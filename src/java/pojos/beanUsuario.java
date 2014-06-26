@@ -132,6 +132,13 @@ public class beanUsuario {
         usuarioService.insertarUsuario(u);
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
                 
+            FacesContext context=FacesContext.getCurrentInstance().getCurrentInstance();
+            FacesMessage message=new FacesMessage("ya existe ese login");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            context.addMessage("ii1",message);
+            return "";
+            
+            
                 }
         
         

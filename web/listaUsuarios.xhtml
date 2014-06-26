@@ -5,6 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
+      
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -14,22 +15,22 @@
             
             <p:dataTable var="usuario" value="#{beanUsuario.listaUsuarios}">
                 
-                <p:column headerText="login">
+                <p:column>
                     <h:outputText value="#{usuario.login}"/>
                 </p:column>
                 
-                <p:column headerText="password">
+                <p:column>
                     <h:outputText value="#{usuario.password}"/>
                 </p:column>
                 
-                <p:column headerText="tipo">
+                <p:column>
                     <h:outputText value="#{usuario.tipoUsuario}"/>
                     
                 </p:column>
                 
             </p:dataTable>
             
-            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" ajax="true" update="tabla"/>
+            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" />
             
         </h:form>
         

@@ -5,6 +5,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
+     
+      
     <h:head>
         <title>eliminar usuario</title>
     </h:head>
@@ -15,10 +17,10 @@
             <h:form>
                 
                 <p:outputLabel value="eliminar usuario por login"/>
-                <h:inputText id="i1" value="#{beanUsuario.login}"/>
+                <p:inputText id="i1" value="#{beanUsuario.login}"/>
                 
                 <p:message for="i1"/>
-                <p:commandButton value="eliminar usuario" action="#{beanUsuario.eliminaUsuario()}" ajax="false"/>
+                <p:commandButton value="eliminar usuario" action="#{beanUsuario.eliminaUsuario()}" />
                 
                 <p:commandButton value="volver" action="#{beanUsuario.volver()}"/>
                 
