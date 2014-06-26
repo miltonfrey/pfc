@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>crear usuario</title>
+    </h:head>
+    <h:body>
+       
+        
+            
+            <h:form>
+                
+                <p:outputLabel value="introducir login"/>
+                <h:inputText id="i1" value="#{beanUsuario.login}"/>
+                <p:message for="i1"/>
+                
+                <p:outputLabel value="escribe una contraseña"/>
+                <p:password id="hidden1" value="#{beanUsuario.password}"/>
+                <p:message for="hidden1"/>
+                
+                <p:growl id="growl"/>
+                <p:commandButton value="crear usuario" action="#{beanUsuario.creaUsuario()}" ajax="false"/>
+                
+                <br/>
+                <p:commandButton value="volver" action="#{beanUsuario.volver()}"/>
+                
+            </h:form>
+            
+        
+        
+        
+        
+        
+        
+        
+    </h:body>
+</html>
+

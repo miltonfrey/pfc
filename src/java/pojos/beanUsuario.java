@@ -9,9 +9,11 @@ package pojos;
 
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -21,6 +23,12 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class beanUsuario {
 
+    
+    
+    
+    
+    private String login;
+    private String password;
     private ArrayList<Usuario> listaUsuarios;
     
     public beanUsuario() {
@@ -52,6 +60,27 @@ public class beanUsuario {
     public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    
+    
+    
+    
     
     public void actualizar(){
         
@@ -59,4 +88,66 @@ public class beanUsuario {
         
     }
     
-}
+    public String eliminaUsuario(){
+        
+        Usuario u=(Usuario)usuarioService.find(getLogin());
+        
+        if (u==null){
+            
+            FacesContext context=FacesContext.getCurrentInstance().getCurrentInstance();
+            FacesMessage message=new FacesMessage("no existe ese usuario");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            context.addMessage("i1",message);
+            return "";
+        }
+        
+        
+        if(usuarioService.delete(u)==false){
+        
+        FacesContext context=FacesContext.getCurrentInstance().getCurrentInstance();
+            FacesMessage message=new FacesMessage("error al eliminar");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            context.addMessage(null,message);
+            return "";
+    }
+        FacesContext context=FacesContext.getCurrentInstance().getCurrentInstance();
+            FacesMessage message=new FacesMessage("usuario borrado: "+getLogin());
+            message.setSeverity(FacesMessage.SEVERITY_WARN);
+            context.addMessage(null,message);
+            return "";
+    }
+    
+    public String creaUsuario(){
+        
+        login=getLogin();
+        password=getPassword();
+        Usuario u=new Usuario();
+        u.setLogin(login);
+        u.setPassword(password);
+        short s=1;
+        u.setTipoUsuario(s);
+        
+        
+        try{
+        usuarioService.insertarUsuario(u);
+        }catch(org.springframework.dao.DataIntegrityViolationException ex){
+                
+                }
+        
+        
+            return("");
+        
+    }
+        
+        public String volver(){
+            
+            return("/index.xhtml?send-redirect");
+            
+        }
+        
+        
+        
+        
+    }
+    
+

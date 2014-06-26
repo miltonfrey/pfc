@@ -41,7 +41,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
     public Usuario find(String nombre){
         
         Session session=sessionFactory.getCurrentSession();
-        Query q=session.createQuery("select u from Usuario u where u.nombre=:nombre");
+        Query q=session.createQuery("select u from Usuario u where u.login=:nombre");
         q.setParameter("nombre", nombre);
         Usuario u=(Usuario)q.uniqueResult();
         return u;
@@ -63,6 +63,17 @@ public class UsuarioDaoImpl implements UsuarioDao{
         return((List<Usuario>)sessionFactory.getCurrentSession().createQuery("select u from Usuario u").list());
         
         
+    }
+    
+    public void insertarUsuario(Usuario u) throws org.springframework.dao.DataIntegrityViolationException{
+        
+        try{
+            sessionFactory.getCurrentSession().save(u);
+            
+        }catch(org.hibernate.exception.ConstraintViolationException ex){
+            
+            
+        }
     }
     
     

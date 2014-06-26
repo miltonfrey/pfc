@@ -12,9 +12,9 @@ import java.util.List;
 public interface UsuarioService {
     
     public Usuario find(String nombre);
-    public void delete(Usuario u);
+    public boolean delete(Usuario u);
     public List<Usuario> listar();
-    
+    public boolean insertarUsuario(Usuario u);
     
     
 }

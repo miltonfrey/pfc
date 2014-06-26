@@ -32,17 +32,33 @@ public class UsuarioServiceImpl implements UsuarioService{
         
     }
     
-    public void delete(Usuario u){
+    public boolean delete(Usuario u){
         try{
         usuarioDao.delete(u);
         }catch(Exception ex){
             ex.printStackTrace();
+            return false;
         }
+        return true;
     }
     
     public List<Usuario>listar(){
         
         return usuarioDao.listar();
+    }
+    
+    public boolean insertarUsuario(Usuario u){
+        
+        try{
+            
+            usuarioDao.insertarUsuario(u);
+            
+        }catch(org.springframework.dao.DataIntegrityViolationException ex){
+            
+            return false;
+        }
+        
+        return true;
     }
     
     
