@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 26-jun-2014 0:09:23 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="pojos.Usuario" table="usuario" catalog="pfc">
+        <id name="login" type="string">
+            <column name="login" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="password" type="string">
+            <column name="password" length="40" not-null="true" />
+        </property>
+        <property name="tipoUsuario" type="java.lang.Short">
+            <column name="tipo_usuario" />
+        </property>
+    </class>
+</hibernate-mapping>
