@@ -15,11 +15,11 @@
         
             
             <h:form>
-                
+                <p:messages for="i1"/>
                 <p:outputLabel value="eliminar usuario por login"/>
                 <p:inputText id="i1" value="#{beanUsuario.login}"/>
                 
-                <p:message for="i1"/>
+                
                 <p:commandButton value="eliminar usuario" action="#{beanUsuario.eliminaUsuario()}" />
                 
                 <p:commandButton value="volver" action="#{beanUsuario.volver()}"/>

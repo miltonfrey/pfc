@@ -94,23 +94,23 @@ public class beanUsuario {
         
         if (u==null){
             
-            FacesContext context=FacesContext.getCurrentInstance().getCurrentInstance();
+            FacesContext context=FacesContext.getCurrentInstance();
             FacesMessage message=new FacesMessage("no existe ese usuario");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            context.addMessage("i1",message);
+            context.addMessage(null,message);
             return "";
         }
         
         
         if(usuarioService.delete(u)==false){
         
-        FacesContext context=FacesContext.getCurrentInstance().getCurrentInstance();
+        FacesContext context=FacesContext.getCurrentInstance();
             FacesMessage message=new FacesMessage("error al eliminar");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             context.addMessage(null,message);
             return "";
     }
-        FacesContext context=FacesContext.getCurrentInstance().getCurrentInstance();
+        FacesContext context=FacesContext.getCurrentInstance();
             FacesMessage message=new FacesMessage("usuario borrado: "+getLogin());
             message.setSeverity(FacesMessage.SEVERITY_WARN);
             context.addMessage(null,message);
@@ -132,10 +132,10 @@ public class beanUsuario {
         usuarioService.insertarUsuario(u);
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
                 
-            FacesContext context=FacesContext.getCurrentInstance().getCurrentInstance();
+            FacesContext context=FacesContext.getCurrentInstance();
             FacesMessage message=new FacesMessage("ya existe ese login");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            context.addMessage("ii1",message);
+            context.addMessage(null,message);
             return "";
             
             
