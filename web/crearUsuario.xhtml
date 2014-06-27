@@ -13,24 +13,33 @@
        
         
             
-            <h:form id="f1">
-                <p:growl for="ii1"/>
+            <h:form>
+                <p:messages/>          <!--si no se pone el messages lo pone igual en el facecontext-->
                 <p:outputLabel value="introducir login"/>
-                <p:inputText id="ii1" value="#{beanUsuario.login}"/>
+                <p:inputText id="ii1" value="#{beanUsuario.login}"
+                             required="true"
+                             requiredMessage="login no puede estar vacio"/>
                 
                 
                 <p:outputLabel value="escribe una contraseña"/>
-                <p:password id="hidden1" value="#{beanUsuario.password}"/>
-                <p:message for="hidden1"/>
+                <p:password id="hidden1" value="#{beanUsuario.password}"
+                required="true"
+                requiredMessage="password no puede estar vacio"/>
                 
                 
                 <p:commandButton value="crear usuario" action="#{beanUsuario.creaUsuario()}" ajax="false" />
                 
                 <br/>
-                <p:commandButton id="b1" value="volver" action="#{beanUsuario.volver()}"/>
+                
                 
             </h:form>
             
+        
+        <h:form>
+            
+            <p:commandButton value="volver" action="#{beanUsuario.volver()}" ajax="false"/>
+            
+        </h:form>
         
         
         

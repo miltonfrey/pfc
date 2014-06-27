@@ -148,7 +148,7 @@ public class beanUsuario {
         
         public String volver(){
             
-            return("/index.xhtml?send-redirect");
+            return("/index.xhtml?faces-redirect");
             
         }
         
