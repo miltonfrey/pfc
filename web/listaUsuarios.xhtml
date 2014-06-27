@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
       
     <h:head>
-        <title>Facelet Title</title>
+        <title>lista de usuarios</title>
     </h:head>
     <h:body>
        
@@ -30,11 +30,15 @@
                 
             </p:dataTable>
             
-            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" />
+            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" update="tabla" />
             
         </h:form>
         
-        
+        <h:form>
+            
+            <p:commandButton value="volver" action="#{beanUsuario.volver()}" ajax="false"/>
+            
+        </h:form>
         
         
         <br />

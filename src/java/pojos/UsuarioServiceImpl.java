@@ -26,27 +26,30 @@ public class UsuarioServiceImpl implements UsuarioService{
         this.usuarioDao = usuarioDao;
     }
     
+    @Override
     public Usuario find(String nombre){
         
         return usuarioDao.find(nombre);
         
     }
     
+    @Override
     public boolean delete(Usuario u){
         try{
         usuarioDao.delete(u);
-        }catch(Exception ex){
-            ex.printStackTrace();
+        }catch(Exception ex){    //ver que exception es
             return false;
         }
         return true;
     }
     
+    @Override
     public List<Usuario>listar(){
         
         return usuarioDao.listar();
     }
     
+    @Override
     public boolean insertarUsuario(Usuario u){
         
         try{

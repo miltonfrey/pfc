@@ -38,6 +38,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
     }
     
     
+    @Override
     public Usuario find(String nombre){
         
         Session session=sessionFactory.getCurrentSession();
@@ -50,13 +51,15 @@ public class UsuarioDaoImpl implements UsuarioDao{
         
     }
     
-    public void delete(Usuario u) throws Exception {
+    @Override
+    public void delete(Usuario u) {
         
         sessionFactory.getCurrentSession().delete(u);
         
         
     }
     
+    @Override
     public List<Usuario> listar(){
         
         
@@ -65,6 +68,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
         
     }
     
+    @Override
     public void insertarUsuario(Usuario u) throws org.springframework.dao.DataIntegrityViolationException{
         
         try{

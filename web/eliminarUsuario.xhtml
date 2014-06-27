@@ -15,19 +15,29 @@
         
             
             <h:form>
-                <p:messages for="i1"/>
+                <p:messages closable="true"/>
+                <p:growl/>
                 <p:outputLabel value="eliminar usuario por login"/>
-                <p:inputText id="i1" value="#{beanUsuario.login}"/>
+                <p:inputText id="i1" value="#{beanUsuario.login}"
+                             required="true"
+                             requiredMessage="el campo de búsqueda no puede estar vacío"/>   <!--meter autocompletar-->
                 
                 
-                <p:commandButton value="eliminar usuario" action="#{beanUsuario.eliminaUsuario()}" />
+                <p:commandButton value="eliminar usuario" action="#{beanUsuario.eliminaUsuario()}" ajax="false" />  <!--con ajax no funciona-->
                 
-                <p:commandButton value="volver" action="#{beanUsuario.volver()}"/>
+               
                 
             </h:form>
             
         
         
+        <h:form>
+            
+            <p:commandButton value="volver" action="#{beanUsuario.volver()}" ajax="false"/>
+            
+        </h:form>
+        
+         
         
         
         

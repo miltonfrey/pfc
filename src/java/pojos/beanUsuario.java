@@ -93,27 +93,19 @@ public class beanUsuario {
         Usuario u=(Usuario)usuarioService.find(getLogin());
         
         if (u==null){
+            creaMensaje("no existe ese usuario", FacesMessage.SEVERITY_ERROR);
             
-            FacesContext context=FacesContext.getCurrentInstance();
-            FacesMessage message=new FacesMessage("no existe ese usuario");
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            context.addMessage(null,message);
             return "";
         }
         
         
         if(usuarioService.delete(u)==false){
         
-        FacesContext context=FacesContext.getCurrentInstance();
-            FacesMessage message=new FacesMessage("error al eliminar");
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            context.addMessage(null,message);
+            creaMensaje("error al eliminar", FacesMessage.SEVERITY_FATAL);
             return "";
     }
-        FacesContext context=FacesContext.getCurrentInstance();
-            FacesMessage message=new FacesMessage("usuario borrado: "+getLogin());
-            message.setSeverity(FacesMessage.SEVERITY_WARN);
-            context.addMessage(null,message);
+        creaMensaje("usuario borrado", FacesMessage.SEVERITY_INFO);
+        
             return "";
     }
     
@@ -131,11 +123,7 @@ public class beanUsuario {
         try{
         usuarioService.insertarUsuario(u);
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
-                
-            FacesContext context=FacesContext.getCurrentInstance();
-            FacesMessage message=new FacesMessage("ya existe ese login");
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            context.addMessage(null,message);
+            creaMensaje("ya existe ese login", FacesMessage.SEVERITY_ERROR);
             return "";
             
             
@@ -151,6 +139,19 @@ public class beanUsuario {
             return("/index.xhtml?faces-redirect");
             
         }
+        
+        
+        
+        public void creaMensaje(String texto,FacesMessage.Severity s){
+            
+            FacesContext context=FacesContext.getCurrentInstance();
+            FacesMessage message=new FacesMessage(texto);
+            message.setSeverity(s);
+            context.addMessage(null, message);
+        }
+        
+        
+        
         
         
         
