@@ -13,7 +13,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 /**
  *
@@ -29,6 +31,10 @@ public class beanUsuario {
     
     private String login;
     private String password;
+    private String email;
+    private String emailAux;
+    
+    
     private ArrayList<Usuario> listaUsuarios;
     
     public beanUsuario() {
@@ -42,9 +48,13 @@ public class beanUsuario {
     }
     
     
-    @ManagedProperty(value="#{usuarioService}")
+    
+    @ManagedProperty(value="#{usuarioService}")  //  Bean injected
     private UsuarioService usuarioService;
 
+    
+    /////////////////////////////////////////////////////////////// GETTERS Y SETTERS
+    
     public UsuarioService getUsuarioService() {
         return usuarioService;
     }
@@ -76,9 +86,27 @@ public class beanUsuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmailAux() {
+        return emailAux;
+    }
+
+    public void setEmailAux(String emailAux) {
+        this.emailAux = emailAux;
+    }
     
     
     
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     
     
     

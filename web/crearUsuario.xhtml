@@ -14,12 +14,33 @@
         
             
             <h:form>
-                <p:messages closable="true"/>          <!--si no se pone el messages lo pone igual en el facecontext-->
+                
+                <p:messages closable="true"/> 
+                
+                <p:outputLabel for="email1" value="correo electrónico"/>
+                <p:inputText id="email1" value="#{beanUsuario.email}"
+                             required="true"
+                             requiredMessage="el campo email está vacío"
+                             validatorMessage="el correo electrónico es erroneo">
+                
+                    <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>
+                
+                </p:inputText>
+                
+                <br/>
+                
+                <p:outputLabel for="email2" value="escriba de nuevo el correo electronico"/>
+                <p:inputText id="email2" value="#{beanUsuario.emailAux}"/>
+                             
+                                         
+                             
+                <br/>
+                <!--si no se pone el messages lo pone igual en el facecontext-->
                 <p:outputLabel value="introducir login"/>
                 <p:inputText id="ii1" value="#{beanUsuario.login}"
                              required="true"
                              requiredMessage="login no puede estar vacio"/>
-                
+                <br/>
                 
                 <p:outputLabel value="escribe una contraseña"/>
                 <p:password id="hidden1" value="#{beanUsuario.password}"
