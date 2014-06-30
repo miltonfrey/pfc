@@ -50,20 +50,18 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
     
     @Override
-    public boolean insertarUsuario(Usuario u){
+    public void insertarUsuario(Usuario u){
         
-        try{
+        
             
             usuarioDao.insertarUsuario(u);
             
-        }catch(org.springframework.dao.DataIntegrityViolationException ex){
-            
-            return false;
-        }
-        
-        return true;
-    }
+       
     
+    
+    
+}
+
     
     
 }

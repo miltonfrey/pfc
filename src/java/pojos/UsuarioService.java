@@ -14,7 +14,7 @@ public interface UsuarioService {
     public Usuario find(String nombre);
     public boolean delete(Usuario u);
     public List<Usuario> listar();
-    public boolean insertarUsuario(Usuario u);
+    public void insertarUsuario(Usuario u);
     
     
 }

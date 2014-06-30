@@ -30,6 +30,12 @@
                     
                 </p:column>
                 
+                <p:column>
+                    <h:outputText value="#{usuario.email}"/>
+                    
+                </p:column>
+                
+                
             </p:dataTable>
             
             <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" update="tabla" />

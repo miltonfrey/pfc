@@ -153,11 +153,12 @@ public class beanUsuario {
         u.setPassword(password);
         short s=1;
         u.setTipoUsuario(s);
-        
+        u.setEmail(email);
         
         try{
         usuarioService.insertarUsuario(u);
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
+            ex.printStackTrace();
             creaMensaje("ya existe ese login", FacesMessage.SEVERITY_ERROR);
             return "";
             

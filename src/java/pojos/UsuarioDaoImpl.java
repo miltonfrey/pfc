@@ -69,15 +69,12 @@ public class UsuarioDaoImpl implements UsuarioDao{
     }
     
     @Override
-    public void insertarUsuario(Usuario u) throws org.springframework.dao.DataIntegrityViolationException{
+    public void insertarUsuario(Usuario u){ //throws org.springframework.dao.DataIntegrityViolationException{
         
-        try{
+        
             sessionFactory.getCurrentSession().save(u);
             
-        }catch(org.hibernate.exception.ConstraintViolationException ex){
-            
-            
-        }
+        
     }
     
     
