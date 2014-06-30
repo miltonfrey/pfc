@@ -139,6 +139,13 @@ public class beanUsuario {
     
     public String creaUsuario(){
         
+        if(getEmail().equals(getEmailAux())==false){
+            
+            creaMensaje("los correos no coinciden", FacesMessage.SEVERITY_ERROR);
+            return "";
+        }
+        
+        
         login=getLogin();
         password=getPassword();
         Usuario u=new Usuario();
@@ -157,7 +164,7 @@ public class beanUsuario {
             
                 }
         
-        
+        creaMensaje("usuario creado", FacesMessage.SEVERITY_INFO);
             return("");
         
     }
