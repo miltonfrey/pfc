@@ -1,5 +1,5 @@
 package pojos;
-// Generated 30-jun-2014 17:58:56 by Hibernate Tools 3.6.0
+// Generated 30-jun-2014 21:57:07 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name="usuario"
     ,catalog="pfc"
-    , uniqueConstraints = {@UniqueConstraint(columnNames="tipo_usuario"), @UniqueConstraint(columnNames="email")} 
+    , uniqueConstraints = @UniqueConstraint(columnNames="email") 
 )
 public class Usuario  implements java.io.Serializable {
 
@@ -70,7 +70,7 @@ public class Usuario  implements java.io.Serializable {
     }
 
     
-    @Column(name="tipo_usuario", unique=true, nullable=false)
+    @Column(name="tipo_usuario", nullable=false)
     public short getTipoUsuario() {
         return this.tipoUsuario;
     }

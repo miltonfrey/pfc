@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30-jun-2014 17:58:56 by Hibernate Tools 3.6.0 -->
+<!-- Generated 30-jun-2014 21:57:09 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="pojos.Usuario" table="usuario" catalog="pfc">
         <id name="login" type="string">
@@ -12,7 +12,7 @@
             <column name="password" length="40" not-null="true" />
         </property>
         <property name="tipoUsuario" type="short">
-            <column name="tipo_usuario" not-null="true" unique="true" />
+            <column name="tipo_usuario" not-null="true" />
         </property>
         <property name="email" type="string">
             <column name="email" length="30" not-null="true" unique="true" />

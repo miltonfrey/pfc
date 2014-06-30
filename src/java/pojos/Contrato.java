@@ -1,10 +1,12 @@
 package pojos;
-// Generated 30-jun-2014 17:58:56 by Hibernate Tools 3.6.0
+// Generated 30-jun-2014 21:57:07 by Hibernate Tools 3.6.0
 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,26 +22,25 @@ import javax.persistence.Table;
 public class Contrato  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
      private Usuario usuario;
 
     public Contrato() {
     }
 
-    public Contrato(int id, Usuario usuario) {
-       this.id = id;
+    public Contrato(Usuario usuario) {
        this.usuario = usuario;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
