@@ -52,6 +52,14 @@
                 
                 <br/>
                 
+                <p:selectOneMenu value="#{beanUsuario.titulacion}" 
+                                 required="true"  
+                                 requiredMessage="hay que intrododucir una titulacion">
+                
+                    <f:selectItem itemLabel="elige una titulacion" noSelectionOption="true"/>
+                    <f:selectItems value="#{beanUsuario.listaTitulaciones}"/>
+                </p:selectOneMenu>
+                
                 
             </h:form>
             

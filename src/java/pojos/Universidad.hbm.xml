@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-jul-2014 19:15:45 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="pojos.Universidad" table="universidad" catalog="pfc">
+        <id name="nombre" type="string">
+            <column name="nombre" length="30" />
+            <generator class="assigned" />
+        </id>
+        <property name="pais" type="string">
+            <column name="pais" length="20" not-null="true" />
+        </property>
+        <property name="web" type="string">
+            <column name="web" length="40" not-null="true" unique="true" />
+        </property>
+        <property name="info" type="string">
+            <column name="info" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

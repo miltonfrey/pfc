@@ -1,5 +1,5 @@
 package pojos;
-// Generated 30-jun-2014 21:57:07 by Hibernate Tools 3.6.0
+// Generated 07-jul-2014 19:15:45 by Hibernate Tools 3.6.0
 
 
 import javax.persistence.Column;

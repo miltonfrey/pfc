@@ -17,22 +17,30 @@
             
             <p:dataTable var="usuario" value="#{beanUsuario.listaUsuarios}">
                 
-                <p:column>
+                <p:column headerText="login">
+                    
                     <h:outputText value="#{usuario.login}"/>
                 </p:column>
                 
-                <p:column>
+                <p:column headerText="password">
+                    
                     <h:outputText value="#{usuario.password}"/>
                 </p:column>
                 
-                <p:column>
+                <p:column headerText="tipo">
+                    
                     <h:outputText value="#{usuario.tipoUsuario}"/>
                     
                 </p:column>
                 
-                <p:column>
-                    <h:outputText value="#{usuario.email}"/>
+                <p:column headerText="correo">
                     
+                    <h:outputText value="#{usuario.email}"/>
+                </p:column>
+                
+                <p:column headerText="titulacion">
+                    
+                    <h:outputText value="#{usuario.titulacion}"/>
                 </p:column>
                 
                 

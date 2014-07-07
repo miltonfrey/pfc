@@ -25,7 +25,7 @@ import javax.faces.validator.ValidatorException;
 @RequestScoped
 public class beanUsuario {
 
-    
+        
     
     
     
@@ -33,9 +33,11 @@ public class beanUsuario {
     private String password;
     private String email;
     private String emailAux;
-    
+    private String titulacion;
     
     private ArrayList<Usuario> listaUsuarios;
+    private ArrayList<String> listaTitulaciones;
+    
     
     public beanUsuario() {
     }
@@ -44,7 +46,9 @@ public class beanUsuario {
     public void init(){
         
         setListaUsuarios((ArrayList < Usuario >)usuarioService.listar());
-        
+        ArrayList<String>aux=new ArrayList<>();
+        aux.add("GEI");
+        setListaTitulaciones(aux);
     }
     
     
@@ -101,6 +105,27 @@ public class beanUsuario {
 
     public void setEmailAux(String emailAux) {
         this.emailAux = emailAux;
+        
+        }
+
+    public ArrayList<String> getListaTitulaciones() {
+        
+       
+        return listaTitulaciones;
+    }
+
+    public void setListaTitulaciones(ArrayList<String> listaTitulaciones) {
+        this.listaTitulaciones = listaTitulaciones;
+    }
+    
+    
+
+    public String getTitulacion() {
+        return titulacion;
+    }
+
+    public void setTitulacion(String titulacion) {
+        this.titulacion = titulacion;
     }
     
     
@@ -154,6 +179,7 @@ public class beanUsuario {
         short s=1;
         u.setTipoUsuario(s);
         u.setEmail(email);
+        u.setTitulacion(titulacion);
         
         try{
         usuarioService.insertarUsuario(u);
