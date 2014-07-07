@@ -1,6 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
+CREATE DATABASE  IF NOT EXISTS `pfc` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `pfc`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
 --
--- Host: localhost    Database: pfc
+-- Host: 127.0.0.1    Database: pfc
 -- ------------------------------------------------------
 -- Server version	5.5.16
 
@@ -23,7 +25,7 @@ DROP TABLE IF EXISTS `contrato`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contrato` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `login` (`login`),
@@ -41,6 +43,32 @@ LOCK TABLES `contrato` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `universidad`
+--
+
+DROP TABLE IF EXISTS `universidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `universidad` (
+  `nombre` varchar(30) NOT NULL,
+  `pais` varchar(20) NOT NULL,
+  `web` varchar(40) NOT NULL,
+  `info` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`nombre`),
+  UNIQUE KEY `web_UNIQUE` (`web`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `universidad`
+--
+
+LOCK TABLES `universidad` WRITE;
+/*!40000 ALTER TABLE `universidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `universidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -52,9 +80,9 @@ CREATE TABLE `usuario` (
   `password` varchar(40) NOT NULL,
   `tipo_usuario` smallint(6) NOT NULL,
   `email` varchar(30) NOT NULL,
+  `titulacion` varchar(25) NOT NULL,
   PRIMARY KEY (`login`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `tipo_usuario` (`tipo_usuario`)
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -64,7 +92,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('pedro','abc',1,'pedro.olarte@udc.es');
+INSERT INTO `usuario` VALUES ('pedro','abc',1,'pedro.olarte@udc.es','');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -77,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-30 19:49:30
+-- Dump completed on 2014-07-07 19:21:13
