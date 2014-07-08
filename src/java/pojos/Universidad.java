@@ -1,5 +1,5 @@
 package pojos;
-// Generated 07-jul-2014 19:15:45 by Hibernate Tools 3.6.0
+// Generated 08-jul-2014 10:38:30 by Hibernate Tools 3.6.0
 
 
 import javax.persistence.Column;
@@ -73,7 +73,7 @@ public class Universidad  implements java.io.Serializable {
     }
 
     
-    @Column(name="info", length=45)
+    @Column(name="info")
     public String getInfo() {
         return this.info;
     }
