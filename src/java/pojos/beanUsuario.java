@@ -167,7 +167,7 @@ public class beanUsuario {
         if(getEmail().equals(getEmailAux())==false){
             
             creaMensaje("los correos no coinciden", FacesMessage.SEVERITY_ERROR);
-            return "";
+            return "principalUsuario.xhtml?faces-redirect=true";
         }
         
         
@@ -184,7 +184,7 @@ public class beanUsuario {
         try{
         usuarioService.insertarUsuario(u);
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
-            ex.printStackTrace();
+            
             creaMensaje("ya existe ese login", FacesMessage.SEVERITY_ERROR);
             return "";
             
@@ -196,13 +196,70 @@ public class beanUsuario {
         
     }
         
-        public String volver(){
+        
+        
+        
+        
+        public String autenticarAdmin(){
+            Usuario u=usuarioService.find(getLogin());
             
-            return("/index.xhtml?faces-redirect=true");
+            if(u==null){
+                
+                creaMensaje("login inexistente", FacesMessage.SEVERITY_ERROR);
+                return "";
+            }
+            
+            String pass=u.getPassword();
+            if((pass.equals(this.getPassword())==false)||u.getTipoUsuario()!=0){
+                
+                creaMensaje("password incorrecto", FacesMessage.SEVERITY_ERROR); // meter numero de errores al loguear
+                return "";
+                
+                
+            }else{
+                
+                
+                
+                return "admin/index.xhtml?faces-redirect=true";
+                
+            }
+            
+            
+        }
+        
+        public String autenticarUsuario(){
+            
+             Usuario u=usuarioService.find(getLogin());
+            
+            if(u==null){
+                
+                creaMensaje("login inexistente", FacesMessage.SEVERITY_ERROR);
+                return "";
+            }
+            
+            String pass=u.getPassword();
+            if(pass.equals(getPassword())==false){
+                
+                creaMensaje("password incorrecto", FacesMessage.SEVERITY_ERROR); // meter numero de errores al loguear
+                return "";
+                
+                
+            }else{
+                
+                
+                return "usuario/index.xhtml?faces-redirect=true";
+                
+            }
+            
             
         }
         
         
+        public String salir(){
+            
+            return("/principal.xhtml?faces-redirect=true");
+            
+        }
         
         public void creaMensaje(String texto,FacesMessage.Severity s){
             
@@ -211,11 +268,6 @@ public class beanUsuario {
             message.setSeverity(s);
             context.addMessage(null, message);
         }
-        
-        
-        
-        
-        
         
         
     }

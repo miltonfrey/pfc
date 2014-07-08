@@ -48,9 +48,7 @@
                 requiredMessage="password no puede estar vacio"/>
                 
                 
-                <p:commandButton value="crear usuario" action="#{beanUsuario.creaUsuario()}" ajax="false" />
-                
-                <br/>
+              
                 
                 <p:selectOneMenu value="#{beanUsuario.titulacion}" 
                                  required="true"  
@@ -60,21 +58,22 @@
                     <f:selectItems value="#{beanUsuario.listaTitulaciones}"/>
                 </p:selectOneMenu>
                 
+                 <p:commandButton value="crear usuario" action="#{beanUsuario.creaUsuario()}" ajax="false" />
+                
+                <br/>
+                
+                
                 
             </h:form>
             
         
-       <!-- <h:form>
-            
-            <p:commandButton value="volver" action="#{beanUsuario.volver()}" ajax="false"/>
-            
-        </h:form>-->
+       
         
         
         
         
         
-       <h:outputLink value="index.xhtml"><img src="resources/iniciar-icono-4628-48.png"/></h:outputLink> 
+       <h:outputLink value="principalUsuario.xhtml"><h:graphicImage value="resources/iniciar-icono-4628-48.png"/></h:outputLink>  <!--tb vale img src-->
         
     </h:body>
 </html>
