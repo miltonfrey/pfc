@@ -32,7 +32,7 @@ public class filtroAdmin implements Filter {
         if ((session == null) ||(session.getAttribute("user")==null)||(session.getAttribute("user").toString().equals("admin")==false)) {
            
             
-            response.sendRedirect(request.getContextPath() + "/principal.xhtml");
+            response.sendRedirect(request.getContextPath() + "/zonaRestringida.xhtml?faces-redirect=true");
             
         } 
             

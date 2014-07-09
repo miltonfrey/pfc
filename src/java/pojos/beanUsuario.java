@@ -13,10 +13,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.http.HttpRequest;
 
 /**
  *
@@ -211,7 +211,7 @@ public class beanUsuario {
             }
             
             String pass=u.getPassword();
-            if((pass.equals(this.getPassword())==false)||u.getTipoUsuario()!=0){
+            if((pass.equals(password)==false)||u.getTipoUsuario()!=0){
                 
                 creaMensaje("password incorrecto", FacesMessage.SEVERITY_ERROR); // meter numero de errores al loguear
                 return "";
@@ -230,6 +230,7 @@ public class beanUsuario {
         
         public String autenticarUsuario(){
             
+            
              Usuario u=usuarioService.find(getLogin());
             
             if(u==null){
@@ -239,15 +240,17 @@ public class beanUsuario {
             }
             
             String pass=u.getPassword();
-            if(pass.equals(getPassword())==false){
+            if(pass.equals(password)==false){
                 
                 creaMensaje("password incorrecto", FacesMessage.SEVERITY_ERROR); // meter numero de errores al loguear
+                
+                
                 return "";
                 
                 
             }else{
-                
-                
+                HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+                session.setAttribute("user", "user");
                 return "usuario/index.xhtml?faces-redirect=true";
                 
             }
@@ -266,6 +269,15 @@ public class beanUsuario {
             
         }
         
+        
+        
+        public String comprobarContext(){
+            
+            HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            //creaMensaje(request.getRequestURI(), FacesMessage.SEVERITY_WARN); //direccion actual
+            creaMensaje(request.getContextPath(), FacesMessage.SEVERITY_WARN); // direccion del contexto
+            return "";
+        }
         
         
         public void creaMensaje(String texto,FacesMessage.Severity s){

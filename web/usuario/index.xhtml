@@ -12,13 +12,19 @@
     <h:body>
        
         <h:form>
-            
+            <p:messages closable="true"/>
             <p:outputLabel value="por hacer"/>
-            
+            <p:commandButton value="contextRequest" action="#{beanUsuario.comprobarContext}" ajax="false"/>
             
         </h:form>
         
-        
+        <h:form>
+            
+            
+           
+            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir}" ajax="false"/>
+            
+        </h:form>
         
         
         

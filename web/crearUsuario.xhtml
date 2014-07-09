@@ -49,8 +49,9 @@
                 
                 
               
-                
-                <p:selectOneMenu value="#{beanUsuario.titulacion}" 
+                <br/>
+                <p:outputLabel value="titulacion" for="select1"/>
+                <p:selectOneMenu id="select1" value="#{beanUsuario.titulacion}" 
                                  required="true"  
                                  requiredMessage="hay que intrododucir una titulacion">
                 
@@ -58,6 +59,7 @@
                     <f:selectItems value="#{beanUsuario.listaTitulaciones}"/>
                 </p:selectOneMenu>
                 
+                <br/>
                  <p:commandButton value="crear usuario" action="#{beanUsuario.creaUsuario()}" ajax="false" />
                 
                 <br/>
