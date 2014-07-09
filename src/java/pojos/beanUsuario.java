@@ -16,6 +16,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -218,8 +219,8 @@ public class beanUsuario {
                 
             }else{
                 
-                
-                
+                HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+                session.setAttribute("user", "admin");
                 return "admin/index.xhtml?faces-redirect=true";
                 
             }
@@ -257,9 +258,15 @@ public class beanUsuario {
         
         public String salir(){
             
+            
+            
+            HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            session.invalidate();
             return("/principal.xhtml?faces-redirect=true");
             
         }
+        
+        
         
         public void creaMensaje(String texto,FacesMessage.Severity s){
             
