@@ -16,7 +16,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.springframework.http.HttpRequest;
+import org.primefaces.event.SelectEvent;
+
 
 /**
  *
@@ -33,8 +34,11 @@ public class beanUsuario {
     private String login;
     private String password;
     private String email;
-    private String emailAux;
+    
     private String titulacion;
+    
+    private String emailAux;
+    private Usuario selectedUsuario;
     
     private ArrayList<Usuario> listaUsuarios;
     private ArrayList<String> listaTitulaciones;
@@ -128,6 +132,14 @@ public class beanUsuario {
     public void setTitulacion(String titulacion) {
         this.titulacion = titulacion;
     }
+
+    public Usuario getSelectedUsuario() {
+        return selectedUsuario;
+    }
+
+    public void setSelectedUsuario(Usuario selectedUsuario) {
+        this.selectedUsuario = selectedUsuario;
+    }
     
     
     
@@ -161,6 +173,20 @@ public class beanUsuario {
         creaMensaje("usuario borrado", FacesMessage.SEVERITY_INFO);
         
             return "";
+    }
+    
+    
+    public void eliminaUsuarioLista(){
+        
+         if(usuarioService.delete(selectedUsuario)==false){
+        
+            creaMensaje("error al eliminar "+ getSelectedUsuario().getLogin(), FacesMessage.SEVERITY_FATAL);
+            
+    }else{
+         
+        creaMensaje("usuario borrado "+getSelectedUsuario().getLogin(), FacesMessage.SEVERITY_INFO);
+        this.actualizar();
+         } 
     }
     
     public String creaUsuario(){
@@ -267,6 +293,16 @@ public class beanUsuario {
             session.invalidate();
             return("/principal.xhtml?faces-redirect=true");
             
+        }
+        
+        
+        public void cancel(){
+            
+        }
+        
+        public void select(SelectEvent event){
+            
+            selectedUsuario=(Usuario)event.getObject();
         }
         
         

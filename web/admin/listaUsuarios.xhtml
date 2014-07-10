@@ -13,9 +13,9 @@
        
         <h:form id="tabla">
             
+            <p:messages closable="true"/>
             
-            
-            <p:dataTable var="usuario" value="#{beanUsuario.listaUsuarios}">
+            <p:dataTable var="usuario" value="#{beanUsuario.listaUsuarios}" >
                 
                 <p:column headerText="login">
                     
@@ -43,10 +43,32 @@
                     <h:outputText value="#{usuario.titulacion}"/>
                 </p:column>
                 
+                <p:column>
+                    
+                    <p:commandButton value="eliminar"  oncomplete="sure.show()">
+                                                                                              <!--con p: no hace falta f:ajax-->
+                        <f:setPropertyActionListener value="#{usuario}" target="#{beanUsuario.selectedUsuario}" />
+                        
+                    </p:commandButton>
+                    
+                    
+                </p:column>
+                
+                
                 
             </p:dataTable>
             
-            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" update="tabla" />
+            <p:dialog id="alerta1" widgetVar="sure" header="borrar" closable="false">
+                <p:commandButton value="si" action="#{beanUsuario.eliminaUsuarioLista()}" update=":tabla:" onclick="alerta1.hide()"/>
+                <p:commandButton value="no" action="#{beanUsuario.cancel()}" onclick="alerta1.hide()"/>
+                 
+            </p:dialog>
+            
+            <br/>
+            
+            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" update="tabla"/>
+            
+            
             
         </h:form>
         
