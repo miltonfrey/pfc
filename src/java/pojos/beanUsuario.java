@@ -7,6 +7,7 @@
 package pojos;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -14,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.primefaces.event.SelectEvent;
@@ -24,8 +26,9 @@ import org.primefaces.event.SelectEvent;
  * @author abc
  */
 @ManagedBean
-@RequestScoped
-public class beanUsuario {
+@javax.faces.bean.SessionScoped
+//@javax.faces.bean.RequestScoped
+public class beanUsuario implements Serializable{
 
         
     
@@ -305,6 +308,16 @@ public class beanUsuario {
             selectedUsuario=(Usuario)event.getObject();
         }
         
+        
+        
+        public void prueba(){
+            
+            
+            creaMensaje("se ha producido un evento "+selectedUsuario.getLogin(), FacesMessage.SEVERITY_WARN);
+            
+            
+            
+        }
         
         
         public String comprobarContext(){

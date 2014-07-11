@@ -45,10 +45,10 @@
                 
                 <p:column>
                     
-                    <p:commandButton value="eliminar"  oncomplete="sure.show()">
+                    <p:commandButton value="eliminar" oncomplete="sure.show()" action="#{beanUsuario.prueba}" update=":tabla:">
                                                                                               <!--con p: no hace falta f:ajax-->
-                        <f:setPropertyActionListener value="#{usuario}" target="#{beanUsuario.selectedUsuario}" />
-                        
+                    <f:setPropertyActionListener value="#{usuario}" target="#{beanUsuario.selectedUsuario}" />
+                    
                     </p:commandButton>
                     
                     
@@ -72,9 +72,17 @@
             
         </h:form>
         
+        <h:form id="f1">
+            <p:messages closable="true" for="f1"/> 
+            <h:inputText value="#{beanUsuario.login}"/>
+            <p:commandButton value="pruebaListener" actionListener="#{beanUsuario.prueba}" update="f1" />
+            
+            
+        </h:form>
         
         
-        <h:outputLink value="index.xhtml?faces-redirect=true"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink> <!--se puede poner resources sin /-->
+        
+        <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink> <!--se puede poner resources sin /-->
         
         
         

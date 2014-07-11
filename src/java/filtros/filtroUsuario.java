@@ -33,7 +33,7 @@ public class filtroUsuario implements Filter{
         
         if((session==null)||(session.getAttribute("user")==null)||(session.getAttribute("user").toString().equals("user")==false)){
             
-            response.sendRedirect(request.getContextPath() + "/zonaRestringida.xhtml?faces-redirect=true");
+            response.sendRedirect(request.getContextPath() + "/zonaRestringida.xhtml");
         }else{
             
             chain.doFilter(req, res);
