@@ -303,10 +303,7 @@ public class beanUsuario implements Serializable{
             
         }
         
-        public void select(){
-            
-            
-        }
+        
         
         
         

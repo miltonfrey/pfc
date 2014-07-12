@@ -47,7 +47,7 @@
                 </p:column>
                 
                 <p:column>
-                    
+                                                      <!--para boton con sessionscope-->
                    <!-- <p:commandButton value="eliminar" oncomplete="sure.show()" action="{beanUsuario.select}" update=":tabla:">
                                                                                               
                     <f:setPropertyActionListener value="{usuario}" target="{beanUsuario.selectedUsuario}" />
@@ -65,7 +65,7 @@
                 
                 
             </p:dataTable>
-            
+                                <!-- otra forma de hacer el boton confirm, requiere sessionscope-->
             <p:dialog id="alerta1" widgetVar="sure" header="borrar" closable="false">
                 <p:commandButton value="si" action="#{beanUsuario.eliminaUsuarioLista()}" update=":tabla:" onclick="alerta1.hide()"/>
                 <p:commandButton value="no" action="#{beanUsuario.cancel()}" onclick="alerta1.hide()"/>
@@ -80,13 +80,7 @@
             
         </h:form>
         
-        <h:form id="f1">
-            <p:messages closable="true" for="f1"/> 
-            <h:inputText value="#{beanUsuario.login}"/>
-            <p:commandButton value="pruebaListener" actionListener="#{beanUsuario.prueba}" update="f1" />
-            
-            
-        </h:form>
+        
         
         
         
