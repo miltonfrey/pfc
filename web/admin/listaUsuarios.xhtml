@@ -45,7 +45,7 @@
                 
                 <p:column>
                     
-                    <p:commandButton value="eliminar" oncomplete="sure.show()" action="#{beanUsuario.prueba}" update=":tabla:">
+                    <p:commandButton value="eliminar" oncomplete="sure.show()" action="#{beanUsuario.select}" update=":tabla:">
                                                                                               <!--con p: no hace falta f:ajax-->
                     <f:setPropertyActionListener value="#{usuario}" target="#{beanUsuario.selectedUsuario}" />
                     

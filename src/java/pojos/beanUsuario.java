@@ -303,21 +303,14 @@ public class beanUsuario implements Serializable{
             
         }
         
-        public void select(SelectEvent event){
-            
-            selectedUsuario=(Usuario)event.getObject();
-        }
-        
-        
-        
-        public void prueba(){
-            
-            
-            creaMensaje("se ha producido un evento "+selectedUsuario.getLogin(), FacesMessage.SEVERITY_WARN);
-            
+        public void select(){
             
             
         }
+        
+        
+        
+       
         
         
         public String comprobarContext(){
