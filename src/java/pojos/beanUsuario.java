@@ -26,8 +26,8 @@ import org.primefaces.event.SelectEvent;
  * @author abc
  */
 @ManagedBean
-@javax.faces.bean.SessionScoped
-//@javax.faces.bean.RequestScoped
+//@javax.faces.bean.SessionScoped
+@javax.faces.bean.RequestScoped
 public class beanUsuario implements Serializable{
 
         

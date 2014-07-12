@@ -4,6 +4,7 @@ package filtros;
 
 
 import java.io.IOException;
+import javax.faces.application.ResourceHandler;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -39,6 +40,9 @@ public class filtroAdmin implements Filter {
                 
                 
         else{
+            
+           
+            
              chain.doFilter(req, res);
              
         }

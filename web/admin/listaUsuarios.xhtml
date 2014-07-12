@@ -7,6 +7,9 @@
       xmlns:p="http://primefaces.org/ui">
       
     <h:head>
+        
+    <!--    <script type='text/javascript' src=""/> -->
+       
         <title>lista de usuarios</title>
     </h:head>
     <h:body>
@@ -45,12 +48,17 @@
                 
                 <p:column>
                     
-                    <p:commandButton value="eliminar" oncomplete="sure.show()" action="#{beanUsuario.select}" update=":tabla:">
-                                                                                              <!--con p: no hace falta f:ajax-->
-                    <f:setPropertyActionListener value="#{usuario}" target="#{beanUsuario.selectedUsuario}" />
+                   <!-- <p:commandButton value="eliminar" oncomplete="sure.show()" action="{beanUsuario.select}" update=":tabla:">
+                                                                                              
+                    <f:setPropertyActionListener value="{usuario}" target="{beanUsuario.selectedUsuario}" />
                     
+                    </p:commandButton>  -->
+                    
+                    
+                    <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false"
+                                     value="eliminar" action="#{beanUsuario.eliminaUsuarioLista}" icon="edit_icon" update=":tabla:" >
+                        <f:setPropertyActionListener target="#{beanUsuario.selectedUsuario}" value="#{usuario}" />
                     </p:commandButton>
-                    
                     
                 </p:column>
                 
