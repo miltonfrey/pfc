@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+    <h:head>
+        <title>crear carrera</title>
+    </h:head>
+    <h:body>
+        
+        <p:panel>
+            
+            <h:form>
+                
+                <p:growl/>
+                
+                <h:outputLabel value="nombre"/>
+                <h:inputText value="#{beanCarrera.nombre}"
+                             required="true"
+                             requiredMessage="el campo nombre está vacío">
+                    
+                </h:inputText>
+                
+                <h:outputLabel value="universidad"/>
+                <h:inputText value="#{beanCarrera.universidad}"
+                             required="true"
+                             requiredMessage="el campo universidad está vacío">
+                    
+                </h:inputText>
+                
+                <h:outputLabel value="pais" for="p1"/>
+                <p:selectOneMenu id="p1" value="#{beanCarrera.pais}"
+                                 required="true"
+                                 requiredMessage="el campo pais está vacío">
+                    
+                    <f:selectItem itemLabel="elige un pais" noSelectionOption="true"/>
+                    <f:selectItems value="#{beanCarrera.paises}"/>
+                    
+                </p:selectOneMenu>
+                
+                
+                             
+                <p:outputLabel value="información adicional"/>
+                <p:inputTextarea value="#{beanCarrera.info}"/>
+                
+                
+                <p:outputLabel value="pagina web"/>
+                <h:inputText value="#{beanCarrera.web}"/>
+                
+                
+                <p:commandButton value="crear carrera" action="#{beanCarrera.creaCarrera}" ajax="false"/>
+                
+                
+                
+               
+            </h:form>
+            
+            
+        </p:panel>
+        
+        <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
+        
+    </h:body>
+    
+</html>
+
+

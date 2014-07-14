@@ -18,6 +18,32 @@ USE `pfc`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `carrera`
+--
+
+DROP TABLE IF EXISTS `carrera`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `carrera` (
+  `nombre` varchar(40) NOT NULL,
+  `universidad` varchar(45) NOT NULL,
+  `pais` varchar(15) NOT NULL,
+  `info` longtext,
+  `web` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`nombre`,`universidad`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `carrera`
+--
+
+LOCK TABLES `carrera` WRITE;
+/*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `contrato`
 --
 
@@ -40,32 +66,6 @@ CREATE TABLE `contrato` (
 LOCK TABLES `contrato` WRITE;
 /*!40000 ALTER TABLE `contrato` DISABLE KEYS */;
 /*!40000 ALTER TABLE `contrato` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `universidad`
---
-
-DROP TABLE IF EXISTS `universidad`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `universidad` (
-  `nombre` varchar(30) NOT NULL,
-  `pais` varchar(20) NOT NULL,
-  `web` varchar(40) NOT NULL,
-  `info` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`nombre`),
-  UNIQUE KEY `web_UNIQUE` (`web`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `universidad`
---
-
-LOCK TABLES `universidad` WRITE;
-/*!40000 ALTER TABLE `universidad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `universidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('pedro','abc',1,'pedro.olarte@udc.es','');
+INSERT INTO `usuario` VALUES ('admin','admin',0,'admin@udc.es','admin');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -105,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-07 19:21:13
+-- Dump completed on 2014-07-14 19:26:12

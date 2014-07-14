@@ -3,15 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/index.xhtml</file>
-            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/hibernate.reveng.xml</file>
-            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/WEB-INF/faces-config.xml</file>
-            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/WEB-INF/applicationContext.xml</file>
-            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/UsuarioDaoImpl.java</file>
-            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/listaUsuarios.xhtml</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/CarreraDaoImpl.java</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/beanCarrera.java</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/admin/listaUsuarios.xhtml</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/beanUsuario.java</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/admin/crearCarrera.xhtml</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/Carrera.java</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/CarreraDao.java</file>
             <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/UsuarioDao.java</file>
-            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/admin/index.xhtml</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/crearUsuario.xhtml</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/web/zonaRestringida.xhtml</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/CarreraServiceImpl.java</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/UsuarioDaoImpl.java</file>
+            <file>file:/C:/Users/cba/Documents/NetBeansProjects/pfc/src/java/pojos/CarreraService.java</file>
         </group>
     </open-files>
 </project-private>

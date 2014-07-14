@@ -54,7 +54,7 @@ public class beanUsuario implements Serializable{
     public void init(){
         
         setListaUsuarios((ArrayList < Usuario >)usuarioService.listar());
-        ArrayList<String>aux=new ArrayList<>();
+        ArrayList<String>aux=new ArrayList<String>();
         aux.add("GEI");
         setListaTitulaciones(aux);
     }
@@ -280,6 +280,7 @@ public class beanUsuario implements Serializable{
             }else{
                 HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
                 session.setAttribute("user", "user");
+                
                 return "usuario/index.xhtml?faces-redirect=true";
                 
             }
