@@ -179,17 +179,24 @@ public class beanUsuario implements Serializable{
     }
     
     
-    public void eliminaUsuarioLista(){
+    public String eliminaUsuarioLista(){
         
-         if(usuarioService.delete(selectedUsuario)==false){
         
+        try{
+         usuarioService.delete(selectedUsuario);
+        
+                 
+                 
+        }catch(Exception ex){
+                     
             creaMensaje("error al eliminar "+ getSelectedUsuario().getLogin(), FacesMessage.SEVERITY_FATAL);
-            
-    }else{
+            return "";
+                 }
          
         creaMensaje("usuario borrado "+getSelectedUsuario().getLogin(), FacesMessage.SEVERITY_INFO);
         this.actualizar();
-         } 
+        return "";
+          
     }
     
     public String creaUsuario(){

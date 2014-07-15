@@ -13,9 +13,9 @@
         
         <p:panel>
             
-            <h:form>
+            <h:form id="formCrea">
                 
-                <p:growl/>
+                <p:growl for="formCrea"/>
                 
                 <h:outputLabel value="nombre"/>
                 <h:inputText value="#{beanCarrera.nombre}"
@@ -68,9 +68,9 @@
                 
                 <p:growl id="msgs"/>
                 
-                <p:dataTable id="tabla1" var="carrera" value="#{beanCarrera.listaCarreras}" editable="true">
+                <p:dataTable id="tabla1" var="carrera" value="#{beanCarrera.listaCarreras}" editable="true" emptyMessage="">
                 
-                    <p:ajax event="rowEdit" listener="#{beanCarrera.onRowEdit}" update=":carreraForm:msgs"/>
+                    <p:ajax event="rowEdit" listener="#{beanCarrera.onRowEdit}" update=":carreraForm:msgs"/>   
                     <p:ajax event="rowEditCancel" listener="#{beanCarrera.onRowCancel}"/>
                     <p:column headerText="nombre" sortBy="#{carrera.id.nombre}">
                         <p:cellEditor>
@@ -81,14 +81,35 @@
                          
                     <p:column headerText="universidad" sortBy="#{carrera.id.universidad}">
                         <p:cellEditor>
+                            
                         <f:facet name="output"><h:outputText value="#{carrera.id.universidad}"/></f:facet>
-                        <f:facet name="input"><h:inputText value="#{carrera.id.universidad}"/></f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{carrera.id.universidad}"/>
+                               
+                               
+                        </f:facet>
                         </p:cellEditor>
                     </p:column>
                 
                     <p:column>
                         <p:rowEditor/>
                     </p:column>
+                    
+                    <p:column>
+                                                      <!--para boton con sessionscope-->
+                   <!-- <p:commandButton value="eliminar" oncomplete="sure.show()" action="{beanUsuario.select}" update=":tabla:">
+                                                                                              
+                    <f:setPropertyActionListener value="{usuario}" target="{beanUsuario.selectedUsuario}" />
+                    
+                    </p:commandButton>  -->
+                    
+                    
+                    <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false"
+                                     value="eliminar" action="#{beanCarrera.eliminaCarreraLista}" icon="edit_icon" update=":carreraForm:" >
+                        <f:setPropertyActionListener target="#{beanCarrera.selectedCarrera}" value="#{carrera}" />
+                    </p:commandButton>
+                    
+                </p:column>
                 
                 </p:dataTable>
                              

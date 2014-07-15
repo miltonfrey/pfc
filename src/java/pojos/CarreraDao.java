@@ -13,7 +13,7 @@ public interface CarreraDao {
     public void delete(Carrera c);
     public Carrera find(String name);
     public void insertarCarrera(Carrera c);
-    
+    public void actualizar(Carrera c);
     
     
     

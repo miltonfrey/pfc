@@ -31,6 +31,7 @@ public class beanCarrera implements Serializable{
     private String universidad;
     private String info;
     private String web;
+    private Carrera selectedCarrera;
     
     private ArrayList<Carrera> listaCarreras;
     private ArrayList<String> paises;
@@ -154,6 +155,20 @@ public class beanCarrera implements Serializable{
         
         setListaCarreras((ArrayList<Carrera>)carreraService.listar());
     }
+
+    public Carrera getSelectedCarrera() {
+        return selectedCarrera;
+    }
+
+    public void setSelectedCarrera(Carrera selectedCarrera) {
+        this.selectedCarrera = selectedCarrera;
+    }
+    
+    
+    
+    
+    
+    
     
     
     
@@ -188,13 +203,27 @@ public class beanCarrera implements Serializable{
   }
   
   
-  public void onRowEdit(RowEditEvent event){
+  public String onRowEdit(RowEditEvent event){
       
       
-      creaMensaje("carrera modificada", FacesMessage.SEVERITY_INFO);
       
+      Carrera c=(Carrera)event.getObject();
+      Carrera d=selectedCarrera;
+      try{
+          
+          carreraService.actualizar(c);
+          
+      }catch(Exception ex){
+          
+          creaMensaje("se ha producido un error al actualizar "+ selectedCarrera.getId().getNombre(), FacesMessage.SEVERITY_ERROR);
+          return "";
+      }
       
+      creaMensaje("carrera actualiza", FacesMessage.SEVERITY_INFO);
+      return "";
   }
+  
+  
   
   public void onRowCancel(RowEditEvent event){
       
@@ -202,5 +231,25 @@ public class beanCarrera implements Serializable{
       
   }
     
-    
+ 
+  public String eliminaCarreraLista(){
+      
+      try{
+          
+          carreraService.delete(selectedCarrera);
+          
+      }catch(Exception ex){
+          
+          creaMensaje("error al eliminar", FacesMessage.SEVERITY_ERROR);
+          return "";
+      }
+      
+      
+      creaMensaje("carrera eliminada correctamente", FacesMessage.SEVERITY_INFO);
+      actualizar();
+      selectedCarrera=null;
+  return "";
+  
+  
+}
 }

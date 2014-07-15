@@ -51,11 +51,13 @@ public class CarreraDaoImpl implements CarreraDao{
         
         sessionFactory.getCurrentSession().save(u);
         
-        
-        
-        
     }
     
+    @Override
+    public void actualizar(Carrera c){
+        
+        sessionFactory.getCurrentSession().update(c);
+    }
     
 }
 

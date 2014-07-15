@@ -53,4 +53,10 @@ public class CarreraServiceImpl implements CarreraService{
         
     }
     
+    public void actualizar(Carrera c){
+        
+        carreraDao.actualizar(c);
+        
+    }
+    
 }
