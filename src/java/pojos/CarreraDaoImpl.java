@@ -1,6 +1,8 @@
 package pojos;
 
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,7 +28,7 @@ public class CarreraDaoImpl implements CarreraDao{
     public Carrera find(String name){
         
         Session session=sessionFactory.getCurrentSession();
-        Query q=session.createQuery("select u from Universidad u where nombre u.nombre=:name");
+        Query q=session.createQuery("select c from Carrera c where nombre c.id.nombre=:name");
         q.setParameter("nombre", name);
         return (Carrera)q.uniqueResult();
         
@@ -40,7 +42,7 @@ public class CarreraDaoImpl implements CarreraDao{
     @Override
     public List<Carrera> listarCarreras(){
         
-        return(sessionFactory.getCurrentSession().createQuery("select u from Carrer u").list());
+        return(sessionFactory.getCurrentSession().createQuery("select c from Carrera c").list());
         
     }
     
@@ -48,6 +50,10 @@ public class CarreraDaoImpl implements CarreraDao{
     public void insertarCarrera(Carrera u){
         
         sessionFactory.getCurrentSession().save(u);
+        
+        
+        
+        
     }
     
     

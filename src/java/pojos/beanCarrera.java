@@ -8,6 +8,7 @@ package pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -35,6 +36,7 @@ public class beanCarrera implements Serializable{
     
     @PostConstruct
     public void init(){
+        setListaCarreras((ArrayList<Carrera>)carreraService.listar());
         ArrayList<String>aux=new ArrayList<String>();
         aux.add("Alemania");
         aux.add("Francia");
@@ -103,6 +105,7 @@ public class beanCarrera implements Serializable{
     
 
     public ArrayList<Carrera> getListaCarreras() {
+        setListaCarreras(listaCarreras);
         return listaCarreras;
     }
 
@@ -142,7 +145,10 @@ public class beanCarrera implements Serializable{
     }
     
     
-    
+    public void actualizar(){
+        
+        setListaCarreras((ArrayList<Carrera>)carreraService.listar());
+    }
     
     
     
@@ -167,6 +173,16 @@ public class beanCarrera implements Serializable{
             return("/principal.xhtml?faces-redirect=true");
             
         }
+  
+  public List<String> completa(String text){
+      
+      
+      ArrayList<String> lista=paises;
+      return lista;
+      
+  }
+  
+  
     
     
 }

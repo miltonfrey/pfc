@@ -61,6 +61,67 @@
             
         </p:panel>
         
+        
+        <p:panel>
+            
+            <h:form id="CarreraForm">
+                
+                <p:dataTable var="carrera" value="#{beanCarrera.listaCarreras}">
+                
+                    <p:column headerText="nombre" sortBy="#{carrera.id.nombre}">
+                        
+                        <h:outputText value="#{carrera.id.nombre}"/>
+                        
+                    </p:column>
+                    <p:column headerText="universidad" sortBy="#{carrera.id.universidad}">
+                        
+                        <h:outputText value="#{carrera.id.universidad}"/>
+                        
+                    </p:column>
+                
+                
+                
+                </p:dataTable>
+                             
+                <p:commandButton value="actualizar" action="#{beanCarrera.actualizar}" update="CarreraForm"/>
+                
+                <br/>
+                
+                <p:commandButton value="salir" action="#{beanCarrera.salir()}" ajax="false"/>
+            </h:form>
+            
+            
+            
+            
+            
+        </p:panel>
+        <br/>
+        
+        
+        <p:panel>
+            
+            <h:form id="autoForm">
+                
+                <p:growl for="autoForm"/>
+                <p:panelGrid columns="2">
+                    
+                    <p:outputLabel value="nombre" for="a1"/>
+                    <p:autoComplete id="a1" value="#{beanCarrera.pais}" completeMethod="#{beanCarrera.completa}"/> 
+                    
+                </p:panelGrid>
+                
+                
+                
+                
+                
+            </h:form>
+            
+            
+            
+            
+        </p:panel>
+        
+        
         <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
         
         
