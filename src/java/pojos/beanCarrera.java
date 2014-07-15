@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import org.primefaces.event.RowEditEvent;
 
 
 @ManagedBean
@@ -140,6 +141,10 @@ public class beanCarrera implements Serializable{
         }
         
         creaMensaje("carrera creada", FacesMessage.SEVERITY_INFO);
+        setNombre("");
+        setUniversidad("");
+        setPais("");
+        actualizar();
         return "";
         
     }
@@ -168,7 +173,7 @@ public class beanCarrera implements Serializable{
             
             
             
-            HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             session.invalidate();
             return("/principal.xhtml?faces-redirect=true");
             
@@ -183,6 +188,19 @@ public class beanCarrera implements Serializable{
   }
   
   
+  public void onRowEdit(RowEditEvent event){
+      
+      
+      creaMensaje("carrera modificada", FacesMessage.SEVERITY_INFO);
+      
+      
+  }
+  
+  public void onRowCancel(RowEditEvent event){
+      
+      creaMensaje("edicion cancelada", FacesMessage.SEVERITY_INFO);
+      
+  }
     
     
 }

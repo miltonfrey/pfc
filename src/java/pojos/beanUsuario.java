@@ -319,6 +319,14 @@ public class beanUsuario implements Serializable{
             return "";
         }
         
+        public void comprobarSession(){
+            
+            HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            creaMensaje((String)session.getAttribute("user") ,FacesMessage.SEVERITY_INFO);
+            
+            
+        }
+        
         
         public void creaMensaje(String texto,FacesMessage.Severity s){
             

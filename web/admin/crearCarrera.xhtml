@@ -64,30 +64,39 @@
         
         <p:panel>
             
-            <h:form id="CarreraForm">
+            <h:form id="carreraForm">
                 
-                <p:dataTable var="carrera" value="#{beanCarrera.listaCarreras}">
+                <p:growl id="msgs"/>
                 
+                <p:dataTable id="tabla1" var="carrera" value="#{beanCarrera.listaCarreras}" editable="true">
+                
+                    <p:ajax event="rowEdit" listener="#{beanCarrera.onRowEdit}" update=":carreraForm:msgs"/>
+                    <p:ajax event="rowEditCancel" listener="#{beanCarrera.onRowCancel}"/>
                     <p:column headerText="nombre" sortBy="#{carrera.id.nombre}">
-                        
-                        <h:outputText value="#{carrera.id.nombre}"/>
-                        
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{carrera.id.nombre}"/></f:facet>
+                            <f:facet name="input"><h:inputText value="#{carrera.id.nombre}"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
+                         
                     <p:column headerText="universidad" sortBy="#{carrera.id.universidad}">
-                        
-                        <h:outputText value="#{carrera.id.universidad}"/>
-                        
+                        <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{carrera.id.universidad}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{carrera.id.universidad}"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
                 
-                
+                    <p:column>
+                        <p:rowEditor/>
+                    </p:column>
                 
                 </p:dataTable>
                              
-                <p:commandButton value="actualizar" action="#{beanCarrera.actualizar}" update="CarreraForm"/>
+                <p:commandButton value="actualizar" action="#{beanCarrera.actualizar}" update="carreraForm"/>
                 
                 <br/>
                 
-                <p:commandButton value="salir" action="#{beanCarrera.salir()}" ajax="false"/>
+                <p:commandButton value="salir" action="#{beanCarrera.salir}" ajax="false"/>
             </h:form>
             
             
