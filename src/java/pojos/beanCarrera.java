@@ -17,6 +17,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 
 
 @ManagedBean
@@ -230,6 +231,16 @@ public class beanCarrera implements Serializable{
       creaMensaje("edicion cancelada", FacesMessage.SEVERITY_INFO);
       
   }
+  
+  public void onRowSelect(SelectEvent event){
+      
+      selectedCarrera=(Carrera)event.getObject();
+      creaMensaje(selectedCarrera.getId().getNombre(), FacesMessage.SEVERITY_INFO);
+      
+  }
+  
+  
+  
     
  
   public String eliminaCarreraLista(){

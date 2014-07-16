@@ -68,8 +68,12 @@
                 
                 <p:growl id="msgs"/>
                 
-                <p:dataTable id="tabla1" var="carrera" value="#{beanCarrera.listaCarreras}" editable="true" emptyMessage="">
-                
+                <p:dataTable id="tabla1" var="carrera" value="#{beanCarrera.listaCarreras}" editable="true" emptyMessage="" selectionMode="single"
+                             selection="#{beanCarrera.selectedCarrera}"
+                             rowKey="#{carrera.id}">
+                    
+                    <p:ajax event="rowSelect" listener="#{beanCarrera.onRowSelect}" update=":carreraForm:msgs" />
+                    <p:ajax event="rowUnselect"/>
                     <p:ajax event="rowEdit" listener="#{beanCarrera.onRowEdit}" update=":carreraForm:msgs"/>   
                     <p:ajax event="rowEditCancel" listener="#{beanCarrera.onRowCancel}"/>
                     <p:column headerText="nombre" sortBy="#{carrera.id.nombre}">
