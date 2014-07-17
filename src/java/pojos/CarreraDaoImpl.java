@@ -1,5 +1,6 @@
 package pojos;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -8,9 +9,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Repository("carreraDao")
-public class CarreraDaoImpl implements CarreraDao{
+public class CarreraDaoImpl implements CarreraDao,Serializable{
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -28,16 +31,16 @@ public class CarreraDaoImpl implements CarreraDao{
     public Carrera find(String name){
         
         Session session=sessionFactory.getCurrentSession();
-        Query q=session.createQuery("select c from Carrera c where nombre c.id.nombre=:name");
-        q.setParameter("nombre", name);
+        Query q=session.createQuery("select c from Carrera c where c.id.nombre=:name");
+        q.setParameter("name", name);
         return (Carrera)q.uniqueResult();
         
         
     }
     @Override
-    public void delete(Carrera u){
+    public void delete(Carrera c){
         
-        sessionFactory.getCurrentSession().delete(u);
+        sessionFactory.getCurrentSession().delete(c);
     }
     @Override
     public List<Carrera> listarCarreras(){
@@ -47,16 +50,16 @@ public class CarreraDaoImpl implements CarreraDao{
     }
     
     @Override
-    public void insertarCarrera(Carrera u){
+    public void insertarCarrera(Carrera c){
         
-        sessionFactory.getCurrentSession().save(u);
+        sessionFactory.getCurrentSession().save(c);
         
     }
     
     @Override
     public void actualizar(Carrera c){
         
-        sessionFactory.getCurrentSession().update(c);
+        sessionFactory.getCurrentSession().saveOrUpdate(c);
     }
     
 }

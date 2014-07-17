@@ -6,6 +6,7 @@
 
 package pojos;
 
+import java.io.Serializable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("carreraService")
 @Transactional
-public class CarreraServiceImpl implements CarreraService{
+public class CarreraServiceImpl implements CarreraService,Serializable{
     
     @Autowired
     private CarreraDao carreraDao;
@@ -52,7 +53,7 @@ public class CarreraServiceImpl implements CarreraService{
         
         
     }
-    
+    @Override
     public void actualizar(Carrera c){
         
         carreraDao.actualizar(c);

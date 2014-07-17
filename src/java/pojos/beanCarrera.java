@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -22,7 +23,7 @@ import org.primefaces.event.SelectEvent;
 
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class beanCarrera implements Serializable{
     
     @ManagedProperty(value="#{carreraService}")
@@ -33,10 +34,11 @@ public class beanCarrera implements Serializable{
     private String universidad;
     private String info;
     private String web;
-    private boolean disabled;
+    //private boolean disabled;
     
     private Carrera selectedCarrera;
     private Carrera nuevaCarrera;
+    private Carrera aux;
     
     private ArrayList<Carrera> listaCarreras;
     private ArrayList<String> paises;
@@ -109,13 +111,9 @@ public class beanCarrera implements Serializable{
         this.universidad = universidad;
     }
 
-    public boolean isDisabled() {
-        return disabled;
-    }
+   
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
+   
     
     
     
@@ -171,6 +169,11 @@ public class beanCarrera implements Serializable{
         setListaCarreras((ArrayList<Carrera>)carreraService.listar());
     }
 
+    
+    
+    
+    
+    
     public Carrera getSelectedCarrera() {
         return selectedCarrera;
     }
@@ -232,8 +235,8 @@ public class beanCarrera implements Serializable{
   public void onRowInit(RowEditEvent event){
      
       selectedCarrera=(Carrera)event.getObject();
-      disabled=true;
-      creaMensaje(selectedCarrera.getId().getNombre()+" "+disabled, FacesMessage.SEVERITY_INFO);
+      aux=carreraService.find(selectedCarrera.getId().getNombre());
+      creaMensaje(aux.getId().getNombre()+" ", FacesMessage.SEVERITY_INFO);
       
   }
   
@@ -253,8 +256,17 @@ public class beanCarrera implements Serializable{
      
       
       try{
-          creaMensaje(nuevaCarrera.getId().getNombre(), FacesMessage.SEVERITY_INFO);
-          //carreraService.actualizar(nuevaCarrera);
+          creaMensaje(nuevaCarrera.getId().getNombre() +" "+ aux.getId().getNombre(), FacesMessage.SEVERITY_INFO);
+          
+          CarreraId id=new CarreraId(nuevaCarrera.getId().getNombre(),nuevaCarrera.getId().getUniversidad());
+          
+          aux.setId(id);
+          aux.setPais(nuevaCarrera.getPais());
+          if(nuevaCarrera.getInfo()!=null)
+              aux.setInfo(nuevaCarrera.getInfo());
+          if(nuevaCarrera.getWeb()!=null)
+              aux.setWeb(nuevaCarrera.getWeb());
+          carreraService.actualizar(aux);
           
       }catch(Exception ex){
           
@@ -262,9 +274,10 @@ public class beanCarrera implements Serializable{
           return "";
       }
       
-     // creaMensaje("carrera actualizada", FacesMessage.SEVERITY_INFO);
-      
+      creaMensaje("carrera actualizada", FacesMessage.SEVERITY_INFO);
+      actualizar();
       return "";
+      
   }
   
   
@@ -299,7 +312,7 @@ public class beanCarrera implements Serializable{
       }
       
       
-      creaMensaje("carrera eliminada correctamente", FacesMessage.SEVERITY_INFO);
+      creaMensaje("carrera eliminada correctamente "+selectedCarrera.getId().getNombre(), FacesMessage.SEVERITY_INFO);
       actualizar();
       selectedCarrera=null;
   return "";

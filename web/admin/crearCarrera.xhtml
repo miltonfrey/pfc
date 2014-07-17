@@ -74,10 +74,10 @@
                 <p:growl id="msgs"/>
                 
                 <p:dataTable id="tabla1" var="carrera" value="#{beanCarrera.listaCarreras}" editable="true" emptyMessage="" 
-                  >
+                             rowKey="#{carrera.id}">
                     
                     <p:ajax event="rowEditInit" listener="#{beanCarrera.onRowInit}" update=":carreraForm:msgs"/>
-                    <p:ajax event="rowEdit" listener="#{beanCarrera.onRowEdit}" update=":carreraForm:tabla1"/>   
+                    <p:ajax event="rowEdit" listener="#{beanCarrera.onRowEdit}" update=":carreraForm:tabla1,:carreraForm:msgs"/>   
                     <p:ajax event="rowEditCancel" listener="#{beanCarrera.onRowCancel}" />
                     <p:column headerText="nombre" sortBy="#{carrera.id.nombre}">
                         <p:cellEditor>
@@ -91,7 +91,10 @@
                             
                         <f:facet name="output"><h:outputText value="#{carrera.id.universidad}"/></f:facet>
                         <f:facet name="input">
-                            <h:inputText value="#{carrera.id.universidad}"/>
+                            <h:inputText value="#{carrera.id.universidad}"
+                                         required="true"
+                                         requiredMessage="el campo no puede estar vacío"
+                                         />
                                
                                
                         </f:facet>
