@@ -23,7 +23,7 @@ import org.primefaces.event.SelectEvent;
 
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class beanCarrera implements Serializable{
     
     @ManagedProperty(value="#{carreraService}")
@@ -232,7 +232,7 @@ public class beanCarrera implements Serializable{
   
   
   
-  public void onRowInit(RowEditEvent event){
+ /* public void onRowInit(RowEditEvent event){
      
       selectedCarrera=(Carrera)event.getObject();
       aux=carreraService.find(selectedCarrera.getId().getNombre());
@@ -240,7 +240,7 @@ public class beanCarrera implements Serializable{
       
   }
   
-  
+  */
   
   
   
@@ -250,23 +250,14 @@ public class beanCarrera implements Serializable{
       
       
       
-      nuevaCarrera=(Carrera)event.getObject();
+      selectedCarrera=(Carrera)event.getObject();
      
       
      
       
       try{
-          creaMensaje(nuevaCarrera.getId().getNombre() +" "+ aux.getId().getNombre(), FacesMessage.SEVERITY_INFO);
-          
-          CarreraId id=new CarreraId(nuevaCarrera.getId().getNombre(),nuevaCarrera.getId().getUniversidad());
-          
-          aux.setId(id);
-          aux.setPais(nuevaCarrera.getPais());
-          if(nuevaCarrera.getInfo()!=null)
-              aux.setInfo(nuevaCarrera.getInfo());
-          if(nuevaCarrera.getWeb()!=null)
-              aux.setWeb(nuevaCarrera.getWeb());
-          carreraService.actualizar(aux);
+         
+          carreraService.actualizar(selectedCarrera);
           
       }catch(Exception ex){
           
@@ -274,7 +265,7 @@ public class beanCarrera implements Serializable{
           return "";
       }
       
-      creaMensaje("carrera actualizada", FacesMessage.SEVERITY_INFO);
+      creaMensaje("carrera actualizada "+selectedCarrera.getId().getNombre(), FacesMessage.SEVERITY_INFO);
       actualizar();
       return "";
       

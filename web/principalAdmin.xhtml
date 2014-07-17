@@ -12,12 +12,16 @@
     <h:body>
        
         <h:form>
+            <p:panel id="p1">
+                <p:focus context="p1"/>
             <p:messages closable="true"/>
             <p:panel>
-            <p:outputLabel value="login"/>
-            <h:inputText value="#{beanUsuario.login}"
+                  <p:outputLabel value="login"/>
+                  <h:inputText value="#{beanUsuario.login}"
                          required="true"
-                         requiredMessage="el campo login esta vacio"/>
+                         requiredMessage="el campo login esta vacio"
+                         autocomplete="false"/>
+                      
             <br/>
             <br/>
             <p:outputLabel value="password"/>
@@ -27,7 +31,7 @@
             </p:panel>
             
             <p:commandButton value="autenticar" action="#{beanUsuario.autenticarAdmin()}" ajax="false"/>
-            
+            </p:panel>
         </h:form>
         <br/>
         

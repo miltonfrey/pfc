@@ -76,30 +76,43 @@
                 <p:dataTable id="tabla1" var="carrera" value="#{beanCarrera.listaCarreras}" editable="true" emptyMessage="" 
                              rowKey="#{carrera.id}">
                     
-                    <p:ajax event="rowEditInit" listener="#{beanCarrera.onRowInit}" update=":carreraForm:msgs"/>
+                   <!-- <p:ajax event="rowEditInit" listener="{beanCarrera.onRowInit}" update=":carreraForm:msgs"/>-->
+                   
                     <p:ajax event="rowEdit" listener="#{beanCarrera.onRowEdit}" update=":carreraForm:tabla1,:carreraForm:msgs"/>   
                     <p:ajax event="rowEditCancel" listener="#{beanCarrera.onRowCancel}" />
                     <p:column headerText="nombre" sortBy="#{carrera.id.nombre}">
-                        <p:cellEditor>
-                            <f:facet name="output"><h:outputText value="#{carrera.id.nombre}"/></f:facet>
-                            <f:facet name="input"><h:inputText value="#{carrera.id.nombre}"/></f:facet>
-                        </p:cellEditor>
+                        
+                           <h:outputText value="#{carrera.id.nombre}"/>
+                            
+                        
                     </p:column>
                          
                     <p:column headerText="universidad" sortBy="#{carrera.id.universidad}">
-                        <p:cellEditor>
+                        
                             
-                        <f:facet name="output"><h:outputText value="#{carrera.id.universidad}"/></f:facet>
+                        #{carrera.id.universidad}     <!--da igual poner h:outputtext-->
+                        
+                        
+                    </p:column>
+                    
+                    <p:column>
+                        <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{carrera.pais}"/></f:facet>
                         <f:facet name="input">
-                            <h:inputText value="#{carrera.id.universidad}"
-                                         required="true"
-                                         requiredMessage="el campo no puede estar vacío"
-                                         />
-                               
-                               
+                            
+                            <p:selectOneMenu value="#{carrera.pais}" style="width: 100%"
+                                             required="true"
+                                             requiredMessage="hay que seleccionar un pais">
+                                             
+                                <f:selectItems value="#{beanCarrera.paises}"/>
+                            
+                            </p:selectOneMenu>
+                            
                         </f:facet>
+                        
                         </p:cellEditor>
                     </p:column>
+                    
                 
                     <p:column>
                         <p:rowEditor/>
@@ -113,8 +126,8 @@
                     
                     </p:commandButton>  -->
                     
-                    
-                    <p:commandButton id="b1" onclick="if (! confirm('¿seguro que quieres borrar?')) return false"
+                    <!---->
+                    <p:commandButton id="b1" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
                                      value="eliminar" action="#{beanCarrera.eliminaCarreraLista}" icon="edit_icon" update=":carreraForm:"
                                      widgetVar="btnRemove"
                                      >
