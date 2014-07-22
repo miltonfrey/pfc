@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `pfc` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `pfc`;
 -- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
 --
--- Host: 127.0.0.1    Database: pfc
+-- Host: localhost    Database: pfc
 -- ------------------------------------------------------
--- Server version	5.5.16
+-- Server version	5.5.24-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +16,36 @@ USE `pfc`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `asignatura`
+--
+
+DROP TABLE IF EXISTS `asignatura`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignatura` (
+  `codAsignatura` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(40) NOT NULL,
+  `creditos` smallint(6) NOT NULL,
+  `periodo` varchar(10) NOT NULL,
+  `info` longtext,
+  `nombreTit` varchar(40) NOT NULL,
+  `nombreUni` varchar(45) NOT NULL,
+  PRIMARY KEY (`codAsignatura`),
+  KEY `nombreTit` (`nombreTit`,`nombreUni`),
+  CONSTRAINT `asignatura_ibfk_1` FOREIGN KEY (`nombreTit`, `nombreUni`) REFERENCES `carrera` (`nombre`, `universidad`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asignatura`
+--
+
+LOCK TABLES `asignatura` WRITE;
+/*!40000 ALTER TABLE `asignatura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asignatura` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `carrera`
@@ -40,6 +70,7 @@ CREATE TABLE `carrera` (
 
 LOCK TABLES `carrera` WRITE;
 /*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
+INSERT INTO `carrera` VALUES ('CC.PP','USC','Alemania','',''),('FIC','UDC','Alemania','',''),('FIS','UDC','Alemania','','');
 /*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,6 +97,38 @@ CREATE TABLE `contrato` (
 LOCK TABLES `contrato` WRITE;
 /*!40000 ALTER TABLE `contrato` DISABLE KEYS */;
 /*!40000 ALTER TABLE `contrato` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `movilidad`
+--
+
+DROP TABLE IF EXISTS `movilidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `movilidad` (
+  `codMovilidad` int(11) NOT NULL AUTO_INCREMENT,
+  `fechaInicio` datetime NOT NULL,
+  `fechaFin` datetime NOT NULL,
+  `estado` tinyint(4) NOT NULL,
+  `loginAlumno` varchar(20) NOT NULL,
+  `nombreCarrera` varchar(40) DEFAULT NULL,
+  `nombreUni` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`codMovilidad`),
+  KEY `carrera_idx` (`nombreCarrera`,`nombreUni`),
+  KEY `login_idx` (`loginAlumno`),
+  CONSTRAINT `carrera` FOREIGN KEY (`nombreCarrera`, `nombreUni`) REFERENCES `carrera` (`nombre`, `universidad`) ON DELETE CASCADE ON UPDATE SET NULL,
+  CONSTRAINT `login` FOREIGN KEY (`loginAlumno`) REFERENCES `usuario` (`login`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `movilidad`
+--
+
+LOCK TABLES `movilidad` WRITE;
+/*!40000 ALTER TABLE `movilidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `movilidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -105,4 +168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-14 19:26:12
+-- Dump completed on 2014-07-21 18:54:36

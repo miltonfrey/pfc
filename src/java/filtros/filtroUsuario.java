@@ -31,10 +31,16 @@ public class filtroUsuario implements Filter{
         HttpServletResponse response=(HttpServletResponse)res;
         HttpSession session=(HttpSession)request.getSession(false);
         
-        if((session==null)||(session.getAttribute("user")==null)||(session.getAttribute("user").toString().equals("user")==false)){
+        if((session==null)||(session.getAttribute("user")==null)){             //(session.getAttribute("user").toString().equals("user")==false)){
+                             
             
             response.sendRedirect(request.getContextPath() + "/zonaRestringida.xhtml");
         }else{
+            
+            
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            response.setDateHeader("Expires", 0); // Proxies.
             
             chain.doFilter(req, res);
             

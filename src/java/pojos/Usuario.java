@@ -1,5 +1,5 @@
 package pojos;
-// Generated 14-jul-2014 17:58:38 by Hibernate Tools 3.6.0
+// Generated 21-jul-2014 18:56:56 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -29,6 +29,7 @@ public class Usuario  implements java.io.Serializable {
      private String email;
      private String titulacion;
      private Set<Contrato> contratos = new HashSet<Contrato>(0);
+     private Set<Movilidad> movilidads = new HashSet<Movilidad>(0);
 
     public Usuario() {
     }
@@ -41,13 +42,14 @@ public class Usuario  implements java.io.Serializable {
         this.email = email;
         this.titulacion = titulacion;
     }
-    public Usuario(String login, String password, short tipoUsuario, String email, String titulacion, Set<Contrato> contratos) {
+    public Usuario(String login, String password, short tipoUsuario, String email, String titulacion, Set<Contrato> contratos, Set<Movilidad> movilidads) {
        this.login = login;
        this.password = password;
        this.tipoUsuario = tipoUsuario;
        this.email = email;
        this.titulacion = titulacion;
        this.contratos = contratos;
+       this.movilidads = movilidads;
     }
    
      @Id 
@@ -109,6 +111,15 @@ public class Usuario  implements java.io.Serializable {
     
     public void setContratos(Set<Contrato> contratos) {
         this.contratos = contratos;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="usuario")
+    public Set<Movilidad> getMovilidads() {
+        return this.movilidads;
+    }
+    
+    public void setMovilidads(Set<Movilidad> movilidads) {
+        this.movilidads = movilidads;
     }
 
 

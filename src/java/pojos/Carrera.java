@@ -1,12 +1,16 @@
 package pojos;
-// Generated 14-jul-2014 17:58:38 by Hibernate Tools 3.6.0
+// Generated 21-jul-2014 18:56:56 by Hibernate Tools 3.6.0
 
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,6 +27,8 @@ public class Carrera  implements java.io.Serializable {
      private String pais;
      private String info;
      private String web;
+     private Set<Movilidad> movilidads = new HashSet<Movilidad>(0);
+     private Set<Asignatura> asignaturas = new HashSet<Asignatura>(0);
 
     public Carrera() {
     }
@@ -32,11 +38,13 @@ public class Carrera  implements java.io.Serializable {
         this.id = id;
         this.pais = pais;
     }
-    public Carrera(CarreraId id, String pais, String info, String web) {
+    public Carrera(CarreraId id, String pais, String info, String web, Set<Movilidad> movilidads, Set<Asignatura> asignaturas) {
        this.id = id;
        this.pais = pais;
        this.info = info;
        this.web = web;
+       this.movilidads = movilidads;
+       this.asignaturas = asignaturas;
     }
    
      @EmbeddedId
@@ -81,6 +89,24 @@ public class Carrera  implements java.io.Serializable {
     
     public void setWeb(String web) {
         this.web = web;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="carrera")
+    public Set<Movilidad> getMovilidads() {
+        return this.movilidads;
+    }
+    
+    public void setMovilidads(Set<Movilidad> movilidads) {
+        this.movilidads = movilidads;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="carrera")
+    public Set<Asignatura> getAsignaturas() {
+        return this.asignaturas;
+    }
+    
+    public void setAsignaturas(Set<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
 

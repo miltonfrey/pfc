@@ -1,0 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package pojos;
+
+import java.util.List;
+
+
+public interface MovilidadDao {
+    
+    public void crearMovilidad(Movilidad c);
+    public List<Movilidad> listarMovilidad();
+    public void cambiarMovilidad(Movilidad m);
+    public void eliminarMovilidad(Movilidad m);
+    
+    public List<Movilidad> listarPorEstado(String estado);
+    
+    
+    
+}

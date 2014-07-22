@@ -13,7 +13,8 @@
        
         <h:form>
             <p:messages closable="true"/>
-            <p:panel>
+            <p:panel id="panel1">
+                <p:focus for="panel1"/>
             <p:outputLabel value="login"/>
             <h:inputText value="#{beanUsuario.login}"
                          required="true"

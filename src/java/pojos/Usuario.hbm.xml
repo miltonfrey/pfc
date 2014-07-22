@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 14-jul-2014 17:58:40 by Hibernate Tools 3.6.0 -->
+<!-- Generated 21-jul-2014 18:56:58 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="pojos.Usuario" table="usuario" catalog="pfc">
         <id name="login" type="string">
@@ -25,6 +25,12 @@
                 <column name="login" length="20" not-null="true" />
             </key>
             <one-to-many class="pojos.Contrato" />
+        </set>
+        <set name="movilidads" table="movilidad" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="loginAlumno" length="20" not-null="true" />
+            </key>
+            <one-to-many class="pojos.Movilidad" />
         </set>
     </class>
 </hibernate-mapping>

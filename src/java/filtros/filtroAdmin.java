@@ -30,7 +30,7 @@ public class filtroAdmin implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
 
-        if ((session == null) ||(session.getAttribute("user")==null)||(session.getAttribute("user").toString().equals("admin")==false)) {
+        if ((session == null) ||(session.getAttribute("admin")==null)||(session.getAttribute("admin").toString().equals("admin")==false)) {
            
             
             response.sendRedirect(request.getContextPath() + "/zonaRestringida.xhtml");

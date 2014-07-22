@@ -256,7 +256,7 @@ public class beanUsuario implements Serializable{
             }else{
                 
                 HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-                session.setAttribute("user", "admin");
+                session.setAttribute("admin", "admin");
                 return "admin/index.xhtml?faces-redirect=true";
                 
             }
@@ -286,7 +286,7 @@ public class beanUsuario implements Serializable{
                 
             }else{
                 HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-                session.setAttribute("user", "user");
+                session.setAttribute("user", login);
                 
                 return "usuario/index.xhtml?faces-redirect=true";
                 
@@ -321,7 +321,7 @@ public class beanUsuario implements Serializable{
         public String comprobarContext(){
             
             HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            //creaMensaje(request.getRequestURI(), FacesMessage.SEVERITY_WARN); //direccion actual
+            creaMensaje(request.getRequestURI(), FacesMessage.SEVERITY_WARN); //direccion que hizo el request
             creaMensaje(request.getContextPath(), FacesMessage.SEVERITY_WARN); // direccion del contexto
             return "";
         }
