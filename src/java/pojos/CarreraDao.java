@@ -14,8 +14,10 @@ public interface CarreraDao {
     public Carrera find(String name);
     public void insertarCarrera(Carrera c);
     public void actualizar(Carrera c);
-    
-    
+    public List<Carrera> listarPorUniversidad(String universidad);
+    public List<Carrera> listarPorPais(String pais);
+   public List<String> listarPorUniversidadStr(String universidad);
+   public List<String> listarPorPaisStr(String pais);
     
 }
 

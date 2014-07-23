@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+      
+    <h:head>
+        <title>Crear movilidad</title>
+    </h:head>
+    <h:body>
+       
+       
+                
+                
+                
+           
+            
+            
+            
+        
+        
+            <h:form id="f1"> 
+                <p:messages />
+            <p:selectOneMenu id="pais" value="#{beanMovilidad.selectedPais}">
+                <p:ajax  listener="#{beanMovilidad.onDropboxChangePais}" update="f1" process="@this"/>
+                <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
+                <f:selectItems value="#{beanCarrera.paises}"/>
+            
+            
+            </p:selectOneMenu>
+            
+                <br/>
+            
+                <p:selectOneMenu id="uni" value="#{beanMovilidad.selectedUni}" >
+                
+                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update="f1"/>
+                <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true"/>
+                <f:selectItems value="#{beanMovilidad.listaUniversidadesStr}" rendered="#{beanMovilidad.checkPais}"/>
+            
+            
+            
+            </p:selectOneMenu>
+            
+            <br/>
+                
+            <p:selectOneMenu id="estudios" value="#{beanMovilidad.selectedCarrera}" >
+                <f:selectItem itemLabel="elige la carrera" noSelectionOption="true" />
+                             <f:selectItems value="#{beanMovilidad.listaCarrerasStr}" rendered="#{beanMovilidad.checkUni}"/>
+                             
+            </p:selectOneMenu>
+            
+            <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" update="f1"/>
+            
+        </h:form>
+   
+        
+            <br/>
+            <br/>
+            <p:panel>
+        <h:form>
+            
+            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            
+        </h:form>
+            </p:panel>
+        
+        <br />
+        
+        <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
+    </h:body>
+</html>

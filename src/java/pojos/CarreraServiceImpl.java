@@ -60,4 +60,37 @@ public class CarreraServiceImpl implements CarreraService,Serializable{
         
     }
     
+    @Override
+    public List<Carrera>listarPorUniversidad(String universidad){
+        
+        return carreraDao.listarPorUniversidad(universidad);
+    }
+    
+    @Override
+    public List<Carrera>listarPorPais(String pais){
+        
+        return carreraDao.listarPorPais(pais);
+        
+    }
+    @Override
+    public List<String>listarPorPaisStr(String pais){
+        
+        System.out.println("en service");
+        
+        return carreraDao.listarPorPaisStr(pais);
+    }
+    @Override
+    public List<String>listarPorUniversidadStr(String universidad){
+        
+        return carreraDao.listarPorUniversidadStr(universidad);
+        
+        
+    }
+    
+    public String prueba(){
+        
+        return "mierda";
+    }
+    
+    
 }

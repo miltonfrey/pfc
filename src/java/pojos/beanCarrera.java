@@ -8,6 +8,7 @@ package pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -51,6 +52,8 @@ public class beanCarrera implements Serializable{
         aux.add("Francia");
         aux.add("Italia");
         aux.add("Suecia");
+        aux.add("Finlandia");
+        Collections.sort(aux);
         setPaises(aux);
         
     }
@@ -129,6 +132,7 @@ public class beanCarrera implements Serializable{
     }
 
     public ArrayList<String> getPaises() {
+        
         return paises;
     }
 
@@ -221,7 +225,7 @@ public class beanCarrera implements Serializable{
             
         }
   
-  public List<String> completa(String text){
+  public List<String> completaPaises(String text){
       
       
       ArrayList<String> lista=paises;

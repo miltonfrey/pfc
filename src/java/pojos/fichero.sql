@@ -119,7 +119,7 @@ CREATE TABLE `movilidad` (
   KEY `login_idx` (`loginAlumno`),
   CONSTRAINT `carrera` FOREIGN KEY (`nombreCarrera`, `nombreUni`) REFERENCES `carrera` (`nombre`, `universidad`) ON DELETE CASCADE ON UPDATE SET NULL,
   CONSTRAINT `login` FOREIGN KEY (`loginAlumno`) REFERENCES `usuario` (`login`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,6 +128,7 @@ CREATE TABLE `movilidad` (
 
 LOCK TABLES `movilidad` WRITE;
 /*!40000 ALTER TABLE `movilidad` DISABLE KEYS */;
+INSERT INTO `movilidad` VALUES (1,'2014-05-23 00:00:00','2014-09-21 00:00:00',0,'user1','FIC','UDC'),(3,'2014-07-22 00:00:00','2014-09-21 00:00:00',0,'user1','FIC','UDC');
 /*!40000 ALTER TABLE `movilidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +156,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('admin','admin',0,'admin@udc.es','admin');
+INSERT INTO `usuario` VALUES ('admin','admin',0,'admin@udc.es','admin'),('user1','pass1',1,'p1@h.s','GEI');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -168,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-21 18:54:36
+-- Dump completed on 2014-07-23 19:53:32
