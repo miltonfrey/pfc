@@ -45,7 +45,7 @@ public class beanUsuario implements Serializable{
     
     private ArrayList<Usuario> listaUsuarios;
     private ArrayList<String> listaTitulaciones;
-    
+    private ArrayList<Movilidad>listaMovilidades;
     
     public beanUsuario() {
     }
@@ -57,15 +57,24 @@ public class beanUsuario implements Serializable{
         ArrayList<String>aux=new ArrayList<String>();
         aux.add("GEI");
         setListaTitulaciones(aux);
+        
+        
     }
     
     
     
     @ManagedProperty(value="#{usuarioService}")  //  Bean injected
     private UsuarioService usuarioService;
-
+    @ManagedProperty(value="#{movilidadService}")  //  Bean injected
+    private MovilidadService movilidadService;
+   
     
     /////////////////////////////////////////////////////////////// GETTERS Y SETTERS
+    
+    
+    
+    
+    
     
     public UsuarioService getUsuarioService() {
         return usuarioService;
@@ -82,6 +91,26 @@ public class beanUsuario implements Serializable{
     public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
+///////////////////////////////////////////////////////////////////////////////////////////
+    /*public ArrayList<Movilidad> getListaMovilidades() {
+        return listaMovilidades;
+    }
+
+    public void setListaMovilidades(ArrayList<Movilidad> listaMovilidades) {
+        this.listaMovilidades = listaMovilidades;
+    }
+
+    public MovilidadService getMovilidadService() {
+        return movilidadService;
+    }
+
+    public void setMovilidadService(MovilidadService movilidadService) {
+        this.movilidadService = movilidadService;
+    }*/
+///////////////////////////////////////////////////////////////////////////////////////////////
+   
+    
+    
 
     public String getLogin() {
         return login;

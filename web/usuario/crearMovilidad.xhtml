@@ -23,6 +23,9 @@
         
             <h:form id="f1"> 
                 <p:messages />
+                
+                
+                
             <p:selectOneMenu id="pais" value="#{beanMovilidad.selectedPais}">
                 <p:ajax  listener="#{beanMovilidad.onDropboxChangePais}" update="f1" process="@this"/>
                 <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
@@ -51,7 +54,7 @@
                              
             </p:selectOneMenu>
             
-            <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" update="f1"/>
+            <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" update="f1" ajax="false"/>
             
         </h:form>
    

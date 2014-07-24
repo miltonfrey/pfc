@@ -12,16 +12,18 @@ import java.util.EventListener;
 import java.util.List;
 import javax.annotation.PostConstruct;
 //import java.util.List;
-import javax.inject.Named;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 
-@Named(value = "beanMovilidad")
-@SessionScoped
+@ManagedBean
+//@javax.faces.bean.SessionScoped
+@javax.faces.bean.RequestScoped
 public class beanMovilidad implements Serializable{
 
    
@@ -29,14 +31,13 @@ public class beanMovilidad implements Serializable{
     public beanMovilidad() {
         }
     
-    //@ManagedProperty(value="#{movilidadService}")
-    //private MovilidadService movilidadService;
+     @ManagedProperty(value="#{movilidadService}")
+    private MovilidadService movilidadService;
     
-    //@ManagedProperty(value="{carreraService}")
-    //private CarreraService carreraService;
+    @ManagedProperty(value="{carreraService}")
+    private CarreraService carreraService;
 
-     @ManagedProperty(value="#{usuarioService}")  //  Bean injected
-      private UsuarioService usuarioService;
+     
     
     
     
@@ -44,8 +45,8 @@ public class beanMovilidad implements Serializable{
     private String selectedUni;
     private String selectedCarrera;
     private ArrayList<Carrera> listaCarreras;
-    private ArrayList<Movilidad>listaMovilidadades;
-    private ArrayList<Usuario>listaUsuarios;
+    private ArrayList<Movilidad>listaMovilidades;
+   
     
     private ArrayList<String> listaUniversidadesStr;
     private ArrayList<String> listaCarrerasStr;
@@ -59,32 +60,26 @@ public class beanMovilidad implements Serializable{
         
         //listaCarreras=(ArrayList<Carrera>)carreraService.listar();
    //     listaMovilidadades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
-        setListaUsuarios((ArrayList < Usuario >)usuarioService.listar());
+        //setListaMovilidades((ArrayList<Movilidad>)movilidadService.listarTodasMovilidades());
     }
 
-    public UsuarioService getUsuarioService() {
-        return usuarioService;
+   
+    
+    
+    
+    
+    
+    public MovilidadService getMovilidadService() {
+        return movilidadService;
     }
 
-    public void setUsuarioService(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+    public void setMovilidadService(MovilidadService movilidadService) {
+        this.movilidadService = movilidadService;
     }
-    
-    
-    
-    
-    
-    //public MovilidadService getMovilidadService() {
-        //return movilidadService;
-    //}
 
-   //public void setMovilidadService(MovilidadService movilidadService) {
-       // this.movilidadService = movilidadService;
-    //}
-
-    //public CarreraService getCarreraService() {
-      //  return carreraService;
-    //}
+    public CarreraService getCarreraService() {
+        return carreraService;
+    }
 
     //public void setCarreraService(CarreraService carreraService) {
       //  this.carreraService = carreraService;
@@ -128,22 +123,16 @@ public class beanMovilidad implements Serializable{
         this.listaCarreras = listaCarreras;
     }
 
-    public ArrayList<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
-
-    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
+   
     
     
 
-    public ArrayList<Movilidad> getListaMovilidadades() {
-        return listaMovilidadades;
+    public ArrayList<Movilidad> getListaMovilidades() {
+        return listaMovilidades;
     }
 
-    public void setListaMovilidadades(ArrayList<Movilidad> listaMovilidadades) {
-        this.listaMovilidadades = listaMovilidadades;
+    public void setListaMovilidades(ArrayList<Movilidad> listaMovilidades) {
+        this.listaMovilidades = listaMovilidades;
     }
     
     
@@ -190,8 +179,8 @@ public class beanMovilidad implements Serializable{
    public void onDropboxChangePais(){
        
        checkPais=true;
-       System.out.println(checkPais);
-      // listaUniversidadesStr=(ArrayList<String>)carreraService.listarPorPaisStr(selectedPais);
+       
+       listaUniversidadesStr=(ArrayList<String>)carreraService.listarPorPaisStr(selectedPais);
       // creaMensaje(carreraService.prueba(),FacesMessage.SEVERITY_INFO);
        
        
@@ -202,7 +191,7 @@ public class beanMovilidad implements Serializable{
         
         checkUni=true;
         
-        //listaCarrerasStr=(ArrayList<String>)carreraService.listarPorUniversidadStr(selectedUni);
+        listaCarrerasStr=(ArrayList<String>)carreraService.listarPorUniversidadStr(selectedUni);
        
         
     }
@@ -215,9 +204,11 @@ public class beanMovilidad implements Serializable{
         selectedCarrera="";
         selectedPais="";
         selectedUni="";
+        String estado="pendiente";
+       // Movilidad m=new Movilidad(;
         checkPais=false;
         checkUni=false;
-       // List<Movilidad>aux=movilidadService.listarTodasMovilidades();
+        //List<Movilidad>aux=movilidadService.listarTodasMovilidades();
     }
     
     
