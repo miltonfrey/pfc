@@ -45,7 +45,7 @@ public class beanUsuario implements Serializable{
     
     private ArrayList<Usuario> listaUsuarios;
     private ArrayList<String> listaTitulaciones;
-    private ArrayList<Movilidad>listaMovilidades;
+   
     
     public beanUsuario() {
     }
@@ -65,8 +65,7 @@ public class beanUsuario implements Serializable{
     
     @ManagedProperty(value="#{usuarioService}")  //  Bean injected
     private UsuarioService usuarioService;
-    @ManagedProperty(value="#{movilidadService}")  //  Bean injected
-    private MovilidadService movilidadService;
+    
    
     
     /////////////////////////////////////////////////////////////// GETTERS Y SETTERS

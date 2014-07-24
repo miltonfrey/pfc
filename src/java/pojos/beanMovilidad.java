@@ -8,22 +8,20 @@ package pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.List;
 import javax.annotation.PostConstruct;
 //import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 
 @ManagedBean
 //@javax.faces.bean.SessionScoped
-@javax.faces.bean.RequestScoped
+@RequestScoped
 public class beanMovilidad implements Serializable{
 
    
@@ -34,7 +32,7 @@ public class beanMovilidad implements Serializable{
      @ManagedProperty(value="#{movilidadService}")
     private MovilidadService movilidadService;
     
-    @ManagedProperty(value="{carreraService}")
+    @ManagedProperty(value="#{carreraService}")
     private CarreraService carreraService;
 
      
@@ -48,6 +46,7 @@ public class beanMovilidad implements Serializable{
     private ArrayList<Movilidad>listaMovilidades;
    
     
+    private ArrayList<String> listaPaises;
     private ArrayList<String> listaUniversidadesStr;
     private ArrayList<String> listaCarrerasStr;
    
@@ -58,9 +57,10 @@ public class beanMovilidad implements Serializable{
     @PostConstruct
     public void init(){
         
-        //listaCarreras=(ArrayList<Carrera>)carreraService.listar();
+       // listaCarreras=(ArrayList<Carrera>)carreraService.listar();
    //     listaMovilidadades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
         //setListaMovilidades((ArrayList<Movilidad>)movilidadService.listarTodasMovilidades());
+        
     }
 
    
@@ -81,9 +81,9 @@ public class beanMovilidad implements Serializable{
         return carreraService;
     }
 
-    //public void setCarreraService(CarreraService carreraService) {
-      //  this.carreraService = carreraService;
-    //}
+    public void setCarreraService(CarreraService carreraService) {
+        this.carreraService = carreraService;
+    }
 
     public String getSelectedPais() {
         return selectedPais;
@@ -153,6 +153,16 @@ public class beanMovilidad implements Serializable{
     public void setListaCarrerasStr(ArrayList<String> listaCarrerasStr) {
         this.listaCarrerasStr = listaCarrerasStr;
     }
+
+    public ArrayList<String> getListaPaises() {
+        return listaPaises;
+    }
+
+    public void setListaPaises(ArrayList<String> listaPaises) {
+        this.listaPaises = listaPaises;
+    }
+
+    
     
     
     
@@ -208,7 +218,7 @@ public class beanMovilidad implements Serializable{
        // Movilidad m=new Movilidad(;
         checkPais=false;
         checkUni=false;
-        //List<Movilidad>aux=movilidadService.listarTodasMovilidades();
+        creaMensaje(selectedCarrera+" "+selectedPais+" "+selectedUni, FacesMessage.SEVERITY_INFO);
     }
     
     

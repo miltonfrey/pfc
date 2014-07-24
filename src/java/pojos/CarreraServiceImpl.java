@@ -75,7 +75,7 @@ public class CarreraServiceImpl implements CarreraService,Serializable{
     @Override
     public List<String>listarPorPaisStr(String pais){
         
-        System.out.println("en service");
+       
         
         return carreraDao.listarPorPaisStr(pais);
     }

@@ -13,27 +13,19 @@
        
        
                 
-                
-                
-           
-            
-            
-            
-        
-        
-            <h:form id="f1"> 
+                 <h:form id="f1"> 
                 <p:messages />
                 
                 
                 
             <p:selectOneMenu id="pais" value="#{beanMovilidad.selectedPais}">
-                <p:ajax  listener="#{beanMovilidad.onDropboxChangePais}" update="f1" process="@this"/>
+                <p:ajax  listener="#{beanMovilidad.onDropboxChangePais}" update="f1"/>
                 <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
                 <f:selectItems value="#{beanCarrera.paises}"/>
             
             
             </p:selectOneMenu>
-            
+                
                 <br/>
             
                 <p:selectOneMenu id="uni" value="#{beanMovilidad.selectedUni}" >
@@ -54,14 +46,17 @@
                              
             </p:selectOneMenu>
             
-            <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" update="f1" ajax="false"/>
+            <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" update="f1"/>
             
+                
         </h:form>
    
         
             <br/>
             <br/>
             <p:panel>
+            
+                
         <h:form>
             
             <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
@@ -73,5 +68,13 @@
         
         <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
         
+                
+           
+            
+            
+            
+        
+        
+           
     </h:body>
 </html>
