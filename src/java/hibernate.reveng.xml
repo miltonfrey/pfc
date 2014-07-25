@@ -2,9 +2,9 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="pfc"/>
-  <table-filter match-name="carrera"/>
   <table-filter match-name="movilidad"/>
-  <table-filter match-name="usuario"/>
+  <table-filter match-name="carrera"/>
   <table-filter match-name="asignatura"/>
   <table-filter match-name="contrato"/>
+  <table-filter match-name="usuario"/>
 </hibernate-reverse-engineering>

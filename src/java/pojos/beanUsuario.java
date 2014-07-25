@@ -314,7 +314,7 @@ public class beanUsuario implements Serializable{
                 
             }else{
                 HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-                session.setAttribute("user", login);
+                session.setAttribute("user", u);
                 
                 return "usuario/index.xhtml?faces-redirect=true";
                 
@@ -357,7 +357,16 @@ public class beanUsuario implements Serializable{
         public void comprobarSession(){
             
             HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-            creaMensaje((String)session.getAttribute("user") ,FacesMessage.SEVERITY_INFO);
+            
+            Usuario u=(Usuario)session.getAttribute("user");
+            
+            if(u!=null){
+            creaMensaje(u.getLogin() ,FacesMessage.SEVERITY_INFO);
+            
+        }
+            else
+                creaMensaje(" " ,FacesMessage.SEVERITY_INFO);
+            
             
             
         }

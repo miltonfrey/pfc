@@ -70,7 +70,7 @@ CREATE TABLE `carrera` (
 
 LOCK TABLES `carrera` WRITE;
 /*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
-INSERT INTO `carrera` VALUES ('CC.PP','USC','Alemania','',''),('FIC','UDC','Alemania','',''),('FIS','UDC','Alemania','','');
+INSERT INTO `carrera` VALUES ('CC.PP','USC','Alemania','',''),('Facultad informatica ','Sorbona ','Francia','',''),('FIC','UDC','Alemania','',''),('FIS','UDC','Alemania','','');
 /*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,16 +110,16 @@ CREATE TABLE `movilidad` (
   `codMovilidad` int(11) NOT NULL AUTO_INCREMENT,
   `fechaInicio` datetime NOT NULL,
   `fechaFin` datetime NOT NULL,
-  `estado` tinyint(4) NOT NULL,
+  `estado` varchar(10) NOT NULL,
   `loginAlumno` varchar(20) NOT NULL,
-  `nombreCarrera` varchar(40) DEFAULT NULL,
-  `nombreUni` varchar(45) DEFAULT NULL,
+  `nombreCarrera` varchar(40) NOT NULL,
+  `nombreUni` varchar(45) NOT NULL,
   PRIMARY KEY (`codMovilidad`),
-  KEY `carrera_idx` (`nombreCarrera`,`nombreUni`),
   KEY `login_idx` (`loginAlumno`),
-  CONSTRAINT `carrera` FOREIGN KEY (`nombreCarrera`, `nombreUni`) REFERENCES `carrera` (`nombre`, `universidad`) ON DELETE CASCADE ON UPDATE SET NULL,
-  CONSTRAINT `login` FOREIGN KEY (`loginAlumno`) REFERENCES `usuario` (`login`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  KEY `carrera_idx` (`nombreCarrera`,`nombreUni`),
+  CONSTRAINT `carrera` FOREIGN KEY (`nombreCarrera`, `nombreUni`) REFERENCES `carrera` (`nombre`, `universidad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `login` FOREIGN KEY (`loginAlumno`) REFERENCES `usuario` (`login`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,6 @@ CREATE TABLE `movilidad` (
 
 LOCK TABLES `movilidad` WRITE;
 /*!40000 ALTER TABLE `movilidad` DISABLE KEYS */;
-INSERT INTO `movilidad` VALUES (1,'2014-05-23 00:00:00','2014-09-21 00:00:00',0,'user1','FIC','UDC'),(3,'2014-07-22 00:00:00','2014-09-21 00:00:00',0,'user1','FIC','UDC');
 /*!40000 ALTER TABLE `movilidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,4 +168,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-23 19:53:32
+-- Dump completed on 2014-07-25 12:12:25

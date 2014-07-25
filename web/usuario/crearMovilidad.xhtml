@@ -8,45 +8,80 @@
       
     <h:head>
         <title>Crear movilidad</title>
+         <h:outputScript library="js" name="calendar_es.js"/>
     </h:head>
     <h:body>
        
        
                 
                  <h:form id="f1"> 
-                <p:messages />
+                     <p:messages  id="msgs1" closable="true" />
                 
                 
+                     <p:panel>
+                         <p:selectOneMenu id="pais" value="#{beanMovilidad.selectedPais}" required="true" requiredMessage="hay que introducir un pais">
+                        <p:ajax  listener="#{beanMovilidad.onDropboxChangePais}" update=":f1:msgs1 :f1:uni :f1:carrera"/>
+                        <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
+                        <f:selectItems value="#{beanCarrera.paises}"/>
+            
+            
+                        </p:selectOneMenu>
+                     </p:panel> 
+               
                 
-            <p:selectOneMenu id="pais" value="#{beanMovilidad.selectedPais}">
-                <p:ajax  listener="#{beanMovilidad.onDropboxChangePais}" update="f1"/>
-                <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
-                <f:selectItems value="#{beanCarrera.paises}"/>
-            
-            
-            </p:selectOneMenu>
+                <p:outputPanel id="uni" >
+                    <p:selectOneMenu  value="#{beanMovilidad.selectedUni}" rendered="#{beanMovilidad.checkPais}" required="true" requiredMessage="hay que intrpducir una universidad"  >
                 
-                <br/>
+                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update=":f1:carrera :f1:msgs1"/>
+                <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" id="uni3" />
+                <f:selectItems value="#{beanMovilidad.listaUniversidadesStr}" id="uni4"  />
             
-                <p:selectOneMenu id="uni" value="#{beanMovilidad.selectedUni}" >
-                
-                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update="f1"/>
-                <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true"/>
-                <f:selectItems value="#{beanMovilidad.listaUniversidadesStr}" rendered="#{beanMovilidad.checkPais}"/>
-            
-            
-            
-            </p:selectOneMenu>
-            
+                 </p:selectOneMenu>
+                </p:outputPanel>
             <br/>
                 
-            <p:selectOneMenu id="estudios" value="#{beanMovilidad.selectedCarrera}" >
+            <p:outputPanel id="carrera">
+                <p:selectOneMenu  value="#{beanMovilidad.selectedCarrera}" rendered="#{beanMovilidad.checkUni}" required="true" requiredMessage="hay que introducir una carrera">
                 <f:selectItem itemLabel="elige la carrera" noSelectionOption="true" />
-                             <f:selectItems value="#{beanMovilidad.listaCarrerasStr}" rendered="#{beanMovilidad.checkUni}"/>
+                <f:selectItems value="#{beanMovilidad.listaCarrerasStr}" />
                              
             </p:selectOneMenu>
+            </p:outputPanel>
             
-            <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" update="f1"/>
+            <p:outputPanel id="horario">
+                
+                <p:outputLabel for="cal1" value="Fecha de inicio"/>
+                <p:calendar id="cal1" value="#{beanMovilidad.fechaInicio}" 
+                            
+                            required="true"
+                            requiredMessage="hay que insertar una fecha de inicio"
+                            locale="es"
+                            mindate="#{beanMovilidad.fechaMin}"
+                            maxdate="#{beanMovilidad.fechaMax}"
+                            pattern="dd-MM-yyyy">
+                   
+                
+                </p:calendar>
+               
+                <br/>
+                <p:outputLabel for="cal2" value="fecha de fin"/>
+                <p:calendar id="cal2" value="#{beanMovilidad.fechaFin}" 
+                            
+                            required="true"
+                            requiredMessage="hay que insertar una fecha de fin"
+                            locale="es"
+                            mindate="#{beanMovilidad.fechaMin}"
+                            pattern="dd-MM-yyyy"
+                            >
+                
+                    
+                
+                </p:calendar>
+                 
+            </p:outputPanel>
+            
+            
+            <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" ajax="false"/>
             
                 
         </h:form>

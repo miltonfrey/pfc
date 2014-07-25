@@ -11,7 +11,7 @@ import java.util.List;
 public interface CarreraDao {
     public List<Carrera> listarCarreras();
     public void delete(Carrera c);
-    public Carrera find(String name);
+    public Carrera find(String name,String uni);
     public void insertarCarrera(Carrera c);
     public void actualizar(Carrera c);
     public List<Carrera> listarPorUniversidad(String universidad);

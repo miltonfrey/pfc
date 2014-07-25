@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface MovilidadDao {
     
-    public void crearMovilidad(Movilidad c);
+    public void crearMovilidad(Movilidad m);
     public List<Movilidad> listarMovilidad();
     public void cambiarMovilidad(Movilidad m);
     public void eliminarMovilidad(Movilidad m);

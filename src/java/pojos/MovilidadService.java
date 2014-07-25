@@ -6,6 +6,7 @@
 
 package pojos;
 
+
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ public interface MovilidadService {
     
     public List<Movilidad> listarTodasMovilidades();
     public List<Movilidad> listarMovilidadesPendientes();
-    
-    
+    public String fechaMin();
+    public String fechaMax();
+    public void crearMovilidad(Movilidad m);
 }

@@ -41,9 +41,9 @@ public class CarreraServiceImpl implements CarreraService,Serializable{
     }
     
     @Override
-    public Carrera find(String name){
+    public Carrera find(String name,String uni){
         
-        return carreraDao.find(name);
+        return carreraDao.find(name,uni);
         
     }
     @Override
@@ -87,10 +87,7 @@ public class CarreraServiceImpl implements CarreraService,Serializable{
         
     }
     
-    public String prueba(){
-        
-        return "mierda";
-    }
+   
     
     
 }

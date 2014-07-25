@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository("carreraDao")
-public class CarreraDaoImpl implements CarreraDao,Serializable{
+public class CarreraDaoImpl implements CarreraDao{
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -26,11 +26,12 @@ public class CarreraDaoImpl implements CarreraDao,Serializable{
     
     
     @Override
-    public Carrera find(String name){
+    public Carrera find(String name,String uni){
         
         Session session=sessionFactory.getCurrentSession();
-        Query q=session.createQuery("select c from Carrera c where c.id.nombre=:name");
+        Query q=session.createQuery("select c from Carrera c where c.id.nombre=:name and c.id.universidad=:uni");
         q.setParameter("name", name);
+        q.setParameter("uni", uni);
         return (Carrera)q.uniqueResult();
         
         
@@ -69,9 +70,10 @@ public class CarreraDaoImpl implements CarreraDao,Serializable{
     return(q.list());
 }
     
+    @Override
     public List<String> listarPorUniversidadStr(String universidad){
         
-        Query q=sessionFactory.getCurrentSession().createQuery("select c.id.nombre from Carrera c where c.universidad=:universidad");
+        Query q=sessionFactory.getCurrentSession().createQuery("select distinct c.id.nombre from Carrera c where c.id.universidad=:universidad");
     q.setParameter("universidad",universidad);
     return(q.list());
     }
@@ -85,8 +87,8 @@ public class CarreraDaoImpl implements CarreraDao,Serializable{
 }
      @Override
      public List<String> listarPorPaisStr(String pais){
-         pais="Alemania";
-         Query q=sessionFactory.getCurrentSession().createQuery("select c.id.universidad from Carrera c where c.pais=:pais");
+         
+         Query q=sessionFactory.getCurrentSession().createQuery("select distinct c.id.universidad from Carrera c where c.pais=:pais");
     q.setParameter("pais",pais);
     return(q.list());
          

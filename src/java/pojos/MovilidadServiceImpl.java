@@ -6,6 +6,9 @@
 
 package pojos;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ public class MovilidadServiceImpl implements MovilidadService{
     
     @Autowired
     private MovilidadDao movilidadDao;
+    SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
 
     public MovilidadDao getMovilidadDao() {
         return movilidadDao;
@@ -42,5 +46,27 @@ public class MovilidadServiceImpl implements MovilidadService{
         
     }
     
+    @Override
+    public String fechaMin(){
+        
+        Calendar calendario=Calendar.getInstance();
+        Date d=calendario.getTime();
+        return sdf.format(d);
+    }
+    
+    @Override
+    public String fechaMax(){
+        Calendar calendario=Calendar.getInstance();
+        calendario.add(1, 2);
+        Date d=calendario.getTime();
+        return sdf.format(d);
+        
+    }
+    
+    @Override
+    public void crearMovilidad(Movilidad m){
+        
+        movilidadDao.crearMovilidad(m);
+    }
     
 }

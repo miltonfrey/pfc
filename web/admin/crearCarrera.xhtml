@@ -131,7 +131,7 @@
                                      value="eliminar" action="#{beanCarrera.eliminaCarreraLista}" icon="edit_icon" update=":carreraForm:"
                                      widgetVar="btnRemove"
                                      >
-                        <f:setPropertyActionListener target="#{beanCarrera.selectedCarrera}" value="#{carrera}" />
+                        <f:setPropertyActionListener target="#{beanCarrera.selectedCarrera}" value="#{carrera}" /> <!--es como un listener-->
                     </p:commandButton>
                     
                 </p:column>

@@ -1,5 +1,5 @@
 package pojos;
-// Generated 21-jul-2014 18:56:56 by Hibernate Tools 3.6.0
+// Generated 25-jul-2014 12:22:17 by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -31,19 +31,12 @@ public class Movilidad  implements java.io.Serializable {
      private Carrera carrera;
      private Date fechaInicio;
      private Date fechaFin;
-     private byte estado;
+     private String estado;
 
     public Movilidad() {
     }
 
-	
-    public Movilidad(Usuario usuario, Date fechaInicio, Date fechaFin, byte estado) {
-        this.usuario = usuario;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.estado = estado;
-    }
-    public Movilidad(Usuario usuario, Carrera carrera, Date fechaInicio, Date fechaFin, byte estado) {
+    public Movilidad(Usuario usuario, Carrera carrera, Date fechaInicio, Date fechaFin, String estado) {
        this.usuario = usuario;
        this.carrera = carrera;
        this.fechaInicio = fechaInicio;
@@ -75,8 +68,8 @@ public class Movilidad  implements java.io.Serializable {
 
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumns( { 
-        @JoinColumn(name="nombreCarrera", referencedColumnName="nombre"), 
-        @JoinColumn(name="nombreUni", referencedColumnName="universidad") } )
+        @JoinColumn(name="nombreCarrera", referencedColumnName="nombre", nullable=false), 
+        @JoinColumn(name="nombreUni", referencedColumnName="universidad", nullable=false) } )
     public Carrera getCarrera() {
         return this.carrera;
     }
@@ -106,12 +99,12 @@ public class Movilidad  implements java.io.Serializable {
     }
 
     
-    @Column(name="estado", nullable=false)
-    public byte getEstado() {
+    @Column(name="estado", nullable=false, length=10)
+    public String getEstado() {
         return this.estado;
     }
     
-    public void setEstado(byte estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

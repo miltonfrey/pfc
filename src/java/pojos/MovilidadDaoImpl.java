@@ -32,9 +32,9 @@ public class MovilidadDaoImpl implements MovilidadDao{
     
     
     @Override
-    public void crearMovilidad(Movilidad c){
+    public void crearMovilidad(Movilidad m){
         
-        sessionFactory.getCurrentSession().saveOrUpdate(c);
+        sessionFactory.getCurrentSession().saveOrUpdate(m);
         
         
     }
