@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Mis movilidades</title>
+    </h:head>
+    <h:body>
+        
+        
+        <h:form id="f1">
+            
+            <p:dataTable id="t1" var="movilidad" value="#{beanMovilidad.listaMisMovilidades}"
+                         emptyMessage="no hay movilidades"
+                         filteredValue="#{beanMovilidad.filteredMovilidades}"
+                         widgetVar="movTable"
+                         >
+                          
+                <p:column filterBy="#{movilidad.estado}" filterMatchMode="exact" headerText="estado" footerText="exact">
+                
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('movTable').filter()">
+                            <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{beanMovilidad.estados}"/>
+                        </p:selectOneMenu>
+                            
+                    </f:facet>
+                    <h:outputText value="#{movilidad.estado}"/>
+                </p:column>
+                
+                <p:column headerText="carrera">
+                    
+                    <h:outputText value="#{movilidad.carrera.id.nombre}"/>
+                    
+                </p:column>
+            
+                
+                
+            </p:dataTable>
+        </h:form>
+            
+            <br/>
+            
+            
+             <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+            
+        
+        <p:panel>
+            
+                
+        <h:form>
+            
+            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            
+        </h:form>
+            </p:panel>
+        
+        
+        
+    </h:body>
+</html>
+

@@ -17,7 +17,7 @@ public interface MovilidadDao {
     public void eliminarMovilidad(Movilidad m);
     
     public List<Movilidad> listarPorEstado(String estado);
-    
+    public List<Movilidad> listarMisMovilidades(String user);
     
     
 }

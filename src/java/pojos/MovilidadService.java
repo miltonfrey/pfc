@@ -20,4 +20,5 @@ public interface MovilidadService {
     public String fechaMin();
     public String fechaMax();
     public void crearMovilidad(Movilidad m);
+    public List<Movilidad> listarMisMovilidades(String user);
 }

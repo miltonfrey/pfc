@@ -69,4 +69,11 @@ public class MovilidadServiceImpl implements MovilidadService{
         movilidadDao.crearMovilidad(m);
     }
     
+    @Override
+    public List<Movilidad> listarMisMovilidades(String user){
+        
+        return movilidadDao.listarMisMovilidades(user);
+        
+    }
+    
 }

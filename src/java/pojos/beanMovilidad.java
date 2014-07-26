@@ -27,7 +27,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.primefaces.event.SelectEvent;
+
 
 
 
@@ -72,7 +72,10 @@ public class beanMovilidad implements Serializable{
     private String selectedCarrera;
     private ArrayList<Carrera> listaCarreras;
     private ArrayList<Movilidad>listaMovilidades;
-   
+    private ArrayList<Movilidad> listaMisMovilidades;
+    private ArrayList<Movilidad> filteredMovilidades;
+    private ArrayList<String> estados;
+    
     SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
     
     private ArrayList<String> listaUniversidadesStr;
@@ -90,8 +93,14 @@ public class beanMovilidad implements Serializable{
        usuario=(Usuario)session.getAttribute("user");
        fechaMin=movilidadService.fechaMin();
        fechaMax=movilidadService.fechaMax();
-        //creaMensaje(" "+fechaMax, null);
-       
+        
+       listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
+       ArrayList<String> aux=new ArrayList<String>();
+       aux.add("pendiente");
+       aux.add("rechazado");
+       aux.add("aceptado");
+       aux.add("cancelado");
+       setEstados(aux);
        // listaCarreras=(ArrayList<Carrera>)carreraService.listar();
    //     listaMovilidadades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
         //setListaMovilidades((ArrayList<Movilidad>)movilidadService.listarTodasMovilidades());
@@ -169,6 +178,22 @@ public class beanMovilidad implements Serializable{
     public void setListaMovilidades(ArrayList<Movilidad> listaMovilidades) {
         this.listaMovilidades = listaMovilidades;
     }
+
+    public ArrayList<Movilidad> getListaMisMovilidades() {
+        return listaMisMovilidades;
+    }
+
+    public void setListaMisMovilidades(ArrayList<Movilidad> listaMisMovilidades) {
+        this.listaMisMovilidades = listaMisMovilidades;
+    }
+
+    public ArrayList<Movilidad> getFilteredMovilidades() {
+        return filteredMovilidades;
+    }
+
+    public void setFilteredMovilidades(ArrayList<Movilidad> filteredMovilidades) {
+        this.filteredMovilidades = filteredMovilidades;
+    }
     
     
     
@@ -187,6 +212,14 @@ public class beanMovilidad implements Serializable{
 
     public void setListaCarrerasStr(ArrayList<String> listaCarrerasStr) {
         this.listaCarrerasStr = listaCarrerasStr;
+    }
+
+    public ArrayList<String> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(ArrayList<String> estados) {
+        this.estados = estados;
     }
 
    
