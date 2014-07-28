@@ -18,6 +18,6 @@ public interface MovilidadDao {
     
     public List<Movilidad> listarPorEstado(String estado);
     public List<Movilidad> listarMisMovilidades(String user);
-    
+    public List<Movilidad> listarMisMovilidadesPorEstado(String user, String estado);
     
 }

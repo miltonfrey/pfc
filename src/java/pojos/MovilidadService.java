@@ -21,4 +21,6 @@ public interface MovilidadService {
     public String fechaMax();
     public void crearMovilidad(Movilidad m);
     public List<Movilidad> listarMisMovilidades(String user);
+    public List<Movilidad> listarMisMovilidadesPorEstado(String user,String estado);
+    public void eliminarMovilidad(Movilidad m);
 }

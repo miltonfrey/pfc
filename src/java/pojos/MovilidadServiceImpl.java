@@ -75,5 +75,14 @@ public class MovilidadServiceImpl implements MovilidadService{
         return movilidadDao.listarMisMovilidades(user);
         
     }
+    @Override
+    public List<Movilidad> listarMisMovilidadesPorEstado(String user, String estado){
+        return movilidadDao.listarMisMovilidadesPorEstado(user, estado);
+    }
+    @Override
+    public void eliminarMovilidad(Movilidad m){
+        
+        movilidadDao.eliminarMovilidad(m);
+    }
     
 }

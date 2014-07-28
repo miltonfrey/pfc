@@ -31,31 +31,9 @@
                     <h:outputText value="#{movilidad.estado}"/>
                 </p:column>
                 
-                <p:column headerText="universidad">
-                    
-                    
-                    <h:outputText value="#{movilidad.carrera.id.universidad}"/>
-                    
-                    
-                </p:column>
-                
                 <p:column headerText="carrera">
                     
                     <h:outputText value="#{movilidad.carrera.id.nombre}"/>
-                    
-                </p:column>
-                
-                <p:column >
-                    
-                    <p:commandButton value="eliminar" action="#{beanMovilidad.eliminarMovilidad}" update=":f1:" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
-                                     icon="edit_icon">
-                        <f:setPropertyActionListener value="#{movilidad}" target="#{beanMovilidad.selectedMovilidad}"/>
-                    
-                    
-                    
-                    </p:commandButton>
-                    
-                    
                     
                 </p:column>
             

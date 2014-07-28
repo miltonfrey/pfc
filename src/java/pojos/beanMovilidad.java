@@ -23,6 +23,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 //import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.RequestScoped;
 //import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -70,6 +71,7 @@ public class beanMovilidad implements Serializable{
     private String selectedPais;
     private String selectedUni;
     private String selectedCarrera;
+    private Movilidad selectedMovilidad;
     private ArrayList<Carrera> listaCarreras;
     private ArrayList<Movilidad>listaMovilidades;
     private ArrayList<Movilidad> listaMisMovilidades;
@@ -155,6 +157,16 @@ public class beanMovilidad implements Serializable{
     public void setSelectedCarrera(String selectedCarrera) {
         this.selectedCarrera = selectedCarrera;
     }
+
+    public Movilidad getSelectedMovilidad() {
+        return selectedMovilidad;
+    }
+
+    public void setSelectedMovilidad(Movilidad selectedMovilidad) {
+        this.selectedMovilidad = selectedMovilidad;
+    }
+    
+    
 
     
     
@@ -337,7 +349,15 @@ public class beanMovilidad implements Serializable{
                 String estado="pendiente";
                 
                 try{
+                    
+                    ArrayList<Movilidad> aux=(ArrayList < Movilidad >)movilidadService.listarMisMovilidadesPorEstado(usuario.getLogin(), estado);
+                    if(aux.size()>0){
+                        
+                        creaMensaje("hay una movilidad pendiente de aceptación, no se puede crear otra, hay que esperar confirmación o cancelarla", FacesMessage.SEVERITY_ERROR);
+                        return null;
+                    }
               Carrera c=carreraService.find(selectedCarrera, selectedUni);
+              
               Movilidad m=new Movilidad(usuario, c, fechaInicio, fechaFin, estado);
               movilidadService.crearMovilidad(m);
                 }catch(Exception ex){
@@ -357,11 +377,39 @@ public class beanMovilidad implements Serializable{
                 
                 
                 
-       // selectedCarrera="";
-        //selectedPais="";
-        //selectedUni="";
+       
     }
     
+    
+    public void eliminarMovilidad(){
+        
+        if(selectedMovilidad.getEstado().equals("pendiente")){
+            
+            try{
+            movilidadService.eliminarMovilidad(selectedMovilidad);
+            }catch(Exception ex){
+                
+                creaMensaje("se ha producido un error eliminando la movilidad", FacesMessage.SEVERITY_ERROR);
+                
+            }
+            
+            creaMensaje("movilidad eliminada correctamente, se ha enviado un mensaje al coordinador ", FacesMessage.SEVERITY_INFO);
+            actualizar();
+            
+        }else{
+            
+            creaMensaje("las únicas movilidades que se pueden eliminar son las que están con estado pendiente", FacesMessage.SEVERITY_ERROR);
+            
+        }
+        
+        
+        
+    }
+    
+    public void actualizar(){
+        
+        listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
+    }
     
     
     

@@ -74,6 +74,15 @@ public class MovilidadDaoImpl implements MovilidadDao{
         
         
     }
+    @Override
+    public List<Movilidad> listarMisMovilidadesPorEstado(String user,String estado){
+        
+        Query q=sessionFactory.getCurrentSession().createQuery("select m from Movilidad m where m.usuario.login=:user and m.estado=:estado");
+        q.setParameter("user", user);
+        q.setParameter("estado", estado);
+        return q.list();
+        
+    }
     
     
 }
