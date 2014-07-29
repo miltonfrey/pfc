@@ -10,20 +10,40 @@
     </h:head>
     <h:body>
         
+        <p:panel>
+            
+            
+            <h:outputLabel value="movilidades de: "/>
+            <h:outputText value="#{beanMovilidad.usuario.login}"/>
+            
+        </p:panel>
+        
+        <br/>
         
         <h:form id="f1">
+            
+            <p:messages closable="true"/>
             
             <p:dataTable id="t1" var="movilidad" value="#{beanMovilidad.listaMisMovilidades}"
                          emptyMessage="no hay movilidades"
                          filteredValue="#{beanMovilidad.filteredMovilidades}"
                          widgetVar="movTable"
+                         
+                         
                          >
-                          
+               
+                <p:panel>
+                    
+                    <h:outputText value="#{movilidad.usuario.login}"/>
+                    
+                </p:panel>
+                
+                    
                 <p:column filterBy="#{movilidad.estado}" filterMatchMode="exact" headerText="estado" >
                 
                     <f:facet name="filter">
                         <p:selectOneMenu onchange="PF('movTable').filter()">
-                            <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="todas" itemValue="#{null}" noSelectionOption="true"/>
                             <f:selectItems value="#{beanMovilidad.estados}"/>
                         </p:selectOneMenu>
                             
@@ -34,18 +54,35 @@
                 <p:column headerText="universidad">
                     
                     
-                    <h:outputText value="#{movilidad.carrera.id.universidad}"/>
+                    <h:outputText value="#{movilidad.carrera.id.nombre}"/>
                     
                     
                 </p:column>
                 
                 <p:column headerText="carrera">
                     
-                    <h:outputText value="#{movilidad.carrera.id.nombre}"/>
+                    <h:outputText value="#{movilidad.carrera.id.universidad}"/>
                     
                 </p:column>
                 
-                <p:column >
+               
+                <p:column headerText="fecha inicio">
+                    
+                    <h:outputText value="#{movilidad.fechaInicio}">
+                                  <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                    
+                    
+                </p:column>
+            
+                <p:column headerText="fecha fin">
+                    
+                    <h:outputText value="#{movilidad.fechaFin}">
+                                  <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                
+                 <p:column headerText="eliminar">
                     
                     <p:commandButton value="eliminar" action="#{beanMovilidad.eliminarMovilidad}" update=":f1:" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
                                      icon="edit_icon">
@@ -58,7 +95,7 @@
                     
                     
                 </p:column>
-            
+                
                 
                 
             </p:dataTable>

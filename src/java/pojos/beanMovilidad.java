@@ -165,6 +165,14 @@ public class beanMovilidad implements Serializable{
     public void setSelectedMovilidad(Movilidad selectedMovilidad) {
         this.selectedMovilidad = selectedMovilidad;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
     
     
 
@@ -309,6 +317,7 @@ public class beanMovilidad implements Serializable{
        
        checkPais=true;
        checkUni=false;
+       selectedUni="";
        listaUniversidadesStr=(ArrayList<String>)carreraService.listarPorPaisStr(selectedPais);
        Collections.sort(listaUniversidadesStr);
        creaMensaje(" al cambiar pais "+checkPais+" selectedPais: "+selectedPais,FacesMessage.SEVERITY_INFO);
@@ -343,7 +352,7 @@ public class beanMovilidad implements Serializable{
                 cal2.setTime(fechaFin);
                 if (cal2.compareTo(cal1)<1){
                     
-                    creaMensaje("la fecha de inicio es posterior a la fecha de fin", FacesMessage.SEVERITY_ERROR);
+                    creaMensaje("la fecha de inicio es igual o posterior a la fecha de fin", FacesMessage.SEVERITY_ERROR);
                     
                 }
                 String estado="pendiente";
