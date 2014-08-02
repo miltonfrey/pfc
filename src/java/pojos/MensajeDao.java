@@ -1,0 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package pojos;
+
+import java.util.Date;
+import java.util.List;
+
+
+public interface MensajeDao {
+
+    public void crearMensaje(Mensaje m);
+    public List<Mensaje> mensajesEnviados(String origen,String destino);
+    public List<Mensaje> mensajesEnviadosPorFecha(String origen,String destino, Date d,Date d2);
+    public void modificarEstado(Mensaje m);
+    
+    
+    
+}

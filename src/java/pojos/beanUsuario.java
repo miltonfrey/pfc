@@ -13,10 +13,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.primefaces.event.SelectEvent;
 
@@ -27,7 +28,7 @@ import org.primefaces.event.SelectEvent;
  */
 @ManagedBean
 //@javax.faces.bean.SessionScoped
-@javax.faces.bean.RequestScoped
+@javax.faces.bean.ViewScoped
 public class beanUsuario implements Serializable{
 
         
@@ -38,6 +39,9 @@ public class beanUsuario implements Serializable{
     private String password;
     private String email;
     
+    private Usuario user;
+    
+    
     private String titulacion;
     
     private String emailAux;
@@ -46,6 +50,8 @@ public class beanUsuario implements Serializable{
     private ArrayList<Usuario> listaUsuarios;
     private ArrayList<String> listaTitulaciones;
    
+    private ArrayList<Mensaje> listaMensajes;
+    
     
     public beanUsuario() {
     }
@@ -58,17 +64,35 @@ public class beanUsuario implements Serializable{
         aux.add("GEI");
         setListaTitulaciones(aux);
         
+        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        
+        if(session.getAttribute("user")!=null){
+            
+            user=(Usuario)session.getAttribute("user");
+        }
+        
+        if (request.getRequestURI().equals(request.getContextPath()+"/usuario/verMisMensajes.xhtml")){
+            
+           
+            
+        }
+        
+        
+        
         
     }
     
     
     
     @ManagedProperty(value="#{usuarioService}")  //  Bean injected
-    private UsuarioService usuarioService;
+    private transient UsuarioService usuarioService;
     
+    @ManagedProperty(value="#{mensajeService}")
+    private transient MensajeService mensajeService; //quitarlo y ponerlo en MensajeBean
    
-    
     /////////////////////////////////////////////////////////////// GETTERS Y SETTERS
+    
     
     
     
@@ -83,6 +107,25 @@ public class beanUsuario implements Serializable{
         this.usuarioService = usuarioService;
     }
 
+    public MensajeService getMensajeService() {
+        return mensajeService;
+    }
+
+    public void setMensajeService(MensajeService mensajeService) {
+        this.mensajeService = mensajeService;
+    }
+
+    public ArrayList<Mensaje> getListaMensajes() {
+        return listaMensajes;
+    }
+
+    public void setListaMensajes(ArrayList<Mensaje> listaMensajes) {
+        this.listaMensajes = listaMensajes;
+    }
+
+    
+    
+    
     public ArrayList<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
@@ -261,6 +304,14 @@ public class beanUsuario implements Serializable{
         
     }
         
+    public String verMisMensajes(){
+        
+        
+        setListaMensajes((ArrayList<Mensaje>) mensajeService.mensajesEnviados("admin",user.getLogin() ));
+        creaMensaje(user.getLogin(), FacesMessage.SEVERITY_INFO);
+        return "verMisMensajes.xhtml?faces-redirect=true";
+        
+    }
         
         
         
@@ -304,7 +355,7 @@ public class beanUsuario implements Serializable{
             }
             
             String pass=u.getPassword();
-            if(pass.equals(password)==false){
+            if((pass.equals(password)==false)||u.getTipoUsuario()!=1){
                 
                 creaMensaje("password incorrecto", FacesMessage.SEVERITY_ERROR); // meter numero de errores al loguear
                 
@@ -349,8 +400,10 @@ public class beanUsuario implements Serializable{
         public String comprobarContext(){
             
             HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            
             creaMensaje(request.getRequestURI(), FacesMessage.SEVERITY_WARN); //direccion que hizo el request
             creaMensaje(request.getContextPath(), FacesMessage.SEVERITY_WARN); // direccion del contexto
+            creaMensaje(request.getRequestURL().toString(), FacesMessage.SEVERITY_WARN);
             return "";
         }
         

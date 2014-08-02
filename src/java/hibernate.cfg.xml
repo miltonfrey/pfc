@@ -13,5 +13,6 @@
     <mapping resource="pojos/Contrato.hbm.xml"/>
     <mapping resource="pojos/Carrera.hbm.xml"/>
     <mapping resource="pojos/Movilidad.hbm.xml"/>
+    <mapping resource="pojos/Mensaje.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

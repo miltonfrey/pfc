@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Mis mensajes</title>
+    </h:head>
+    <h:body>
+        
+        
+        <h:form id="context">
+            <p:messages closable="true" for="context"/>
+            
+            <p:commandButton value="contextRequest" action="#{beanUsuario.comprobarContext}" ajax="false"/>
+            
+        </h:form>
+        
+        
+        
+        <h:form id="f1">
+            
+            <p:messages closable="true" />
+            
+            <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}"
+                         emptyMessage="no hay mensajes">
+            
+                <p:column sortBy="#{mensaje.fecha}">
+                    
+                    <h:outputText value="#{mensaje.fecha}">
+                    
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                        
+                    </h:outputText>
+                    
+                </p:column>
+            
+                
+            
+            </p:dataTable> 
+            <br/>
+            <br/>
+            <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}"
+                         emptyMessage="no hay mensajes">
+            
+                <p:column sortBy="#{mensaje.fecha}">
+                    
+                    <h:outputText value="#{mensaje.fecha}">
+                    
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                        
+                    </h:outputText>
+                    
+                </p:column>
+            
+                
+            
+            </p:dataTable>
+        </h:form> 
+            <br/>
+            <br/>
+            
+            <h:form>
+                <p:messages id="mtext" closable="true"/>
+            
+            <p:outputLabel value="tema" for="tema1"/>
+            
+            <p:inputText id="tema1" value="#{beanMensaje.tema}"/>
+            <p:inputTextarea value="#{beanMensaje.textArea}" rows="10" cols="100" required="true" requiredMessage="el texto está vacío"/> 
+            <p:commandButton value="enviar mensaje a coordinador" action="#{beanMensaje.enviarMensajeCoordinador}" update="mtext"/>
+            </h:form>                 
+                             
+            <br/>
+            <br/>
+            
+            
+            
+            
+        
+        
+        <br/>
+            
+            
+             <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+            
+        
+        <p:panel>
+            
+                
+        <h:form>
+            
+            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            
+        </h:form>
+            </p:panel>
+        
+             <h:form>
+                 <p:messages closable="true" id="formSession"/>
+                 
+                 <p:commandButton value="session" action="#{beanUsuario.comprobarSession()}"  update="formSession"/>
+                 
+             </h:form>
+        
+    </h:body>
+</html>
+

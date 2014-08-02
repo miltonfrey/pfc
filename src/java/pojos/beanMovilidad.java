@@ -65,8 +65,8 @@ public class beanMovilidad implements Serializable{
     
    
     
-    private String fechaMin;
-    private String fechaMax;
+    private Date fechaMin;
+    private Date fechaMax;
     
     private String selectedPais;
     private String selectedUni;
@@ -290,19 +290,19 @@ public class beanMovilidad implements Serializable{
         this.checkCarrera = checkCarrera;
     }
 
-    public String getFechaMin() {
+    public Date getFechaMin() {
         return fechaMin;
     }
 
-    public void setFechaMin(String fechaMin) {
+    public void setFechaMin(Date fechaMin) {
         this.fechaMin = fechaMin;
     }
 
-    public String getFechaMax() {
+    public Date getFechaMax() {
         return fechaMax;
     }
 
-    public void setFechaMax(String fechaMax) {
+    public void setFechaMax(Date fechaMax) {
         this.fechaMax = fechaMax;
     }
 

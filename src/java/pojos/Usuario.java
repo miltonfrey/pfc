@@ -1,5 +1,5 @@
 package pojos;
-// Generated 25-jul-2014 12:22:17 by Hibernate Tools 3.6.0
+// Generated 01-ago-2014 15:26:58 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -28,8 +28,10 @@ public class Usuario  implements java.io.Serializable {
      private short tipoUsuario;
      private String email;
      private String titulacion;
+     private Set<Mensaje> mensajesForDestino = new HashSet<Mensaje>(0);
      private Set<Contrato> contratos = new HashSet<Contrato>(0);
      private Set<Movilidad> movilidads = new HashSet<Movilidad>(0);
+     private Set<Mensaje> mensajesForOrigen = new HashSet<Mensaje>(0);
 
     public Usuario() {
     }
@@ -42,14 +44,16 @@ public class Usuario  implements java.io.Serializable {
         this.email = email;
         this.titulacion = titulacion;
     }
-    public Usuario(String login, String password, short tipoUsuario, String email, String titulacion, Set<Contrato> contratos, Set<Movilidad> movilidads) {
+    public Usuario(String login, String password, short tipoUsuario, String email, String titulacion, Set<Mensaje> mensajesForDestino, Set<Contrato> contratos, Set<Movilidad> movilidads, Set<Mensaje> mensajesForOrigen) {
        this.login = login;
        this.password = password;
        this.tipoUsuario = tipoUsuario;
        this.email = email;
        this.titulacion = titulacion;
+       this.mensajesForDestino = mensajesForDestino;
        this.contratos = contratos;
        this.movilidads = movilidads;
+       this.mensajesForOrigen = mensajesForOrigen;
     }
    
      @Id 
@@ -104,6 +108,15 @@ public class Usuario  implements java.io.Serializable {
         this.titulacion = titulacion;
     }
 
+@OneToMany(fetch=FetchType.LAZY, mappedBy="usuarioByDestino")
+    public Set<Mensaje> getMensajesForDestino() {
+        return this.mensajesForDestino;
+    }
+    
+    public void setMensajesForDestino(Set<Mensaje> mensajesForDestino) {
+        this.mensajesForDestino = mensajesForDestino;
+    }
+
 @OneToMany(fetch=FetchType.LAZY, mappedBy="usuario")
     public Set<Contrato> getContratos() {
         return this.contratos;
@@ -120,6 +133,15 @@ public class Usuario  implements java.io.Serializable {
     
     public void setMovilidads(Set<Movilidad> movilidads) {
         this.movilidads = movilidads;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="usuarioByOrigen")
+    public Set<Mensaje> getMensajesForOrigen() {
+        return this.mensajesForOrigen;
+    }
+    
+    public void setMensajesForOrigen(Set<Mensaje> mensajesForOrigen) {
+        this.mensajesForOrigen = mensajesForOrigen;
     }
 
 

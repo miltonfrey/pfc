@@ -47,19 +47,19 @@ public class MovilidadServiceImpl implements MovilidadService{
     }
     
     @Override
-    public String fechaMin(){
+    public Date fechaMin(){
         
         Calendar calendario=Calendar.getInstance();
         Date d=calendario.getTime();
-        return sdf.format(d);
+        return d;
     }
     
     @Override
-    public String fechaMax(){
+    public Date fechaMax(){
         Calendar calendario=Calendar.getInstance();
-        calendario.add(1, 2);
+        calendario.add(1, 2);// máximo tiempo para la movilidad
         Date d=calendario.getTime();
-        return sdf.format(d);
+        return d;
         
     }
     

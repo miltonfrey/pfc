@@ -11,14 +11,16 @@
     </h:head>
     <h:body>
        
-        <h:form>
-            <p:messages closable="true"/>
-            <p:outputLabel value="por hacer"/>
+        <h:form id="context">
+            <p:messages closable="true" for="context"/>
+            
             <p:commandButton value="contextRequest" action="#{beanUsuario.comprobarContext}" ajax="false"/>
             
         </h:form>
         
-        <h:form>
+        <h:form id="form1">
+            
+            <p:messages closable="true"/>
             
             <h:outputLink value="crearMovilidad.xhtml">crear movilidad</h:outputLink>
             
@@ -32,7 +34,11 @@
             
             
             <br/>
-           
+            <br/>
+            
+            <h:outputLink value="verMisMensajes.xhtml">ver mis mensajes</h:outputLink>
+           <br/>
+            <br/>
             <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir}" ajax="false"/>
             
         </h:form>
