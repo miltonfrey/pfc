@@ -41,8 +41,7 @@ public class beanMensaje implements Serializable{
     private boolean activaTexto;
     private String textArea;
     private String tema;
-    private boolean enviaOrecibe;
-    
+   private String aux;
     
     public beanMensaje() {
         
@@ -104,13 +103,15 @@ public class beanMensaje implements Serializable{
         return activaTexto;
     }
 
-    public boolean isEnviaOrecibe() {
-        return enviaOrecibe;
+    public String getAux() {
+        return aux;
     }
 
-    public void setEnviaOrecibe(boolean enviaOrecibe) {
-        this.enviaOrecibe = enviaOrecibe;
+    public void setAux(String aux) {
+        this.aux = aux;
     }
+
+   
     
     
 
@@ -151,9 +152,9 @@ public class beanMensaje implements Serializable{
     
     
     
-    public void enviarMensaje(){
+    public void activaMensaje(){
         
-        
+        activaTexto=true;
         
     }
     
@@ -174,6 +175,7 @@ public class beanMensaje implements Serializable{
         creaMensaje("mensaje enviado correctamente", FacesMessage.SEVERITY_WARN);
         textArea="";
         tema="";
+        activaTexto=false;
         actualizar();
         return "";
     }

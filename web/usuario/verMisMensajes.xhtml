@@ -10,12 +10,7 @@
     <h:body>
         
         
-        <h:form id="context">
-            <p:messages closable="true" for="context"/>
-            
-            <p:commandButton value="contextRequest" action="#{beanUsuario.comprobarContext}" ajax="false"/>
-            
-        </h:form>
+        
         
         
         
@@ -61,14 +56,32 @@
             <br/>
             <br/>
             
-            <h:form>
-                <p:messages id="mtext" closable="true"/>
+            <h:form id="formMsg">
+                <p:messages closable="true"/>
             
-            <p:outputLabel value="tema" for="tema1"/>
+               <!-- <p:commandButton id="act1" value="enviar mensaje al coordinador" action="{beanMensaje.activaMensaje()}" update=":formMsg:p1" />  --> 
+                <p:selectOneMenu value="#{beanMensaje.aux}">
+                    <p:ajax listener="#{beanMensaje.activaMensaje}" update=":formMsg:p1" />
+                    <f:selectItem itemLabel="cambiar" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="este" itemValue="aux"/>
+                
+                </p:selectOneMenu>
             
-            <p:inputText id="tema1" value="#{beanMensaje.tema}"/>
-            <p:inputTextarea value="#{beanMensaje.textArea}" rows="10" cols="100" required="true" requiredMessage="el texto está vacío"/> 
-            <p:commandButton value="enviar mensaje a coordinador" action="#{beanMensaje.enviarMensajeCoordinador}" update="mtext"/>
+            <p:outputPanel id="p1">
+                
+                <p:inputText id="tema1" value="#{beanMensaje.tema}" rendered="#{beanMensaje.activaTexto}" />
+            <p:inputTextarea id="txt1" value="#{beanMensaje.textArea}" rendered="#{beanMensaje.activaTexto}" rows="10" cols="100" validatorMessage="el texto está vacío" >
+                <f:validateLength minimum="1"/>
+            </p:inputTextarea>
+            
+            <p:selectOneMenu value="#{beanMensaje.aux}" id="aux1" required="true" rendered="#{beanMensaje.activaTexto}">
+            
+                <f:selectItem itemLabel="elige" noSelectionOption="true"/>
+                <f:selectItem itemValue="value1" itemLabel="uno"/>    
+                
+            </p:selectOneMenu>
+            </p:outputPanel>
+            <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajeCoordinador}" update="formMsg"/>
             </h:form>                 
                              
             <br/>
