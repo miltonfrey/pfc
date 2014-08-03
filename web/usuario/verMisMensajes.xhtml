@@ -67,32 +67,34 @@
                 
             
             </p:dataTable>
-        </h:form> 
+         
             <br/>
             <br/>
             
-            <h:form id="formMsg">
+            
                 <p:messages closable="true" id="msg"/>
             
-                <p:commandButton id="act1" value="enviar mensaje al coordinador" action="#{beanMensaje.activaMensaje()}" update=":formMsg:p1" /> 
+                <p:commandButton id="act1" value="enviar mensaje al coordinador" action="#{beanMensaje.activaMensaje()}" update=":f1:p1" /> 
               
                 <p:panel>   
             <p:outputPanel id="p1">
                 <p:outputLabel value="tema" rendered="#{beanMensaje.activaTexto}" for="tema1"/>
                 <p:inputText id="tema1" value="#{beanMensaje.tema}" rendered="#{beanMensaje.activaTexto}" />
                 <p:inputTextarea id="txt1" value="#{beanMensaje.textArea}" rendered="#{beanMensaje.activaTexto}" rows="10" cols="100" required="true" requiredMessage="el texto está vacío" >
-                    <p:commandButton value="cancelar" process="@this" actionListener="#{beanMensaje.cancelarEnvioCoordinador}" update="p1"/>
+                    <p:commandButton value="cancelar" process="@this" actionListener="#{beanMensaje.cancelarEnvioCoordinador}" update="f1" rendered="#{beanMensaje.activaTexto}"/>
             </p:inputTextarea> 
             
             
            
                 
                 <br/>
-                <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajeCoordinador}" update="formMsg" rendered="#{beanMensaje.activaTexto}"/>
+                <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajeCoordinador}" update="f1" rendered="#{beanMensaje.activaTexto}"/>
                 </p:outputPanel>
                     </p:panel>
-            </h:form>                 
-                             
+                           
+                </h:form> 
+                
+                
             <br/>
             <br/>
             

@@ -100,6 +100,39 @@ LOCK TABLES `contrato` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `mensaje`
+--
+
+DROP TABLE IF EXISTS `mensaje`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mensaje` (
+  `idmensaje` int(11) NOT NULL AUTO_INCREMENT,
+  `origen` varchar(45) NOT NULL,
+  `destino` varchar(45) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `tema` mediumtext NOT NULL,
+  `texto` longtext NOT NULL,
+  `estado` varchar(10) NOT NULL,
+  PRIMARY KEY (`idmensaje`),
+  KEY `origen_idx` (`origen`),
+  KEY `destino_idx` (`destino`),
+  CONSTRAINT `destino` FOREIGN KEY (`destino`) REFERENCES `usuario` (`login`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `origen` FOREIGN KEY (`origen`) REFERENCES `usuario` (`login`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mensaje`
+--
+
+LOCK TABLES `mensaje` WRITE;
+/*!40000 ALTER TABLE `mensaje` DISABLE KEYS */;
+INSERT INTO `mensaje` VALUES (2,'user1','admin','2014-08-02 21:53:40','tema1','blablablabla blablabla','sin leer'),(3,'user1','admin','2014-08-02 23:38:58','wrewrwe','fsdfsdfs','sin leer'),(7,'user1','admin','2014-08-03 17:46:49','geegege','egergeg','sin leer'),(8,'user1','admin','2014-08-03 17:50:41','fsdfsdf','ssdfsdfsd','sin leer');
+/*!40000 ALTER TABLE `mensaje` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `movilidad`
 --
 
@@ -117,9 +150,9 @@ CREATE TABLE `movilidad` (
   PRIMARY KEY (`codMovilidad`),
   KEY `login_idx` (`loginAlumno`),
   KEY `carrera_idx` (`nombreCarrera`,`nombreUni`),
-  CONSTRAINT `carrera` FOREIGN KEY (`nombreCarrera`, `nombreUni`) REFERENCES `carrera` (`nombre`, `universidad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `login` FOREIGN KEY (`loginAlumno`) REFERENCES `usuario` (`login`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `carrera` FOREIGN KEY (`nombreCarrera`, `nombreUni`) REFERENCES `carrera` (`nombre`, `universidad`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `login` FOREIGN KEY (`loginAlumno`) REFERENCES `usuario` (`login`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,6 +161,7 @@ CREATE TABLE `movilidad` (
 
 LOCK TABLES `movilidad` WRITE;
 /*!40000 ALTER TABLE `movilidad` DISABLE KEYS */;
+INSERT INTO `movilidad` VALUES (1,'2014-08-03 00:00:00','2014-09-09 00:00:00','pendiente','user1','FIC','UDC');
 /*!40000 ALTER TABLE `movilidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +189,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('admin','admin',0,'admin@udc.es','admin'),('user1','pass1',1,'p1@h.s','GEI');
+INSERT INTO `usuario` VALUES ('admin','admin',0,'admin@udc.es','admin'),('user1','pass1',1,'user1@h.com','GEI');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -168,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-25 12:12:25
+-- Dump completed on 2014-08-03 18:38:21
