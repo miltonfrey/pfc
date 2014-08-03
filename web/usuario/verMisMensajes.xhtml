@@ -20,8 +20,23 @@
             
             <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}"
                          emptyMessage="no hay mensajes">
-            
-                <p:column sortBy="#{mensaje.fecha}">
+                <f:facet name="mensajes recibidos">Mensajes recibidos</f:facet>
+                
+                <p:column headerText="De:">
+                    
+                    <h:outputText value="#{mensaje.usuarioByOrigen.login}"/>
+                    
+                    
+                </p:column>
+                <p:column headerText="tema">
+                    
+                    <h:outputText value="#{mensaje.tema}"/>
+                    
+                </p:column>
+                
+                
+                
+                <p:column headerText="fecha" sortBy="#{mensaje.fecha}">
                     
                     <h:outputText value="#{mensaje.fecha}">
                     
@@ -38,7 +53,7 @@
             <br/>
             <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}"
                          emptyMessage="no hay mensajes">
-            
+                <f:facet name="header">Mensajes enviados</f:facet>
                 <p:column sortBy="#{mensaje.fecha}">
                     
                     <h:outputText value="#{mensaje.fecha}">
@@ -57,31 +72,25 @@
             <br/>
             
             <h:form id="formMsg">
-                <p:messages closable="true"/>
+                <p:messages closable="true" id="msg"/>
             
-               <!-- <p:commandButton id="act1" value="enviar mensaje al coordinador" action="{beanMensaje.activaMensaje()}" update=":formMsg:p1" />  --> 
-                <p:selectOneMenu value="#{beanMensaje.aux}">
-                    <p:ajax listener="#{beanMensaje.activaMensaje}" update=":formMsg:p1" />
-                    <f:selectItem itemLabel="cambiar" noSelectionOption="true"/>
-                    <f:selectItem itemLabel="este" itemValue="aux"/>
-                
-                </p:selectOneMenu>
-            
+                <p:commandButton id="act1" value="enviar mensaje al coordinador" action="#{beanMensaje.activaMensaje()}" update=":formMsg:p1" /> 
+              
+                <p:panel>   
             <p:outputPanel id="p1">
-                
+                <p:outputLabel value="tema" rendered="#{beanMensaje.activaTexto}" for="tema1"/>
                 <p:inputText id="tema1" value="#{beanMensaje.tema}" rendered="#{beanMensaje.activaTexto}" />
-            <p:inputTextarea id="txt1" value="#{beanMensaje.textArea}" rendered="#{beanMensaje.activaTexto}" rows="10" cols="100" validatorMessage="el texto está vacío" >
-                <f:validateLength minimum="1"/>
-            </p:inputTextarea>
+                <p:inputTextarea id="txt1" value="#{beanMensaje.textArea}" rendered="#{beanMensaje.activaTexto}" rows="10" cols="100" required="true" requiredMessage="el texto está vacío" >
+                    <p:commandButton value="cancelar" process="@this" actionListener="#{beanMensaje.cancelarEnvioCoordinador}" update="p1"/>
+            </p:inputTextarea> 
             
-            <p:selectOneMenu value="#{beanMensaje.aux}" id="aux1" required="true" rendered="#{beanMensaje.activaTexto}">
             
-                <f:selectItem itemLabel="elige" noSelectionOption="true"/>
-                <f:selectItem itemValue="value1" itemLabel="uno"/>    
+           
                 
-            </p:selectOneMenu>
-            </p:outputPanel>
-            <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajeCoordinador}" update="formMsg"/>
+                <br/>
+                <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajeCoordinador}" update="formMsg" rendered="#{beanMensaje.activaTexto}"/>
+                </p:outputPanel>
+                    </p:panel>
             </h:form>                 
                              
             <br/>
@@ -117,4 +126,65 @@
         
     </h:body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

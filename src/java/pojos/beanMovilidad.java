@@ -138,6 +138,7 @@ public class beanMovilidad implements Serializable{
     public void setSelectedPais(String selectedPais) {
         this.selectedPais = selectedPais;
         //creaMensaje(selectedPais, FacesMessage.SEVERITY_INFO);
+        
     }
     
     

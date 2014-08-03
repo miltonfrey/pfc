@@ -16,7 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -38,11 +38,10 @@ public class beanMensaje implements Serializable{
     private ArrayList<Mensaje> listaMensajesEnviados;
     private Usuario user;
     
-    private boolean activaTexto;
+    private boolean activaTexto=false;
     private String textArea;
     private String tema;
-   private String aux;
-    
+   
     public beanMensaje() {
         
     }
@@ -103,14 +102,7 @@ public class beanMensaje implements Serializable{
         return activaTexto;
     }
 
-    public String getAux() {
-        return aux;
-    }
-
-    public void setAux(String aux) {
-        this.aux = aux;
-    }
-
+    
    
     
     
@@ -178,6 +170,11 @@ public class beanMensaje implements Serializable{
         activaTexto=false;
         actualizar();
         return "";
+    }
+    
+    public void cancelarEnvioCoordinador(){
+        
+        activaTexto=false;
     }
     
     public void actualizar(){
