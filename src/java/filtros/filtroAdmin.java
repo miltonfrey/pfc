@@ -4,7 +4,7 @@ package filtros;
 
 
 import java.io.IOException;
-import javax.faces.application.ResourceHandler;
+//import javax.faces.application.ResourceHandler;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -30,7 +30,7 @@ public class filtroAdmin implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
 
-        if ((session == null) ||(session.getAttribute("admin")==null)||(session.getAttribute("admin").toString().equals("admin")==false)) {
+        if ((session == null) ||(session.getAttribute("admin")==null)) {
            
             
             response.sendRedirect(request.getContextPath() + "/zonaRestringida.xhtml");

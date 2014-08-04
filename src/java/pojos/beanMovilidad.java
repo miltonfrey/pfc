@@ -27,6 +27,7 @@ import javax.faces.bean.ManagedProperty;
 //import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -68,6 +69,8 @@ public class beanMovilidad implements Serializable{
     private Date fechaMin;
     private Date fechaMax;
     
+    private String changeEstado;
+    
     private String selectedPais;
     private String selectedUni;
     private String selectedCarrera;
@@ -91,23 +94,35 @@ public class beanMovilidad implements Serializable{
     @PostConstruct
     public void init(){
         
-       HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-       usuario=(Usuario)session.getAttribute("user");
-       fechaMin=movilidadService.fechaMin();
-       fechaMax=movilidadService.fechaMax();
-        
-       listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
-       ArrayList<String> aux=new ArrayList<String>();
+        ArrayList<String> aux=new ArrayList<String>();
        aux.add("pendiente");
        aux.add("rechazado");
        aux.add("aceptado");
        aux.add("cancelado");
        setEstados(aux);
-       // listaCarreras=(ArrayList<Carrera>)carreraService.listar();
-   //     listaMovilidadades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
-        //setListaMovilidades((ArrayList<Movilidad>)movilidadService.listarTodasMovilidades());
         
-    }
+       HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+      // HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+       
+       if(session.getAttribute("user")!=null){
+       usuario=(Usuario)session.getAttribute("user");
+       fechaMin=movilidadService.fechaMin();
+       fechaMax=movilidadService.fechaMax();
+       listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
+       
+       
+        
+    }else{
+           usuario=(Usuario)session.getAttribute("admin");
+           listaMisMovilidades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
+                       
+            }
+           
+       }
+       
+       
+    
+    
 
    
     
@@ -305,6 +320,14 @@ public class beanMovilidad implements Serializable{
 
     public void setFechaMax(Date fechaMax) {
         this.fechaMax = fechaMax;
+    }
+
+    public String getChangeEstado() {
+        return changeEstado;
+    }
+
+    public void setChangeEstado(String changeEstado) {
+        this.changeEstado = changeEstado;
     }
 
    

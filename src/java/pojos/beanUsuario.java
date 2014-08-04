@@ -335,7 +335,7 @@ public class beanUsuario implements Serializable{
             }else{
                 
                 HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-                session.setAttribute("admin", "admin");
+                session.setAttribute("admin", u);
                 return "admin/index.xhtml?faces-redirect=true";
                 
             }

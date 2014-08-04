@@ -13,7 +13,9 @@
            <p:messages id="msgsRecibidos" closable="true" />
             
                <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}"
-                         emptyMessage="no hay mensajes">
+                         emptyMessage="no hay mensajes"
+                         widgetVar="mensTabla"
+                         filteredValue="#{beanMensaje.filteredMensajes}">
                <f:facet name="header">Mensajes recibidos</f:facet>
                 
                       <p:column headerText="De:">
@@ -30,12 +32,19 @@
                           </h:outputText>
                       </p:column>
                
-                      <p:column headerText="leido">
-                          <h:outputText value="#{mensaje.estado}"/>
-                      </p:column>
-               
-                      <p:column>
-                          <p:commandButton value="leer" update=":recibidos:panelRecibidos" action="#{beanMensaje.leerMensajeRecibido}">
+               <p:column filterBy="#{mensaje.estado}" headerText="leido" filterMatchMode="exact">
+                   <f:facet name="filter">
+                       <p:selectOneMenu onchange="PF('mensTabla').filter()">
+                            <f:selectItem itemLabel="no" itemValue="no" />
+                            <f:selectItem itemLabel="si" itemValue="si"/>
+                            <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
+                        </p:selectOneMenu>
+                            
+                    </f:facet>
+                    <h:outputText value="#{mensaje.estado}"/>
+               </p:column>
+                    <p:column>
+                          <p:commandButton value="leer" update=":recibidos" action="#{beanMensaje.leerMensajeRecibido}">
                               <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeRecibido}"/>
                            </p:commandButton>
                       </p:column>
@@ -105,6 +114,7 @@
            
            <h:outputLink value="escribeMensaje.xhtml">escribe mensaje al coordinador</h:outputLink>
            
+           <br/>
            <br/>
        
            

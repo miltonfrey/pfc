@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Escribir mensaje al coordinador</title>
+    </h:head>
+    <h:body>
+        
+        <p:panel>
+            <h:form id="formEnvio">
+            <p:messages closable="true"/>
+               <p:outputLabel value="tema"/>
+               <br/>
+               <p:inputText value="#{beanMensaje.tema}"/>
+               <br/>
+               <p:inputTextarea value="#{beanMensaje.texto}" required="true" requiredMessage="el texto está vacío" cols="50" rows="6"/>
+               <br/>
+               <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajeCoordinador}" update="formEnvio"/>
+            
+            </h:form>
+        </p:panel>
+        
+        <br/>
+       
+           
+            
+           <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+            
+        
+        <p:panel>
+             <h:form>
+                 <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            </h:form>
+        </p:panel>
+        
+    
+        
+        
+    </h:body>
+</html>
+

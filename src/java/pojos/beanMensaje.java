@@ -36,6 +36,8 @@ public class beanMensaje implements Serializable{
     
     private ArrayList<Mensaje> listaMensajesRecibidos;
     private ArrayList<Mensaje> listaMensajesEnviados;
+    private ArrayList<Mensaje> filteredMensajes;
+    private ArrayList<String> estados;
     private Usuario user;
     
     
@@ -60,13 +62,33 @@ public class beanMensaje implements Serializable{
     @PostConstruct
     public void init(){
         
+        ArrayList<String> aux=new ArrayList<String>();
+        aux.add("si");
+        aux.add("no");
        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
        user=(Usuario)session.getAttribute("user");
        
+        setEstados(aux);
         setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesEnviados("admin", user.getLogin()));
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviados(user.getLogin(), "admin"));
         
         
+    }
+
+    public ArrayList<String> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(ArrayList<String> estados) {
+        this.estados = estados;
+    }
+
+    public ArrayList<Mensaje> getFilteredMensajes() {
+        return filteredMensajes;
+    }
+
+    public void setFilteredMensajes(ArrayList<Mensaje> filteredMensajes) {
+        this.filteredMensajes = filteredMensajes;
     }
 
    
@@ -249,8 +271,8 @@ public class beanMensaje implements Serializable{
         creaMensaje("mensaje enviado correctamente", FacesMessage.SEVERITY_WARN);
         texto="";
         tema="";
-        activaTexto=false;
-        actualizar();
+        //activaTexto=false;
+        //actualizar();
         return "";
     }
     
@@ -293,6 +315,17 @@ public class beanMensaje implements Serializable{
         activaRecibido=true;
         temaRecibido=selectedMensajeRecibido.getTema();
         textAreaRecibido=selectedMensajeRecibido.getTexto();
+        selectedMensajeRecibido.setEstado("si");
+        try{
+            
+            mensajeService.enviarMensaje(selectedMensajeRecibido);
+            
+        }catch(Exception ex){
+            
+            creaMensaje("se ha producido un error al leer mensaje", FacesMessage.SEVERITY_ERROR);
+            
+        }
+        actualizar();
         
     }
     

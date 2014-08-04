@@ -31,6 +31,9 @@ public class beanCarrera implements Serializable{
     @ManagedProperty(value="#{carreraService}")
     private CarreraService carreraService;
     
+    
+    private String selectedPais;
+    
     private String pais;
     private String nombre;
     private String universidad;
@@ -54,6 +57,12 @@ public class beanCarrera implements Serializable{
         aux.add("Italia");
         aux.add("Suecia");
         aux.add("Finlandia");
+        aux.add("Bélgica");
+        aux.add("Austria");
+        aux.add("Portugal");
+        aux.add("Grecia");
+        aux.add("Holanda");
+        aux.add("España");
         Collections.sort(aux);
         setPaises(aux);
         
@@ -113,6 +122,14 @@ public class beanCarrera implements Serializable{
 
     public void setUniversidad(String universidad) {
         this.universidad = universidad;
+    }
+
+    public String getSelectedPais() {
+        return selectedPais;
+    }
+
+    public void setSelectedPais(String selectedPais) {
+        this.selectedPais = selectedPais;
     }
 
    
@@ -201,12 +218,6 @@ public class beanCarrera implements Serializable{
     
     
     
-    
-    
-    
-    
-    
-    
  public void creaMensaje(String texto,FacesMessage.Severity s){
             
             FacesContext context=FacesContext.getCurrentInstance();
@@ -229,7 +240,7 @@ public class beanCarrera implements Serializable{
   public List<String> completaPaises(String text){
       
       
-      ArrayList<String> lista=paises;
+   List<String> lista=paises;
       return lista;
       
   }
