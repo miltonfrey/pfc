@@ -9,122 +9,114 @@
     </h:head>
     <h:body>
         
-        
-        
-        
-        
-        
-        <h:form id="f1">
+         <h:form id="recibidos">
+           <p:messages id="msgsRecibidos" closable="true" />
             
-            <p:messages closable="true" />
-            
-            <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}"
+               <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}"
                          emptyMessage="no hay mensajes">
-                <f:facet name="mensajes recibidos">Mensajes recibidos</f:facet>
+               <f:facet name="header">Mensajes recibidos</f:facet>
                 
-                <p:column headerText="De:">
+                      <p:column headerText="De:">
+                         <h:outputText value="#{mensaje.usuarioByOrigen.login}"/>
+                      </p:column>
                     
-                    <h:outputText value="#{mensaje.usuarioByOrigen.login}"/>
+                      <p:column headerText="tema">
+                         <h:outputText value="#{mensaje.tema}"/>
+                      </p:column>
                     
-                    
-                </p:column>
-                <p:column headerText="tema">
-                    
-                    <h:outputText value="#{mensaje.tema}"/>
-                    
-                </p:column>
-                
-                
-                
-                <p:column headerText="fecha" sortBy="#{mensaje.fecha}">
-                    
-                    <h:outputText value="#{mensaje.fecha}">
-                    
-                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
-                        
-                    </h:outputText>
-                    
-                </p:column>
-            
-                
-            
-            </p:dataTable> 
-            <br/>
-            <br/>
-            <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}"
-                         emptyMessage="no hay mensajes">
-                <f:facet name="header">Mensajes enviados</f:facet>
-                <p:column sortBy="#{mensaje.fecha}">
-                    
-                    <h:outputText value="#{mensaje.fecha}">
-                    
-                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
-                        
-                    </h:outputText>
-                    
-                </p:column>
-            
-                
-            
-            </p:dataTable>
-         
-            <br/>
-            <br/>
-            
-            
-                <p:messages closable="true" id="msg"/>
-            
-                <p:commandButton id="act1" value="enviar mensaje al coordinador" action="#{beanMensaje.activaMensaje()}" update=":f1:p1" /> 
-              
-                <p:panel>   
-            <p:outputPanel id="p1">
-                <p:outputLabel value="tema" rendered="#{beanMensaje.activaTexto}" for="tema1"/>
-                <p:inputText id="tema1" value="#{beanMensaje.tema}" rendered="#{beanMensaje.activaTexto}" />
-                <p:inputTextarea id="txt1" value="#{beanMensaje.textArea}" rendered="#{beanMensaje.activaTexto}" rows="10" cols="100" required="true" requiredMessage="el texto está vacío" >
-                    <p:commandButton value="cancelar" process="@this" actionListener="#{beanMensaje.cancelarEnvioCoordinador}" update="f1" rendered="#{beanMensaje.activaTexto}"/>
-            </p:inputTextarea> 
-            
-            
+                      <p:column headerText="fecha" sortBy="#{mensaje.fecha}">
+                          <h:outputText value="#{mensaje.fecha}">
+                             <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                          </h:outputText>
+                      </p:column>
+               
+                      <p:column headerText="leido">
+                          <h:outputText value="#{mensaje.estado}"/>
+                      </p:column>
+               
+                      <p:column>
+                          <p:commandButton value="leer" update=":recibidos:panelRecibidos" action="#{beanMensaje.leerMensajeRecibido}">
+                              <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeRecibido}"/>
+                           </p:commandButton>
+                      </p:column>
+                </p:dataTable> 
            
+           
+           <p:outputPanel id="panelRecibidos">
+                <p:outputLabel id="labelTemaRecibido" value="tema" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:inputText id="temaRecibido" value="#{beanMensaje.temaRecibido}" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:outputLabel id="labelTextoRecibido" value="texto" for="textoRecibido" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:inputTextarea id="textoRecibido" value="#{beanMensaje.textAreaRecibido}"
+                                 rendered="#{beanMensaje.activaRecibido}" readonly="true" autoResize="true" cols="80" rows="10"/>
                 
-                <br/>
-                <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajeCoordinador}" update="f1" rendered="#{beanMensaje.activaTexto}"/>
-                </p:outputPanel>
-                    </p:panel>
-                           
-                </h:form> 
-                
-                
+                <p:commandButton value="cerrar" process="@this" action="#{beanMensaje.cerrarMensajeRecibido}" update=":recibidos:panelRecibidos" rendered="#{beanMensaje.activaRecibido}"/>
+            </p:outputPanel>
+    
+           
+         </h:form>    
+                    
+                    
+    
+       
+            
             <br/>
             <br/>
             
+            <h:form id="enviados">
+            <p:messages id="msgsEnviados" closable="true"/>
+                         <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}"
+                         emptyMessage="no hay mensajes">
+                         <f:facet name="header">Mensajes enviados</f:facet>
+                              <p:column sortBy="#{mensaje.fecha}">
+                                   <h:outputText value="#{mensaje.fecha}">
+                                   <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                   </h:outputText>
+                              </p:column>
+                        
+                              <p:column headerText="tema">
+                                 <h:outputText value="#{mensaje.tema}"/>
+                              </p:column>
+                         
+                              <p:column>
+                                  <p:commandButton value="leer" update=":enviados:panelEnviados" action="#{beanMensaje.leerMensajeEnviado}">
+                                       <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensaje}"/>
+                                  </p:commandButton>
+                              </p:column>
+                             
+                        </p:dataTable>   
+                        
+                    <br/>              
+                
+                
+            <p:outputPanel id="panelEnviados">
+                
+                <p:outputLabel id="labelTemaEnviado" value="tema" rendered="#{beanMensaje.activaEnviado}"/>
+                <p:inputText id="temaEnviado" value="#{beanMensaje.temaEnviado}" rendered="#{beanMensaje.activaEnviado}"/>
+                <p:outputLabel id="labelTextoEnviado" value="texto" for="textoEnviado" rendered="#{beanMensaje.activaEnviado}"/>
+                <p:inputTextarea id="textoEnviado" value="#{beanMensaje.textAreaEnviado}"
+                                 rendered="#{beanMensaje.activaEnviado}" readonly="true" autoResize="true" cols="80" rows="10"/>
+                
+                <p:commandButton value="cerrar" process="@this" action="#{beanMensaje.cerrarMensajeEnviado}" update=":enviados:panelEnviados" rendered="#{beanMensaje.activaEnviado}"/>
+            </p:outputPanel>
+                    
+            </h:form>        
+                
+           <br/>
+           
+           <h:outputLink value="escribeMensaje.xhtml">escribe mensaje al coordinador</h:outputLink>
+           
+           <br/>
+       
+           
             
-            
-            
-        
-        
-        <br/>
-            
-            
-             <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+           <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
             
         
         <p:panel>
-            
-                
-        <h:form>
-            
-            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
-            
-        </h:form>
-            </p:panel>
-        
              <h:form>
-                 <p:messages closable="true" id="formSession"/>
-                 
-                 <p:commandButton value="session" action="#{beanUsuario.comprobarSession()}"  update="formSession"/>
-                 
-             </h:form>
+                 <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            </h:form>
+        </p:panel>
         
     </h:body>
 </html>

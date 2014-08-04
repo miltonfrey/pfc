@@ -38,10 +38,21 @@ public class beanMensaje implements Serializable{
     private ArrayList<Mensaje> listaMensajesEnviados;
     private Usuario user;
     
-    private boolean activaTexto=false;
-    private String textArea;
+    
+    
+    private boolean activaRecibido;
+    private String textAreaRecibido;
+    private String temaRecibido;
+    private boolean activaEnviado;
+    private String textAreaEnviado;
+    private String temaEnviado;
+    private boolean activaTexto;
     private String tema;
-   
+    private String texto;
+    
+    private Mensaje selectedMensaje;
+    private Mensaje selectedMensajeRecibido;
+    
     public beanMensaje() {
         
     }
@@ -102,6 +113,56 @@ public class beanMensaje implements Serializable{
         return activaTexto;
     }
 
+    public boolean isActivaEnviado() {
+        return activaEnviado;
+    }
+
+    public void setActivaEnviado(boolean activaEnviado) {
+        this.activaEnviado = activaEnviado;
+    }
+
+    public boolean isActivaRecibido() {
+        return activaRecibido;
+    }
+
+    public void setActivaRecibido(boolean activaRecibido) {
+        this.activaRecibido = activaRecibido;
+    }
+
+    public String getTextAreaRecibido() {
+        return textAreaRecibido;
+    }
+
+    public void setTextAreaRecibido(String textAreaRecibido) {
+        this.textAreaRecibido = textAreaRecibido;
+    }
+
+    public String getTemaRecibido() {
+        return temaRecibido;
+    }
+
+    public void setTemaRecibido(String temaRecibido) {
+        this.temaRecibido = temaRecibido;
+    }
+    
+    
+
+    public String getTema() {
+        return tema;
+    }
+
+    public void setTema(String tema) {
+        this.tema = tema;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
     
    
     
@@ -111,20 +172,36 @@ public class beanMensaje implements Serializable{
         this.activaTexto = activaTexto;
     }
 
-    public String getTextArea() {
-        return textArea;
+    public String getTextAreaEnviado() {
+        return textAreaEnviado;
     }
 
-    public void setTextArea(String textArea) {
-        this.textArea = textArea;
+    public void setTextAreaEnviado(String textAreaEnviado) {
+        this.textAreaEnviado = textAreaEnviado;
     }
 
-    public String getTema() {
-        return tema;
+    public String getTemaEnviado() {
+        return temaEnviado;
     }
 
-    public void setTema(String tema) {
-        this.tema = tema;
+    public void setTemaEnviado(String temaEnviado) {
+        this.temaEnviado = temaEnviado;
+    }
+
+    public Mensaje getSelectedMensaje() {
+        return selectedMensaje;
+    }
+
+    public void setSelectedMensaje(Mensaje selectedMensaje) {
+        this.selectedMensaje = selectedMensaje;
+    }
+
+    public Mensaje getSelectedMensajeRecibido() {
+        return selectedMensajeRecibido;
+    }
+
+    public void setSelectedMensajeRecibido(Mensaje selectedMensajeRecibido) {
+        this.selectedMensajeRecibido = selectedMensajeRecibido;
     }
     
     
@@ -150,12 +227,17 @@ public class beanMensaje implements Serializable{
         
     }
     
+    public void activaMensajeEnviado(){
+        
+        
+    }
+    
     public String enviarMensajeCoordinador(){
         
         Usuario destino=usuarioService.find("admin");
         
         
-        Mensaje m=new Mensaje(user, destino, Calendar.getInstance().getTime(), tema, textArea, "sin leer");
+        Mensaje m=new Mensaje(user, destino, Calendar.getInstance().getTime(), tema, texto, "no");
         try{
         mensajeService.enviarMensaje(m);
         }catch(Exception ex){
@@ -165,7 +247,7 @@ public class beanMensaje implements Serializable{
         }
         
         creaMensaje("mensaje enviado correctamente", FacesMessage.SEVERITY_WARN);
-        textArea="";
+        texto="";
         tema="";
         activaTexto=false;
         actualizar();
@@ -184,6 +266,42 @@ public class beanMensaje implements Serializable{
         
     }
     
+    public void leerMensajeEnviado(){
+        
+        activaEnviado=true;
+        textAreaEnviado=selectedMensaje.getTexto();
+        temaEnviado=selectedMensaje.getTema();
+        
+    }
+    
+    public void eliminarMensajeEnviado(){
+        
+        
+    }
+    
+    
+    public void cerrarMensajeEnviado(){
+        
+        textAreaEnviado="";
+        temaEnviado="";
+        activaEnviado=false;
+        
+    }
+    
+    public void leerMensajeRecibido(){
+        
+        activaRecibido=true;
+        temaRecibido=selectedMensajeRecibido.getTema();
+        textAreaRecibido=selectedMensajeRecibido.getTexto();
+        
+    }
+    
+    public void cerrarMensajeRecibido(){
+        
+        textAreaRecibido="";
+        temaRecibido="";
+        activaRecibido=false;
+    }   
     
     
     
