@@ -408,6 +408,7 @@ public class beanMensaje implements Serializable{
         textAreaRecibido="";
         temaRecibido="";
         activaRecibido=false;
+        
     }   
     
     
