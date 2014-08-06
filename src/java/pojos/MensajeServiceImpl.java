@@ -38,6 +38,18 @@ public class MensajeServiceImpl implements MensajeService{
         mensajeDao.crearMensaje(m);
         
     }
+    @Override
+    public List<Mensaje> mensajesEnviadosTotal(String destino){
+        
+        return mensajeDao.mensajesEnviadosTotal(destino);
+        
+        
+    }
+    @Override
+    public List<Mensaje> mensajesRecibidosTotal(String origen){
+        
+        return mensajeDao.mensajesRecibidosTotal(origen);
+    }
     
     
 }

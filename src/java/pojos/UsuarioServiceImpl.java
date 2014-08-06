@@ -6,6 +6,7 @@
 
 package pojos;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,10 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public List<Usuario>listar(){
         
-        return usuarioDao.listar();
+        List<Usuario> lista= (ArrayList<Usuario>)usuarioDao.listar();
+        Usuario u=usuarioDao.find("admin");
+        lista.remove(u);
+        return lista;
     }
     
     @Override

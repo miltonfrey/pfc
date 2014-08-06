@@ -48,6 +48,7 @@ public class beanUsuario implements Serializable{
     private Usuario selectedUsuario;
     
     private ArrayList<Usuario> listaUsuarios;
+    private ArrayList<Usuario> filteredUsuarios;
     private ArrayList<String> listaTitulaciones;
    
     private ArrayList<Mensaje> listaMensajes;
@@ -132,7 +133,21 @@ public class beanUsuario implements Serializable{
 
     public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
+        
+        
     }
+    
+    public ArrayList<Usuario> getFilteredUsuarios() {
+        return filteredUsuarios;
+    }
+
+    public void setFilteredUsuarios(ArrayList<Usuario> filteredUsuarios) {
+        this.filteredUsuarios = filteredUsuarios;
+    }
+    
+    
+    
+    
 ///////////////////////////////////////////////////////////////////////////////////////////
     /*public ArrayList<Movilidad> getListaMovilidades() {
         return listaMovilidades;
@@ -150,6 +165,8 @@ public class beanUsuario implements Serializable{
         this.movilidadService = movilidadService;
     }*/
 ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    
    
     
     

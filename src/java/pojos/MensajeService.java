@@ -13,5 +13,6 @@ public interface MensajeService {
     
     public List<Mensaje> mensajesEnviados(String origen,String destino);
     public void enviarMensaje(Mensaje m);
-
+public List<Mensaje> mensajesRecibidosTotal(String destino);
+public List<Mensaje> mensajesEnviadosTotal(String origen);
 }

@@ -13,22 +13,34 @@
         
         <h:form id="formMovilidades" onkeypress="return event.keyCode != 13">
             
-            <p:dataTable  id="t1" var="movilidad" value="#{beanMovilidad.listaMisMovilidades}"
+            <p:messages id="msgs" closable="true"/>
+            <p:dataTable  id="t1" var="movilidad" value="#{beanMovilidad.listaMovilidades}"
                           emptyMessage="no hay movilidades" editable="true"
                          filteredValue="#{beanMovilidad.filteredMovilidades}"
                          widgetVar="movTable">
-                         
+                <p:ajax event="rowEdit" listener="#{beanMovilidad.onRowEdit}" update=":formMovilidades:t1 :formMovilidades:msgs"/>
+                <p:ajax event="rowEditCancel" listener="#{beanMovilidad.onRowCancel}" />
                          
                           
                 <p:column filterBy="#{movilidad.estado}" filterMatchMode="exact" headerText="ver estado" >
                 
                     <f:facet name="filter">
-                        <p:selectOneMenu onchange="PF('movTable').filter()">
+                        <p:selectOneMenu onchange="PF('movTable').filter()" style="width: 100%">
                             <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
                             <f:selectItems value="#{beanMovilidad.estados}"/>
                         </p:selectOneMenu>
-                            
                     </f:facet>
+                    <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{movilidad.estado}"/></f:facet>
+                    <f:facet name="input">
+                        
+                        <p:selectOneMenu value="#{beanMovilidad.changeEstado}" style="width: 100%"
+                                         required="true" requiredMessage="hay que elegir un estado">
+                            <f:selectItem itemLabel="seleccionar un estado" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{beanMovilidad.estados}"/>             
+                        </p:selectOneMenu>
+                    </f:facet>
+                    </p:cellEditor>
                 </p:column>
                 
                 
@@ -45,24 +57,9 @@
                 <p:column headerText="alumno" sortBy="#{movilidad.usuario.login}">
                     
                     <h:outputText value="#{movilidad.usuario.login}"/>
+                </p:column>
                     
-                </p:column>
-                
-                <p:column headerText="estado">
-                    <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{movilidad.estado}"/></f:facet>
-                    <f:facet name="input">
-                        
-                        <p:selectOneMenu value="#{beanMovilidad.changeEstado}" style="width: 100%"
-                                         required="true" requiredMessage="hay que elegir un estado">
-                            <f:selectItem itemLabel="seleccionar un estado" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{beanMovilidad.estados}"/>             
-                        </p:selectOneMenu>
-                    </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                
-                <p:column>
+                <p:column headerText="modificar estado">
                         <p:rowEditor/>
                     </p:column>
                 

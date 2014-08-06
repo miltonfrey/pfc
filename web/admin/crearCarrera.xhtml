@@ -13,27 +13,13 @@
     </h:head>
     <h:body>
         
-        <p:panel>
+        
             
             <h:form id="formCrea">
                 
                 <p:growl for="formCrea"/>
                 
-                <h:outputLabel value="nombre"/>
-                <h:inputText value="#{beanCarrera.nombre}"
-                             required="true"
-                             requiredMessage="el campo nombre está vacío">
-                    
-                </h:inputText>
-                
-                <h:outputLabel value="universidad"/>
-                <h:inputText value="#{beanCarrera.universidad}"
-                             required="true"
-                             requiredMessage="el campo universidad está vacío">
-                    
-                </h:inputText>
-                
-                <h:outputLabel value="pais" for="p1"/>
+                <p:outputLabel value="pais" for="p1"/>
                 <p:selectOneMenu id="p1" value="#{beanCarrera.pais}"
                                  required="true"
                                  requiredMessage="el campo pais está vacío">
@@ -43,15 +29,36 @@
                     
                 </p:selectOneMenu>
                 
+                <br/>
+                
+                <p:outputLabel value="estudios"/>
+                <p:inputText value="#{beanCarrera.nombre}"
+                             required="true"
+                             requiredMessage="el campo nombre está vacío">
+                    
+                </p:inputText>
+                
+                <br/>
+                
+                <p:outputLabel value="facultad"/>
+                <p:inputText value="#{beanCarrera.universidad}"
+                             required="true"
+                             requiredMessage="el campo universidad está vacío">
+                    
+                </p:inputText>
+                
+                <br/>
                 
                              
                 <p:outputLabel value="información adicional"/>
                 <p:inputTextarea value="#{beanCarrera.info}"/>
                 
+                <br/>
                 
                 <p:outputLabel value="pagina web"/>
-                <h:inputText value="#{beanCarrera.web}"/>
+                <p:inputText value="#{beanCarrera.web}"/>
                 
+                <br/>
                 
                 <p:commandButton value="crear carrera" action="#{beanCarrera.creaCarrera}" ajax="false"/>
                 
@@ -61,7 +68,7 @@
             </h:form>
             
             
-        </p:panel>
+        
         
         
         <p:panel>
@@ -95,7 +102,7 @@
                         
                     </p:column>
                     
-                    <p:column>
+                    <p:column headerText="pais">
                         <p:cellEditor>
                         <f:facet name="output"><h:outputText value="#{carrera.pais}"/></f:facet>
                         <f:facet name="input">
@@ -114,7 +121,7 @@
                     </p:column>
                     
                 
-                    <p:column>
+                    <p:column headerText="editar">
                         <p:rowEditor/>
                     </p:column>
                     
@@ -138,7 +145,7 @@
                 
                 </p:dataTable>
                              
-                <p:commandButton value="actualizar" action="#{beanCarrera.actualizar}" update="carreraForm"/>
+               
                 
                 <br/>
                 
@@ -153,28 +160,7 @@
         <br/>
         
         
-        <p:panel>
-            
-            <h:form id="autoForm">
-                
-                <p:growl for="autoForm"/>
-                <p:panelGrid columns="2">
-                    
-                    <p:outputLabel value="nombre" for="a1"/>
-                    <p:autoComplete forceSelection="true" id="a1" value="#{beanCarrera.pais}" completeMethod="#{beanCarrera.completaPaises}"/> 
-                    
-                </p:panelGrid>
-                
-                
-                
-                
-                
-            </h:form>
-            
-            
-            
-            
-        </p:panel>
+        
         
         
         <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>

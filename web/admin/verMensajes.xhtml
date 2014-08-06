@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ver mensajes</title>
+    </h:head>
+    <h:body>
+        
+        <h:form id="recibidos">
+           <p:messages id="msgsRecibidos" closable="true" />
+            
+               <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}"
+                         emptyMessage="no hay mensajes"
+                         widgetVar="mensTabla"
+                         filteredValue="#{beanMensaje.filteredMensajes}">
+               <f:facet name="header">Mensajes recibidos</f:facet>
+                
+                      <p:column headerText="De:">
+                         <h:outputText value="#{mensaje.usuarioByOrigen.login}"/>
+                      </p:column>
+                    
+                      <p:column headerText="tema">
+                         <h:outputText value="#{mensaje.tema}"/>
+                      </p:column>
+                    
+                      <p:column headerText="fecha" sortBy="#{mensaje.fecha}">
+                          <h:outputText value="#{mensaje.fecha}">
+                             <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                          </h:outputText>
+                      </p:column>
+               
+               <p:column filterBy="#{mensaje.estado}" headerText="leido" filterMatchMode="exact">
+                   <f:facet name="filter">
+                       <p:selectOneMenu onchange="PF('mensTabla').filter()">
+                            <f:selectItem itemLabel="no" itemValue="no" />
+                            <f:selectItem itemLabel="si" itemValue="si"/>
+                            <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
+                        </p:selectOneMenu>
+                            
+                    </f:facet>
+                    <h:outputText value="#{mensaje.estado}"/>
+               </p:column>
+                    <p:column>
+                          <p:commandButton value="leer" update=":recibidos" action="#{beanMensaje.leerMensajeRecibido}">
+                              <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeRecibido}"/>
+                           </p:commandButton>
+                      </p:column>
+                </p:dataTable> 
+           
+           
+           <p:outputPanel id="panelRecibidos">
+                <p:outputLabel id="labelTemaRecibido" value="tema" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:inputText id="temaRecibido" value="#{beanMensaje.temaRecibido}" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:outputLabel id="labelTextoRecibido" value="texto" for="textoRecibido" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:inputTextarea id="textoRecibido" value="#{beanMensaje.textAreaRecibido}"
+                                 rendered="#{beanMensaje.activaRecibido}" readonly="true" autoResize="true" cols="80" rows="10"/>
+                
+                <p:commandButton value="cerrar" process="@this" action="#{beanMensaje.cerrarMensajeRecibido}" update=":recibidos:panelRecibidos" rendered="#{beanMensaje.activaRecibido}"/>
+            </p:outputPanel>
+    
+           
+         </h:form>    
+                    
+                    
+    
+       
+            
+            <br/>
+            <br/>
+            
+            <h:form id="enviados">
+            <p:messages id="msgsEnviados" closable="true"/>
+                         <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}"
+                         emptyMessage="no hay mensajes">
+                         <f:facet name="header">Mensajes enviados</f:facet>
+                              <p:column sortBy="#{mensaje.fecha}">
+                                   <h:outputText value="#{mensaje.fecha}">
+                                   <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                   </h:outputText>
+                              </p:column>
+                        
+                              <p:column headerText="tema">
+                                 <h:outputText value="#{mensaje.tema}"/>
+                              </p:column>
+                         
+                              <p:column>
+                                  <p:commandButton value="leer" update=":enviados:panelEnviados" action="#{beanMensaje.leerMensajeEnviado}">
+                                       <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensaje}"/>
+                                  </p:commandButton>
+                              </p:column>
+                             
+                        </p:dataTable>   
+                        
+                    <br/>              
+                
+                
+            <p:outputPanel id="panelEnviados">
+                
+                <p:outputLabel id="labelTemaEnviado" value="tema" rendered="#{beanMensaje.activaEnviado}"/>
+                <p:inputText id="temaEnviado" value="#{beanMensaje.temaEnviado}" rendered="#{beanMensaje.activaEnviado}"/>
+                <p:outputLabel id="labelTextoEnviado" value="texto" for="textoEnviado" rendered="#{beanMensaje.activaEnviado}"/>
+                <p:inputTextarea id="textoEnviado" value="#{beanMensaje.textAreaEnviado}"
+                                 rendered="#{beanMensaje.activaEnviado}" readonly="true" autoResize="true" cols="80" rows="10"/>
+                
+                <p:commandButton value="cerrar" process="@this" action="#{beanMensaje.cerrarMensajeEnviado}" update=":enviados:panelEnviados" rendered="#{beanMensaje.activaEnviado}"/>
+            </p:outputPanel>
+                    
+            </h:form>        
+                
+           <br/>
+           
+           <h:outputLink value="escribeMensaje.xhtml">escribir mensaje a usuario</h:outputLink>
+           
+           <br/>
+           <br/>
+       
+           
+            
+           <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+            
+        
+        <p:panel>
+             <h:form>
+                 <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            </h:form>
+        </p:panel>
+        
+    </h:body>
+</html>
+
+        
+        
+    

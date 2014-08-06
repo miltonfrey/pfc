@@ -40,8 +40,8 @@ public class MensajeDaoImpl implements MensajeDao{
     @Override
     public List<Mensaje> mensajesEnviados(String origen,String destino){
         
-        Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByOrigen.login=:origen " +
-                "and m.usuarioByDestino.login=:destino");
+        Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByOrigen.login=:origen  " +
+                "and m.usuarioByDestino.login=:destino order by m.fecha desc");
                 
         q.setParameter("origen", origen);
         q.setParameter("destino", destino);
@@ -56,7 +56,7 @@ public class MensajeDaoImpl implements MensajeDao{
     public List<Mensaje> mensajesEnviadosPorFecha(String origen,String destino,Date d,Date d2){
         
         Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByOrigen.login=:origen " +
-                "and m.usuarioByDestino.login=:destino and m.fecha>=:d and m.fecha=<:d2 order by m.fecha");
+                "and m.usuarioByDestino.login=:destino and m.fecha>=:d and m.fecha=<:d2 order by m.fecha desc");
         q.setParameter("origen", origen);
         q.setParameter("destino", destino);
         q.setParameter("d", d);
@@ -82,10 +82,19 @@ public class MensajeDaoImpl implements MensajeDao{
         return q.list();
         
     }
-                
-                
-                
-           
+      @Override          
+      public List<Mensaje> mensajesEnviadosTotal(String origen){
+          
+          Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByOrigen.login=:origen order by m.fecha desc");
+          q.setParameter("origen", origen);
+          return q.list();
+      }
+       @Override         
+       public List<Mensaje> mensajesRecibidosTotal(String destino){
+           Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByDestino.login=:destino order by m.fecha desc");
+          q.setParameter("destino", destino);
+          return q.list();
+       }    
                 
                 
                 

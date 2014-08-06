@@ -29,6 +29,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.primefaces.event.RowEditEvent;
 
 
 
@@ -49,7 +50,11 @@ public class beanMovilidad implements Serializable{
     @ManagedProperty(value="#{carreraService}")
     private transient CarreraService carreraService;
 
+     @ManagedProperty(value="#{usuarioService}")
+     private transient UsuarioService usuarioService;
      
+     @ManagedProperty(value="#{mensajeService}")
+     private transient MensajeService mensajeService;
   /*  private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
           stream.defaultReadObject();
           FacesContext context = FacesContext.getCurrentInstance();
@@ -114,21 +119,37 @@ public class beanMovilidad implements Serializable{
         
     }else{
            usuario=(Usuario)session.getAttribute("admin");
-           listaMisMovilidades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
+           listaMovilidades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
                        
             }
            
        }
+
+   
+
+    
        
        
     
     
 
    
+     public MensajeService getMensajeService() {
+        return mensajeService;
+    }
+
+    public void setMensajeService(MensajeService mensajeService) {
+        this.mensajeService = mensajeService;
+    }
     
     
-    
-    
+    public UsuarioService getUsuarioService() {
+        return usuarioService;
+    }
+
+    public void setUsuarioService(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
     
     public MovilidadService getMovilidadService() {
         return movilidadService;
@@ -208,6 +229,7 @@ public class beanMovilidad implements Serializable{
     
 
     public ArrayList<Movilidad> getListaMovilidades() {
+        Collections.reverse(listaMovilidades);
         return listaMovilidades;
     }
 
@@ -216,7 +238,8 @@ public class beanMovilidad implements Serializable{
     }
 
     public ArrayList<Movilidad> getListaMisMovilidades() {
-        return listaMisMovilidades;
+         Collections.reverse(listaMisMovilidades);
+         return listaMisMovilidades;
     }
 
     public void setListaMisMovilidades(ArrayList<Movilidad> listaMisMovilidades) {
@@ -359,6 +382,32 @@ public class beanMovilidad implements Serializable{
        creaMensaje(" al cambiar uni "+checkUni+" selectedUni: "+selectedUni,FacesMessage.SEVERITY_INFO);
         
     }
+    
+    
+    public void onRowEdit(RowEditEvent event){
+        
+        Movilidad m=(Movilidad)event.getObject();
+        m.setEstado(changeEstado);
+        try{
+            
+            movilidadService.crearMovilidad(m);
+            
+        }catch(Exception ex){
+            
+            creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+            
+        }
+        
+        Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(), "movilidad modificada","el coordinador ha modificado la movilidad", "no");
+        mensajeService.enviarMensaje(mensaje);
+        creaMensaje("estado de una movilidad modificado, se ha enviado un mensaje", FacesMessage.SEVERITY_INFO);
+       
+    }
+    
+    public void onRowCancel(){
+        
+        
+    }
 
    
     
@@ -369,7 +418,7 @@ public class beanMovilidad implements Serializable{
         
         checkPais=false;
         checkUni=false;
-        creaMensaje(selectedCarrera+" "+selectedPais+" "+selectedUni+" "+usuario.getLogin() + " "+fechaMax, FacesMessage.SEVERITY_INFO);
+        creaMensaje(selectedCarrera+" "+selectedPais+" "+selectedUni+" "+usuario.getLogin() + " "+fechaFin, FacesMessage.SEVERITY_INFO);
         Calendar cal1=Calendar.getInstance();
         Calendar cal2=Calendar.getInstance();
                 cal1.setTime(fechaInicio);
@@ -377,27 +426,53 @@ public class beanMovilidad implements Serializable{
                 if (cal2.compareTo(cal1)<1){
                     
                     creaMensaje("la fecha de inicio es igual o posterior a la fecha de fin", FacesMessage.SEVERITY_ERROR);
-                    
+                    return "";
                 }
-                String estado="pendiente";
                 
+                 ArrayList<Movilidad> aux;
                 try{
                     
-                    ArrayList<Movilidad> aux=(ArrayList < Movilidad >)movilidadService.listarMisMovilidadesPorEstado(usuario.getLogin(), estado);
-                    if(aux.size()>0){
+                   aux=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
+                }catch(Exception ex){
+                    
+                    creaMensaje("se ha producido un error",FacesMessage.SEVERITY_ERROR);
+                    return "";
+                        }            
+                    
+                
+                    for(Movilidad mov:aux){
                         
-                        creaMensaje("hay una movilidad pendiente de aceptación, no se puede crear otra, hay que esperar confirmación o cancelarla", FacesMessage.SEVERITY_ERROR);
-                        return null;
+                        if(mov.getEstado().equals("pendiente")||mov.getEstado().equals("aceptado")){
+                            
+                            creaMensaje("hay una movilidad pendiente o en curso, para cancelarla o modificarla contacta con el coordinador", FacesMessage.SEVERITY_ERROR);
+                            return null;
+                        
+                        }
+                        
+                        
                     }
+              String estado="pendiente";
               Carrera c=carreraService.find(selectedCarrera, selectedUni);
               
               Movilidad m=new Movilidad(usuario, c, fechaInicio, fechaFin, estado);
+              try{
               movilidadService.crearMovilidad(m);
+                    
                 }catch(Exception ex){
                     creaMensaje("se ha producido un error creando la movilidad", FacesMessage.SEVERITY_ERROR);
                     return "";
                 }
-                creaMensaje("movilidad creada, a la espera de aprobación por el coordinador", FacesMessage.SEVERITY_INFO);
+                creaMensaje("movilidad creada, a la espera de aprobación por el coordinador, enviado un mensaje", FacesMessage.SEVERITY_INFO);
+                
+                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getLogin()+" ha creado una movilidad", "no");
+                try{
+                    mensajeService.enviarMensaje(mensaje);
+                }catch(Exception ex){
+                    creaMensaje("error al enviar el mensaje", FacesMessage.SEVERITY_ERROR);
+                }
+                
+                
+                
                 selectedCarrera="";
                 selectedPais="";
                 selectedUni="";
@@ -444,6 +519,11 @@ public class beanMovilidad implements Serializable{
         listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
     }
     
+    public void actualizarTodasMovilidades(){
+        
+        listaMovilidades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
+        
+    }
     
     
     

@@ -7,9 +7,11 @@
 package pojos;
 
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+//import java.util.Collections;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
@@ -17,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -37,6 +40,7 @@ public class beanMensaje implements Serializable{
     private ArrayList<Mensaje> listaMensajesRecibidos;
     private ArrayList<Mensaje> listaMensajesEnviados;
     private ArrayList<Mensaje> filteredMensajes;
+    
     private ArrayList<String> estados;
     private Usuario user;
     
@@ -55,6 +59,8 @@ public class beanMensaje implements Serializable{
     private Mensaje selectedMensaje;
     private Mensaje selectedMensajeRecibido;
     
+    private Usuario selectedUsuario;
+    
     public beanMensaje() {
         
     }
@@ -62,18 +68,46 @@ public class beanMensaje implements Serializable{
     @PostConstruct
     public void init(){
         
-        ArrayList<String> aux=new ArrayList<String>();
+        ArrayList<String> aux= new ArrayList<String>();
         aux.add("si");
         aux.add("no");
-       HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-       user=(Usuario)session.getAttribute("user");
-       
         setEstados(aux);
-        setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesEnviados("admin", user.getLogin()));
+       HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+       
+       
+       if((Usuario)session.getAttribute("user")!=null){
+           user=(Usuario)session.getAttribute("user");
+           setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesEnviados("admin", user.getLogin()));
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviados(user.getLogin(), "admin"));
+           
+       }
+       else{
+           
+           user=(Usuario)session.getAttribute("admin");
+           setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviadosTotal("admin"));
+           setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesRecibidosTotal("admin"));
+          
+           
+       }
+       
+       
+        
+        
+        
         
         
     }
+
+    public Usuario getSelectedUsuario() {
+        return selectedUsuario;
+    }
+
+    public void setSelectedUsuario(Usuario selectedUsuario) {
+        this.selectedUsuario = selectedUsuario;
+    }
+    
+    
+    
 
     public ArrayList<String> getEstados() {
         return estados;
@@ -87,9 +121,17 @@ public class beanMensaje implements Serializable{
         return filteredMensajes;
     }
 
+   
+    
+    
+    
+    
+
     public void setFilteredMensajes(ArrayList<Mensaje> filteredMensajes) {
         this.filteredMensajes = filteredMensajes;
     }
+
+    
 
    
     
@@ -98,6 +140,7 @@ public class beanMensaje implements Serializable{
     
 
     public ArrayList<Mensaje> getListaMensajesRecibidos() {
+        //Collections.reverse(listaMensajesRecibidos);
         return listaMensajesRecibidos;
     }
 
@@ -106,6 +149,7 @@ public class beanMensaje implements Serializable{
     }
 
     public ArrayList<Mensaje> getListaMensajesEnviados() {
+        //Collections.reverse(listaMensajesEnviados);
         return listaMensajesEnviados;
     }
 
@@ -243,16 +287,9 @@ public class beanMensaje implements Serializable{
     
     
     
-    public void activaMensaje(){
-        
-        activaTexto=true;
-        
-    }
     
-    public void activaMensajeEnviado(){
-        
-        
-    }
+    
+    
     
     public String enviarMensajeCoordinador(){
         
@@ -271,9 +308,31 @@ public class beanMensaje implements Serializable{
         creaMensaje("mensaje enviado correctamente", FacesMessage.SEVERITY_WARN);
         texto="";
         tema="";
-        //activaTexto=false;
+        activaTexto=false;
         //actualizar();
         return "";
+    }
+    
+    public String enviaMensajeUsuario(){
+        
+         Mensaje m=new Mensaje(user, selectedUsuario, Calendar.getInstance().getTime(), tema, texto, "no");
+        try{
+        mensajeService.enviarMensaje(m);
+        }catch(Exception ex){
+            
+            creaMensaje("se ha producido un error creando el mensaje", FacesMessage.SEVERITY_ERROR);
+            return "";
+        }
+        
+        creaMensaje("mensaje enviado correctamente", FacesMessage.SEVERITY_WARN);
+        texto="";
+        tema="";
+        activaTexto=false;
+        //actualizar();
+        return "";
+        
+        
+        
     }
     
     public void cancelarEnvioCoordinador(){
@@ -281,11 +340,23 @@ public class beanMensaje implements Serializable{
         activaTexto=false;
     }
     
+   
+    
+    
     public void actualizar(){
         
-        setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesEnviados("admin", user.getLogin()));
+        if(user.getLogin().equals("user")){
+        //setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesEnviados("admin", user.getLogin()));
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviados(user.getLogin(), "admin"));
-        
+        filteredMensajes=null;
+        }
+        else if(user.getLogin().equals("admin")){
+        setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviadosTotal("admin"));
+        filteredMensajes=null;
+        //setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesRecibidosTotal("admin"));
+            
+            
+        }
     }
     
     public void leerMensajeEnviado(){
@@ -310,7 +381,7 @@ public class beanMensaje implements Serializable{
         
     }
     
-    public void leerMensajeRecibido(){
+    public String leerMensajeRecibido(){
         
         activaRecibido=true;
         temaRecibido=selectedMensajeRecibido.getTema();
@@ -323,9 +394,12 @@ public class beanMensaje implements Serializable{
         }catch(Exception ex){
             
             creaMensaje("se ha producido un error al leer mensaje", FacesMessage.SEVERITY_ERROR);
-            
+            return "";
         }
         actualizar();
+       HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        
+      return "";
         
     }
     
