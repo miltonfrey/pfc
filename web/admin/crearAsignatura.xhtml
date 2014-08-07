@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>crear asignatura</title>
+    </h:head>
+    <h:body>
+        
+        <h:form id="f1"> 
+                     <p:messages  id="msgs1" closable="true" />
+                
+                
+                     <p:panel>
+                         <p:selectOneMenu id="pais" value="#{beanCarrera.selectedPais}" required="true" requiredMessage="hay que introducir un pais">
+                        <p:ajax  listener="#{beanCarrera.onDropboxChangePais}" update=":f1:msgs1 :f1:uni :f1:carrera"/>
+                        <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
+                        <f:selectItems value="#{beanCarrera.paises}"/>
+            
+            
+                        </p:selectOneMenu>
+                     </p:panel> 
+               
+                
+                <p:outputPanel id="uni" >
+                    <p:selectOneMenu  value="#{beanCarrera.selectedUni}" rendered="#{beanCarrera.checkPais}" required="true" requiredMessage="hay que intrpducir una universidad"  >
+                
+                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update=":f1:carrera :f1:msgs1"/>
+                <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" id="uni3" />
+                <f:selectItems value="#{beanCarrera.listaUniversidadesStr}" id="uni4"  />
+            
+                 </p:selectOneMenu>
+                </p:outputPanel>
+            <br/>
+                
+            <p:outputPanel id="carrera">
+                <p:selectOneMenu  value="#{beanMovilidad.selectedCarrera}" rendered="#{beanMovilidad.checkUni}" required="true" requiredMessage="hay que introducir una carrera">
+                <f:selectItem itemLabel="elige la carrera" noSelectionOption="true" />
+                <f:selectItems value="#{beanCarrera.listaCarrerasStr}" />
+                             
+            </p:selectOneMenu>
+            </p:outputPanel>
+            
+            <p:outputPanel id="asign">
+                
+                <p:outputLabel value="nombre "/>
+                <p:inputText value="#{beanCarrera.nombreAsignatura}"/>
+                <br/>
+                <p:outputLabel value="creditos"/>
+                <p:inputText value="#{beanCarrera.creditosAsignatura}"/>
+                <br/>
+                <p:outputLabel value="periodo"/>
+                <p:selectOneMenu value="#{beanCarrera.periodoAsignatura}">
+                    <f:selectItem itemLabel="anual" itemValue="anual"/>
+                    <f:selectItem itemLabel="invierno" itemValue="invierno"/>
+                    <f:selectItem itemLabel="primavera" itemValue="primavera"/>
+                </p:selectOneMenu>
+                <p:commandButton value="crear asignatura"/>
+            </p:outputPanel>
+            
+            
+            
+            
+            
+            
+        </h:form>
+        
+        
+        
+        
+        
+         <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+            
+        
+        <p:panel>
+             <h:form>
+                 <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            </h:form>
+        </p:panel>
+        
+    
+
+        
+        
+    </h:body>
+</html>
+

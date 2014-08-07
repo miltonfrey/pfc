@@ -398,7 +398,7 @@ public class beanMovilidad implements Serializable{
             
         }
         
-        Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(), "movilidad "+changeEstado,"el coordinador ha modificado la movilidad", "no");
+        Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(), "movilidad: "+changeEstado,"el coordinador ha modificado la movilidad", "no");
         mensajeService.enviarMensaje(mensaje);
         creaMensaje("estado de una movilidad modificado, se ha enviado un mensaje", FacesMessage.SEVERITY_INFO);
        

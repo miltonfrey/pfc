@@ -18,9 +18,12 @@
             
             <p:messages closable="true"/>
             
-            <p:dataTable var="usuario" value="#{beanUsuario.listaUsuarios}" >
+            <p:dataTable id="tabla" var="usuario" value="#{beanUsuario.listaUsuarios}"
+                         filteredValue="#{beanUsuario.filteredUsuarios}"
+                         widgetVar="usTable"
+                         emptyMessage="no se han encontrado usuarios">
                 
-                <p:column headerText="login">
+                <p:column headerText="login" sortBy="#{usuario.login}" filterBy="#{usuario.login}" filterMatchMode="contains">
                     
                     <h:outputText value="#{usuario.login}"/>
                 </p:column>

@@ -32,7 +32,7 @@ public class beanCarrera implements Serializable{
     private CarreraService carreraService;
     
     
-    private String selectedPais;
+    
     
     private String pais;
     private String nombre;
@@ -40,6 +40,22 @@ public class beanCarrera implements Serializable{
     private String info;
     private String web;
     //private boolean disabled;
+    
+    private boolean checkPais;
+    private boolean checkUni;
+    private boolean checkCarrera;
+    
+    private String selectedUni;
+    private String selectedCarr;
+    private String selectedPais;
+    
+    
+    private String nombreAsignatura;
+    private Integer creditosAsignatura;
+    private String periodoAsignatura;
+    
+    private ArrayList<String> listaUniversidadesStr;
+    private ArrayList<String> listaCarrerasStr;
     
     private Carrera selectedCarrera;
     private Carrera nuevaCarrera;
@@ -132,6 +148,54 @@ public class beanCarrera implements Serializable{
         this.selectedPais = selectedPais;
     }
 
+    public String getSelectedUni() {
+        return selectedUni;
+    }
+
+    public void setSelectedUni(String selectedUni) {
+        this.selectedUni = selectedUni;
+    }
+
+    public String getSelectedCarr() {
+        return selectedCarr;
+    }
+
+    public void setSelectedCarr(String selectedCarr) {
+        this.selectedCarr = selectedCarr;
+    }
+
+    
+    public void onDropboxChangePais(){
+        
+        checkPais=true;
+       checkUni=false;
+       selectedUni="";
+       listaUniversidadesStr=(ArrayList<String>)carreraService.listarPorPaisStr(selectedPais);
+       Collections.sort(listaUniversidadesStr);
+       }
+    
+    public void onDropboxChangeUni(){
+        
+        
+        checkUni=true;
+        
+    }
+
+    public ArrayList<String> getListaUniversidadesStr() {
+        return listaUniversidadesStr;
+    }
+
+    public void setListaUniversidadesStr(ArrayList<String> listaUniversidadesStr) {
+        this.listaUniversidadesStr = listaUniversidadesStr;
+    }
+
+    public ArrayList<String> getListaCarrerasStr() {
+        return listaCarrerasStr;
+    }
+
+    public void setListaCarrerasStr(ArrayList<String> listaCarrerasStr) {
+        this.listaCarrerasStr = listaCarrerasStr;
+    }
    
 
    
@@ -211,6 +275,58 @@ public class beanCarrera implements Serializable{
     public void setNuevaCarrera(Carrera nuevaCarrera) {
         this.nuevaCarrera = nuevaCarrera;
     }
+
+    public boolean isCheckPais() {
+        return checkPais;
+    }
+
+    public void setCheckPais(boolean checkPais) {
+        this.checkPais = checkPais;
+    }
+
+    public boolean isCheckUni() {
+        return checkUni;
+    }
+
+    public void setCheckUni(boolean checkUni) {
+        this.checkUni = checkUni;
+    }
+
+    public boolean isCheckCarrera() {
+        return checkCarrera;
+    }
+
+    public void setCheckCarrera(boolean checkCarrera) {
+        this.checkCarrera = checkCarrera;
+    }
+
+    public String getNombreAsignatura() {
+        return nombreAsignatura;
+    }
+
+    public void setNombreAsignatura(String nombreAsignatura) {
+        this.nombreAsignatura = nombreAsignatura;
+    }
+
+    public Integer getCreditosAsignatura() {
+        return creditosAsignatura;
+    }
+
+    public void setCreditosAsignatura(Integer creditosAsignatura) {
+        this.creditosAsignatura = creditosAsignatura;
+    }
+
+    public String getPeriodoAsignatura() {
+        return periodoAsignatura;
+    }
+
+    public void setPeriodoAsignatura(String periodoAsignatura) {
+        this.periodoAsignatura = periodoAsignatura;
+    }
+    
+    
+    
+    
     
     
     
