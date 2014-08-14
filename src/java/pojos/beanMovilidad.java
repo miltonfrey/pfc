@@ -47,8 +47,8 @@ public class beanMovilidad implements Serializable{
      @ManagedProperty(value="#{movilidadService}")
     private transient MovilidadService movilidadService;
     
-    @ManagedProperty(value="#{carreraService}")
-    private transient CarreraService carreraService;
+    @ManagedProperty(value="#{universidadService}")
+    private transient UniversidadService universidadService;
 
      @ManagedProperty(value="#{usuarioService}")
      private transient UsuarioService usuarioService;
@@ -58,8 +58,8 @@ public class beanMovilidad implements Serializable{
   /*  private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
           stream.defaultReadObject();
           FacesContext context = FacesContext.getCurrentInstance();
-          carreraService = (CarreraService)context.getApplication()                            //esto parece no ser necesario
-                .evaluateExpressionGet(context, "#{carreraService}", CarreraService.class);
+          universidadService = (UniversidadService)context.getApplication()                            //esto parece no ser necesario
+                .evaluateExpressionGet(context, "#{universidadService}", UniversidadService.class);
           movilidadService = (MovilidadService)context.getApplication()
                 .evaluateExpressionGet(context, "#{movilidadService}", MovilidadService.class);
        }
@@ -78,9 +78,9 @@ public class beanMovilidad implements Serializable{
     
     private String selectedPais;
     private String selectedUni;
-    private String selectedCarrera;
+    private String selectedUniversidad;
     private Movilidad selectedMovilidad;
-    private ArrayList<Carrera> listaCarreras;
+    private ArrayList<Universidad> listaUniversidads;
     private ArrayList<Movilidad>listaMovilidades;
     private ArrayList<Movilidad> listaMisMovilidades;
     private ArrayList<Movilidad> filteredMovilidades;
@@ -89,11 +89,11 @@ public class beanMovilidad implements Serializable{
     SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
     
     private ArrayList<String> listaUniversidadesStr;
-    private ArrayList<String> listaCarrerasStr;
+    private ArrayList<String> listaUniversidadsStr;
    
     private boolean checkPais;
     private boolean checkUni;
-    private boolean checkCarrera;
+    private boolean checkUniversidad;
     
     
     @PostConstruct
@@ -159,12 +159,12 @@ public class beanMovilidad implements Serializable{
         this.movilidadService = movilidadService;
     }
 
-    public CarreraService getCarreraService() {
-        return carreraService;
+    public UniversidadService getUniversidadService() {
+        return universidadService;
     }
 
-    public void setCarreraService(CarreraService carreraService) {
-        this.carreraService = carreraService;
+    public void setUniversidadService(UniversidadService universidadService) {
+        this.universidadService = universidadService;
     }
 
     public String getSelectedPais() {
@@ -187,12 +187,12 @@ public class beanMovilidad implements Serializable{
         this.selectedUni = selectedUni;
     }
 
-    public String getSelectedCarrera() {
-        return selectedCarrera;
+    public String getSelectedUniversidad() {
+        return selectedUniversidad;
     }
 
-    public void setSelectedCarrera(String selectedCarrera) {
-        this.selectedCarrera = selectedCarrera;
+    public void setSelectedUniversidad(String selectedUniversidad) {
+        this.selectedUniversidad = selectedUniversidad;
     }
 
     public Movilidad getSelectedMovilidad() {
@@ -216,12 +216,12 @@ public class beanMovilidad implements Serializable{
     
     
     
-    public ArrayList<Carrera> getListaCarreras() {
-        return listaCarreras;
+    public ArrayList<Universidad> getListaUniversidads() {
+        return listaUniversidads;
     }
 
-    public void setListaCarreras(ArrayList<Carrera> listaCarreras) {
-        this.listaCarreras = listaCarreras;
+    public void setListaUniversidads(ArrayList<Universidad> listaUniversidads) {
+        this.listaUniversidads = listaUniversidads;
     }
 
    
@@ -265,12 +265,12 @@ public class beanMovilidad implements Serializable{
         this.listaUniversidadesStr = listaUniversidadesStr;
     }
 
-    public ArrayList<String> getListaCarrerasStr() {
-        return listaCarrerasStr;
+    public ArrayList<String> getListaUniversidadsStr() {
+        return listaUniversidadsStr;
     }
 
-    public void setListaCarrerasStr(ArrayList<String> listaCarrerasStr) {
-        this.listaCarrerasStr = listaCarrerasStr;
+    public void setListaUniversidadsStr(ArrayList<String> listaUniversidadsStr) {
+        this.listaUniversidadsStr = listaUniversidadsStr;
     }
 
     public ArrayList<String> getEstados() {
@@ -321,12 +321,12 @@ public class beanMovilidad implements Serializable{
         this.fechaFin = fechaFin;
     }
 
-    public boolean isCheckCarrera() {
-        return checkCarrera;
+    public boolean isCheckUniversidad() {
+        return checkUniversidad;
     }
 
-    public void setCheckCarrera(boolean checkCarrera) {
-        this.checkCarrera = checkCarrera;
+    public void setCheckUniversidad(boolean checkUniversidad) {
+        this.checkUniversidad = checkUniversidad;
     }
 
     public Date getFechaMin() {
@@ -365,7 +365,7 @@ public class beanMovilidad implements Serializable{
        checkPais=true;
        checkUni=false;
        selectedUni="";
-       listaUniversidadesStr=(ArrayList<String>)carreraService.listarPorPaisStr(selectedPais);
+       listaUniversidadesStr=(ArrayList<String>)universidadService.listarPorPaisStr(selectedPais);
        Collections.sort(listaUniversidadesStr);
        creaMensaje(" al cambiar pais "+checkPais+" selectedPais: "+selectedPais,FacesMessage.SEVERITY_INFO);
        
@@ -377,8 +377,8 @@ public class beanMovilidad implements Serializable{
         
         checkUni=true;
         
-        listaCarrerasStr=(ArrayList<String>)carreraService.listarPorUniversidadStr(selectedUni);
-        Collections.sort(listaCarrerasStr);
+        listaUniversidadsStr=(ArrayList<String>)universidadService.listarPorUniversidadStr(selectedUni);
+        Collections.sort(listaUniversidadsStr);
        creaMensaje(" al cambiar uni "+checkUni+" selectedUni: "+selectedUni,FacesMessage.SEVERITY_INFO);
         
     }
@@ -398,8 +398,8 @@ public class beanMovilidad implements Serializable{
             
         }
         
-        Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(), "movilidad: "+changeEstado,"el coordinador ha modificado la movilidad", "no");
-        mensajeService.enviarMensaje(mensaje);
+       // Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(), "movilidad: "+changeEstado,"el coordinador ha modificado la movilidad", "no");
+        //mensajeService.enviarMensaje(mensaje);
         creaMensaje("estado de una movilidad modificado, se ha enviado un mensaje", FacesMessage.SEVERITY_INFO);
        
     }
@@ -418,7 +418,7 @@ public class beanMovilidad implements Serializable{
         
         checkPais=false;
         checkUni=false;
-        creaMensaje(selectedCarrera+" "+selectedPais+" "+selectedUni+" "+usuario.getLogin() + " "+fechaFin, FacesMessage.SEVERITY_INFO);
+        creaMensaje(selectedUniversidad+" "+selectedPais+" "+selectedUni+" "+usuario.getLogin() + " "+fechaFin, FacesMessage.SEVERITY_INFO);
         Calendar cal1=Calendar.getInstance();
         Calendar cal2=Calendar.getInstance();
                 cal1.setTime(fechaInicio);
@@ -452,11 +452,11 @@ public class beanMovilidad implements Serializable{
                         
                     }
               String estado="pendiente";
-              Carrera c=carreraService.find(selectedCarrera, selectedUni);
+             // Universidad c=universidadService.find(selectedUniversidad, selectedUni);
               
-              Movilidad m=new Movilidad(usuario, c, fechaInicio, fechaFin, estado);
+              //Movilidad m=new Movilidad(usuario, c, fechaInicio, fechaFin, estado);
               try{
-              movilidadService.crearMovilidad(m);
+             // movilidadService.crearMovilidad(m);
                     
                 }catch(Exception ex){
                     creaMensaje("se ha producido un error creando la movilidad", FacesMessage.SEVERITY_ERROR);
@@ -464,16 +464,16 @@ public class beanMovilidad implements Serializable{
                 }
                 creaMensaje("movilidad creada, a la espera de aprobación por el coordinador, enviado un mensaje", FacesMessage.SEVERITY_INFO);
                 
-                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getLogin()+" ha creado una movilidad", "no");
+               // Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getLogin()+" ha creado una movilidad", "no");
                 try{
-                    mensajeService.enviarMensaje(mensaje);
+                   // mensajeService.enviarMensaje(mensaje);
                 }catch(Exception ex){
                     creaMensaje("error al enviar el mensaje", FacesMessage.SEVERITY_ERROR);
                 }
                 
                 
                 
-                selectedCarrera="";
+                selectedUniversidad="";
                 selectedPais="";
                 selectedUni="";
                 fechaFin=null;
@@ -502,7 +502,7 @@ public class beanMovilidad implements Serializable{
             }
             
             creaMensaje("movilidad eliminada correctamente, se ha enviado un mensaje al coordinador ", FacesMessage.SEVERITY_INFO);
-            Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no");
+           // Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no");
             actualizar();
             
         }else{

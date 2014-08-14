@@ -14,10 +14,10 @@
                 
                 
                      <p:panel>
-                         <p:selectOneMenu id="pais" value="#{beanCarrera.selectedPais}" required="true" requiredMessage="hay que introducir un pais">
-                        <p:ajax  listener="#{beanCarrera.onDropboxChangePais}" update=":f1:msgs1 :f1:uni :f1:carrera"/>
+                         <p:selectOneMenu id="pais" value="#{beanUniversidad.selectedPais}" required="true" requiredMessage="hay que introducir un pais">
+                        <p:ajax  listener="#{beanUniversidad.onDropboxChangePais}" update=":f1:msgs1 :f1:uni :f1:universidad"/>
                         <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
-                        <f:selectItems value="#{beanCarrera.paises}"/>
+                        <f:selectItems value="#{beanUniversidad.paises}"/>
             
             
                         </p:selectOneMenu>
@@ -25,20 +25,20 @@
                
                 
                 <p:outputPanel id="uni" >
-                    <p:selectOneMenu  value="#{beanCarrera.selectedUni}" rendered="#{beanCarrera.checkPais}" required="true" requiredMessage="hay que intrpducir una universidad"  >
+                    <p:selectOneMenu  value="#{beanUniversidad.selectedUni}" rendered="#{beanUniversidad.checkPais}" required="true" requiredMessage="hay que intrpducir una universidad"  >
                 
-                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update=":f1:carrera :f1:msgs1"/>
+                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update=":f1:universidad :f1:msgs1"/>
                 <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" id="uni3" />
-                <f:selectItems value="#{beanCarrera.listaUniversidadesStr}" id="uni4"  />
+                <f:selectItems value="#{beanUniversidad.listaUniversidadesStr}" id="uni4"  />
             
                  </p:selectOneMenu>
                 </p:outputPanel>
             <br/>
                 
-            <p:outputPanel id="carrera">
-                <p:selectOneMenu  value="#{beanMovilidad.selectedCarrera}" rendered="#{beanMovilidad.checkUni}" required="true" requiredMessage="hay que introducir una carrera">
-                <f:selectItem itemLabel="elige la carrera" noSelectionOption="true" />
-                <f:selectItems value="#{beanCarrera.listaCarrerasStr}" />
+            <p:outputPanel id="universidad">
+                <p:selectOneMenu  value="#{beanMovilidad.selectedUniversidad}" rendered="#{beanMovilidad.checkUni}" required="true" requiredMessage="hay que introducir una universidad">
+                <f:selectItem itemLabel="elige la universidad" noSelectionOption="true" />
+                <f:selectItems value="#{beanUniversidad.listaUniversidadsStr}" />
                              
             </p:selectOneMenu>
             </p:outputPanel>
@@ -46,13 +46,13 @@
             <p:outputPanel id="asign">
                 
                 <p:outputLabel value="nombre "/>
-                <p:inputText value="#{beanCarrera.nombreAsignatura}"/>
+                <p:inputText value="#{beanUniversidad.nombreAsignatura}"/>
                 <br/>
                 <p:outputLabel value="creditos"/>
-                <p:inputText value="#{beanCarrera.creditosAsignatura}"/>
+                <p:inputText value="#{beanUniversidad.creditosAsignatura}"/>
                 <br/>
                 <p:outputLabel value="periodo"/>
-                <p:selectOneMenu value="#{beanCarrera.periodoAsignatura}">
+                <p:selectOneMenu value="#{beanUniversidad.periodoAsignatura}">
                     <f:selectItem itemLabel="anual" itemValue="anual"/>
                     <f:selectItem itemLabel="invierno" itemValue="invierno"/>
                     <f:selectItem itemLabel="primavera" itemValue="primavera"/>

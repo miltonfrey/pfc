@@ -17,29 +17,42 @@
                 
                 <p:messages closable="true"/> 
                 
-                <p:outputLabel for="email1" value="correo electrónico"/>
-                <p:inputText id="email1" value="#{beanUsuario.email}"
+                
+                
+                <p:outputLabel value="escriba el nombre"/>
+                <p:inputText value="#{beanUsuario.nombre}"
                              required="true"
-                             requiredMessage="el campo email está vacío"
-                             validatorMessage="el correo electrónico es erroneo">
-                
-                    <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"/>
-                
-                </p:inputText>
-                <p:message for="email1"/>
-                <br/>
-                
-                <p:outputLabel for="email2" value="escriba de nuevo el correo electronico"/>
-                <p:inputText id="email2" value="#{beanUsuario.emailAux}"/>
+                             requiredMessage="el campo nombre está vacío"/>
                              
                                          
                              
                 <br/>
-                <!--si no se pone el messages lo pone igual en el facecontext-->
-                <p:outputLabel value="introducir login"/>
-                <p:inputText id="ii1" value="#{beanUsuario.login}"
+                
+                <p:outputLabel value="escriba el primer apellido"/>
+                <p:inputText value="#{beanUsuario.apellido1}"
                              required="true"
-                             requiredMessage="login no puede estar vacio"/>
+                             requiredMessage="el campo apellido1 está vacío"/>
+                             
+                                         
+                             
+                <br/>
+                
+                
+                             
+                
+                <!--si no se pone el messages lo pone igual en el facecontext-->
+                <p:outputLabel value="introducir segundo apellido"/>
+                <p:inputText id="ii1" value="#{beanUsuario.apellido2}"/>
+                             
+                <br/>
+                
+                <p:outputLabel value="escriba un login"/>
+                <p:inputText value="#{beanUsuario.login}"
+                             required="true"
+                             requiredMessage="el campo login está vacío"/>
+                             
+                                         
+                             
                 <br/>
                 
                 <p:outputLabel value="escribe una contraseña"/>
@@ -47,7 +60,11 @@
                 required="true"
                 requiredMessage="password no puede estar vacio"/>
                 
-                
+                <br/>
+                <p:outputLabel value="repite la contraseña"/>
+                <p:password value="#{beanUsuario.passwordAux}"
+                            required="true"
+                            requiredMessage="el campo password está vacío"/>
               
                 <br/>
                 <p:outputLabel value="titulacion" for="select1"/>
@@ -69,14 +86,22 @@
             </h:form>
             
         
+       <br/>
+        <br/>
+        
+        
+        
+        
+       <h:outputLink value="principal.xhtml"><h:graphicImage value="resources/iniciar-icono-4628-48.png"/></h:outputLink>  <!--tb vale img src-->
+        
+       <br/>
+       <br/>
        
-        
-        
-        
-        
-        
-       <h:outputLink value="principalUsuario.xhtml"><h:graphicImage value="resources/iniciar-icono-4628-48.png"/></h:outputLink>  <!--tb vale img src-->
-        
+       <h:form>
+            
+            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            
+        </h:form>
     </h:body>
 </html>
 

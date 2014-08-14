@@ -14,7 +14,7 @@
     </h:head>
     <h:body>
        
-        <h:form id="tabla">
+        <h:form id="formTabla">
             
             <p:messages closable="true"/>
             
@@ -23,39 +23,38 @@
                          widgetVar="usTable"
                          emptyMessage="no se han encontrado usuarios">
                 
-                <p:column headerText="login" sortBy="#{usuario.login}" filterBy="#{usuario.login}" filterMatchMode="contains">
+                <p:column headerText="login" sortBy="#{usuario.nombre}" filterBy="#{usuario.login}" filterMatchMode="contains">
                     
                     <h:outputText value="#{usuario.login}"/>
                 </p:column>
+            
+                <p:column headerText="nombre" sortBy="#{usuario.nombre}" filterBy="#{usuario.nombre}" filterMatchMode="contains">
                 
-                
-                <p:column headerText="tipo">
-                    
-                    <h:outputText value="#{usuario.tipoUsuario}"/>
-                    
+                          <h:outputText value="#{usuario.nombre}"/>
+                          
                 </p:column>
                 
-                <p:column headerText="correo">
-                    
-                    <h:outputText value="#{usuario.email}"/>
-                </p:column>
+                <p:column headerText="apellido" sortBy="#{usuario.apellido1}" filterBy="#{usuario.apellido1}" filterMatchMode="contains">
                 
-                <p:column headerText="titulacion">
-                    
-                    <h:outputText value="#{usuario.titulacion}"/>
+                    <h:outputText value="#{usuario.apellido1}"/>
+                
+                </p:column>
+                          
+                <p:column headerText="titulacion" filterBy="#{usuario.titulacion}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('usTable').filter()">
+                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{beanUsuario.listaTitulaciones}" />
+                </p:selectOneMenu>
+            </f:facet>
+            
+            <h:outputText value="#{usuario.titulacion}"/>
                 </p:column>
                 
                 <p:column headerText="eliminar">
-                                                      <!--para boton con sessionscope-->
-                   <!-- <p:commandButton value="eliminar" oncomplete="sure.show()" action="{beanUsuario.select}" update=":tabla:">
-                                                                                              
-                    <f:setPropertyActionListener value="{usuario}" target="{beanUsuario.selectedUsuario}" />
-                    
-                    </p:commandButton>  -->
-                    
-                    
+               
                     <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false"
-                                     value="eliminar" action="#{beanUsuario.eliminaUsuarioLista}" icon="edit_icon" update=":tabla:" >
+                                     value="eliminar" action="#{beanUsuario.eliminaUsuarioLista}" icon="edit_icon"  update=":formTabla" >
                         <f:setPropertyActionListener target="#{beanUsuario.selectedUsuario}" value="#{usuario}" />
                     </p:commandButton>
                     
@@ -64,18 +63,12 @@
                 
                 
             </p:dataTable>
-                                <!-- otra forma de hacer el boton confirm, requiere sessionscope-->
-            <p:dialog id="alerta1" widgetVar="sure" header="borrar" closable="false">
-                <p:commandButton value="si" action="#{beanUsuario.eliminaUsuarioLista()}" update=":tabla:" onclick="alerta1.hide()"/>
-                <p:commandButton value="no" action="#{beanUsuario.cancel()}" onclick="alerta1.hide()"/>
-                 
-            </p:dialog>
+                              
             
             <br/>
             
-            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" update="tabla"/>
-            
-            
+            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" update="formTabla"/>
+       
             
         </h:form>
         

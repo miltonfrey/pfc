@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-ago-2014 23:00:45 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="pojos.Universidad" table="universidad" catalog="pfc">
+        <id name="codUniversidad" type="string">
+            <column name="codUniversidad" length="15" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pais" class="pojos.Pais" fetch="select">
+            <column name="pais" length="45" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="info" type="string">
+            <column name="info" />
+        </property>
+        <property name="web" type="string">
+            <column name="web" length="50" />
+        </property>
+        <set name="movilidads" table="movilidad" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="codUniversidad" length="15" not-null="true" />
+            </key>
+            <one-to-many class="pojos.Movilidad" />
+        </set>
+        <set name="asignaturas" table="asignatura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="codUniversidad" length="15" not-null="true" />
+            </key>
+            <one-to-many class="pojos.Asignatura" />
+        </set>
+    </class>
+</hibernate-mapping>

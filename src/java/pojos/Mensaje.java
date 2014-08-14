@@ -1,5 +1,5 @@
 package pojos;
-// Generated 01-ago-2014 15:26:58 by Hibernate Tools 3.6.0
+// Generated 11-ago-2014 23:00:43 by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -31,18 +31,22 @@ public class Mensaje  implements java.io.Serializable {
      private Date fecha;
      private String tema;
      private String texto;
-     private String estado;
+     private String leidoDestino;
+     private String eliminadoOrigen;
+     private String eliminadoDestino;
 
     public Mensaje() {
     }
 
-    public Mensaje(Usuario usuarioByOrigen, Usuario usuarioByDestino, Date fecha, String tema, String texto, String estado) {
+    public Mensaje(Usuario usuarioByOrigen, Usuario usuarioByDestino, Date fecha, String tema, String texto, String leidoDestino, String eliminadoOrigen, String eliminadoDestino) {
        this.usuarioByOrigen = usuarioByOrigen;
        this.usuarioByDestino = usuarioByDestino;
        this.fecha = fecha;
        this.tema = tema;
        this.texto = texto;
-       this.estado = estado;
+       this.leidoDestino = leidoDestino;
+       this.eliminadoOrigen = eliminadoOrigen;
+       this.eliminadoDestino = eliminadoDestino;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -108,13 +112,33 @@ public class Mensaje  implements java.io.Serializable {
     }
 
     
-    @Column(name="estado", nullable=false, length=10)
-    public String getEstado() {
-        return this.estado;
+    @Column(name="leidoDestino", nullable=false, length=2)
+    public String getLeidoDestino() {
+        return this.leidoDestino;
     }
     
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setLeidoDestino(String leidoDestino) {
+        this.leidoDestino = leidoDestino;
+    }
+
+    
+    @Column(name="eliminadoOrigen", nullable=false, length=2)
+    public String getEliminadoOrigen() {
+        return this.eliminadoOrigen;
+    }
+    
+    public void setEliminadoOrigen(String eliminadoOrigen) {
+        this.eliminadoOrigen = eliminadoOrigen;
+    }
+
+    
+    @Column(name="eliminadoDestino", nullable=false, length=2)
+    public String getEliminadoDestino() {
+        return this.eliminadoDestino;
+    }
+    
+    public void setEliminadoDestino(String eliminadoDestino) {
+        this.eliminadoDestino = eliminadoDestino;
     }
 
 

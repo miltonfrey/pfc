@@ -41,7 +41,21 @@ public class MensajeDaoImpl implements MensajeDao{
     public List<Mensaje> mensajesEnviados(String origen,String destino){
         
         Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByOrigen.login=:origen  " +
-                "and m.usuarioByDestino.login=:destino order by m.fecha desc");
+                "and m.usuarioByDestino.login=:destino and m.eliminadoOrigen='no' order by m.fecha desc" );
+             
+        q.setParameter("origen", origen);
+        q.setParameter("destino", destino);
+        return q.list();
+      
+        
+    }
+    
+    
+    @Override
+    public List<Mensaje> mensajesRecibidos(String origen,String destino){
+        
+        Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByOrigen.login=:origen  " +
+                "and m.usuarioByDestino.login=:destino and m.eliminadoDestino='no' order by m.fecha desc" );
                 
         q.setParameter("origen", origen);
         q.setParameter("destino", destino);
@@ -72,6 +86,7 @@ public class MensajeDaoImpl implements MensajeDao{
     public void modificarEstado(Mensaje m){
         
         sessionFactory.getCurrentSession().saveOrUpdate(m);
+        
     }
     
     
@@ -85,19 +100,23 @@ public class MensajeDaoImpl implements MensajeDao{
       @Override          
       public List<Mensaje> mensajesEnviadosTotal(String origen){
           
-          Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByOrigen.login=:origen order by m.fecha desc");
+          Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByOrigen.login=:origen and m.eliminadoOrigen='no' order by m.fecha desc");
           q.setParameter("origen", origen);
           return q.list();
       }
        @Override         
        public List<Mensaje> mensajesRecibidosTotal(String destino){
-           Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByDestino.login=:destino order by m.fecha desc");
+           Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByDestino.login=:destino and m.eliminadoDestino='no' order by m.fecha desc");
           q.setParameter("destino", destino);
           return q.list();
        }    
                 
-                
-                
+             @Override   
+             public void eliminarMensaje(Mensaje m){
+                 
+                 sessionFactory.getCurrentSession().delete(m);
+                 
+             }   
                 
         
     

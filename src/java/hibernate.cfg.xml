@@ -9,9 +9,10 @@
     <property name="hibernate.connection.password">admin</property>
     <property name="hibernate.show_sql">true</property>
     <mapping resource="pojos/Usuario.hbm.xml"/>
+    <mapping resource="pojos/Universidad.hbm.xml"/>
+    <mapping resource="pojos/Pais.hbm.xml"/>
     <mapping resource="pojos/Asignatura.hbm.xml"/>
-    <mapping resource="pojos/Contrato.hbm.xml"/>
-    <mapping resource="pojos/Carrera.hbm.xml"/>
+    <mapping resource="pojos/Cursoacademico.hbm.xml"/>
     <mapping resource="pojos/Movilidad.hbm.xml"/>
     <mapping resource="pojos/Mensaje.hbm.xml"/>
   </session-factory>

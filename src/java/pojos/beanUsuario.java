@@ -15,11 +15,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 //import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
-import org.primefaces.event.SelectEvent;
+
 
 
 /**
@@ -37,14 +37,14 @@ public class beanUsuario implements Serializable{
     
     private String login;
     private String password;
-    private String email;
-    
+    private String passwordAux;
+    private String nombre;
+    private String apellido1;
+    private String apellido2;
     private Usuario user;
-    
-    
     private String titulacion;
     
-    private String emailAux;
+    
     private Usuario selectedUsuario;
     
     private ArrayList<Usuario> listaUsuarios;
@@ -63,23 +63,24 @@ public class beanUsuario implements Serializable{
         setListaUsuarios((ArrayList < Usuario >)usuarioService.listar());
         ArrayList<String>aux=new ArrayList<String>();
         aux.add("GEI");
+        aux.add("MUEI");
         setListaTitulaciones(aux);
         
         HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        //HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         
         if(session.getAttribute("user")!=null){
             
             user=(Usuario)session.getAttribute("user");
         }
         
-        if (request.getRequestURI().equals(request.getContextPath()+"/usuario/verMisMensajes.xhtml")){
+     /*  if (request.getRequestURI().equals(request.getContextPath()+"/usuario/verMisMensajes.xhtml")){
             
            
             
         }
         
-        
+        */
         
         
     }
@@ -149,21 +150,7 @@ public class beanUsuario implements Serializable{
     
     
 ///////////////////////////////////////////////////////////////////////////////////////////
-    /*public ArrayList<Movilidad> getListaMovilidades() {
-        return listaMovilidades;
-    }
-
-    public void setListaMovilidades(ArrayList<Movilidad> listaMovilidades) {
-        this.listaMovilidades = listaMovilidades;
-    }
-
-    public MovilidadService getMovilidadService() {
-        return movilidadService;
-    }
-
-    public void setMovilidadService(MovilidadService movilidadService) {
-        this.movilidadService = movilidadService;
-    }*/
+   
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
     
@@ -183,26 +170,46 @@ public class beanUsuario implements Serializable{
         return password;
     }
 
+    public String getPasswordAux() {
+        return passwordAux;
+    }
+
+    public void setPasswordAux(String passwordAux) {
+        this.passwordAux = passwordAux;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido1() {
+        return apellido1;
+    }
+
+    public void setApellido1(String apellido1) {
+        this.apellido1 = apellido1;
+    }
+
+    public String getApellido2() {
+        return apellido2;
+    }
+
+    public void setApellido2(String apellido2) {
+        this.apellido2 = apellido2;
+    }
+
+    
+    
+    
+    
+    
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmailAux() {
-        return emailAux;
-    }
-
-    public void setEmailAux(String emailAux) {
-        this.emailAux = emailAux;
-        
-        }
 
     public ArrayList<String> getListaTitulaciones() {
         
@@ -242,6 +249,7 @@ public class beanUsuario implements Serializable{
     public void actualizar(){
         
         setListaUsuarios((ArrayList < Usuario >)usuarioService.listar());
+        filteredUsuarios=null;
         
     }
     
@@ -282,28 +290,30 @@ public class beanUsuario implements Serializable{
                  }
          
         creaMensaje("usuario borrado "+getSelectedUsuario().getLogin(), FacesMessage.SEVERITY_INFO);
-        this.actualizar();
+        actualizar();
         return "";
           
     }
     
     public String creaUsuario(){
         
-        if(getEmail().equals(getEmailAux())==false){
+        if(getPassword().equals(getPasswordAux())==false){
             
-            creaMensaje("los correos no coinciden", FacesMessage.SEVERITY_ERROR);
-            return "principalUsuario.xhtml?faces-redirect=true";
+            creaMensaje("los password no coinciden", FacesMessage.SEVERITY_ERROR);
+            return "";
         }
         
         
-        login=getLogin();
-        password=getPassword();
+        
         Usuario u=new Usuario();
         u.setLogin(login);
         u.setPassword(password);
         short s=1;
         u.setTipoUsuario(s);
-        u.setEmail(email);
+        u.setNombre(nombre);
+        u.setApellido1(apellido1);
+        u.setApellido2(apellido2);
+        
         u.setTitulacion(titulacion);
         
         try{
@@ -317,23 +327,19 @@ public class beanUsuario implements Serializable{
                 }
         
         creaMensaje("usuario creado", FacesMessage.SEVERITY_INFO);
+        
+        login="";
+        nombre="";
+        apellido1="";
+        apellido2="";
+        titulacion="";
+        password="";
             return("");
         
     }
         
-    public String verMisMensajes(){
-        
-        
-        setListaMensajes((ArrayList<Mensaje>) mensajeService.mensajesEnviados("admin",user.getLogin() ));
-        creaMensaje(user.getLogin(), FacesMessage.SEVERITY_INFO);
-        return "verMisMensajes.xhtml?faces-redirect=true";
-        
-    }
-        
-        
-        
-        
-        public String autenticarAdmin(){
+    
+            public String autenticarAdmin(){
             Usuario u=usuarioService.find(getLogin());
             
             if(u==null){

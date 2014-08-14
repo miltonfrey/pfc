@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+    <h:head>
+        <title>crear universidad</title>
+        <h:outputScript library="js" name="funciones.js"/>
+        
+    </h:head>
+    <h:body>
+        
+        
+            
+            <h:form id="formUniversidad">
+                
+                <p:messages closable="true"/>
+                
+                <p:outputLabel value="pais" for="p1"/>
+                <p:selectOneMenu id="p1" value="#{beanUniversidad.paisStr}"
+                                 required="true"
+                                 requiredMessage="el campo pais está vacío">
+                                 
+                    
+                    <f:selectItem itemLabel="elige un pais" noSelectionOption="true"/>
+                    <f:selectItems var="pais" value="#{beanUniversidad.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}" />
+                    
+                </p:selectOneMenu>
+                
+                <br/>
+                
+                <p:outputLabel value="nombre"/>
+                <p:inputText value="#{beanUniversidad.nombre}"
+                             required="true"
+                             requiredMessage="el campo nombre está vacío">
+                    
+                </p:inputText>
+                
+                <br/>
+                
+                <p:outputLabel value="código universidad"/>
+                <p:inputText value="#{beanUniversidad.codUniversidad}"
+                             required="true"
+                             requiredMessage="el campo Coduniversidad está vacío">
+                    
+                </p:inputText>
+                
+                <br/>
+                
+                             
+                <p:outputLabel value="información adicional"/>
+                <p:inputTextarea value="#{beanUniversidad.info}"/>
+                
+                <br/>
+                
+                <p:outputLabel value="pagina web"/>
+                <p:inputText value="#{beanUniversidad.web}"/>
+                
+                <br/>
+                
+                <p:commandButton value="crear universidad" action="#{beanUniversidad.creaUniversidad}" ajax="false"/>
+                
+            <br/>
+            <br/>  
+                <p:dataTable id="universidadTable" var="universidad" value="#{beanUniversidad.listaUniversidades}"  emptyMessage="No hay universidades" 
+                             widgetVar="uniBtn">
+                
+                    <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
+                        
+                        <h:outputText value="#{universidad.codUniversidad}"/>
+                            
+                        
+                    </p:column>
+                         
+                    <p:column headerText="universidad" sortBy="#{universidad.nombre}">
+                        
+                            
+                        <h:outputText value="#{universidad.nombre}"/>
+                        
+                        
+                    </p:column>
+                    
+                    <p:column sortBy="#{universidad.pais.nombre}" headerText="pais">
+                    
+                        <h:outputText value="#{universidad.pais.nombre}"/>
+                         
+                    </p:column>
+                    
+                
+                    
+                    
+                    <p:column headerText="Eliminar">
+                                                      
+                    <p:commandButton id="b1" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
+                                     value="eliminar" action="#{beanUniversidad.eliminaUniversidadLista}" process="b1" icon="edit_icon" update=":formUniversidad">
+                                    
+                                     
+                        <f:setPropertyActionListener target="#{beanUniversidad.selectedUniversidad}" value="#{universidad}" /> <!--es como un listener-->
+                    </p:commandButton>
+                    
+                </p:column>
+                
+                </p:dataTable>
+                             
+            </h:form>
+            
+            
+        
+        
+        
+       
+            
+            
+            
+            
+            
+                
+                <br/>
+                
+                
+                <h:form>
+                <p:commandButton value="salir" action="#{beanUsuario.salir}" ajax="false"/>
+            </h:form>
+            
+            
+            
+            
+            
+        
+        <br/>
+        
+        
+        
+        
+        
+        <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
+        
+    </h:body>
+    
+</html>
+
+

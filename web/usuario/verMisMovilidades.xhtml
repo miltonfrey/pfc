@@ -54,14 +54,14 @@
                 <p:column headerText="universidad">
                     
                     
-                    <h:outputText value="#{movilidad.carrera.id.nombre}"/>
+                    <h:outputText value="#{movilidad.universidad.id.nombre}"/>
                     
                     
                 </p:column>
                 
-                <p:column headerText="carrera">
+                <p:column headerText="universidad">
                     
-                    <h:outputText value="#{movilidad.carrera.id.universidad}"/>
+                    <h:outputText value="#{movilidad.universidad.id.universidad}"/>
                     
                 </p:column>
                 
@@ -84,7 +84,7 @@
                 
                  <p:column headerText="eliminar">
                     
-                    <p:commandButton value="eliminar" action="#{beanMovilidad.eliminarMovilidad}" update=":f1:" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
+                    <p:commandButton  value="eliminar" action="#{beanMovilidad.eliminarMovilidad}" update=":f1:" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
                                      icon="edit_icon">
                         <f:setPropertyActionListener value="#{movilidad}" target="#{beanMovilidad.selectedMovilidad}"/>
                     

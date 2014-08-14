@@ -15,7 +15,9 @@
                <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}"
                          emptyMessage="no hay mensajes"
                          widgetVar="mensTabla"
-                         filteredValue="#{beanMensaje.filteredMensajes}">
+                         filteredValue="#{beanMensaje.filteredMensajesRecibidos}"
+                         selection="#{beanMensaje.selectedMensajesRecibidos}"
+                         rowKey="#{mensaje.idmensaje}">
                <f:facet name="header">Mensajes recibidos</f:facet>
                 
                       <p:column headerText="De:">
@@ -32,7 +34,7 @@
                           </h:outputText>
                       </p:column>
                
-               <p:column filterBy="#{mensaje.estado}" headerText="leido" filterMatchMode="exact">
+               <p:column filterBy="#{mensaje.leidoDestino}" headerText="leido" filterMatchMode="exact">
                    <f:facet name="filter">
                        <p:selectOneMenu onchange="PF('mensTabla').filter()">
                             <f:selectItem itemLabel="no" itemValue="no" />
@@ -41,13 +43,20 @@
                         </p:selectOneMenu>
                             
                     </f:facet>
-                    <h:outputText value="#{mensaje.estado}"/>
+                   <h:outputText value="#{mensaje.leidoDestino}"/>
                </p:column>
                     <p:column>
                           <p:commandButton value="leer" update=":recibidos" action="#{beanMensaje.leerMensajeRecibido}">
                               <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeRecibido}"/>
                            </p:commandButton>
                       </p:column>
+               
+               <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+               
+                         <f:facet name="footer">
+                             <p:commandButton update=":recibidos:" icon="ui-icon-search" value="Borrar" action="#{beanMensaje.eliminarMensajesRecibidos}" 
+                                              oncomplete="PF('mensTabla').clearFilters()"/>
+                         </f:facet>
                 </p:dataTable> 
            
            
@@ -74,7 +83,9 @@
             <h:form id="enviados">
             <p:messages id="msgsEnviados" closable="true"/>
                          <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}"
-                         emptyMessage="no hay mensajes">
+                         emptyMessage="no hay mensajes"
+                         selection="#{beanMensaje.selectedMensajesEnviados}"
+                         rowKey="#{mensaje.idmensaje}">
                          <f:facet name="header">Mensajes enviados</f:facet>
                               <p:column sortBy="#{mensaje.fecha}">
                                    <h:outputText value="#{mensaje.fecha}">
@@ -88,9 +99,15 @@
                          
                               <p:column>
                                   <p:commandButton value="leer" update=":enviados:panelEnviados" action="#{beanMensaje.leerMensajeEnviado}">
-                                       <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensaje}"/>
+                                       <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeEnviado}"/>
                                   </p:commandButton>
                               </p:column>
+                         
+                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+               
+                         <f:facet name="footer">
+                             <p:commandButton update=":enviados:" icon="ui-icon-search" value="Borrar" action="#{beanMensaje.eliminarMensajesEnviados}" />
+                         </f:facet>
                              
                         </p:dataTable>   
                         

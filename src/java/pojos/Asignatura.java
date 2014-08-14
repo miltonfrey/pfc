@@ -1,15 +1,14 @@
 package pojos;
-// Generated 01-ago-2014 15:26:58 by Hibernate Tools 3.6.0
+// Generated 11-ago-2014 23:00:43 by Hibernate Tools 3.6.0
 
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,57 +22,65 @@ import javax.persistence.Table;
 public class Asignatura  implements java.io.Serializable {
 
 
-     private Integer codAsignatura;
-     private Carrera carrera;
+     private AsignaturaId id;
+     private Universidad universidad;
      private String nombre;
      private short creditos;
      private String periodo;
      private String info;
+     private String web;
+     private String facultad;
+     private String estudios;
 
     public Asignatura() {
     }
 
 	
-    public Asignatura(Carrera carrera, String nombre, short creditos, String periodo) {
-        this.carrera = carrera;
+    public Asignatura(AsignaturaId id, Universidad universidad, String nombre, short creditos, String periodo) {
+        this.id = id;
+        this.universidad = universidad;
         this.nombre = nombre;
         this.creditos = creditos;
         this.periodo = periodo;
     }
-    public Asignatura(Carrera carrera, String nombre, short creditos, String periodo, String info) {
-       this.carrera = carrera;
+    public Asignatura(AsignaturaId id, Universidad universidad, String nombre, short creditos, String periodo, String info, String web, String facultad, String estudios) {
+       this.id = id;
+       this.universidad = universidad;
        this.nombre = nombre;
        this.creditos = creditos;
        this.periodo = periodo;
        this.info = info;
+       this.web = web;
+       this.facultad = facultad;
+       this.estudios = estudios;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
+     @EmbeddedId
 
     
-    @Column(name="codAsignatura", unique=true, nullable=false)
-    public Integer getCodAsignatura() {
-        return this.codAsignatura;
+    @AttributeOverrides( {
+        @AttributeOverride(name="codAsignatura", column=@Column(name="codAsignatura", nullable=false) ), 
+        @AttributeOverride(name="codUniversidad", column=@Column(name="codUniversidad", nullable=false, length=15) ) } )
+    public AsignaturaId getId() {
+        return this.id;
     }
     
-    public void setCodAsignatura(Integer codAsignatura) {
-        this.codAsignatura = codAsignatura;
+    public void setId(AsignaturaId id) {
+        this.id = id;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumns( { 
-        @JoinColumn(name="nombreTit", referencedColumnName="nombre", nullable=false), 
-        @JoinColumn(name="nombreUni", referencedColumnName="universidad", nullable=false) } )
-    public Carrera getCarrera() {
-        return this.carrera;
+    @JoinColumn(name="codUniversidad", nullable=false, insertable=false, updatable=false)
+    public Universidad getUniversidad() {
+        return this.universidad;
     }
     
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
+    public void setUniversidad(Universidad universidad) {
+        this.universidad = universidad;
     }
 
     
-    @Column(name="nombre", nullable=false, length=40)
+    @Column(name="nombre", nullable=false, length=45)
     public String getNombre() {
         return this.nombre;
     }
@@ -110,6 +117,36 @@ public class Asignatura  implements java.io.Serializable {
     
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    
+    @Column(name="web", length=50)
+    public String getWeb() {
+        return this.web;
+    }
+    
+    public void setWeb(String web) {
+        this.web = web;
+    }
+
+    
+    @Column(name="facultad", length=45)
+    public String getFacultad() {
+        return this.facultad;
+    }
+    
+    public void setFacultad(String facultad) {
+        this.facultad = facultad;
+    }
+
+    
+    @Column(name="estudios", length=45)
+    public String getEstudios() {
+        return this.estudios;
+    }
+    
+    public void setEstudios(String estudios) {
+        this.estudios = estudios;
     }
 
 

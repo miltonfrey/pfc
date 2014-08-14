@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 01-ago-2014 15:26:58 by Hibernate Tools 3.6.0 -->
+<!-- Generated 11-ago-2014 23:00:45 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="pojos.Usuario" table="usuario" catalog="pfc">
         <id name="login" type="string">
@@ -14,11 +14,17 @@
         <property name="tipoUsuario" type="short">
             <column name="tipo_usuario" not-null="true" />
         </property>
-        <property name="email" type="string">
-            <column name="email" length="30" not-null="true" unique="true" />
-        </property>
         <property name="titulacion" type="string">
             <column name="titulacion" length="25" not-null="true" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <property name="apellido1" type="string">
+            <column name="apellido1" length="45" not-null="true" />
+        </property>
+        <property name="apellido2" type="string">
+            <column name="apellido2" length="45" />
         </property>
         <set name="mensajesForDestino" table="mensaje" inverse="true" lazy="true" fetch="select">
             <key>
@@ -26,15 +32,9 @@
             </key>
             <one-to-many class="pojos.Mensaje" />
         </set>
-        <set name="contratos" table="contrato" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="login" length="20" not-null="true" />
-            </key>
-            <one-to-many class="pojos.Contrato" />
-        </set>
         <set name="movilidads" table="movilidad" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="loginAlumno" length="20" not-null="true" />
+                <column name="loginUsuario" length="20" not-null="true" />
             </key>
             <one-to-many class="pojos.Movilidad" />
         </set>

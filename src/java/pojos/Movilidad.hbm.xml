@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 01-ago-2014 15:26:58 by Hibernate Tools 3.6.0 -->
+<!-- Generated 11-ago-2014 23:00:45 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="pojos.Movilidad" table="movilidad" catalog="pfc">
         <id name="codMovilidad" type="java.lang.Integer">
@@ -9,11 +9,13 @@
             <generator class="identity" />
         </id>
         <many-to-one name="usuario" class="pojos.Usuario" fetch="select">
-            <column name="loginAlumno" length="20" not-null="true" />
+            <column name="loginUsuario" length="20" not-null="true" />
         </many-to-one>
-        <many-to-one name="carrera" class="pojos.Carrera" fetch="select">
-            <column name="nombreCarrera" length="40" not-null="true" />
-            <column name="nombreUni" length="45" not-null="true" />
+        <many-to-one name="cursoacademico" class="pojos.Cursoacademico" fetch="select">
+            <column name="cursoAcademico" length="10" not-null="true" />
+        </many-to-one>
+        <many-to-one name="universidad" class="pojos.Universidad" fetch="select">
+            <column name="codUniversidad" length="15" not-null="true" />
         </many-to-one>
         <property name="fechaInicio" type="timestamp">
             <column name="fechaInicio" length="19" not-null="true" />

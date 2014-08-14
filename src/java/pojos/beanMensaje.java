@@ -19,8 +19,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.bean.ViewScoped;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 
 /**
  *
@@ -39,7 +39,8 @@ public class beanMensaje implements Serializable{
     
     private ArrayList<Mensaje> listaMensajesRecibidos;
     private ArrayList<Mensaje> listaMensajesEnviados;
-    private ArrayList<Mensaje> filteredMensajes;
+    
+    
     
     private ArrayList<String> estados;
     private Usuario user;
@@ -49,16 +50,21 @@ public class beanMensaje implements Serializable{
     private boolean activaRecibido;
     private String textAreaRecibido;
     private String temaRecibido;
+    
     private boolean activaEnviado;
     private String textAreaEnviado;
     private String temaEnviado;
+    
     private boolean activaTexto;
     private String tema;
     private String texto;
     
-    private Mensaje selectedMensaje;
+    private Mensaje selectedMensajeEnviado;
     private Mensaje selectedMensajeRecibido;
-    
+    private ArrayList<Mensaje> selectedMensajesEnviados;
+    private ArrayList<Mensaje> selectedMensajesRecibidos;
+    private ArrayList<Mensaje> filteredMensajesEnviados;
+    private ArrayList<Mensaje> filteredMensajesRecibidos;
     private Usuario selectedUsuario;
     
     public beanMensaje() {
@@ -77,7 +83,7 @@ public class beanMensaje implements Serializable{
        
        if((Usuario)session.getAttribute("user")!=null){
            user=(Usuario)session.getAttribute("user");
-           setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesEnviados("admin", user.getLogin()));
+           setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesRecibidos("admin", user.getLogin()));
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviados(user.getLogin(), "admin"));
            
        }
@@ -117,20 +123,47 @@ public class beanMensaje implements Serializable{
         this.estados = estados;
     }
 
-    public ArrayList<Mensaje> getFilteredMensajes() {
-        return filteredMensajes;
+    public ArrayList<Mensaje> getSelectedMensajesEnviados() {
+        return selectedMensajesEnviados;
     }
 
+    public void setSelectedMensajesEnviados(ArrayList<Mensaje> selectedMensajesEnviados) {
+        this.selectedMensajesEnviados = selectedMensajesEnviados;
+    }
+
+    public ArrayList<Mensaje> getSelectedMensajesRecibidos() {
+        return selectedMensajesRecibidos;
+    }
+
+    public void setSelectedMensajesRecibidos(ArrayList<Mensaje> selectedMensajesRecibidos) {
+        this.selectedMensajesRecibidos = selectedMensajesRecibidos;
+    }
+
+    public ArrayList<Mensaje> getFilteredMensajesEnviados() {
+        return filteredMensajesEnviados;
+    }
+
+    public void setFilteredMensajesEnviados(ArrayList<Mensaje> filteredMensajesEnviados) {
+        this.filteredMensajesEnviados = filteredMensajesEnviados;
+    }
+
+    public ArrayList<Mensaje> getFilteredMensajesRecibidos() {
+        return filteredMensajesRecibidos;
+    }
+
+    public void setFilteredMensajesRecibidos(ArrayList<Mensaje> filteredMensajesRecibidos) {
+        this.filteredMensajesRecibidos = filteredMensajesRecibidos;
+    }
+
+   
+    
    
     
     
     
     
 
-    public void setFilteredMensajes(ArrayList<Mensaje> filteredMensajes) {
-        this.filteredMensajes = filteredMensajes;
-    }
-
+   
     
 
    
@@ -254,12 +287,12 @@ public class beanMensaje implements Serializable{
         this.temaEnviado = temaEnviado;
     }
 
-    public Mensaje getSelectedMensaje() {
-        return selectedMensaje;
+    public Mensaje getSelectedMensajeEnviado() {
+        return selectedMensajeEnviado;
     }
 
-    public void setSelectedMensaje(Mensaje selectedMensaje) {
-        this.selectedMensaje = selectedMensaje;
+    public void setSelectedMensajeEnviado(Mensaje selectedMensajeEnviado) {
+        this.selectedMensajeEnviado = selectedMensajeEnviado;
     }
 
     public Mensaje getSelectedMensajeRecibido() {
@@ -296,7 +329,7 @@ public class beanMensaje implements Serializable{
         Usuario destino=usuarioService.find("admin");
         
         
-        Mensaje m=new Mensaje(user, destino, Calendar.getInstance().getTime(), tema, texto, "no");
+        Mensaje m=new Mensaje(user, destino, Calendar.getInstance().getTime(), tema, texto, "no","no","no");
         try{
         mensajeService.enviarMensaje(m);
         }catch(Exception ex){
@@ -309,13 +342,13 @@ public class beanMensaje implements Serializable{
         texto="";
         tema="";
         activaTexto=false;
-        //actualizar();
+        //actualizarEnviados();
         return "";
     }
     
     public String enviaMensajeUsuario(){
         
-         Mensaje m=new Mensaje(user, selectedUsuario, Calendar.getInstance().getTime(), tema, texto, "no");
+         Mensaje m=new Mensaje(user, selectedUsuario, Calendar.getInstance().getTime(), tema, texto, "no","no","no");
         try{
         mensajeService.enviarMensaje(m);
         }catch(Exception ex){
@@ -328,12 +361,12 @@ public class beanMensaje implements Serializable{
         texto="";
         tema="";
         activaTexto=false;
-        //actualizar();
+        //actualizarEnviados();
         return "";
-        
-        
-        
+   
     }
+    
+   
     
     public void cancelarEnvioCoordinador(){
         
@@ -343,34 +376,162 @@ public class beanMensaje implements Serializable{
    
     
     
-    public void actualizar(){
+    public void actualizarEnviados(){
         
-        if(user.getLogin().equals("user")){
-        //setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesEnviados("admin", user.getLogin()));
+        if(user.getLogin().equals("admin")==false){
+            
+        
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviados(user.getLogin(), "admin"));
-        filteredMensajes=null;
+        
+        
+        for(Mensaje m:selectedMensajesEnviados){
+            
+            if(selectedMensajeEnviado!=null&&m.getIdmensaje().equals(selectedMensajeEnviado.getIdmensaje()))
+             
+            activaEnviado=false;
+            
+        }    
+        
+        //filteredMensajes=null;
+        //selectedMensajes=null;
+        //selectedMensajeEnviado=null;
+        
         }
         else if(user.getLogin().equals("admin")){
+             
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviadosTotal("admin"));
-        filteredMensajes=null;
-        //setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesRecibidosTotal("admin"));
+        for(Mensaje m:selectedMensajesEnviados){
             
+            if(selectedMensajeEnviado!=null&&m.getIdmensaje().equals(selectedMensajeEnviado.getIdmensaje()))
+             
+            activaEnviado=false;
+            
+        }       
+        //filteredMensajesEnviados=null;
+        //selectedMensajesEnviados=null;
+        //selectedMensajeEnviado=null;
             
         }
+              
     }
     
-    public void leerMensajeEnviado(){
+    
+    public void actualizarRecibidos(){
         
-        activaEnviado=true;
-        textAreaEnviado=selectedMensaje.getTexto();
-        temaEnviado=selectedMensaje.getTema();
+        if(user.getLogin().equals("admin")==false){
+            
+        setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesRecibidos("admin", user.getLogin()));
+        for(Mensaje m:selectedMensajesRecibidos){
+            
+            if(selectedMensajeRecibido!=null&&m.getIdmensaje().equals(selectedMensajeRecibido.getIdmensaje()))
+             
+            activaRecibido=false;
+            
+        }     
+            
+        
+        //filteredMensajes=null;
+        //selectedMensajesRecibidos=null;
+        //selectedMensajeRecibido=null;
+        
+        }
+        else if(user.getLogin().equals("admin")){
+            
+        setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesRecibidosTotal("admin"));
+        for(Mensaje m:selectedMensajesRecibidos){
+            
+            if(selectedMensajeRecibido!=null&&m.getIdmensaje().equals(selectedMensajeRecibido.getIdmensaje()))
+             
+            activaRecibido=false;
+            
+        }    
+        
+        
+        
+        
+        //filteredMensajesRecibidos=null;
+        //selectedMensajes=null;
+        //selectedMensajeRecibido=null;
+            
+        }
+              
+    }
+    
+    
+   
+    
+    public String eliminarMensajesEnviados(){
+        creaMensaje("en eliminarMensajeEnviado", FacesMessage.SEVERITY_INFO);
+        if(selectedMensajesEnviados.isEmpty()){
+            return "";
+        }
+        
+        for(Mensaje m:selectedMensajesEnviados){
+            creaMensaje(m.getEliminadoDestino(), FacesMessage.SEVERITY_INFO);
+            m.setEliminadoOrigen("si");
+            try{
+                
+                if(m.getEliminadoDestino().equals("si")){
+                    
+                    mensajeService.eliminarMensaje(m);
+                }else{
+                    
+                  mensajeService.enviarMensaje(m);  
+                }
+                
+            }catch(Exception ex){
+                
+                creaMensaje("se ha producido un error en el borrado de mensajes", FacesMessage.SEVERITY_ERROR);
+                return "";
+            }
+            
+        }
+        
+        
+        creaMensaje("mensajes eliminados correctamente", FacesMessage.SEVERITY_INFO);
+        actualizarEnviados();
+       // actualizarRecibidos();
+        return "";
         
     }
     
-    public void eliminarMensajeEnviado(){
+    
+     public String eliminarMensajesRecibidos(){
+        
+        if(selectedMensajesRecibidos.isEmpty()){
+            return "";
+        }
+        
+        for(Mensaje m:selectedMensajesRecibidos){
+         
+            m.setEliminadoDestino("si");
+            try{
+                
+                if(m.getEliminadoOrigen().equals("si")){
+                    
+                    mensajeService.eliminarMensaje(m);
+                }else{
+                    
+                     mensajeService.enviarMensaje(m);
+                }
+                
+            }catch(Exception ex){
+                
+                creaMensaje("se ha producido un error en el borrado de mensajes", FacesMessage.SEVERITY_ERROR);
+                return "";
+            }
+            
+        }
+        
+         creaMensaje("mensajes eliminados correctamente", FacesMessage.SEVERITY_INFO);
+         //actualizarEnviados();
+        actualizarRecibidos();
+        return "";
+        
         
         
     }
+    
     
     
     public void cerrarMensajeEnviado(){
@@ -386,7 +547,7 @@ public class beanMensaje implements Serializable{
         activaRecibido=true;
         temaRecibido=selectedMensajeRecibido.getTema();
         textAreaRecibido=selectedMensajeRecibido.getTexto();
-        selectedMensajeRecibido.setEstado("si");
+        selectedMensajeRecibido.setLeidoDestino("si");
         try{
             
             mensajeService.enviarMensaje(selectedMensajeRecibido);
@@ -396,12 +557,21 @@ public class beanMensaje implements Serializable{
             creaMensaje("se ha producido un error al leer mensaje", FacesMessage.SEVERITY_ERROR);
             return "";
         }
-        actualizar();
-       HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        
+       //listaMensajesEnviados=(ArrayList<Mensaje>)mensajeService.mensajesRecibidos(, texto)
         
       return "";
         
     }
+    
+     public void leerMensajeEnviado(){
+        
+        activaEnviado=true;
+        textAreaEnviado=selectedMensajeEnviado.getTexto();
+        temaEnviado=selectedMensajeEnviado.getTema();
+        
+    }
+    
     
     public void cerrarMensajeRecibido(){
         
@@ -421,7 +591,5 @@ public class beanMensaje implements Serializable{
             context.addMessage(null, message);
         }
     
-    
-    
-    
+   
 }

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Curso académico</title>
+    </h:head>
+    <h:body>
+        
+        
+        <h:form id="formCurso">
+            
+            <p:messages id="messages1" closable="true"/>
+            
+            <p:outputLabel value="Curso académico"/>
+            <p:inputMask id="msk1" value="#{beanUniversidad.cursoAcademico}" mask="99/99"
+                         required="true"
+                         requiredMessage="el campo curso académico está vacío"/>
+             <br/>
+             <p:commandButton id="insBtn" value="crear curso académico" action="#{beanUniversidad.creaCursoAcademico}" update="formCurso" process="msk1 insBtn"/>
+            
+             <br/>
+             <br/>
+             <p:selectOneMenu id="m1" value="#{beanUniversidad.cursoAcademico}" required="true" requiredMessage="hay que elegir un curso académico">
+                 <f:selectItem itemValue="#{null}" itemLabel="lista de cursos academicos" noSelectionOption="true"/>
+                 <f:selectItems id="sel1" var="curso" value="#{beanUniversidad.listaCursoAcademico}" itemLabel="#{curso.cursoAcademico}" itemValue="#{curso.cursoAcademico}"/>
+             </p:selectOneMenu>
+             
+             <p:commandButton id="delBtn" value="eliminar curso académico" action="#{beanUniversidad.eliminarCursoAcademico()}" update="formCurso" process="m1 delBtn" />
+        </h:form>
+        
+      <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>  <!--tb vale img src-->
+        
+       <br/>
+       <br/>
+       
+       <h:form id="f1">
+           <p:messages closable="true"/>
+           <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}" update="f1"/>
+            
+        </h:form>
+        
+        
+        
+    </h:body>
+</html>
+

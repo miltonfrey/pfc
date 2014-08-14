@@ -1,5 +1,5 @@
 package pojos;
-// Generated 01-ago-2014 15:26:58 by Hibernate Tools 3.6.0
+// Generated 11-ago-2014 23:00:43 by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,7 +27,8 @@ public class Movilidad  implements java.io.Serializable {
 
      private Integer codMovilidad;
      private Usuario usuario;
-     private Carrera carrera;
+     private Cursoacademico cursoacademico;
+     private Universidad universidad;
      private Date fechaInicio;
      private Date fechaFin;
      private String estado;
@@ -36,9 +36,10 @@ public class Movilidad  implements java.io.Serializable {
     public Movilidad() {
     }
 
-    public Movilidad(Usuario usuario, Carrera carrera, Date fechaInicio, Date fechaFin, String estado) {
+    public Movilidad(Usuario usuario, Cursoacademico cursoacademico, Universidad universidad, Date fechaInicio, Date fechaFin, String estado) {
        this.usuario = usuario;
-       this.carrera = carrera;
+       this.cursoacademico = cursoacademico;
+       this.universidad = universidad;
        this.fechaInicio = fechaInicio;
        this.fechaFin = fechaFin;
        this.estado = estado;
@@ -57,7 +58,7 @@ public class Movilidad  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="loginAlumno", nullable=false)
+    @JoinColumn(name="loginUsuario", nullable=false)
     public Usuario getUsuario() {
         return this.usuario;
     }
@@ -67,15 +68,23 @@ public class Movilidad  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumns( { 
-        @JoinColumn(name="nombreCarrera", referencedColumnName="nombre", nullable=false), 
-        @JoinColumn(name="nombreUni", referencedColumnName="universidad", nullable=false) } )
-    public Carrera getCarrera() {
-        return this.carrera;
+    @JoinColumn(name="cursoAcademico", nullable=false)
+    public Cursoacademico getCursoacademico() {
+        return this.cursoacademico;
     }
     
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
+    public void setCursoacademico(Cursoacademico cursoacademico) {
+        this.cursoacademico = cursoacademico;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="codUniversidad", nullable=false)
+    public Universidad getUniversidad() {
+        return this.universidad;
+    }
+    
+    public void setUniversidad(Universidad universidad) {
+        this.universidad = universidad;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

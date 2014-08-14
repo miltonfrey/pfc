@@ -33,6 +33,12 @@ public class MensajeServiceImpl implements MensajeService{
         return mensajeDao.mensajesEnviados(origen, destino);
     }
     
+     @Override
+    public List<Mensaje> mensajesRecibidos(String origen,String destino){
+        
+        return mensajeDao.mensajesRecibidos(origen, destino);
+    }
+    
     @Override
     public void enviarMensaje(Mensaje m){
         mensajeDao.crearMensaje(m);
@@ -51,5 +57,11 @@ public class MensajeServiceImpl implements MensajeService{
         return mensajeDao.mensajesRecibidosTotal(origen);
     }
     
+    
+    @Override
+    public void eliminarMensaje(Mensaje m){
+        
+        mensajeDao.eliminarMensaje(m);
+    }
     
 }
