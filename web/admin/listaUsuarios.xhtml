@@ -20,8 +20,10 @@
             
             <p:dataTable id="tabla" var="usuario" value="#{beanUsuario.listaUsuarios}"
                          filteredValue="#{beanUsuario.filteredUsuarios}"
+                         selection="#{beanUsuario.selectedUsuarios}"
                          widgetVar="usTable"
-                         emptyMessage="no se han encontrado usuarios">
+                         emptyMessage="no se han encontrado usuarios"
+                         rowKey="#{usuario.login}">
                 
                 <p:column headerText="login" sortBy="#{usuario.nombre}" filterBy="#{usuario.login}" filterMatchMode="contains">
                     
@@ -53,14 +55,19 @@
                 
                 <p:column headerText="eliminar">
                
-                    <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false"
-                                     value="eliminar" action="#{beanUsuario.eliminaUsuarioLista}" icon="edit_icon"  update=":formTabla" >
-                        <f:setPropertyActionListener target="#{beanUsuario.selectedUsuario}" value="#{usuario}" />
-                    </p:commandButton>
+                    <!--<p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false"
+                                     value="eliminar" action="{beanUsuario.eliminaUsuarioLista}" icon="edit_icon"  update=":formTabla" >
+                        <f:setPropertyActionListener target="{beanUsuario.selectedUsuario}" value="{usuario}" />
+                    </p:commandButton>-->
                     
                 </p:column>
                 
-                
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+               
+                         <f:facet name="footer">
+                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Borrar" action="#{beanUsuario.eliminaUsuariosLista}" 
+                                              />
+                         </f:facet>
                 
             </p:dataTable>
                               

@@ -17,4 +17,5 @@ public void enviarMensaje(Mensaje m);
 public List<Mensaje> mensajesRecibidosTotal(String destino);
 public List<Mensaje> mensajesEnviadosTotal(String origen);
 public void eliminarMensaje(Mensaje m);
+public Mensaje find(Integer msgId);
 }

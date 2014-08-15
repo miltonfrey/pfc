@@ -46,6 +46,7 @@ public class beanUsuario implements Serializable{
     
     
     private Usuario selectedUsuario;
+    private ArrayList<Usuario> selectedUsuarios;
     
     private ArrayList<Usuario> listaUsuarios;
     private ArrayList<Usuario> filteredUsuarios;
@@ -153,6 +154,14 @@ public class beanUsuario implements Serializable{
    
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public ArrayList<Usuario> getSelectedUsuarios() {
+        return selectedUsuarios;
+    }
+
+    public void setSelectedUsuarios(ArrayList<Usuario> selectedUsuarios) {
+        this.selectedUsuarios = selectedUsuarios;
+    }
+
     
    
     
@@ -249,7 +258,9 @@ public class beanUsuario implements Serializable{
     public void actualizar(){
         
         setListaUsuarios((ArrayList < Usuario >)usuarioService.listar());
-        filteredUsuarios=null;
+        //if(filteredUsuarios!=null)
+        //filteredUsuarios.remove(selectedUsuario);
+        //filteredUsuarios=null;
         
     }
     
@@ -294,6 +305,38 @@ public class beanUsuario implements Serializable{
         return "";
           
     }
+    
+    public String eliminaUsuariosLista(){
+        
+        if(selectedUsuarios.isEmpty()){
+            return "";
+        }
+        
+        for(Usuario u:selectedUsuarios){
+        
+        try{
+         usuarioService.delete(u);
+         if(filteredUsuarios!=null){
+             
+             filteredUsuarios.remove(u);
+             
+         }
+        
+                 
+                 
+        }catch(Exception ex){
+                     
+            creaMensaje("error al eliminar "+ getSelectedUsuario().getLogin(), FacesMessage.SEVERITY_FATAL);
+            return "";
+                 }
+        }
+        creaMensaje("usuarios borrado ", FacesMessage.SEVERITY_INFO);
+        actualizar();
+        return "";
+          
+    }
+    
+    
     
     public String creaUsuario(){
         

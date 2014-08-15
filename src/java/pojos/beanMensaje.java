@@ -392,9 +392,6 @@ public class beanMensaje implements Serializable{
             
         }    
         
-        //filteredMensajes=null;
-        //selectedMensajes=null;
-        //selectedMensajeEnviado=null;
         
         }
         else if(user.getLogin().equals("admin")){
@@ -407,10 +404,7 @@ public class beanMensaje implements Serializable{
             activaEnviado=false;
             
         }       
-        //filteredMensajesEnviados=null;
-        //selectedMensajesEnviados=null;
-        //selectedMensajeEnviado=null;
-            
+        
         }
               
     }
@@ -428,12 +422,7 @@ public class beanMensaje implements Serializable{
             activaRecibido=false;
             
         }     
-            
-        
-        //filteredMensajes=null;
-        //selectedMensajesRecibidos=null;
-        //selectedMensajeRecibido=null;
-        
+         
         }
         else if(user.getLogin().equals("admin")){
             
@@ -445,14 +434,7 @@ public class beanMensaje implements Serializable{
             activaRecibido=false;
             
         }    
-        
-        
-        
-        
-        //filteredMensajesRecibidos=null;
-        //selectedMensajes=null;
-        //selectedMensajeRecibido=null;
-            
+   
         }
               
     }
@@ -468,15 +450,21 @@ public class beanMensaje implements Serializable{
         
         for(Mensaje m:selectedMensajesEnviados){
             creaMensaje(m.getEliminadoDestino(), FacesMessage.SEVERITY_INFO);
-            m.setEliminadoOrigen("si");
+            
+            
+             Mensaje aux=mensajeService.find(m.getIdmensaje());
+            
+            if(aux!=null){
+            aux.setEliminadoOrigen("si");
+           
             try{
-                
-                if(m.getEliminadoDestino().equals("si")){
+            
+                if(aux.getEliminadoDestino().equals("si")){
                     
-                    mensajeService.eliminarMensaje(m);
+                    mensajeService.eliminarMensaje(aux);
                 }else{
                     
-                  mensajeService.enviarMensaje(m);  
+                  mensajeService.enviarMensaje(aux);  
                 }
                 
             }catch(Exception ex){
@@ -484,10 +472,9 @@ public class beanMensaje implements Serializable{
                 creaMensaje("se ha producido un error en el borrado de mensajes", FacesMessage.SEVERITY_ERROR);
                 return "";
             }
-            
+            }
         }
-        
-        
+     
         creaMensaje("mensajes eliminados correctamente", FacesMessage.SEVERITY_INFO);
         actualizarEnviados();
        // actualizarRecibidos();
@@ -504,15 +491,20 @@ public class beanMensaje implements Serializable{
         
         for(Mensaje m:selectedMensajesRecibidos){
          
-            m.setEliminadoDestino("si");
+            Mensaje aux=mensajeService.find(m.getIdmensaje());
+            
+            if(aux!=null){
+            aux.setEliminadoDestino("si");
+                creaMensaje(aux.getEliminadoOrigen()+" "+aux.getEliminadoDestino(), FacesMessage.SEVERITY_INFO);
+            
             try{
                 
-                if(m.getEliminadoOrigen().equals("si")){
+                if(aux.getEliminadoOrigen().equals("si")){
                     
-                    mensajeService.eliminarMensaje(m);
+                    mensajeService.eliminarMensaje(aux);
                 }else{
                     
-                     mensajeService.enviarMensaje(m);
+                     mensajeService.enviarMensaje(aux);
                 }
                 
             }catch(Exception ex){
@@ -522,7 +514,7 @@ public class beanMensaje implements Serializable{
             }
             
         }
-        
+        }
          creaMensaje("mensajes eliminados correctamente", FacesMessage.SEVERITY_INFO);
          //actualizarEnviados();
         actualizarRecibidos();
@@ -547,17 +539,25 @@ public class beanMensaje implements Serializable{
         activaRecibido=true;
         temaRecibido=selectedMensajeRecibido.getTema();
         textAreaRecibido=selectedMensajeRecibido.getTexto();
-        selectedMensajeRecibido.setLeidoDestino("si");
+        
+       // if (filteredMensajesRecibidos!=null) filteredMensajesRecibidos.remove(selectedMensajeRecibido);
+        
+        Mensaje aux=mensajeService.find(selectedMensajeRecibido.getIdmensaje());
+            
+            if(aux!=null){
+            aux.setLeidoDestino("si");
+            selectedMensajeRecibido.setLeidoDestino("si");
+        //if (filteredMensajesRecibidos!=null) filteredMensajesRecibidos.add(aux);
         try{
             
-            mensajeService.enviarMensaje(selectedMensajeRecibido);
+            mensajeService.enviarMensaje(aux);
             
         }catch(Exception ex){
             
             creaMensaje("se ha producido un error al leer mensaje", FacesMessage.SEVERITY_ERROR);
             return "";
         }
-        
+            }
        //listaMensajesEnviados=(ArrayList<Mensaje>)mensajeService.mensajesRecibidos(, texto)
         
       return "";

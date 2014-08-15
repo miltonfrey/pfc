@@ -118,8 +118,12 @@ public class MensajeDaoImpl implements MensajeDao{
                  
              }   
                 
-        
-    
+     @Override   
+     public Mensaje find(Integer msgId){
+         return(Mensaje)sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.idmensaje=:msgId").setParameter("msgId", msgId).uniqueResult();
+         
+         
+     }
     
     
 }

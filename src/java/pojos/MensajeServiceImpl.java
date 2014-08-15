@@ -64,4 +64,10 @@ public class MensajeServiceImpl implements MensajeService{
         mensajeDao.eliminarMensaje(m);
     }
     
+    
+    public Mensaje find(Integer msgId){
+        
+        return mensajeDao.find(msgId);
+    }
+    
 }

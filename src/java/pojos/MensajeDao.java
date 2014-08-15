@@ -20,5 +20,5 @@ public interface MensajeDao {
     public List<Mensaje> mensajesEnviadosTotal(String origen);
     public List<Mensaje> mensajesRecibidosTotal(String destino);
     public void eliminarMensaje(Mensaje m);
-    
+    public Mensaje find(Integer msgId);
 }
