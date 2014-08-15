@@ -63,7 +63,12 @@ public class MensajeDaoImpl implements MensajeDao{
        
         
     }
-            
+            @Override         
+       public List<Mensaje> mensajesRecibidosTotal(String destino){
+           Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByDestino.login=:destino and m.eliminadoDestino='no' order by m.fecha desc");
+          q.setParameter("destino", destino);
+          return q.list();
+       }     
             
             
    @Override
@@ -104,12 +109,7 @@ public class MensajeDaoImpl implements MensajeDao{
           q.setParameter("origen", origen);
           return q.list();
       }
-       @Override         
-       public List<Mensaje> mensajesRecibidosTotal(String destino){
-           Query q=sessionFactory.getCurrentSession().createQuery("select m from Mensaje m where m.usuarioByDestino.login=:destino and m.eliminadoDestino='no' order by m.fecha desc");
-          q.setParameter("destino", destino);
-          return q.list();
-       }    
+      
                 
              @Override   
              public void eliminarMensaje(Mensaje m){

@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
       
     <h:head>
@@ -66,7 +65,7 @@
                
                          <f:facet name="footer">
                              <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Borrar" action="#{beanUsuario.eliminaUsuariosLista}" 
-                                              />
+                                 oncomplete="PF('usTable').clearFilters()"/>
                          </f:facet>
                 
             </p:dataTable>

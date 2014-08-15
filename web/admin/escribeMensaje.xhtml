@@ -53,7 +53,8 @@
                <p:inputTextarea value="#{beanMensaje.texto}" required="true" requiredMessage="el texto está vacío" cols="50" rows="6" rendered="#{beanMensaje.activaTexto}"/>
                <br/>
                <p:commandButton value="enviar" action="#{beanMensaje.enviaMensajeUsuario}" rendered="#{beanMensaje.activaTexto}" update="usuario"/>
-            
+               <p:commandButton value="cancelar" action="#{beanMensaje.cancelarEnvioCoordinador()}"  process="@this" rendered="#{beanMensaje.activaTexto}" update=":usuario"/>
+                                
             
            </p:outputPanel>
         </p:panel>

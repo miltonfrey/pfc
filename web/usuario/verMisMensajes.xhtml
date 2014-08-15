@@ -17,7 +17,7 @@
                          widgetVar="mensTabla"
                          filteredValue="#{beanMensaje.filteredMensajesRecibidos}"
                          selection="#{beanMensaje.selectedMensajesRecibidos}"
-                         rowKey="#{mensaje.eliminadoDestino}">
+                         rowKey="#{mensaje.idmensaje}">
                <f:facet name="header">Mensajes recibidos</f:facet>
                 
                       <p:column headerText="De:">
@@ -36,11 +36,10 @@
                
                <p:column filterBy="#{mensaje.leidoDestino}" headerText="leido" filterMatchMode="exact">
                    <f:facet name="filter">
-                       <p:selectOneMenu onchange="PF('mensTabla').filter()">
-                           <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItem itemLabel="si" itemValue="si" />
-                            <f:selectItem itemLabel="no" itemValue="no"/>
-                            
+                      <p:selectOneMenu onchange="PF('mensTabla').filter()">
+                            <f:selectItem itemLabel="no" itemValue="no" />
+                            <f:selectItem itemLabel="si" itemValue="si"/>
+                            <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
                         </p:selectOneMenu>
                             
                     </f:facet>
@@ -55,7 +54,8 @@
                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                
                          <f:facet name="footer">
-                             <p:commandButton update=":recibidos:" icon="ui-icon-search" value="Borrar" action="#{beanMensaje.eliminarMensajesRecibidos}" />
+                             <p:commandButton update=":recibidos:" icon="ui-icon-search" value="Borrar" action="#{beanMensaje.eliminarMensajesRecibidos}"
+                                              oncomplete="PF('mensTabla').clearFilters()"/>
                          </f:facet>
                
                 </p:dataTable> 

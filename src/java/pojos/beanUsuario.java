@@ -262,6 +262,8 @@ public class beanUsuario implements Serializable{
         //filteredUsuarios.remove(selectedUsuario);
         //filteredUsuarios=null;
         
+       
+        
     }
     
     public String eliminaUsuario(){
@@ -316,14 +318,7 @@ public class beanUsuario implements Serializable{
         
         try{
          usuarioService.delete(u);
-         if(filteredUsuarios!=null){
-             
-             filteredUsuarios.remove(u);
-             
-         }
-        
-                 
-                 
+      
         }catch(Exception ex){
                      
             creaMensaje("error al eliminar "+ getSelectedUsuario().getLogin(), FacesMessage.SEVERITY_FATAL);

@@ -64,7 +64,7 @@ public class MensajeServiceImpl implements MensajeService{
         mensajeDao.eliminarMensaje(m);
     }
     
-    
+    @Override
     public Mensaje find(Integer msgId){
         
         return mensajeDao.find(msgId);

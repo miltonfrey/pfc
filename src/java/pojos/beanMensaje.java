@@ -379,23 +379,20 @@ public class beanMensaje implements Serializable{
     public void actualizarEnviados(){
         
         if(user.getLogin().equals("admin")==false){
-            
-        
+         
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviados(user.getLogin(), "admin"));
-        
-        
+       
         for(Mensaje m:selectedMensajesEnviados){
-            
+         
             if(selectedMensajeEnviado!=null&&m.getIdmensaje().equals(selectedMensajeEnviado.getIdmensaje()))
              
             activaEnviado=false;
             
         }    
-        
-        
+       
         }
         else if(user.getLogin().equals("admin")){
-             
+      
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviadosTotal("admin"));
         for(Mensaje m:selectedMensajesEnviados){
             
@@ -413,14 +410,14 @@ public class beanMensaje implements Serializable{
     public void actualizarRecibidos(){
         
         if(user.getLogin().equals("admin")==false){
-            
+            creaMensaje("en user", FacesMessage.SEVERITY_INFO);
         setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesRecibidos("admin", user.getLogin()));
         for(Mensaje m:selectedMensajesRecibidos){
             
             if(selectedMensajeRecibido!=null&&m.getIdmensaje().equals(selectedMensajeRecibido.getIdmensaje()))
              
             activaRecibido=false;
-            
+         
         }     
          
         }
@@ -482,7 +479,6 @@ public class beanMensaje implements Serializable{
         
     }
     
-    
      public String eliminarMensajesRecibidos(){
         
         if(selectedMensajesRecibidos.isEmpty()){
@@ -519,13 +515,9 @@ public class beanMensaje implements Serializable{
          //actualizarEnviados();
         actualizarRecibidos();
         return "";
-        
-        
-        
+    
     }
-    
-    
-    
+   
     public void cerrarMensajeEnviado(){
         
         textAreaEnviado="";

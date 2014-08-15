@@ -62,7 +62,7 @@
            
            <p:outputPanel id="panelRecibidos">
                 <p:outputLabel id="labelTemaRecibido" value="tema" rendered="#{beanMensaje.activaRecibido}"/>
-                <p:inputText id="temaRecibido" value="#{beanMensaje.temaRecibido}" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:inputText id="temaRecibido" value="#{beanMensaje.temaRecibido}" rendered="#{beanMensaje.activaRecibido}" readonly="true"/>
                 <p:outputLabel id="labelTextoRecibido" value="texto" for="textoRecibido" rendered="#{beanMensaje.activaRecibido}"/>
                 <p:inputTextarea id="textoRecibido" value="#{beanMensaje.textAreaRecibido}"
                                  rendered="#{beanMensaje.activaRecibido}" readonly="true" autoResize="true" cols="80" rows="10"/>

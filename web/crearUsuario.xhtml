@@ -49,7 +49,8 @@
                 <p:outputLabel value="escriba un login"/>
                 <p:inputText value="#{beanUsuario.login}"
                              required="true"
-                             requiredMessage="el campo login está vacío"/>
+                             requiredMessage="el campo login está vacío"
+                             autocomplete="off"/>
                              
                                          
                              
@@ -58,7 +59,8 @@
                 <p:outputLabel value="escribe una contraseña"/>
                 <p:password id="hidden1" value="#{beanUsuario.password}"
                 required="true"
-                requiredMessage="password no puede estar vacio"/>
+                requiredMessage="password no puede estar vacio"
+                autocomplete="off"/>
                 
                 <br/>
                 <p:outputLabel value="repite la contraseña"/>
