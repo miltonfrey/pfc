@@ -9,55 +9,67 @@
     </h:head>
     <h:body>
         
-        <h:form id="f1"> 
+        <h:form id="formAsignatura"> 
                      <p:messages  id="msgs1" closable="true" />
                 
                 
                      <p:panel>
-                         <p:selectOneMenu id="pais" value="#{beanUniversidad.selectedPais}" required="true" requiredMessage="hay que introducir un pais">
-                        <p:ajax  listener="#{beanUniversidad.onDropboxChangePais}" update=":f1:msgs1 :f1:uni :f1:universidad"/>
+                         <p:selectOneMenu id="pais" value="#{beanUniversidad.paisStr}" required="true" requiredMessage="hay que introducir un pais">
+                        <p:ajax  listener="#{beanUniversidad.onChangePais}" update=":formAsignatura:universidad"/>
                         <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
-                        <f:selectItems value="#{beanUniversidad.paises}"/>
+                        <f:selectItems value="#{beanUniversidad.listaPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.nombre}"/>
             
             
                         </p:selectOneMenu>
                      </p:panel> 
                
                 
-                <p:outputPanel id="uni" >
-                    <p:selectOneMenu  value="#{beanUniversidad.selectedUni}" rendered="#{beanUniversidad.checkPais}" required="true" requiredMessage="hay que intrpducir una universidad"  >
+                <p:outputPanel id="universidad" >
+                    <p:selectOneMenu  value="#{beanUniversidad.universidadStr}" rendered="#{beanUniversidad.checkPaisStr}" required="true" requiredMessage="hay que introducir una universidad"  >
                 
-                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update=":f1:universidad :f1:msgs1"/>
+                        <p:ajax listener="#{beanUniversidad.onChangeUniversidad}" update=":formAsignatura:asignatura"/>
                 <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" id="uni3" />
-                <f:selectItems value="#{beanUniversidad.listaUniversidadesStr}" id="uni4"  />
+                <f:selectItems value="#{beanUniversidad.listaUniversidades}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"/>
             
                  </p:selectOneMenu>
                 </p:outputPanel>
             <br/>
                 
-            <p:outputPanel id="universidad">
-                <p:selectOneMenu  value="#{beanMovilidad.selectedUniversidad}" rendered="#{beanMovilidad.checkUni}" required="true" requiredMessage="hay que introducir una universidad">
-                <f:selectItem itemLabel="elige la universidad" noSelectionOption="true" />
-                <f:selectItems value="#{beanUniversidad.listaUniversidadsStr}" />
-                             
-            </p:selectOneMenu>
-            </p:outputPanel>
             
-            <p:outputPanel id="asign">
+            
+            <p:outputPanel id="asignatura">
                 
+                
+                <p:outputLabel value="Código"/>
+                <p:inputText value="#{beanUniversidad.codAsignatura}" rendered="#{beanUniversidad.checkUniversidadStr}"/>
+                <br/>
                 <p:outputLabel value="nombre "/>
-                <p:inputText value="#{beanUniversidad.nombreAsignatura}"/>
+                <p:inputText value="#{beanUniversidad.nombreAsignatura}" rendered="#{beanUniversidad.checkUniversidadStr}"/>
                 <br/>
                 <p:outputLabel value="creditos"/>
-                <p:inputText value="#{beanUniversidad.creditosAsignatura}"/>
+                <p:inputText value="#{beanUniversidad.creditosAsignatura}" rendered="#{beanUniversidad.checkUniversidadStr}"/>
                 <br/>
                 <p:outputLabel value="periodo"/>
-                <p:selectOneMenu value="#{beanUniversidad.periodoAsignatura}">
+                <p:selectOneMenu value="#{beanUniversidad.periodoAsignatura}}" rendered="#{beanUniversidad.checkUniversidadStr}">
                     <f:selectItem itemLabel="anual" itemValue="anual"/>
                     <f:selectItem itemLabel="invierno" itemValue="invierno"/>
                     <f:selectItem itemLabel="primavera" itemValue="primavera"/>
                 </p:selectOneMenu>
-                <p:commandButton value="crear asignatura"/>
+                
+                <br/>
+                <p:outputLabel value="web"/>
+                <p:inputText value="#{beanUniversidad.webAsignatura}" rendered="#{beanUniversidad.checkUniversidadStr}"/>
+                <br/>
+                <p:outputLabel value="info"/>
+                <p:inputTextarea value="#{beanUniversidad.infoAsignatura}" rendered="#{beanUniversidad.checkUniversidadStr}"/>
+                <br/>
+                <p:outputLabel value="titulacion"/>
+                <p:inputText value="#{beanUniversidad.titulacionAsignatura}" rendered="#{beanUniversidad.checkUniversidadStr}"/>
+                <br/>
+                
+                <p:commandButton value="crear asignatura" action="#{beanUniversidad.creaAsignatura}" rendered="#{beanUniversidad.checkUniversidadStr}" update=":formAsignatura"/>
+                
+                
             </p:outputPanel>
             
             

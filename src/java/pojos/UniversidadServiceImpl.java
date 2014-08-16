@@ -143,6 +143,12 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
        return universidadDao.listaCursosAcademicos();
    }
    
+   
+   @Override
+   public Universidad findUniversidad(String universidad){
+       
+       return universidadDao.findUniversidad(universidad);
+   }
     
 }
 

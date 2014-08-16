@@ -143,4 +143,13 @@ public class UniversidadDaoImpl implements UniversidadDao,Serializable{
         return sessionFactory.getCurrentSession().createQuery("select c from Cursoacademico c order by c.cursoAcademico").list();
         
     }
+    
+    @Override
+    public Universidad findUniversidad(String universidad){
+        
+        Query q=sessionFactory.getCurrentSession().createQuery("select u from Universidad u where u.nombre=:universidad");
+        q.setParameter("universidad", universidad);
+        return (Universidad)q.uniqueResult();
+        
+    }
 }

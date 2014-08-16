@@ -9,23 +9,26 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 //import javax.faces.bean.SessionScoped;
 //import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 //import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.dao.DataAccessException;
 
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class beanUniversidad implements Serializable{
     
     @ManagedProperty(value="#{universidadService}")
     private UniversidadService universidadService;
+    
+    @ManagedProperty (value="#{asignaturaService}")
+    private AsignaturaService asignaturaService;
+    
     
     
     private String cursoAcademico;
@@ -34,9 +37,9 @@ public class beanUniversidad implements Serializable{
     private String paisStr;
     private Pais pais;
     
+   
     
-    
-    
+    //universidad
     private String codUniversidad;
     private String nombre;
     private String universidadStr;
@@ -44,15 +47,46 @@ public class beanUniversidad implements Serializable{
     private String web;
    
     
+    //asignatura
+    
+    private Integer codAsignatura;
+    private String nombreAsignatura;
+    private Integer creditosAsignatura;
+    private String periodoAsignatura;
+    private String infoAsignatura;
+    private String webAsignatura;
+    private String facultadAsignatura;
+    private String titulacionAsignatura;
+    
     private ArrayList<Universidad> listaUniversidades;
     private ArrayList<Pais> listaPaises;
     
     
     private boolean checkPaisStr;
-  
+    private boolean checkUniversidadStr;
+    
     
     private Pais selectedPais;
     private Universidad selectedUniversidad;
+    
+    
+    
+    public UniversidadService getUniversidadService() {
+        return universidadService;
+    }
+
+    public void setUniversidadService(UniversidadService universidadService) {
+        this.universidadService = universidadService;
+    }
+
+    public AsignaturaService getAsignaturaService() {
+        return asignaturaService;
+    }
+
+    public void setAsignaturaService(AsignaturaService asignaturaService) {
+        this.asignaturaService = asignaturaService;
+    }
+    
     
     
     
@@ -68,6 +102,8 @@ public class beanUniversidad implements Serializable{
             setListaCursoAcademico((ArrayList < Cursoacademico >)universidadService.listaCursosAcademicos());
         }
         
+       
+        
     }
     
     
@@ -76,13 +112,9 @@ public class beanUniversidad implements Serializable{
         
     }
 
-    public UniversidadService getUniversidadService() {
-        return universidadService;
-    }
-
-    public void setUniversidadService(UniversidadService universidadService) {
-        this.universidadService = universidadService;
-    }
+    
+    
+    
 
     public String getCursoAcademico() {
         return cursoAcademico;
@@ -200,31 +232,129 @@ public class beanUniversidad implements Serializable{
     }
    
     
-    
-    
-    
-
-   
- 
- 
-   
-
-    
-    
-    
-   
-    
-    
-    
-    
-    
-    public Universidad getSelectedUniversidad() {
+     public Universidad getSelectedUniversidad() {
         return selectedUniversidad;
     }
 
     public void setSelectedUniversidad(Universidad selectedUniversidad) {
         this.selectedUniversidad = selectedUniversidad;
     }
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    public Integer getCodAsignatura() {
+        return codAsignatura;
+    }
+
+    public void setCodAsignatura(Integer codAsignatura) {
+        this.codAsignatura = codAsignatura;
+    }
+
+    public String getNombreAsignatura() {
+        return nombreAsignatura;
+    }
+
+    public void setNombreAsignatura(String nombreAsignatura) {
+        this.nombreAsignatura = nombreAsignatura;
+    }
+
+    public Integer getCreditosAsignatura() {
+        return creditosAsignatura;
+    }
+
+    public void setCreditosAsignatura(Integer creditosAsignatura) {
+        this.creditosAsignatura = creditosAsignatura;
+    }
+
+    public String getPeriodoAsignatura() {
+        return periodoAsignatura;
+    }
+
+    public void setPeriodoAsignatura(String periodoAsignatura) {
+        this.periodoAsignatura = periodoAsignatura;
+    }
+
+    public String getInfoAsignatura() {
+        return infoAsignatura;
+    }
+
+    public void setInfoAsignatura(String infoAsignatura) {
+        this.infoAsignatura = infoAsignatura;
+    }
+
+    public String getWebAsignatura() {
+        return webAsignatura;
+    }
+
+    public void setWebAsignatura(String webAsignatura) {
+        this.webAsignatura = webAsignatura;
+    }
+
+    public String getFacultadAsignatura() {
+        return facultadAsignatura;
+    }
+
+    public void setFacultadAsignatura(String facultadAsignatura) {
+        this.facultadAsignatura = facultadAsignatura;
+    }
+
+    public String getTitulacionAsignatura() {
+        return titulacionAsignatura;
+    }
+
+    public void setTitulacionAsignatura(String titulacionAsignatura) {
+        this.titulacionAsignatura = titulacionAsignatura;
+    }
+   
+   public void onChangePais(){
+       
+       checkPaisStr=true;
+       //checkUniversidadStr=false;
+       //universidadStr="";
+       
+   }
+
+    public void onChangeUniversidad(){
+        
+        checkUniversidadStr=true;
+        
+    }
+    
+    public String creaAsignatura(){
+        System.out.println("hola");
+        AsignaturaId id=new AsignaturaId(codAsignatura,universidadStr);
+        Universidad uni=universidadService.findUniversidad(universidadStr);
+        
+        creaMensaje("asigntura creada", FacesMessage.SEVERITY_ERROR);
+        Asignatura a=new Asignatura(id, uni, nombre, creditosAsignatura.shortValue(), infoAsignatura,webAsignatura,infoAsignatura,facultadAsignatura,titulacionAsignatura);
+        
+        try{
+            
+            asignaturaService.crearAsignatura(a);
+        }catch(Exception ex){
+            
+            creaMensaje("se ha producido un error creando la asignatura", FacesMessage.SEVERITY_ERROR);
+            
+        }
+        
+        creaMensaje("asignatura creada correctamente", FacesMessage.SEVERITY_INFO);
+        nombreAsignatura="";
+        codAsignatura=null;
+        creditosAsignatura=null;
+        periodoAsignatura="";
+        titulacionAsignatura="";
+        facultadAsignatura="";
+        infoAsignatura="";
+        webAsignatura="";
+     
+        return null;
+    }
+   
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+   
 
    
 
@@ -234,6 +364,14 @@ public class beanUniversidad implements Serializable{
 
     public void setCheckPais(boolean checkPaisStr) {
         this.checkPaisStr = checkPaisStr;
+    }
+
+    public boolean isCheckUniversidadStr() {
+        return checkUniversidadStr;
+    }
+
+    public void setCheckUniversidadStr(boolean checkUniversidadStr) {
+        this.checkUniversidadStr = checkUniversidadStr;
     }
 
   

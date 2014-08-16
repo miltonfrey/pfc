@@ -32,6 +32,8 @@ public interface UniversidadDao {
    public void crearCursoAcademico(Cursoacademico c); 
    public void eliminarCursoAcademico(Cursoacademico c);
    public List<Cursoacademico> listaCursosAcademicos();
+   public Universidad findUniversidad(String universidad);
+   
 }
 
 

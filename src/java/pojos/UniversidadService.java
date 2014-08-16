@@ -29,5 +29,5 @@ public interface UniversidadService {
     public void crearCursoAcademico(String cursoAcademico);
     public void eliminarCursoAcademico(String c);
     public List<Cursoacademico> listaCursosAcademicos();
-    
+    public Universidad findUniversidad(String universidad);
 }
