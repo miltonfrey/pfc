@@ -17,11 +17,33 @@
             <p:dataTable  id="t1" var="movilidad" value="#{beanMovilidad.listaMovilidades}"
                           emptyMessage="no hay movilidades" editable="true"
                          filteredValue="#{beanMovilidad.filteredMovilidades}"
-                         widgetVar="movTable">
+                         widgetVar="movTable"
+                         rowKey="#{movilidad.codMovilidad}">
                 <p:ajax event="rowEdit" listener="#{beanMovilidad.onRowEdit}" update=":formMovilidades:t1 :formMovilidades:msgs"/>
                 <p:ajax event="rowEditCancel" listener="#{beanMovilidad.onRowCancel}" />
                          
                           
+                <p:column headerText="nombre" sortBy="#{movilidad.usuario.nombre}">
+                    
+                    <h:outputText value="#{movilidad.usuario.nombre}"/>
+                </p:column>
+                
+                <p:column headerText="apellido" sortBy="#{movilidad.usuario.apellido1}" filterBy="#{movilidad.usuario.apellido1}" filterMatchMode="contains">
+                    
+                    <h:outputText value="#{movilidad.usuario.apellido1}"/>
+                </p:column>
+                
+                <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}">
+                    
+                    <h:outputText value="#{movilidad.universidad.nombre}"/>
+                    
+                </p:column>
+                
+                
+                    
+                <p:column headerText="modificar estado">
+                        <p:rowEditor/>
+                </p:column>
                 <p:column filterBy="#{movilidad.estado}" filterMatchMode="exact" headerText="ver estado" >
                 
                     <f:facet name="filter">
@@ -44,28 +66,14 @@
                 </p:column>
                 
                 
-                <p:column headerText="universidad">
-                    
-                    <h:outputText value="#{movilidad.universidad.id.universidad}"/>
-                    
-                </p:column>
-                
-                <p:column headerText="universidad">
-            
-                          <h:outputText value="#{movilidad.universidad.id.nombre}"/>
-                </p:column>
-                <p:column headerText="alumno" sortBy="#{movilidad.usuario.login}">
-                    
-                    <h:outputText value="#{movilidad.usuario.login}"/>
-                </p:column>
-                    
-                <p:column headerText="modificar estado">
-                        <p:rowEditor/>
-                    </p:column>
                 
             </p:dataTable>
         </h:form>
             
+            <br/>
+            
+            <h:outputLink value="escribeMensaje.xhtml">Escribir mensaje a alumno</h:outputLink>
+            <br/>
             <br/>
             
             

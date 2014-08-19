@@ -26,7 +26,7 @@ public interface UniversidadService {
     public List<Universidad> listarPorPais(String pais);
     public List<String> listarPorUniversidadStr(String universidad);
     public List<String> listarPorPaisStr(String pais);
-    public void crearCursoAcademico(String cursoAcademico);
+    public void crearCursoAcademico(Cursoacademico cursoAcademico);
     public void eliminarCursoAcademico(String c);
     public List<Cursoacademico> listaCursosAcademicos();
     public Universidad findUniversidad(String universidad);

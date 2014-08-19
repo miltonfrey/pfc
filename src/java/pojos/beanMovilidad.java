@@ -29,6 +29,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 //import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Hibernate;
 import org.primefaces.event.RowEditEvent;
 
 
@@ -104,9 +105,10 @@ public class beanMovilidad implements Serializable{
         
         ArrayList<String> aux=new ArrayList<String>();
        aux.add("pendiente");
-       aux.add("rechazado");
-       aux.add("aceptado");
-       aux.add("cancelado");
+       aux.add("rechazada");
+       aux.add("aceptada");
+       aux.add("cancelada");
+       aux.add("terminada");
        setEstados(aux);
         
        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -123,7 +125,7 @@ public class beanMovilidad implements Serializable{
     }else{
            usuario=(Usuario)session.getAttribute("admin");
            listaMovilidades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
-                       
+           
             }
            
        }
@@ -372,7 +374,7 @@ public class beanMovilidad implements Serializable{
       
        listaUniversidades=(ArrayList<Universidad>)universidadService.listarPorPais(selectedPais);
        //Collections.sort(listaUniversidadesStr);
-       
+      
        
        
    }
@@ -417,10 +419,7 @@ public class beanMovilidad implements Serializable{
    
     
     public String crearMovilidad(){
-        
-        
-        
-        
+   
         checkPais=false;
         //checkUni=false;
         
@@ -453,7 +452,7 @@ public class beanMovilidad implements Serializable{
                     return "";
                         }            
                     
-                int i=0;
+                    int i=0;
                     for(Movilidad mov:aux){
                         
                         if(mov.getEstado().equals("pendiente")){
@@ -467,21 +466,26 @@ public class beanMovilidad implements Serializable{
                             
                             i=i+1;
                             if(i==2){
-                                creaMensaje("solo se pueden tener dos movilidades aceptadas", FacesMessage.SEVERITY_ERROR);
+                                creaMensaje("solo se pueden tener dos movilidades en curso", FacesMessage.SEVERITY_ERROR);
                                 return "";
                             }
                         }
                     
                     }
-                    if(cal1.get(2)>6){
-                        cursoacademico.setCursoAcademico(cal1.get(1)+"/"+(cal1.get(1)+1));
-                    }else
-                        cursoacademico.setCursoAcademico(cal1.get(1)-1+"/"+(cal1.get(1)));
+                    Cursoacademico ca=new Cursoacademico();
                     
+                    if(cal1.get(2)>6){
+                       
+                        ca.setCursoAcademico(cal1.get(1)+"/"+(cal1.get(1)+1));
+                    }else{
+                        
+                        ca.setCursoAcademico(cal1.get(1)-1+"/"+(cal1.get(1)));
+                    }
+              universidadService.crearCursoAcademico(ca);
               String estado="pendiente";
               Universidad u=universidadService.findUniversidad(selectedUniversidad);
               
-              Movilidad m=new Movilidad(usuario,cursoacademico, u, fechaInicio, fechaFin, estado);
+              Movilidad m=new Movilidad(usuario,ca, u, fechaInicio, fechaFin, estado);
               try{
               movilidadService.crearMovilidad(m);
                     
@@ -505,19 +509,14 @@ public class beanMovilidad implements Serializable{
                 selectedUniversidad="";
                 fechaFin=null;
                 fechaInicio=null;
-                cursoacademico.setCursoAcademico("");
+                ca.setCursoAcademico("");
                 
                 return "";
-                
-                
-                
-                
-                
-       
+        
     }
     
     
-    public void eliminarMovilidad(){
+    public String eliminarMovilidad(){
         
         if(selectedMovilidad.getEstado().equals("pendiente")){
             
@@ -530,18 +529,39 @@ public class beanMovilidad implements Serializable{
             }
             
             creaMensaje("movilidad eliminada correctamente, se ha enviado un mensaje al coordinador ", FacesMessage.SEVERITY_INFO);
-           // Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no");
+            
+            Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no","no","no");
+            try{
+                mensajeService.enviarMensaje(mensaje);
+            }catch(Exception ex){
+                creaMensaje("se ha producido un error enviando el mensaje", FacesMessage.SEVERITY_ERROR);
+                return "";
+            }
             actualizar();
             
         }else{
-            
-            creaMensaje("las únicas movilidades que se pueden eliminar son las que están con estado pendiente", FacesMessage.SEVERITY_ERROR);
-            
+         
+            if(selectedMovilidad.getEstado().equals("aceptado")){
+                
+                
+                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre(), "no","no","no");
+            try{
+                mensajeService.enviarMensaje(mensaje);
+            }catch(Exception ex){
+                creaMensaje("se ha producido un error enviando el mensaje", FacesMessage.SEVERITY_ERROR);
+                    
+            }
+                creaMensaje("se ha enviado un mensaje al coordinador para su cancelación", FacesMessage.SEVERITY_INFO);
+            return "";
         }
         
-        
-        
+        }
+        return "";
     }
+        
+    
+    
+
     
     public void actualizar(){
         

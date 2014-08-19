@@ -72,8 +72,17 @@ public class MovilidadServiceImpl implements MovilidadService{
     @Override
     public List<Movilidad> listarMisMovilidades(String user){
         
-        return movilidadDao.listarMisMovilidades(user);
-        
+        List<Movilidad> aux= movilidadDao.listarMisMovilidades(user);
+        for(Movilidad m:aux){
+            
+            
+            if(m.getFechaFin().compareTo(new Date())==-1){
+                m.setEstado("terminada");
+            }
+            
+            
+        }
+        return aux;
     }
     @Override
     public List<Movilidad> listarMisMovilidadesPorEstado(String user, String estado){

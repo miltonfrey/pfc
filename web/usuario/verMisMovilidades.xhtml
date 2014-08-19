@@ -20,7 +20,7 @@
         
         <br/>
         
-        <h:form id="f1">
+        <h:form id="formMovilidad">
             
             <p:messages closable="true"/>
             
@@ -28,10 +28,7 @@
                          emptyMessage="no hay movilidades"
                          filteredValue="#{beanMovilidad.filteredMovilidades}"
                          widgetVar="movTable">
-                         
-                         
-                         
-               
+                
                 <p:panel>
                     
                     <h:outputText value="#{movilidad.usuario.login}"/>
@@ -51,12 +48,12 @@
                     <h:outputText value="#{movilidad.estado}"/>
                 </p:column>
                 
-                <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}">
+                <p:column headerText="universidad" sortBy="#{movilidad.universidad.codUniversidad}">
+                
+                    <h:outputText value="#{movilidad.universidad.codUniversidad}"/>
                     
-                    
-                    <h:outputText value="#{movilidad.universidad.nombre}"/>
-                    
-                    
+                
+                
                 </p:column>
                 
                 <p:column headerText="curso académico" sortBy="#{movilidad.cursoacademico.cursoAcademico}">
@@ -66,7 +63,7 @@
                 </p:column>
                 
                
-                <p:column headerText="fecha inicio">
+                <p:column headerText="fecha inicio" sortBy="#{movilidad.fechaInicio}">
                     
                     <h:outputText value="#{movilidad.fechaInicio}">
                                   <f:convertDateTime pattern="dd-MM-yyyy"/>
@@ -75,7 +72,7 @@
                     
                 </p:column>
             
-                <p:column headerText="fecha fin">
+                <p:column headerText="fecha fin" sortBy="#{movilidad.fechaFin}">
                     
                     <h:outputText value="#{movilidad.fechaFin}">
                                   <f:convertDateTime pattern="dd-MM-yyyy" />
@@ -84,8 +81,8 @@
                 
                  <p:column headerText="eliminar">
                     
-                    <p:commandButton  value="eliminar" action="#{beanMovilidad.eliminarMovilidad}" update=":f1:" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
-                                     icon="edit_icon">
+                    <p:commandButton  value="eliminar" action="#{beanMovilidad.eliminarMovilidad}" update=":formMovilidad" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
+                                      icon="edit_icon"  oncomplete="PF('movTable').filter()"> <!--clearFilters() tb vale-->
                         <f:setPropertyActionListener value="#{movilidad}" target="#{beanMovilidad.selectedMovilidad}"/>
                     
                     

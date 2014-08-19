@@ -607,8 +607,8 @@ public class beanUniversidad implements Serializable{
       }
       
       try{
-          
-          universidadService.crearCursoAcademico(cursoAcademico);
+          Cursoacademico c=new Cursoacademico(cursoAcademico);
+          universidadService.crearCursoAcademico(c);
           
       }catch(RuntimeException ex){
           

@@ -115,10 +115,10 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
         
     }
     @Override
-   public void crearCursoAcademico(String cursoAcademico){
+   public void crearCursoAcademico(Cursoacademico cursoAcademico){
        
-       Cursoacademico c=new Cursoacademico(cursoAcademico);
-       universidadDao.crearCursoAcademico(c);
+       
+       universidadDao.crearCursoAcademico(cursoAcademico);
        
    }
    @Override
