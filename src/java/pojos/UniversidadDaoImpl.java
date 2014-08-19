@@ -109,7 +109,7 @@ public class UniversidadDaoImpl implements UniversidadDao,Serializable{
     @Override
      public List<Universidad> listarPorPais(String pais){
     
-    Query q=sessionFactory.getCurrentSession().createQuery("select c from Universidad c where c.pais=:pais");
+    Query q=sessionFactory.getCurrentSession().createQuery("select u from Universidad u where u.pais.nombre=:pais");
     q.setParameter("pais",pais);
     return(q.list());
 }

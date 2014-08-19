@@ -4,6 +4,8 @@
 package pojos;
 
 import java.io.Serializable;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,11 +28,37 @@ public class AsignaturaDaoImpl implements AsignaturaDao,Serializable{
     @Override
     public void crearAsignatura(Asignatura a){
         
-        sessionFactory.getCurrentSession().saveOrUpdate(a);
+        sessionFactory.getCurrentSession().save(a);
         
         
     }
+    @Override
+    public void actualizarAsignatura(Asignatura a){
+        
+        sessionFactory.getCurrentSession().saveOrUpdate(a);
+    }
+    
+    @Override
+    public List<Asignatura> listarAsignaturas(){
+        
+        return sessionFactory.getCurrentSession().createQuery("select a from Asignatura a").list();
+    }
     
     
+    @Override
+    public List<Asignatura> listarAsignaturasPorUniversidad(String nombre){
+        
+        Query q=sessionFactory.getCurrentSession().createQuery("select a from Asignatura a where a.universidad.nombre=:nombre");
+        q.setParameter("nombre", nombre);
+        return q.list();
+        
+    }
+    
+    @Override
+    public void eliminaAsignatura(Asignatura a){
+        
+        sessionFactory.getCurrentSession().delete(a);
+        
+    }
     
 }

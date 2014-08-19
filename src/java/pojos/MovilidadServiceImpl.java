@@ -57,7 +57,7 @@ public class MovilidadServiceImpl implements MovilidadService{
     @Override
     public Date fechaMax(){
         Calendar calendario=Calendar.getInstance();
-        calendario.add(1, 2);// máximo tiempo para la movilidad
+        calendario.add(1, 1);// máximo tiempo para la movilidad
         Date d=calendario.getTime();
         return d;
         

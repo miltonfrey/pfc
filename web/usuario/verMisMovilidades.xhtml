@@ -51,17 +51,17 @@
                     <h:outputText value="#{movilidad.estado}"/>
                 </p:column>
                 
-                <p:column headerText="universidad">
+                <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}">
                     
                     
-                    <h:outputText value="#{movilidad.universidad.id.nombre}"/>
+                    <h:outputText value="#{movilidad.universidad.nombre}"/>
                     
                     
                 </p:column>
                 
-                <p:column headerText="universidad">
+                <p:column headerText="curso académico" sortBy="#{movilidad.cursoacademico.cursoAcademico}">
                     
-                    <h:outputText value="#{movilidad.universidad.id.universidad}"/>
+                    <h:outputText value="#{movilidad.cursoacademico.cursoAcademico}"/>
                     
                 </p:column>
                 

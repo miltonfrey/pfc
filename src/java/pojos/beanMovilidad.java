@@ -73,14 +73,17 @@ public class beanMovilidad implements Serializable{
     
     private Date fechaMin;
     private Date fechaMax;
+    private Cursoacademico cursoacademico;
+    
+    
     
     private String changeEstado;
     
     private String selectedPais;
-    private String selectedUni;
+    
     private String selectedUniversidad;
     private Movilidad selectedMovilidad;
-    private ArrayList<Universidad> listaUniversidads;
+    private ArrayList<Universidad> listaUniversidades;
     private ArrayList<Movilidad>listaMovilidades;
     private ArrayList<Movilidad> listaMisMovilidades;
     private ArrayList<Movilidad> filteredMovilidades;
@@ -176,16 +179,18 @@ public class beanMovilidad implements Serializable{
         //creaMensaje(selectedPais, FacesMessage.SEVERITY_INFO);
         
     }
+
+    public Cursoacademico getCursoacademico() {
+        return cursoacademico;
+    }
+
+    public void setCursoacademico(Cursoacademico cursoacademico) {
+        this.cursoacademico = cursoacademico;
+    }
     
     
 
-    public String getSelectedUni() {
-        return selectedUni;
-    }
-
-    public void setSelectedUni(String selectedUni) {
-        this.selectedUni = selectedUni;
-    }
+   
 
     public String getSelectedUniversidad() {
         return selectedUniversidad;
@@ -216,12 +221,12 @@ public class beanMovilidad implements Serializable{
     
     
     
-    public ArrayList<Universidad> getListaUniversidads() {
-        return listaUniversidads;
+    public ArrayList<Universidad> getListaUniversidades() {
+        return listaUniversidades;
     }
 
-    public void setListaUniversidads(ArrayList<Universidad> listaUniversidads) {
-        this.listaUniversidads = listaUniversidads;
+    public void setListaUniversidades(ArrayList<Universidad> listaUniversidades) {
+        this.listaUniversidades = listaUniversidades;
     }
 
    
@@ -363,11 +368,11 @@ public class beanMovilidad implements Serializable{
    public void onDropboxChangePais(){
        
        checkPais=true;
-       checkUni=false;
-       selectedUni="";
-       listaUniversidadesStr=(ArrayList<String>)universidadService.listarPorPaisStr(selectedPais);
-       Collections.sort(listaUniversidadesStr);
-       creaMensaje(" al cambiar pais "+checkPais+" selectedPais: "+selectedPais,FacesMessage.SEVERITY_INFO);
+       //checkUni=false;
+      
+       listaUniversidades=(ArrayList<Universidad>)universidadService.listarPorPais(selectedPais);
+       //Collections.sort(listaUniversidadesStr);
+       
        
        
    }
@@ -375,11 +380,11 @@ public class beanMovilidad implements Serializable{
     public void onDropboxchangeUni(){
         
         
-        checkUni=true;
+        //checkUni=true;
         
-        listaUniversidadsStr=(ArrayList<String>)universidadService.listarPorUniversidadStr(selectedUni);
-        Collections.sort(listaUniversidadsStr);
-       creaMensaje(" al cambiar uni "+checkUni+" selectedUni: "+selectedUni,FacesMessage.SEVERITY_INFO);
+        //listaUniversidades=(ArrayList<St>)universidadService.listarPorUniversidadStr(selectedUniversidad);
+       // Collections.sort(listaUniversidadsStr);
+      
         
     }
     
@@ -417,8 +422,8 @@ public class beanMovilidad implements Serializable{
         
         
         checkPais=false;
-        checkUni=false;
-        creaMensaje(selectedUniversidad+" "+selectedPais+" "+selectedUni+" "+usuario.getLogin() + " "+fechaFin, FacesMessage.SEVERITY_INFO);
+        //checkUni=false;
+        
         Calendar cal1=Calendar.getInstance();
         Calendar cal2=Calendar.getInstance();
                 cal1.setTime(fechaInicio);
@@ -426,6 +431,15 @@ public class beanMovilidad implements Serializable{
                 if (cal2.compareTo(cal1)<1){
                     
                     creaMensaje("la fecha de inicio es igual o posterior a la fecha de fin", FacesMessage.SEVERITY_ERROR);
+                    return "";
+                }
+                
+                Calendar calAux=Calendar.getInstance();
+                calAux.setTime(fechaInicio);
+                calAux.add(2, 3);
+                if(cal2.compareTo(calAux)<0){
+                    
+                    creaMensaje("la duración mínima de una movilidad son 3 meses", FacesMessage.SEVERITY_ERROR);
                     return "";
                 }
                 
@@ -439,24 +453,37 @@ public class beanMovilidad implements Serializable{
                     return "";
                         }            
                     
-                
+                int i=0;
                     for(Movilidad mov:aux){
                         
-                        if(mov.getEstado().equals("pendiente")||mov.getEstado().equals("aceptado")){
+                        if(mov.getEstado().equals("pendiente")){
                             
                             creaMensaje("hay una movilidad pendiente o en curso, para cancelarla o modificarla contacta con el coordinador", FacesMessage.SEVERITY_ERROR);
                             return null;
                         
                         }
                         
-                        
+                        if(mov.getEstado().equals("aceptado")){
+                            
+                            i=i+1;
+                            if(i==2){
+                                creaMensaje("solo se pueden tener dos movilidades aceptadas", FacesMessage.SEVERITY_ERROR);
+                                return "";
+                            }
+                        }
+                    
                     }
+                    if(cal1.get(2)>6){
+                        cursoacademico.setCursoAcademico(cal1.get(1)+"/"+(cal1.get(1)+1));
+                    }else
+                        cursoacademico.setCursoAcademico(cal1.get(1)-1+"/"+(cal1.get(1)));
+                    
               String estado="pendiente";
-             // Universidad c=universidadService.find(selectedUniversidad, selectedUni);
+              Universidad u=universidadService.findUniversidad(selectedUniversidad);
               
-              //Movilidad m=new Movilidad(usuario, c, fechaInicio, fechaFin, estado);
+              Movilidad m=new Movilidad(usuario,cursoacademico, u, fechaInicio, fechaFin, estado);
               try{
-             // movilidadService.crearMovilidad(m);
+              movilidadService.crearMovilidad(m);
                     
                 }catch(Exception ex){
                     creaMensaje("se ha producido un error creando la movilidad", FacesMessage.SEVERITY_ERROR);
@@ -464,20 +491,21 @@ public class beanMovilidad implements Serializable{
                 }
                 creaMensaje("movilidad creada, a la espera de aprobación por el coordinador, enviado un mensaje", FacesMessage.SEVERITY_INFO);
                 
-               // Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getLogin()+" ha creado una movilidad", "no");
+                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getLogin()+" ha creado una movilidad", "no","no","no");
                 try{
-                   // mensajeService.enviarMensaje(mensaje);
+                    mensajeService.enviarMensaje(mensaje);
                 }catch(Exception ex){
                     creaMensaje("error al enviar el mensaje", FacesMessage.SEVERITY_ERROR);
                 }
                 
-                
-                
+                creaMensaje("movilidad creada", FacesMessage.SEVERITY_INFO);
+                creaMensaje(usuario.getLogin()+ selectedUniversidad+" "+selectedPais+" "+" " + " "+fechaInicio+" "+ fechaFin, FacesMessage.SEVERITY_INFO);
                 selectedUniversidad="";
                 selectedPais="";
-                selectedUni="";
+                selectedUniversidad="";
                 fechaFin=null;
                 fechaInicio=null;
+                cursoacademico.setCursoAcademico("");
                 
                 return "";
                 
