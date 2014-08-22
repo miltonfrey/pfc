@@ -1,5 +1,5 @@
 package pojos;
-// Generated 11-ago-2014 23:00:43 by Hibernate Tools 3.6.0
+// Generated 20-ago-2014 18:45:29 by Hibernate Tools 3.6.0
 
 
 import javax.persistence.Column;
@@ -13,14 +13,14 @@ public class AsignaturaId  implements java.io.Serializable {
 
 
      private int codAsignatura;
-     private String codUniversidad;
+     private String nombreUniversidad;
 
     public AsignaturaId() {
     }
 
-    public AsignaturaId(int codAsignatura, String codUniversidad) {
+    public AsignaturaId(int codAsignatura, String nombreUniversidad) {
        this.codAsignatura = codAsignatura;
-       this.codUniversidad = codUniversidad;
+       this.nombreUniversidad = nombreUniversidad;
     }
    
 
@@ -35,13 +35,13 @@ public class AsignaturaId  implements java.io.Serializable {
     }
 
 
-    @Column(name="codUniversidad", nullable=false, length=15)
-    public String getCodUniversidad() {
-        return this.codUniversidad;
+    @Column(name="nombreUniversidad", nullable=false, length=45)
+    public String getNombreUniversidad() {
+        return this.nombreUniversidad;
     }
     
-    public void setCodUniversidad(String codUniversidad) {
-        this.codUniversidad = codUniversidad;
+    public void setNombreUniversidad(String nombreUniversidad) {
+        this.nombreUniversidad = nombreUniversidad;
     }
 
 
@@ -52,14 +52,14 @@ public class AsignaturaId  implements java.io.Serializable {
 		 AsignaturaId castOther = ( AsignaturaId ) other; 
          
 		 return (this.getCodAsignatura()==castOther.getCodAsignatura())
- && ( (this.getCodUniversidad()==castOther.getCodUniversidad()) || ( this.getCodUniversidad()!=null && castOther.getCodUniversidad()!=null && this.getCodUniversidad().equals(castOther.getCodUniversidad()) ) );
+ && ( (this.getNombreUniversidad()==castOther.getNombreUniversidad()) || ( this.getNombreUniversidad()!=null && castOther.getNombreUniversidad()!=null && this.getNombreUniversidad().equals(castOther.getNombreUniversidad()) ) );
    }
    
    public int hashCode() {
          int result = 17;
          
          result = 37 * result + this.getCodAsignatura();
-         result = 37 * result + ( getCodUniversidad() == null ? 0 : this.getCodUniversidad().hashCode() );
+         result = 37 * result + ( getNombreUniversidad() == null ? 0 : this.getNombreUniversidad().hashCode() );
          return result;
    }   
 

@@ -11,6 +11,7 @@ package pojos;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.Calendar;
 
 import java.util.Collections;
@@ -29,7 +30,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 //import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.hibernate.Hibernate;
 import org.primefaces.event.RowEditEvent;
 
 
@@ -76,7 +76,9 @@ public class beanMovilidad implements Serializable{
     private Date fechaMax;
     private Cursoacademico cursoacademico;
     
-    
+    private String texto;
+    private String tema;
+    private boolean activaTexto;
     
     private String changeEstado;
     
@@ -84,17 +86,27 @@ public class beanMovilidad implements Serializable{
     
     private String selectedUniversidad;
     private Movilidad selectedMovilidad;
+    private Movilidad antiguaMovilidad;
     private ArrayList<Universidad> listaUniversidades;
     private ArrayList<Movilidad>listaMovilidades;
     private ArrayList<Movilidad> listaMisMovilidades;
     private ArrayList<Movilidad> filteredMovilidades;
+    private ArrayList<Movilidad> selectedMovilidades;
     private ArrayList<String> estados;
+    
+    
+    
+    
+    private ArrayList<Object> listaObject;
+    private ArrayList<Object> listaO;
     
     SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
     
     private ArrayList<String> listaUniversidadesStr;
     private ArrayList<String> listaUniversidadsStr;
    
+    
+    
     private boolean checkPais;
     private boolean checkUni;
     private boolean checkUniversidad;
@@ -119,7 +131,7 @@ public class beanMovilidad implements Serializable{
        fechaMin=movilidadService.fechaMin();
        fechaMax=movilidadService.fechaMax();
        listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
-       
+       //listaObject=(ArrayList<Object>)movilidadService.doJoin();
        
         
     }else{
@@ -129,6 +141,22 @@ public class beanMovilidad implements Serializable{
             }
            
        }
+
+    public ArrayList<Object> getListaObject() {
+        return listaObject;
+    }
+
+    public void setListaObject(ArrayList<Object> listaObject) {
+        this.listaObject = listaObject;
+    }
+
+    public ArrayList<Object> getListaO() {
+        return listaO;
+    }
+
+    public void setListaO(ArrayList<Object> listaO) {
+        this.listaO = listaO;
+    }
 
    
 
@@ -189,6 +217,30 @@ public class beanMovilidad implements Serializable{
     public void setCursoacademico(Cursoacademico cursoacademico) {
         this.cursoacademico = cursoacademico;
     }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public String getTema() {
+        return tema;
+    }
+
+    public void setTema(String tema) {
+        this.tema = tema;
+    }
+
+    public boolean isActivaTexto() {
+        return activaTexto;
+    }
+
+    public void setActivaTexto(boolean activaTexto) {
+        this.activaTexto = activaTexto;
+    }
     
     
 
@@ -209,6 +261,16 @@ public class beanMovilidad implements Serializable{
     public void setSelectedMovilidad(Movilidad selectedMovilidad) {
         this.selectedMovilidad = selectedMovilidad;
     }
+
+    public ArrayList<Movilidad> getSelectedMovilidades() {
+        return selectedMovilidades;
+    }
+
+    public void setSelectedMovilidades(ArrayList<Movilidad> selectedMovilidades) {
+        this.selectedMovilidades = selectedMovilidades;
+    }
+    
+    
 
     public Usuario getUsuario() {
         return usuario;
@@ -259,6 +321,14 @@ public class beanMovilidad implements Serializable{
 
     public void setFilteredMovilidades(ArrayList<Movilidad> filteredMovilidades) {
         this.filteredMovilidades = filteredMovilidades;
+    }
+
+    public Movilidad getAntiguaMovilidad() {
+        return antiguaMovilidad;
+    }
+
+    public void setAntiguaMovilidad(Movilidad antiguaMovilidad) {
+        this.antiguaMovilidad = antiguaMovilidad;
     }
     
     
@@ -375,6 +445,13 @@ public class beanMovilidad implements Serializable{
        listaUniversidades=(ArrayList<Universidad>)universidadService.listarPorPais(selectedPais);
        //Collections.sort(listaUniversidadesStr);
       
+     /*  Object[] arrayObject=(Object[])listaObject.get(0);
+       Movilidad m=(Movilidad)arrayObject[0];
+       System.out.println(m.getEstado());
+       Universidad u=(Universidad)arrayObject[1];
+       System.out.println(u.getNombre());*/
+       
+       //listaO=(ArrayList<Object>)Arrays.asList((Object[])listaObject.get(0));
        
        
    }
@@ -390,10 +467,23 @@ public class beanMovilidad implements Serializable{
         
     }
     
+    public void onRowEditInit(RowEditEvent event){
+        
+        
+        antiguaMovilidad=(Movilidad)event.getObject();
+        creaMensaje("init", FacesMessage.SEVERITY_INFO);
+        
+    }
+    
+    
     
     public void onRowEdit(RowEditEvent event){
-        
+       
         Movilidad m=(Movilidad)event.getObject();
+        
+        if(changeEstado.equals(m.getEstado())==false){
+            
+        
         m.setEstado(changeEstado);
         try{
             
@@ -407,8 +497,18 @@ public class beanMovilidad implements Serializable{
         
        // Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(), "movilidad: "+changeEstado,"el coordinador ha modificado la movilidad", "no");
         //mensajeService.enviarMensaje(mensaje);
-        creaMensaje("estado de una movilidad modificado, se ha enviado un mensaje", FacesMessage.SEVERITY_INFO);
        
+        Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(),"cambio de estado de movilidad","destino:"+m.getUniversidad().getNombre()+" \n"+"fecha de inicio:"+sdf.format(m.getFechaInicio())+" \n"+"fecha fin:"+sdf.format(m.getFechaFin())+"\n\n"+ "el estado de la movilidad ahora es: "+m.getEstado(), "no","no","no");
+        try{
+            
+            mensajeService.enviarMensaje(mensaje);
+        }catch(Exception ex){
+            
+            creaMensaje("se ha producido un error enviando el mensaje", FacesMessage.SEVERITY_ERROR);
+        }
+        creaMensaje("estado de una movilidad modificado, se ha enviado un mensaje", FacesMessage.SEVERITY_INFO);
+        }
+               
     }
     
     public void onRowCancel(){
@@ -441,6 +541,12 @@ public class beanMovilidad implements Serializable{
                     creaMensaje("la duración mínima de una movilidad son 3 meses", FacesMessage.SEVERITY_ERROR);
                     return "";
                 }
+                calAux.setTime(fechaInicio);
+                calAux.add(2, 12);
+                if(cal2.compareTo(calAux)>0){
+                    creaMensaje("la duración máxima es de un año", FacesMessage.SEVERITY_ERROR);
+                    return "";
+                }
                 
                  ArrayList<Movilidad> aux;
                 try{
@@ -453,6 +559,9 @@ public class beanMovilidad implements Serializable{
                         }            
                     
                     int i=0;
+                    Movilidad enCurso=null;
+                    
+                    if(aux.size()>0){
                     for(Movilidad mov:aux){
                         
                         if(mov.getEstado().equals("pendiente")){
@@ -462,15 +571,27 @@ public class beanMovilidad implements Serializable{
                         
                         }
                         
-                        if(mov.getEstado().equals("aceptado")){
-                            
-                            i=i+1;
-                            if(i==2){
-                                creaMensaje("solo se pueden tener dos movilidades en curso", FacesMessage.SEVERITY_ERROR);
-                                return "";
-                            }
-                        }
+                       if(mov.getEstado().equals("aceptada")){
+                           i=i+1;
+                           enCurso=mov;
+                           if(i>1){
+                               
+                               creaMensaje("solo se puede tener dos convocatorias en curso", FacesMessage.SEVERITY_ERROR);
+                               return "";
+                           }
+                           
+                       }
+                  
+                    }     
                     
+                       if(i==1){
+                           
+                            if( (fechaInicio.compareTo(enCurso.getFechaInicio())>-1 && fechaInicio.compareTo(enCurso.getFechaFin())<1)||(fechaFin.compareTo(enCurso.getFechaInicio())>-1  && fechaFin.compareTo(enCurso.getFechaFin())<1)||(fechaInicio.compareTo(enCurso.getFechaInicio())<1  && fechaFin.compareTo(enCurso.getFechaFin())>-1)){
+                                //creaMensaje(Boolean.toString((fechaInicio.compareTo(enCurso.getFechaInicio())<1  && fechaFin.compareTo(enCurso.getFechaFin())<1)), FacesMessage.SEVERITY_INFO);
+                                creaMensaje("las fechas se solapan con otra movilidad", FacesMessage.SEVERITY_ERROR);
+                           return "";
+                       }
+                       }
                     }
                     Cursoacademico ca=new Cursoacademico();
                     
@@ -485,7 +606,7 @@ public class beanMovilidad implements Serializable{
               String estado="pendiente";
               Universidad u=universidadService.findUniversidad(selectedUniversidad);
               
-              Movilidad m=new Movilidad(usuario,ca, u, fechaInicio, fechaFin, estado);
+              Movilidad m=new Movilidad(usuario,u, ca, fechaInicio, fechaFin, estado);
               try{
               movilidadService.crearMovilidad(m);
                     
@@ -493,9 +614,11 @@ public class beanMovilidad implements Serializable{
                     creaMensaje("se ha producido un error creando la movilidad", FacesMessage.SEVERITY_ERROR);
                     return "";
                 }
-                creaMensaje("movilidad creada, a la espera de aprobación por el coordinador, enviado un mensaje", FacesMessage.SEVERITY_INFO);
+               
                 
-                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getLogin()+" ha creado una movilidad", "no","no","no");
+                
+                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getNombre()+" "+usuario.getApellido1()+""
+                        + " ha creado una movilidad a "+selectedUniversidad+" entre el "+sdf.format(fechaInicio)+" y "+sdf.format(fechaFin) , "no","no","no");
                 try{
                     mensajeService.enviarMensaje(mensaje);
                 }catch(Exception ex){
@@ -541,10 +664,10 @@ public class beanMovilidad implements Serializable{
             
         }else{
          
-            if(selectedMovilidad.getEstado().equals("aceptado")){
+            if(selectedMovilidad.getEstado().equals("aceptada")){
                 
                 
-                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre(), "no","no","no");
+                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre()+" con fecha de inicio:"+selectedMovilidad.getFechaInicio()+" y fecha fin:"+selectedMovilidad.getFechaFin(), "no","no","no");
             try{
                 mensajeService.enviarMensaje(mensaje);
             }catch(Exception ex){
@@ -559,7 +682,25 @@ public class beanMovilidad implements Serializable{
         return "";
     }
         
-    
+    public String eliminaMovilidadLista(){
+        
+        for(Movilidad m:selectedMovilidades){
+        
+        try{
+            
+            movilidadService.eliminarMovilidad(m);
+            
+        }catch(Exception ex){
+            
+            creaMensaje("se ha producido un error eliminando la movilidad", FacesMessage.SEVERITY_ERROR);
+            return "";
+        }
+        }
+        
+        actualizarTodasMovilidades();
+        return "";
+        
+    }
     
 
     
@@ -574,6 +715,35 @@ public class beanMovilidad implements Serializable{
         
     }
     
+    public void activaTexto(){
+        
+        activaTexto=true;
+    }
+    
+    
+    public String enviarMensajesVarios(){
+    if(selectedMovilidades.isEmpty()){
+        return "";
+    }
+    for(Movilidad m:selectedMovilidades){
+        Mensaje mensaje=new Mensaje(usuario, m.getUsuario(), Calendar.getInstance().getTime(), tema, texto, "no", "no", "no");
+        try{
+        mensajeService.enviarMensaje(mensaje);
+        }catch(Exception ex){
+            
+            creaMensaje("error al enviar mensajes", FacesMessage.SEVERITY_ERROR);
+            return "";
+        }
+    }
+        creaMensaje("mensajes enviados correctamente", FacesMessage.SEVERITY_INFO);
+        activaTexto=false;
+    return "";
+}
+    
+    public void cancelar(){
+        
+        activaTexto=false;
+    }
     
     
     public void creaMensaje(String texto,FacesMessage.Severity s){

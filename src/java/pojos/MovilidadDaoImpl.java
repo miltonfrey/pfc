@@ -84,5 +84,13 @@ public class MovilidadDaoImpl implements MovilidadDao{
         
     }
     
+    @Override
+    public List<Object> doJoin(){
+        
+        String s="user1";
+        Query q=sessionFactory.getCurrentSession().createQuery("select m,u from Movilidad m,Universidad u where m.usuario.login=:s");
+        q.setParameter("s", s);
+        return q.list();
+    }
     
 }

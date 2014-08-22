@@ -4,9 +4,9 @@
   <schema-selection match-catalog="pfc"/>
   <table-filter match-name="asignatura"/>
   <table-filter match-name="pais"/>
+  <table-filter match-name="usuario"/>
+  <table-filter match-name="mensaje"/>
   <table-filter match-name="universidad"/>
   <table-filter match-name="movilidad"/>
   <table-filter match-name="cursoacademico"/>
-  <table-filter match-name="mensaje"/>
-  <table-filter match-name="usuario"/>
 </hibernate-reverse-engineering>

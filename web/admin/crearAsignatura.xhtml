@@ -101,9 +101,9 @@
                         
                     </p:column>
                 
-                    <p:column headerText="nombre" sortBy="#{asignatura.nombre}">
+                    <p:column headerText="nombre" sortBy="#{asignatura.nombreAsignatura}">
                         
-                        <h:outputText value="#{asignatura.nombre}"/>
+                        <h:outputText value="#{asignatura.nombreAsignatura}"/>
                         
                     </p:column>
                 
@@ -150,12 +150,12 @@
                     
                 
                 <p:outputLabel value="web" rendered="#{beanUniversidad.checkDetalles}"/>
-                <p:inputText value="#{beanUniversidad.selectedAsignatura.web}" rendered="#{beanUniversidad.checkDetalles}"/>
+                <p:inputText value="#{beanUniversidad.selectedAsignatura.webAsignatura}" rendered="#{beanUniversidad.checkDetalles}"/>
                 <p:outputLabel value="info" rendered="#{beanUniversidad.checkDetalles}"/>
-                <p:inputTextarea value="#{beanUniversidad.selectedAsignatura.info}" rendered="#{beanUniversidad.checkDetalles}"/>
+                <p:inputTextarea value="#{beanUniversidad.selectedAsignatura.infoAsigantura}" rendered="#{beanUniversidad.checkDetalles}"/>
                 <br/>
                 <p:outputLabel value="titulacion" rendered="#{beanUniversidad.checkDetalles}"/>
-                <p:inputText value="#{beanUniversidad.selectedAsignatura.estudios}" rendered="#{beanUniversidad.checkDetalles}"/>
+                <p:inputText value="#{beanUniversidad.selectedAsignatura.titulacion}" rendered="#{beanUniversidad.checkDetalles}"/>
                 <br/>
                 <p:outputLabel value="Facultad" rendered="#{beanUniversidad.checkDetalles}"/>
                 <p:inputText value="#{beanUniversidad.selectedAsignatura.facultad}" rendered="#{beanUniversidad.checkDetalles}"/>

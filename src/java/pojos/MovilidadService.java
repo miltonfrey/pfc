@@ -24,4 +24,5 @@ public interface MovilidadService {
     public List<Movilidad> listarMisMovilidades(String user);
     public List<Movilidad> listarMisMovilidadesPorEstado(String user,String estado);
     public void eliminarMovilidad(Movilidad m);
+    public List<Object> doJoin();
 }

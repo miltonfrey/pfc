@@ -66,6 +66,7 @@ public class beanMensaje implements Serializable{
     private ArrayList<Mensaje> filteredMensajesEnviados;
     private ArrayList<Mensaje> filteredMensajesRecibidos;
     private Usuario selectedUsuario;
+    private ArrayList<Usuario> selectedUsuarios;
     
     public beanMensaje() {
         
@@ -110,6 +111,14 @@ public class beanMensaje implements Serializable{
 
     public void setSelectedUsuario(Usuario selectedUsuario) {
         this.selectedUsuario = selectedUsuario;
+    }
+
+    public ArrayList<Usuario> getSelectedUsuarios() {
+        return selectedUsuarios;
+    }
+
+    public void setSelectedUsuarios(ArrayList<Usuario> selectedUsuarios) {
+        this.selectedUsuarios = selectedUsuarios;
     }
     
     
@@ -386,6 +395,7 @@ public class beanMensaje implements Serializable{
          
             if(selectedMensajeEnviado!=null&&m.getIdmensaje().equals(selectedMensajeEnviado.getIdmensaje()))
              
+                
             activaEnviado=false;
             
         }    
@@ -563,6 +573,27 @@ public class beanMensaje implements Serializable{
         temaEnviado=selectedMensajeEnviado.getTema();
         
     }
+     
+     
+     public String enviarMensajesVarios(){
+    if(selectedUsuarios.isEmpty()){
+        return "";
+    }
+    for(Usuario u:selectedUsuarios){
+        Mensaje mensaje=new Mensaje(user, u, Calendar.getInstance().getTime(), tema, texto, "no", "no", "no");
+        try{
+        mensajeService.enviarMensaje(mensaje);
+        }catch(Exception ex){
+            
+            creaMensaje("error al enviar mensajes", FacesMessage.SEVERITY_ERROR);
+            return "";
+        }
+    }
+        creaMensaje("mensajes enviados correctamente", FacesMessage.SEVERITY_INFO);
+        activaTexto=false;
+    return "";
+}
+     
     
     
     public void cerrarMensajeRecibido(){

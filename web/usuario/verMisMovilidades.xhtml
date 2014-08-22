@@ -48,9 +48,9 @@
                     <h:outputText value="#{movilidad.estado}"/>
                 </p:column>
                 
-                <p:column headerText="universidad" sortBy="#{movilidad.universidad.codUniversidad}">
+                <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}">
                 
-                    <h:outputText value="#{movilidad.universidad.codUniversidad}"/>
+                    <h:outputText value="#{movilidad.universidad.nombre}"/>
                     
                 
                 
@@ -94,8 +94,9 @@
                 </p:column>
                 
                 
-                
-            </p:dataTable>
+            </p:dataTable> 
+            
+            
         </h:form>
             
             <br/>

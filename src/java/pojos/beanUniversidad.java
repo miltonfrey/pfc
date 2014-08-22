@@ -359,7 +359,7 @@ public class beanUniversidad implements Serializable{
         
        
         Universidad uni=universidadService.findUniversidad(universidadStr);
-         AsignaturaId id=new AsignaturaId(codAsignatura,uni.getCodUniversidad());
+         AsignaturaId id=new AsignaturaId(codAsignatura,universidadStr);
         
         
         
@@ -391,10 +391,10 @@ public class beanUniversidad implements Serializable{
     
     public void verDetalles(){
         
-        webAsignatura=SelectedAsignatura.getWeb();
-        infoAsignatura=SelectedAsignatura.getInfo();
+        webAsignatura=SelectedAsignatura.getWebAsignatura();
+        infoAsignatura=SelectedAsignatura.getInfoAsigantura();
         facultadAsignatura=SelectedAsignatura.getFacultad();
-        titulacionAsignatura=SelectedAsignatura.getEstudios();
+        titulacionAsignatura=SelectedAsignatura.getTitulacion();
         checkDetalles=true;
         checkUniversidadStr=false;
         
@@ -415,7 +415,7 @@ public class beanUniversidad implements Serializable{
         
         
         listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
-        creaMensaje(SelectedAsignatura.getNombre()+" "+SelectedAsignatura.getWeb(), FacesMessage.SEVERITY_INFO);
+        
         
     }
     
@@ -672,11 +672,11 @@ public class beanUniversidad implements Serializable{
       
       creaMensaje(request.getRequestURI(), FacesMessage.SEVERITY_INFO);
       
-            if (request.getRequestURI().equals("/pfc/admin/crearCursoAcademico.xhtml")==true){
+           // if (request.getRequestURI().equals("/pfc/admin/crearCursoAcademico.xhtml")==true){
                 
-                creaMensaje("si",FacesMessage.SEVERITY_INFO);
+            //    creaMensaje("si",FacesMessage.SEVERITY_INFO);
                 
-            }
+           // }
             
             //HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             //session.invalidate();

@@ -57,7 +57,7 @@ public class MovilidadServiceImpl implements MovilidadService{
     @Override
     public Date fechaMax(){
         Calendar calendario=Calendar.getInstance();
-        calendario.add(1, 1);// máximo tiempo para la movilidad
+        calendario.add(1, 1);// máximo tiempo para empezar la movilidad
         Date d=calendario.getTime();
         return d;
         
@@ -92,6 +92,13 @@ public class MovilidadServiceImpl implements MovilidadService{
     public void eliminarMovilidad(Movilidad m){
         
         movilidadDao.eliminarMovilidad(m);
+    }
+    
+    @Override
+    public List<Object> doJoin(){
+        
+        return movilidadDao.doJoin();
+        
     }
     
 }

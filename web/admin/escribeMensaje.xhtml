@@ -14,12 +14,26 @@
             <p:dataTable id="tabla" filteredValue="#{beanUsuario.filteredUsuarios}"
                          var="usuario" value="#{beanUsuario.listaUsuarios}" 
                          widgetVar="usTable"
-                         emptyMessage="no hay usuarios">
+                         emptyMessage="no hay usuarios"
+                         selection="#{beanMensaje.selectedUsuarios}"
+                         rowKey="#{usuario.login}">
             
                 <p:column headerText="login" filterBy="#{usuario.login}" filterMatchMode="contains">
                 
                     <h:outputText value="#{usuario.login}"/>
                     
+                </p:column>
+                
+                <p:column headerText="nombre" sortBy="#{usuario.nombre}">
+                
+                    <h:outputText value="#{usuario.nombre}"/>
+                
+                </p:column>
+                
+                <p:column headerText="apellido" filterBy="#{usuario.apellido1}" sortBy="#{usuario.apellido1}">
+                
+                    <h:outputText value="#{usuario.apellido1}"/>
+                
                 </p:column>
                 
                 <p:column headerText="titulacion" sortBy="#{usuario.titulacion}">
@@ -28,14 +42,12 @@
                 
                 </p:column>
                 
-                <p:column headerText="enviar mensaje">
-                    
-                    <p:commandButton value="escribir mensaje" action="#{beanMensaje.activarTexto}" update=":usuario:panelEnvio">
-                    
-                        <f:setPropertyActionListener target="#{beanMensaje.selectedUsuario}" value="#{usuario}"/>
-                        
-                    </p:commandButton>   
-                </p:column>
+                <p:column selectionMode="multiple" headerText="seleccion" style="width:16px;text-align:center"/>
+               
+                <f:facet name="footer">
+                             <p:commandButton value="enviar mensaje" action="#{beanMensaje.activarTexto}" update=":usuario"/>  
+                </f:facet>
+                
                 
             </p:dataTable>
             
@@ -52,7 +64,7 @@
                <br/>
                <p:inputTextarea value="#{beanMensaje.texto}" required="true" requiredMessage="el texto está vacío" cols="50" rows="6" rendered="#{beanMensaje.activaTexto}"/>
                <br/>
-               <p:commandButton value="enviar" action="#{beanMensaje.enviaMensajeUsuario}" rendered="#{beanMensaje.activaTexto}" update="usuario"/>
+               <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajesVarios()}" rendered="#{beanMensaje.activaTexto}" update="usuario"/>
                <p:commandButton value="cancelar" action="#{beanMensaje.cancelarEnvioCoordinador()}"  process="@this" rendered="#{beanMensaje.activaTexto}" update=":usuario"/>
                                 
             

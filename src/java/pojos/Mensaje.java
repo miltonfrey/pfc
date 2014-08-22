@@ -1,5 +1,5 @@
 package pojos;
-// Generated 11-ago-2014 23:00:43 by Hibernate Tools 3.6.0
+// Generated 20-ago-2014 18:45:29 by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -38,6 +38,16 @@ public class Mensaje  implements java.io.Serializable {
     public Mensaje() {
     }
 
+	
+    public Mensaje(Usuario usuarioByOrigen, Usuario usuarioByDestino, Date fecha, String texto, String leidoDestino, String eliminadoOrigen, String eliminadoDestino) {
+        this.usuarioByOrigen = usuarioByOrigen;
+        this.usuarioByDestino = usuarioByDestino;
+        this.fecha = fecha;
+        this.texto = texto;
+        this.leidoDestino = leidoDestino;
+        this.eliminadoOrigen = eliminadoOrigen;
+        this.eliminadoDestino = eliminadoDestino;
+    }
     public Mensaje(Usuario usuarioByOrigen, Usuario usuarioByDestino, Date fecha, String tema, String texto, String leidoDestino, String eliminadoOrigen, String eliminadoDestino) {
        this.usuarioByOrigen = usuarioByOrigen;
        this.usuarioByDestino = usuarioByDestino;
@@ -92,7 +102,7 @@ public class Mensaje  implements java.io.Serializable {
     }
 
     
-    @Column(name="tema", nullable=false, length=16777215)
+    @Column(name="tema", length=16777215)
     public String getTema() {
         return this.tema;
     }

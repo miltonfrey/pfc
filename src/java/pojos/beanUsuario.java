@@ -9,6 +9,7 @@ package pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -76,17 +77,12 @@ public class beanUsuario implements Serializable{
         }
         
      /*  if (request.getRequestURI().equals(request.getContextPath()+"/usuario/verMisMensajes.xhtml")){
-            
-           
-            
+        
         }
         
         */
         
-        
     }
-    
-    
     
     @ManagedProperty(value="#{usuarioService}")  //  Bean injected
     private transient UsuarioService usuarioService;
@@ -435,6 +431,17 @@ public class beanUsuario implements Serializable{
             
         }
         
+        public void numeroMovilidades(){
+            
+            
+            Set<Movilidad> movilidades=user.getMovilidads();
+            creaMensaje(" "+movilidades.size(), FacesMessage.SEVERITY_INFO);
+           
+            
+        }
+        
+        
+        
         
         public String salir(){
             
@@ -443,6 +450,7 @@ public class beanUsuario implements Serializable{
             HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             session.invalidate();
             return("/principal.xhtml?faces-redirect=true");
+            
             
         }
         

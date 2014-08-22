@@ -1,5 +1,5 @@
 package pojos;
-// Generated 11-ago-2014 23:00:43 by Hibernate Tools 3.6.0
+// Generated 20-ago-2014 18:45:29 by Hibernate Tools 3.6.0
 
 
 import javax.persistence.AttributeOverride;
@@ -24,35 +24,32 @@ public class Asignatura  implements java.io.Serializable {
 
      private AsignaturaId id;
      private Universidad universidad;
-     private String nombre;
-     private short creditos;
+     private String nombreAsignatura;
+     private Short creditos;
      private String periodo;
-     private String info;
-     private String web;
+     private String infoAsigantura;
+     private String webAsignatura;
      private String facultad;
-     private String estudios;
+     private String titulacion;
 
     public Asignatura() {
     }
 
 	
-    public Asignatura(AsignaturaId id, Universidad universidad, String nombre, short creditos, String periodo) {
+    public Asignatura(AsignaturaId id, Universidad universidad) {
         this.id = id;
         this.universidad = universidad;
-        this.nombre = nombre;
-        this.creditos = creditos;
-        this.periodo = periodo;
     }
-    public Asignatura(AsignaturaId id, Universidad universidad, String nombre, short creditos, String periodo, String info, String web, String facultad, String estudios) {
+    public Asignatura(AsignaturaId id, Universidad universidad, String nombreAsignatura, Short creditos, String periodo, String infoAsigantura, String webAsignatura, String facultad, String titulacion) {
        this.id = id;
        this.universidad = universidad;
-       this.nombre = nombre;
+       this.nombreAsignatura = nombreAsignatura;
        this.creditos = creditos;
        this.periodo = periodo;
-       this.info = info;
-       this.web = web;
+       this.infoAsigantura = infoAsigantura;
+       this.webAsignatura = webAsignatura;
        this.facultad = facultad;
-       this.estudios = estudios;
+       this.titulacion = titulacion;
     }
    
      @EmbeddedId
@@ -60,7 +57,7 @@ public class Asignatura  implements java.io.Serializable {
     
     @AttributeOverrides( {
         @AttributeOverride(name="codAsignatura", column=@Column(name="codAsignatura", nullable=false) ), 
-        @AttributeOverride(name="codUniversidad", column=@Column(name="codUniversidad", nullable=false, length=15) ) } )
+        @AttributeOverride(name="nombreUniversidad", column=@Column(name="nombreUniversidad", nullable=false, length=45) ) } )
     public AsignaturaId getId() {
         return this.id;
     }
@@ -70,7 +67,7 @@ public class Asignatura  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="codUniversidad", nullable=false, insertable=false, updatable=false)
+    @JoinColumn(name="nombreUniversidad", nullable=false, insertable=false, updatable=false)
     public Universidad getUniversidad() {
         return this.universidad;
     }
@@ -80,27 +77,27 @@ public class Asignatura  implements java.io.Serializable {
     }
 
     
-    @Column(name="nombre", nullable=false, length=45)
-    public String getNombre() {
-        return this.nombre;
+    @Column(name="nombreAsignatura", length=50)
+    public String getNombreAsignatura() {
+        return this.nombreAsignatura;
     }
     
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreAsignatura(String nombreAsignatura) {
+        this.nombreAsignatura = nombreAsignatura;
     }
 
     
-    @Column(name="creditos", nullable=false)
-    public short getCreditos() {
+    @Column(name="creditos")
+    public Short getCreditos() {
         return this.creditos;
     }
     
-    public void setCreditos(short creditos) {
+    public void setCreditos(Short creditos) {
         this.creditos = creditos;
     }
 
     
-    @Column(name="periodo", nullable=false, length=10)
+    @Column(name="periodo", length=10)
     public String getPeriodo() {
         return this.periodo;
     }
@@ -110,27 +107,27 @@ public class Asignatura  implements java.io.Serializable {
     }
 
     
-    @Column(name="info")
-    public String getInfo() {
-        return this.info;
+    @Column(name="infoAsigantura")
+    public String getInfoAsigantura() {
+        return this.infoAsigantura;
     }
     
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    
-    @Column(name="web", length=50)
-    public String getWeb() {
-        return this.web;
-    }
-    
-    public void setWeb(String web) {
-        this.web = web;
+    public void setInfoAsigantura(String infoAsigantura) {
+        this.infoAsigantura = infoAsigantura;
     }
 
     
-    @Column(name="facultad", length=45)
+    @Column(name="webAsignatura", length=50)
+    public String getWebAsignatura() {
+        return this.webAsignatura;
+    }
+    
+    public void setWebAsignatura(String webAsignatura) {
+        this.webAsignatura = webAsignatura;
+    }
+
+    
+    @Column(name="facultad", length=50)
     public String getFacultad() {
         return this.facultad;
     }
@@ -140,13 +137,13 @@ public class Asignatura  implements java.io.Serializable {
     }
 
     
-    @Column(name="estudios", length=45)
-    public String getEstudios() {
-        return this.estudios;
+    @Column(name="titulacion", length=45)
+    public String getTitulacion() {
+        return this.titulacion;
     }
     
-    public void setEstudios(String estudios) {
-        this.estudios = estudios;
+    public void setTitulacion(String titulacion) {
+        this.titulacion = titulacion;
     }
 
 

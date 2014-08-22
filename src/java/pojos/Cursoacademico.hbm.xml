@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11-ago-2014 23:00:45 by Hibernate Tools 3.6.0 -->
+<!-- Generated 20-ago-2014 18:45:29 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="pojos.Cursoacademico" table="cursoacademico" catalog="pfc">
         <id name="cursoAcademico" type="string">
@@ -10,7 +10,7 @@
         </id>
         <set name="movilidads" table="movilidad" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="cursoAcademico" length="10" not-null="true" />
+                <column name="cursoAcademico" length="10" />
             </key>
             <one-to-many class="pojos.Movilidad" />
         </set>
