@@ -12,12 +12,13 @@
          <h:form id="recibidos">
            <p:messages id="msgsRecibidos" closable="true" />
             
-               <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}"
+           <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}" rows="10"
                          emptyMessage="no hay mensajes"
                          widgetVar="mensTabla"
                          filteredValue="#{beanMensaje.filteredMensajesRecibidos}"
                          selection="#{beanMensaje.selectedMensajesRecibidos}"
-                         rowKey="#{mensaje.idmensaje}">
+                         rowKey="#{mensaje.idmensaje}"
+                         paginator="true">
                <f:facet name="header">Mensajes recibidos</f:facet>
                 
                       <p:column headerText="De:">
@@ -83,10 +84,11 @@
             
             <h:form id="enviados">
             <p:messages id="msgsEnviados" closable="true"/>
-            <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}" rowKey="#{mensaje.idmensaje}"
+            <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}" rowKey="#{mensaje.idmensaje}" rows="10"
                          emptyMessage="no hay mensajes"
                          style="margin-bottom:0"
-                         selection="#{beanMensaje.selectedMensajesEnviados}">
+                         selection="#{beanMensaje.selectedMensajesEnviados}"
+                         paginator="true">
                  
                          <f:facet name="header">Mensajes enviados</f:facet>
                               <p:column sortBy="#{mensaje.fecha}">
