@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Detalles Asignatura</title>
+    </h:head>
+    <h:body>
+        
+        <h:form id="detallesAsignatura">
+            
+            <p:messages id="msgs" closable="true"/>
+            
+            <p:outputLabel value="nombre: "/>
+            <h:outputText value="#{beanContrato.selectedAsignatura.nombreAsignatura}"/>
+            <br/>   
+            <p:outputLabel value="universidad: "/>
+            <h:outputText value="#{beanContrato.selectedAsignatura.id.nombreUniversidad}"/>
+            <br/>
+            <p:outputLabel value="creditos: "/>
+            <h:outputText value="#{beanContrato.selectedAsignatura.creditos}"/>
+            <br/>
+            <p:outputLabel value="periodo: "/>
+            <h:outputText value="#{beanContrato.selectedAsignatura.periodo}"/>
+            <br/>
+            <p:outputLabel value="facultad: "/>
+            <h:outputText value="#{beanContrato.selectedAsignatura.facultad}"/>
+            <br/>
+            <p:outputLabel value="info: "/>
+            <p:inputTextarea value="#{beanContrato.selectedAsignatura.infoAsigantura}" readonly="true"/>
+            <br/>
+            <p:outputLabel value="pagina web: "/>
+            <h:outputLink value="#{beanContrato.selectedAsignatura.webAsignatura}"> pagina web </h:outputLink>
+            <br/>
+            <p:outputLabel value="titulacion: "/>
+            <h:outputText value="#{beanContrato.selectedAsignatura.titulacion}"/>
+            <br/>
+     
+            
+        </h:form> 
+        
+        
+        
+        <p:panel>
+        
+            <h:form>
+            
+                <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            
+            </h:form>
+        </p:panel>
+        
+        <br />
+        
+        <h:outputLink value="elaborarContrato.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
+        
+        
+    </h:body>
+</html>
+

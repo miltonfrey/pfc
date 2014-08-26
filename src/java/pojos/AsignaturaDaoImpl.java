@@ -48,7 +48,7 @@ public class AsignaturaDaoImpl implements AsignaturaDao,Serializable{
     @Override
     public List<Asignatura> listarAsignaturasPorUniversidad(String nombre){
         
-        Query q=sessionFactory.getCurrentSession().createQuery("select a from Asignatura a where a.universidad.nombre=:nombre");
+        Query q=sessionFactory.getCurrentSession().createQuery("select a from Asignatura a where a.universidad.nombre=:nombre order by a.universidad.nombre desc" );
         q.setParameter("nombre", nombre);
         return q.list();
         

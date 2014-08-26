@@ -18,7 +18,8 @@
                          filteredValue="#{beanMensaje.filteredMensajesRecibidos}"
                          selection="#{beanMensaje.selectedMensajesRecibidos}"
                          rowKey="#{mensaje.idmensaje}"
-                         paginator="true">
+                         paginator="true"
+                         style="position: relative;top: 3px;right: -500px;width: 50%">
                <f:facet name="header">Mensajes recibidos</f:facet>
                 
                       <p:column headerText="De:">
@@ -29,7 +30,7 @@
                          <h:outputText value="#{mensaje.tema}"/>
                       </p:column>
                     
-                      <p:column headerText="fecha" sortBy="#{mensaje.fecha}">
+               <p:column headerText="fecha" sortBy="#{mensaje.fecha}" style="width:50%">
                           <h:outputText value="#{mensaje.fecha}">
                              <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                           </h:outputText>

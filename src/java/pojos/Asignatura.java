@@ -1,5 +1,5 @@
 package pojos;
-// Generated 20-ago-2014 18:45:29 by Hibernate Tools 3.6.0
+// Generated 26-ago-2014 11:59:10 by Hibernate Tools 3.6.0
 
 
 import javax.persistence.AttributeOverride;
@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -31,6 +32,7 @@ public class Asignatura  implements java.io.Serializable {
      private String webAsignatura;
      private String facultad;
      private String titulacion;
+     private MiembroGrupoAsignatura miembroGrupoAsignatura;
 
     public Asignatura() {
     }
@@ -40,7 +42,7 @@ public class Asignatura  implements java.io.Serializable {
         this.id = id;
         this.universidad = universidad;
     }
-    public Asignatura(AsignaturaId id, Universidad universidad, String nombreAsignatura, Short creditos, String periodo, String infoAsigantura, String webAsignatura, String facultad, String titulacion) {
+    public Asignatura(AsignaturaId id, Universidad universidad, String nombreAsignatura, Short creditos, String periodo, String infoAsigantura, String webAsignatura, String facultad, String titulacion, MiembroGrupoAsignatura miembroGrupoAsignatura) {
        this.id = id;
        this.universidad = universidad;
        this.nombreAsignatura = nombreAsignatura;
@@ -50,6 +52,7 @@ public class Asignatura  implements java.io.Serializable {
        this.webAsignatura = webAsignatura;
        this.facultad = facultad;
        this.titulacion = titulacion;
+       this.miembroGrupoAsignatura = miembroGrupoAsignatura;
     }
    
      @EmbeddedId
@@ -117,7 +120,7 @@ public class Asignatura  implements java.io.Serializable {
     }
 
     
-    @Column(name="webAsignatura", length=50)
+    @Column(name="webAsignatura", length=200)
     public String getWebAsignatura() {
         return this.webAsignatura;
     }
@@ -144,6 +147,15 @@ public class Asignatura  implements java.io.Serializable {
     
     public void setTitulacion(String titulacion) {
         this.titulacion = titulacion;
+    }
+
+@OneToOne(fetch=FetchType.LAZY, mappedBy="asignatura")
+    public MiembroGrupoAsignatura getMiembroGrupoAsignatura() {
+        return this.miembroGrupoAsignatura;
+    }
+    
+    public void setMiembroGrupoAsignatura(MiembroGrupoAsignatura miembroGrupoAsignatura) {
+        this.miembroGrupoAsignatura = miembroGrupoAsignatura;
     }
 
 

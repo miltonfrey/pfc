@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Elaborar contrato</title>
+    </h:head>
+    <h:body>
+        <h:form id="formEquivalencia">
+            
+            <p:outputLabel value="asignaturas de la FIC"/>
+            <p:dataTable id="tablaFic" value="#{beanContrato.listaAsignaturasFic}" var="asigFic"
+                         emptyMessage="no hay asignaturas"
+                         widgetVar="asigFicBtn"
+                         rowKey="#{asigFic.idAsignatura}"
+                         selection="#{beanContrato.selectedAsignaturas}"
+                         filteredValue="#{beanContrato.filteredAsignaturas}">
+            
+                <p:column headerText="asignatura" filterBy="#{asigFic.nombreAsignatura}" filterMatchMode="contains" sortBy="#{asigFic.nombreAsignatura}">
+                
+                    <h:outputText value="#{asigFic.nombreAsignatura}"/>
+                
+                </p:column>
+            
+                <p:column headerText="creditos" sortBy="#{asigFic.creditos}">
+                
+                    <h:outputText value="#{asigFic.creditos}"/>
+                
+                </p:column>
+                
+                <p:column headerText="periodo" sortBy="#{asigFic.periodo}">
+                
+                    <h:outputText value="#{asigFic.periodo}"/>
+                
+                </p:column>
+                <p:column headerText="detalles">
+                    
+                    <h:commandButton value="ver detalles de la asignatura" action="#{beanContrato.detallesAsign}">
+                    <f:setPropertyActionListener value="#{asigFic}" target="#{beanContrato.selectedAsignatura}"/>
+                    </h:commandButton>
+                    
+                </p:column>
+            
+            </p:dataTable>
+      
+        </h:form>
+        
+        
+        <p:panel>
+         <h:form>
+            
+            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            
+        </h:form>
+            </p:panel>
+        
+        <br />
+        
+        <h:outputLink value="crearContrato.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
+        
+        
+    </h:body>
+</html>
+

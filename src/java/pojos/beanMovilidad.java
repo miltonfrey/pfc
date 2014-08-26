@@ -121,6 +121,7 @@ public class beanMovilidad implements Serializable{
        aux.add("aceptada");
        aux.add("cancelada");
        aux.add("terminada");
+       aux.add("en curso");
        setEstados(aux);
         
        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -606,7 +607,8 @@ public class beanMovilidad implements Serializable{
               String estado="pendiente";
               Universidad u=universidadService.findUniversidad(selectedUniversidad);
               
-              Movilidad m=new Movilidad(usuario,u, ca, fechaInicio, fechaFin, estado);
+              
+              Movilidad m=new Movilidad(usuario,u, ca, fechaInicio, fechaFin, estado,null);
               try{
               movilidadService.crearMovilidad(m);
                     

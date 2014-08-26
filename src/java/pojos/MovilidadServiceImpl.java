@@ -6,6 +6,7 @@
 
 package pojos;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("movilidadService")
 @Transactional
-public class MovilidadServiceImpl implements MovilidadService{
+public class MovilidadServiceImpl implements MovilidadService,Serializable{
     
     
     @Autowired
@@ -100,5 +101,15 @@ public class MovilidadServiceImpl implements MovilidadService{
         return movilidadDao.doJoin();
         
     }
+    
+    
+    @Override
+    public List<Movilidad> listarMovilidadesValidas(String user){
+        
+        return movilidadDao.listarMovilidadesValidas(user);
+        
+        
+    }
+    
     
 }

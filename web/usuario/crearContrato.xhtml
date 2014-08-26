@@ -10,8 +10,87 @@
     <h:body>
         
         
-        <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+       
             
+        <p:panel>
+            
+            
+            <h:outputLabel value="movilidades que pueden crear contrato de: "/>
+            <h:outputText value="#{beanMovilidad.usuario.login}"/>
+            
+        </p:panel>
+        
+        
+        <h:form id="formMovilidades">
+            
+            <p:messages id="msgs" closable="true"/>
+                        
+            <p:dataTable id="tablaMovilidades" emptyMessage="no hay movilidades"
+                         value="#{beanContrato.listaMovilidadesValidas}"
+                         var="movilidad"
+                         rowKey="#{movilidad.codMovilidad}">
+                
+                <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}">
+                
+                <h:outputText value="#{movilidad.universidad.nombre}"/>
+                
+                </p:column>
+                
+                <p:column headerText="fecha inicio" sortBy="#{movilidad.fechaInicio}">
+                
+                    <h:outputText value="#{movilidad.fechaInicio}">
+                    
+                        <f:convertDateTime pattern="dd-MM-YYYY"/>
+                        
+                    </h:outputText>
+                
+                </p:column>
+               
+                <p:column headerText="fecha fin" sortBy="#{movilidad.fechaFin}">
+                
+                    <h:outputText value="#{movilidad.fechaFin}">
+                    
+                        <f:convertDateTime pattern="dd-MM-YYYY"/>
+                        
+                    </h:outputText>
+                
+                </p:column>
+                
+                <p:column headerText="estado" sortBy="#{movilidad.estado}">
+                
+                    <h:outputText value="#{movilidad.estado}"/>
+                
+                </p:column>
+                
+                <p:column headerText="crear contrato">
+                    
+                    
+                    <p:commandButton value="crear contrato" action="#{beanContrato.crearContrato}" ajax="false">
+                    
+                        <f:setPropertyActionListener value="#{movilidad}" target="#{beanContrato.selectedMovilidad}"/>
+                    
+                    
+                    </p:commandButton>
+                    
+                    
+                    
+                </p:column>
+                
+                
+                
+            </p:dataTable>    
+         
+        </h:form>
+        
+        
+        
+        
+        
+        
+         <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
+        
+        
         
         <p:panel>
              <h:form>

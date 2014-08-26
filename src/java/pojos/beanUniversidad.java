@@ -14,6 +14,7 @@ import javax.faces.bean.ViewScoped;
 //import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+
 //import javax.faces.event.ActionEvent;
 
 import org.springframework.dao.DataAccessException;
@@ -72,6 +73,8 @@ public class beanUniversidad implements Serializable{
     private Universidad selectedUniversidad;
     private ArrayList<Asignatura> selectedAsignaturas;
     private Asignatura SelectedAsignatura;
+    private ArrayList<Asignatura>filteredAsignaturas;
+    
     
     public UniversidadService getUniversidadService() {
         return universidadService;
@@ -333,6 +336,17 @@ public class beanUniversidad implements Serializable{
     public void setSelectedAsignatura(Asignatura SelectedAsignatura) {
         this.SelectedAsignatura = SelectedAsignatura;
     }
+
+    public ArrayList<Asignatura> getFilteredAsignaturas() {
+        return filteredAsignaturas;
+    }
+
+    public void setFilteredAsignaturas(ArrayList<Asignatura> filteredAsignaturas) {
+        this.filteredAsignaturas = filteredAsignaturas;
+    }
+    
+    
+    
     
     
    
@@ -363,13 +377,13 @@ public class beanUniversidad implements Serializable{
         
         
         
-        
-        Asignatura a=new Asignatura(id, uni, nombreAsignatura, creditosAsignatura.shortValue(),periodoAsignatura,infoAsignatura,webAsignatura,facultadAsignatura,titulacionAsignatura);
+       
+        Asignatura a=new Asignatura(id,uni, nombreAsignatura, creditosAsignatura.shortValue(),periodoAsignatura,infoAsignatura,webAsignatura,facultadAsignatura,titulacionAsignatura,null);
         
         try{
             
             asignaturaService.crearAsignatura(a);
-        }catch(org.springframework.dao.DataIntegrityViolationException ex){
+        }catch(Exception ex){
             
             creaMensaje("se ha producido un error creando la asignatura, el código ya existe", FacesMessage.SEVERITY_ERROR);
             return "";
@@ -396,7 +410,7 @@ public class beanUniversidad implements Serializable{
         facultadAsignatura=SelectedAsignatura.getFacultad();
         titulacionAsignatura=SelectedAsignatura.getTitulacion();
         checkDetalles=true;
-        checkUniversidadStr=false;
+        //checkUniversidadStr=false;
         
     }
     
@@ -430,7 +444,7 @@ public class beanUniversidad implements Serializable{
     }
     
     
-    public void eliminaAsignaturasLista(){
+    public String eliminaAsignaturasLista(){
         
         if(selectedAsignaturas.isEmpty()==false){
         for (Asignatura a:selectedAsignaturas){
@@ -443,6 +457,7 @@ public class beanUniversidad implements Serializable{
             }catch(Exception ex){
                 
                 creaMensaje("se ha producido un error eliminando asignatura", FacesMessage.SEVERITY_ERROR);
+                return "";
             }
             
             
@@ -450,7 +465,12 @@ public class beanUniversidad implements Serializable{
         
         creaMensaje("se han eliminado correctamente las asignaturas",FacesMessage.SEVERITY_INFO);
         listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
+        //checkUniversidadStr=false;
+        checkDetalles=false;
+        return "";
     }
+        
+        return "";
     }
     
     

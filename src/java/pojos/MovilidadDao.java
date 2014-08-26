@@ -20,6 +20,10 @@ public interface MovilidadDao {
     public List<Movilidad> listarMisMovilidades(String user);
     public List<Movilidad> listarMisMovilidadesPorEstado(String user, String estado);
     
+    public List<Movilidad> listarMovilidadesValidas(String usuario);
+    
+    
+    
     public List<Object> doJoin();
         
         
