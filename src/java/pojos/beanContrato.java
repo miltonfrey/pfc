@@ -11,13 +11,15 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class beanContrato implements Serializable{
 
     @ManagedProperty(value="#{movilidadService}")
@@ -27,7 +29,7 @@ public class beanContrato implements Serializable{
     private AsignaturaService asignaturaService;
     
     
-    
+    private HttpServletRequest request;
     
     private ArrayList<Movilidad> listaMovilidadesValidas;
     private Movilidad selectedMovilidad;
@@ -49,11 +51,14 @@ public class beanContrato implements Serializable{
     public void init(){
         
         HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+       
         if((Usuario)session.getAttribute("user")!=null){
            user=(Usuario)session.getAttribute("user");
         } 
         listaMovilidadesValidas=(ArrayList<Movilidad>)movilidadService.listarMovilidadesValidas(user.getLogin());
-        listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
+        
+        //if (request.getRequestURI().equals(request.getContextPath()+"/usuario/elaborarContrato.xhtml"))
+        
         
         
     }
@@ -160,8 +165,10 @@ public class beanContrato implements Serializable{
     public String crearContrato(){
         
         
+        listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
+        listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
         
-        return ("elaborarContrato.xhtml");
+        return ("elaborarContrato.xhtml?faces-redirect=true");
         
         
     }

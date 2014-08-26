@@ -8,17 +8,18 @@
         <title>Elaborar contrato</title>
     </h:head>
     <h:body>
-        <h:form id="formEquivalencia">
+        <h:form id="formEquivalenciaFIC">
             
             <p:outputLabel value="asignaturas de la FIC"/>
-            <p:dataTable id="tablaFic" value="#{beanContrato.listaAsignaturasFic}" var="asigFic"
+            <p:dataTable id="tablaFic" value="#{beanContrato.listaAsignaturasFic}" var="asigFic" rows="10"
                          emptyMessage="no hay asignaturas"
                          widgetVar="asigFicBtn"
-                         rowKey="#{asigFic.idAsignatura}"
-                         selection="#{beanContrato.selectedAsignaturas}"
-                         filteredValue="#{beanContrato.filteredAsignaturas}">
+                         rowKey="#{asigFic.id}"
+                         selection="#{beanEquivalencia.selectedAsignaturasFic}"
+                         filteredValue="#{beanContrato.filteredAsignaturas}"
+                         paginator="true">
             
-                <p:column headerText="asignatura" filterBy="#{asigFic.nombreAsignatura}" filterMatchMode="contains" sortBy="#{asigFic.nombreAsignatura}">
+                <p:column headerText="asignatura" filterBy="#{asigFic.nombreAsignatura}" filterMatchMode="startsWith" sortBy="#{asigFic.nombreAsignatura}">
                 
                     <h:outputText value="#{asigFic.nombreAsignatura}"/>
                 
@@ -37,15 +38,61 @@
                 </p:column>
                 <p:column headerText="detalles">
                     
-                    <h:commandButton value="ver detalles de la asignatura" action="#{beanContrato.detallesAsign}">
+                    <p:commandButton value="ver detalles" action="#{beanContrato.detallesAsign}" ajax="false">
                     <f:setPropertyActionListener value="#{asigFic}" target="#{beanContrato.selectedAsignatura}"/>
-                    </h:commandButton>
+                    </p:commandButton>
+                    
+                </p:column>
+                
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+               
+                         <f:facet name="footer">
+                             <p:commandButton id="addBtn" process=":formEquivalenciaFIC:" update=":formEquivalenciaFIC:" icon="ui-icon-search" value="Añadir" action="#{beanEquivalencia.añadirAsignaturasFic}"  
+                               oncomplete="PF('asigFicBtn').toggleCheckAll;PF('asigFicBtn').toggleCheckAll;" />
+                         </f:facet>
+                    
+                    
+             
+            
+            </p:dataTable>
+       
+        </h:form>
+        
+        
+        
+        <h:form id="formTablaEquivalencias">
+            
+            <p:dataTable id="tablaEquivalencias"
+                         emptyMessage="no hay equivalencias"
+                         selection="#{beanEquivalencia.selectedEquivalencias}"
+                         value="#{beanEquivalencia.}"
+                         var="asignaturaFic"
+                         >
+                       
+                
+                <p:column headerText="nombre">
+                    
+                    <h:outputText value="#{asignaturaFic.nombreAsignatura}"/>
                     
                 </p:column>
             
+            
+            
+            
+                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+               
+                         <f:facet name="footer">
+                             <p:commandButton id="deleteBtn" onclick="if (! confirm('¿seguro que quieres borrar?')) return false" process=":formTablaEquivalencias:" update=":formTablaEquivalencias:"  icon="ui-icon-search" value="Borrar" action="#{beanEquivalencia.eliminaEquivalenciasLista}"  
+                               />
+                         </f:facet>
+            
+            
             </p:dataTable>
-      
+            
         </h:form>
+        
+        
+        
         
         
         <p:panel>

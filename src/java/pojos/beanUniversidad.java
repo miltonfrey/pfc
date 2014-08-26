@@ -398,9 +398,9 @@ public class beanUniversidad implements Serializable{
         facultadAsignatura="";
         infoAsignatura="";
         webAsignatura="";
-        listaAsignaturas=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(uni.getNombre());
-
-        return null;
+        listaAsignaturas=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
+        //filteredAsignaturas=null;
+        return "";
     }
     
     public void verDetalles(){
@@ -457,7 +457,7 @@ public class beanUniversidad implements Serializable{
             }catch(Exception ex){
                 
                 creaMensaje("se ha producido un error eliminando asignatura", FacesMessage.SEVERITY_ERROR);
-                return "";
+                return null;
             }
             
             
