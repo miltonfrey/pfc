@@ -28,7 +28,8 @@
             <p:dataTable id="tablaMovilidades" emptyMessage="no hay movilidades"
                          value="#{beanContrato.listaMovilidadesValidas}"
                          var="movilidad"
-                         rowKey="#{movilidad.codMovilidad}">
+                         rowKey="#{movilidad.codMovilidad}"
+                          >
                 
                 <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}">
                 

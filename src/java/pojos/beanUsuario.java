@@ -423,6 +423,8 @@ public class beanUsuario implements Serializable{
             }else{
                 HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
                 session.setAttribute("user", u);
+              
+                
                 
                 return "usuario/index.xhtml?faces-redirect=true";
                 
@@ -501,6 +503,17 @@ public class beanUsuario implements Serializable{
             message.setSeverity(s);
             context.addMessage(null, message);
         }
+        
+     /*   public void prueba(){
+            
+             HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+             session.setAttribute("atr1", "atr1");
+            session.setAttribute("atr2", "atr2");
+            
+            creaMensaje((String)session.getAttribute("atr1")+" "+(String)session.getAttribute("atr2"), FacesMessage.SEVERITY_INFO);
+        }
+        
+        */
         
         
     }

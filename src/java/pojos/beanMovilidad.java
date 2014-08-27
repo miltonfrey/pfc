@@ -11,11 +11,13 @@ package pojos;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import java.util.Calendar;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 //import java.util.List;
 
@@ -133,7 +135,10 @@ public class beanMovilidad implements Serializable{
        fechaMax=movilidadService.fechaMax();
        listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
        //listaObject=(ArrayList<Object>)movilidadService.doJoin();
-       
+       //Object[] lo=(Object[])listaObject.get(0);
+      //listaO=(ArrayList<Object>)(List<Object>)Arrays.asList(lo);
+     // Universidad us=(Universidad)lo[1];
+         //  creaMensaje(us.getNombre(), FacesMessage.SEVERITY_INFO);
         
     }else{
            usuario=(Usuario)session.getAttribute("admin");

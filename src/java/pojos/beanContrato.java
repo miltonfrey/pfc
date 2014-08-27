@@ -41,7 +41,8 @@ public class beanContrato implements Serializable{
     private ArrayList<Asignatura>listaAsignaturasFic;
     
     private ArrayList<Asignatura> selectedAsignaturas;
-    private ArrayList<Asignatura> filteredAsignaturas;
+    private ArrayList<Asignatura> filteredAsignaturasFic;
+    private ArrayList<Asignatura> filteredAsignaturasUni;
     
     
     public beanContrato() {
@@ -114,6 +115,7 @@ public class beanContrato implements Serializable{
     }
 
     public ArrayList<Asignatura> getListaAsignaturasUniversidad() {
+    
         return listaAsignaturasUniversidad;
     }
 
@@ -137,13 +139,23 @@ public class beanContrato implements Serializable{
         this.selectedAsignaturas = selectedAsignaturas;
     }
 
-    public ArrayList<Asignatura> getFilteredAsignaturas() {
-        return filteredAsignaturas;
+    public ArrayList<Asignatura> getFilteredAsignaturasFic() {
+        return filteredAsignaturasFic;
     }
 
-    public void setFilteredAsignaturas(ArrayList<Asignatura> filteredAsignaturas) {
-        this.filteredAsignaturas = filteredAsignaturas;
+    public void setFilteredAsignaturasFic(ArrayList<Asignatura> filteredAsignaturasFic) {
+        this.filteredAsignaturasFic = filteredAsignaturasFic;
     }
+
+    public ArrayList<Asignatura> getFilteredAsignaturasUni() {
+        return filteredAsignaturasUni;
+    }
+
+    public void setFilteredAsignaturasUni(ArrayList<Asignatura> filteredAsignaturasUni) {
+        this.filteredAsignaturasUni = filteredAsignaturasUni;
+    }
+
+   
 
     public Asignatura getSelectedAsignatura() {
         return selectedAsignatura;

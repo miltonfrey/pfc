@@ -9,9 +9,12 @@ package pojos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -31,13 +34,15 @@ public class beanEquivalencia implements Serializable{
     private beanContrato beanContrato;
     
    
+    private Equivalencia equivalencia;
+    
+    
     private ArrayList<Equivalencia>listaEquivalencias;
     
     private ArrayList<Asignatura>selectedAsignaturasFic;
+    private ArrayList<Asignatura> selectedAsignaturasUni;
+    
     private ArrayList<Asignatura>selectedEquivalencias;
-    
-    
-    
     
     public beanEquivalencia() {
         
@@ -45,6 +50,12 @@ public class beanEquivalencia implements Serializable{
     
     @PostConstruct
     public void init(){
+        
+       
+        
+        
+        
+        equivalencia=new Equivalencia();
         
         
         
@@ -100,6 +111,22 @@ public class beanEquivalencia implements Serializable{
     public void setListaEquivalencias(ArrayList<Equivalencia> listaEquivalencias) {
         this.listaEquivalencias = listaEquivalencias;
     }
+
+    public Equivalencia getEquivalencia() {
+        return equivalencia;
+    }
+
+    public void setEquivalencia(Equivalencia equivalencia) {
+        this.equivalencia = equivalencia;
+    }
+
+    public ArrayList<Asignatura> getSelectedAsignaturasUni() {
+        return selectedAsignaturasUni;
+    }
+
+    public void setSelectedAsignaturasUni(ArrayList<Asignatura> selectedAsignaturasUni) {
+        this.selectedAsignaturasUni = selectedAsignaturasUni;
+    }
     
     
     
@@ -112,17 +139,34 @@ public class beanEquivalencia implements Serializable{
     
     
     public String añadirAsignaturasFic(){
+        
+        GrupoAsignatura grupoA=new GrupoAsignatura();
+        equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
+        
+        MiembroGrupoAsignatura m;
         for(Asignatura a:selectedAsignaturasFic){
         
        // MiembroGrupoAsignaturaId id=new MiembroGrupoAsignaturaId(a.getId().getCodAsignatura(),a.getNombreAsignatura());
-        GrupoAsignatura g=new GrupoAsignatura();
         
-            
-            
-        MiembroGrupoAsignatura m=new MiembroGrupoAsignatura(a)
+        m=new MiembroGrupoAsignatura(a, grupoA);
+        grupoA.getMiembroGrupoAsignaturas().add(m);
         
-                }
+        }
+        
+        equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
+        
+        return "";
+                
     }
+    
+    
+    public String añadirAsignaturasUniversidad(){
+        
+        
+        return "";
+        
+    }
+    
     
     
     public String eliminaEquivalenciasLista(){
@@ -132,8 +176,12 @@ public class beanEquivalencia implements Serializable{
         
     }
     
-    
-    
-    
+     public void creaMensaje(String texto,FacesMessage.Severity s){
+            
+            FacesContext context=FacesContext.getCurrentInstance();
+            FacesMessage message=new FacesMessage(texto);
+            message.setSeverity(s);
+            context.addMessage(null, message);
+        }
     
 }
