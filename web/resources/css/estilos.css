@@ -10,9 +10,31 @@ body.green{
 
 #formEquivalenciaFIC\:tablaFic{
     
-    width: 50%;
-    height: 50%
+    width: 100%;
+    height: 100%
     
     
+    
+}
+
+tabla{
+    
+    width:50%;
+    color: red;
+    
+}
+
+tabla tr td{
+    
+    height: 20px;
+    
+    
+}
+
+#formEquivalenciaFIC\\:tablaFic\\:column\\:creditos{
+    
+    font-size: 55px;
+    height: 15%;
+    width: 15%;
     
 }

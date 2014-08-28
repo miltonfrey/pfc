@@ -140,7 +140,7 @@ public class beanEquivalencia implements Serializable{
     
     public String añadirAsignaturasFic(){
         
-        GrupoAsignatura grupoA=new GrupoAsignatura();
+      /*  GrupoAsignatura grupoA=new GrupoAsignatura();
         equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
         
         MiembroGrupoAsignatura m;
@@ -154,7 +154,7 @@ public class beanEquivalencia implements Serializable{
         }
         
         equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
-        
+        */
         return "";
                 
     }
@@ -162,6 +162,7 @@ public class beanEquivalencia implements Serializable{
     
     public String añadirAsignaturasUniversidad(){
         
+        creaMensaje(selectedAsignaturasUni.get(0).getNombreAsignatura(),FacesMessage.SEVERITY_INFO);
         
         return "";
         
