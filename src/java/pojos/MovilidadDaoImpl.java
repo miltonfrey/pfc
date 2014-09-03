@@ -6,6 +6,7 @@
 
 package pojos;
 
+import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository("movilidadDao") 
-public class MovilidadDaoImpl implements MovilidadDao{
+public class MovilidadDaoImpl implements MovilidadDao, Serializable{
     
     @Autowired
     private SessionFactory sessionFactory;

@@ -352,12 +352,15 @@ public class beanUniversidad implements Serializable{
    
    public void onChangePais(){
        
+       
        checkPaisStr=true;
        listaUniversidades=(ArrayList < Universidad >)universidadService.listarPorPais(paisStr);
        universidadStr="";
        checkDetalles=false;
        checkUniversidadStr=false;
        checkTabla=false;
+       
+       
    }
 
     public void onChangeUniversidad(){
@@ -366,6 +369,7 @@ public class beanUniversidad implements Serializable{
         checkTabla=true;
         listaAsignaturas=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
        checkDetalles=false;
+       
         
     }
     

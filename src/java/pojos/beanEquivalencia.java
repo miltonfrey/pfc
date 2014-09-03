@@ -6,15 +6,22 @@
 
 package pojos;
 
+import antlr.debug.Event;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.ToggleSelectEvent;
+import org.primefaces.event.UnselectEvent;
+//import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -33,9 +40,15 @@ public class beanEquivalencia implements Serializable{
     @ManagedProperty(value="#{beanContrato}")
     private beanContrato beanContrato;
     
+    @ManagedProperty(value="#{equivalenciaService}")
+    private EquivalenciaService equivalenciaService;
    
     private Equivalencia equivalencia;
+    GrupoAsignatura grupoA=new GrupoAsignatura();
+    GrupoAsignatura grupoB=new GrupoAsignatura();
     
+     Set<MiembroGrupoAsignatura> setMiembrosGrupoAsignaturasA;
+     Set<MiembroGrupoAsignatura> setMiembrosGrupoAsignaturasB;
     
     private ArrayList<Equivalencia>listaEquivalencias;
     
@@ -51,7 +64,7 @@ public class beanEquivalencia implements Serializable{
     @PostConstruct
     public void init(){
         
-       
+       listaEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalencias();
         
         
         
@@ -86,6 +99,18 @@ public class beanEquivalencia implements Serializable{
     public void setBeanContrato(beanContrato beanContrato) {
         this.beanContrato = beanContrato;
     }
+
+    public EquivalenciaService getEquivalenciaService() {
+        return equivalenciaService;
+    }
+
+    public void setEquivalenciaService(EquivalenciaService equivalenciaService) {
+        this.equivalenciaService = equivalenciaService;
+    }
+    
+    
+    
+    
     
     //////////////////////////////////////////////////////////////////////////////////////////
     public ArrayList<Asignatura> getSelectedAsignaturasFic() {
@@ -127,6 +152,22 @@ public class beanEquivalencia implements Serializable{
     public void setSelectedAsignaturasUni(ArrayList<Asignatura> selectedAsignaturasUni) {
         this.selectedAsignaturasUni = selectedAsignaturasUni;
     }
+
+    public GrupoAsignatura getGrupoA() {
+        return grupoA;
+    }
+
+    public void setGrupoA(GrupoAsignatura grupoA) {
+        this.grupoA = grupoA;
+    }
+
+    public GrupoAsignatura getGrupoB() {
+        return grupoB;
+    }
+
+    public void setGrupoB(GrupoAsignatura grupoB) {
+        this.grupoB = grupoB;
+    }
     
     
     
@@ -140,8 +181,9 @@ public class beanEquivalencia implements Serializable{
     
     public String añadirAsignaturasFic(){
         
-      /*  GrupoAsignatura grupoA=new GrupoAsignatura();
-        equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
+       
+           grupoA=new GrupoAsignatura();
+        
         
         MiembroGrupoAsignatura m;
         for(Asignatura a:selectedAsignaturasFic){
@@ -154,19 +196,65 @@ public class beanEquivalencia implements Serializable{
         }
         
         equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
-        */
+        grupoA.getEquivalenciasForGrupoAsignaturaA().add(equivalencia);
+        
+        
+         try{
+         if(equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().isEmpty()==false&&equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().isEmpty()==false)
+         crearEquivalencia();
+         }catch(Exception ex){
+             
+         }
         return "";
-                
+        
     }
+                
+    
     
     
     public String añadirAsignaturasUniversidad(){
         
-        creaMensaje(selectedAsignaturasUni.get(0).getNombreAsignatura(),FacesMessage.SEVERITY_INFO);
         
+        
+           grupoB=new GrupoAsignatura();
+        
+       
+        for(Asignatura a:selectedAsignaturasUni){
+            
+            MiembroGrupoAsignatura m=new MiembroGrupoAsignatura(a,grupoB);
+            grupoB.getMiembroGrupoAsignaturas().add(m);
+            
+        }
+         equivalencia.setGrupoAsignaturaByGrupoAsignaturaB(grupoB);
+         grupoB.getEquivalenciasForGrupoAsignaturaB().add(equivalencia);
+        
+         try{
+         if(equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().isEmpty()==false&&equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().isEmpty()==false)
+         crearEquivalencia();
+         }catch(Exception ex){
+             
+         }
         return "";
         
     }
+    
+    public void crearEquivalencia(){
+        
+        
+            creaMensaje(" "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().size()+"  /   "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().size(), FacesMessage.SEVERITY_INFO);
+            equivalenciaService.crearGrupoAsignaturas(grupoA);
+            equivalenciaService.crearGrupoAsignaturas(grupoB);
+            equivalenciaService.crearEquivalencia(equivalencia);
+            equivalencia=null;
+            listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.listarEquivalencias();
+            grupoA=new GrupoAsignatura();
+            grupoB=new GrupoAsignatura();
+            equivalencia=new Equivalencia();
+        
+        
+    }
+    
+    
     
     
     
@@ -176,6 +264,48 @@ public class beanEquivalencia implements Serializable{
         return "";
         
     }
+    
+  /*  public void limpiar(){
+        
+        DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaFic");
+        //dataTable.reset();
+        //dataTable.resetValue();
+       // dataTable.setFirst(10);
+        //dataTable.reset();
+        //dataTable.resetValue();
+        //dataTable.setFilters(null);
+        //dataTable.findSelectedRowKeys();
+        
+        
+    }
+    
+    
+    public void seleccionaFila(SelectEvent event){
+        
+        Asignatura a=(Asignatura)event.getObject();
+        creaMensaje(a.getNombreAsignatura(), FacesMessage.SEVERITY_INFO);
+        
+        
+    }
+    
+    public void deseleccionarFila(UnselectEvent event){
+        
+        Asignatura a=(Asignatura)event.getObject();
+        creaMensaje(a.getNombreAsignatura(), FacesMessage.SEVERITY_INFO);
+        
+    }
+    
+    public void unToggle(ToggleSelectEvent event){
+        
+      DataTable dataTable=(DataTable)event.getSource();
+      
+      ArrayList<Asignatura> aux=(ArrayList < Asignatura >)dataTable.getSelection();
+      for(Asignatura a:aux){
+          
+          creaMensaje(a.getNombreAsignatura(), FacesMessage.SEVERITY_INFO);
+      }
+    }
+    */
     
      public void creaMensaje(String texto,FacesMessage.Severity s){
             

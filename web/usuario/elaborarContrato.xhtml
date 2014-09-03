@@ -31,15 +31,17 @@
                          emptyMessage="no hay asignaturas"
                          widgetVar="asigFicBtn"
                          rowKey="#{asigFic.id}"
-                         selection="#{beanEquivalencia.selectedAsignaturasFic}"
-                         filteredValue="#{beanContrato.filteredAsignaturasFic}"
+                         selection="#{beanEquivalencia.selectedAsignaturasFic}"                  
                          paginator="true"
-                         style="height: 45%;width: 45%;font-size: 15px;position: absolute;top: 58px;
-                         ">
-                         
-                         
+                         style="height: 45%;width: 45%;font-size: 15px;position: absolute;top: 58px;"
+                          >
+                         <!--filteredValue="{beanContrato.filteredAsignaturasFic}"-->
+               <!-- <p:ajax event="rowSelectCheckbox" listener="{beanEquivalencia.seleccionaFila}" update=":formEquivalenciaFic"/>
+                <p:ajax event="rowUnselectCheckbox" listener="{beanEquivalencia.deseleccionarFila}" update=":formEquivalenciaFic"/>    
+                <p:ajax event="toggleSelect" listener="{beanEquivalencia.unToggle}" update=":formEquivalenciaFic"/>-->
+                
                 <f:facet name="header">UNIVERSIDAD DE ORIGEN: UDC</f:facet>
-                <p:column headerText="asignatura" filterBy="#{asigFic.nombreAsignatura}" filterMatchMode="startsWith" sortBy="#{asigFic.nombreAsignatura}" style="font-size: 15px; height: 20%;width: 20%">
+                <p:column headerText="asignatura"  sortBy="#{asigFic.nombreAsignatura}" style="font-size: 15px; height: 20%;width: 20%">
                 
                     <h:outputText value="#{asigFic.nombreAsignatura}" style="height: 20%;width: 20%"/>
                 
@@ -69,8 +71,8 @@
                 
                 
                          <f:facet name="footer">
-                             <p:commandButton id="addBtn" process=":formEquivalenciaFic:" update=":formEquivalenciaFic: :formTablaEquivalencias: :formGrowl" icon="ui-icon-search" value="Añadir" action="#{beanEquivalencia.añadirAsignaturasFic}"  
-                               oncomplete="clearCheckboxes(PF('asigFicBtn'));PF('asigFicBtn').filter();" />
+                             <p:commandButton  id="addBtn" process=":formEquivalenciaFic:tablaFic" update=":formEquivalenciaFic: :formTablaEquivalencias: :formGrowl" icon="ui-icon-search" value="Añadir"  actionListener="#{beanEquivalencia.añadirAsignaturasFic}"
+                                               oncomplete="PF('asigFicBtn').unselectAllRows();PF('asigFicBtn').filter();" />
                          </f:facet>
                 
             </p:dataTable>
@@ -95,7 +97,7 @@
                 
                 <f:facet name="header">ASIGNATURAS UNIVERSIDAD DE DESTINO: #{beanContrato.selectedMovilidad.universidad.nombre}</f:facet>
                 
-                <p:column headerText="asignatura" filterBy="#{asigUni.nombreAsignatura}" filterMatchMode="startsWith" sortBy="#{asigUni.nombreAsignatura}" style="height: 20%;width: 20%">
+                <p:column headerText="asignatura" sortBy="#{asigUni.nombreAsignatura}" style="height: 20%;width: 20%">
                 
                     <h:outputText value="#{asigUni.nombreAsignatura}"/>
                 
@@ -124,7 +126,7 @@
                
                          <f:facet name="footer">
                              <p:commandButton id="addBtn" process=":formEquivalenciaUniversidad:" update=":formEquivalenciaUniversidad: :formTablaEquivalencias: :formGrowl:" icon="ui-icon-search" value="Añadir" action="#{beanEquivalencia.añadirAsignaturasUniversidad}"  
-                               oncomplete="clearCheckboxes(PF('asigUniBtn'));PF('asigUniBtn').filter();" />
+                               oncomplete="PF('asigUniBtn').unselectAllRows();PF('asigUniBtn').filter();" />
                          </f:facet>
             
             
@@ -143,18 +145,18 @@
             <p:dataTable id="tablaEquivalencias"
                          emptyMessage="no hay equivalencias"
                          selection="#{beanEquivalencia.selectedEquivalencias}"
-                         
-                         var="asignaturaFic"
+                         value="#{beanEquivalencia.listaEquivalencias}"
+                         var="equivalencia"
                          style="height: 65%;width: 60%;position:absolute;top: 600px;left: 265px;text-align: center;"
-                         rowKey="#{asignaturaFic.id}">
+                         rowKey="#{equivalencia.idequivalencia}">
                          
                 <f:facet name="header">LISTA DE EQUIVALENCIAS</f:facet>
-                <p:column headerText="nombre">
+                
+                <p:column headerText="id">
                     
-                    <h:outputText value="#{asignaturaFic.nombreAsignatura}"/>
+                    
                     
                 </p:column>
-            
             
             
             
