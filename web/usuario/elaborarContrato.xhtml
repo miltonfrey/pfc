@@ -34,8 +34,7 @@
                          selection="#{beanEquivalencia.selectedAsignaturasFic}"                  
                          paginator="true"
                          style="height: 45%;width: 45%;font-size: 15px;position: absolute;top: 58px;"
-                          >
-                         <!--filteredValue="{beanContrato.filteredAsignaturasFic}"-->
+                         filteredValue="#{beanContrato.filteredAsignaturasFic}">
                <!-- <p:ajax event="rowSelectCheckbox" listener="{beanEquivalencia.seleccionaFila}" update=":formEquivalenciaFic"/>
                 <p:ajax event="rowUnselectCheckbox" listener="{beanEquivalencia.deseleccionarFila}" update=":formEquivalenciaFic"/>    
                 <p:ajax event="toggleSelect" listener="{beanEquivalencia.unToggle}" update=":formEquivalenciaFic"/>-->
@@ -87,13 +86,13 @@
                          var="asigUni"
                          widgetVar="asigUniBtn"
                          selection="#{beanEquivalencia.selectedAsignaturasUni}"
-                         filteredValue="#{beanContrato.filteredAsignaturasUni}"
+                        
                          rowKey="#{asigUni.id}"
                          paginator="true"
                          rows="10"
                          style="width: 45%;height: 45%;font-size: 15px;
-                         position:absolute;top: 58px;left: 650px; ">
-            
+                         position:absolute;top: 58px;left: 650px; "
+                        filteredValue="#{beanContrato.filteredAsignaturasUni}">
                 
                 <f:facet name="header">ASIGNATURAS UNIVERSIDAD DE DESTINO: #{beanContrato.selectedMovilidad.universidad.nombre}</f:facet>
                 

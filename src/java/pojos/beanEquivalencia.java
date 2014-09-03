@@ -194,9 +194,10 @@ public class beanEquivalencia implements Serializable{
         grupoA.getMiembroGrupoAsignaturas().add(m);
         
         }
-        
         equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
-        grupoA.getEquivalenciasForGrupoAsignaturaA().add(equivalencia);
+         grupoA.getEquivalenciasForGrupoAsignaturaA().add(equivalencia);
+        
+        
         
         
          try{

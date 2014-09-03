@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 26-ago-2014 11:59:12 by Hibernate Tools 3.6.0 -->
+<!-- Generated 04-sep-2014 0:25:19 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="pojos.Movilidad" table="movilidad" catalog="pfc">
         <id name="codMovilidad" type="java.lang.Integer">
