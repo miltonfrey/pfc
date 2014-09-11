@@ -394,8 +394,7 @@ public class beanMensaje implements Serializable{
         for(Mensaje m:selectedMensajesEnviados){
          
             if(selectedMensajeEnviado!=null&&m.getIdmensaje().equals(selectedMensajeEnviado.getIdmensaje()))
-             
-                
+            
             activaEnviado=false;
             
         }    

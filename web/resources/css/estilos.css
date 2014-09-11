@@ -8,33 +8,76 @@ body.green{
     
 }
 
-#formEquivalenciaFIC\:tablaFic{
-    
-    width: 100%;
-    height: 100%
-    
-    
-    
+.tablaFic{
+    height: 45%;
+    width: 45%;
+    font-size: 15px;
+    position: absolute;
+    top: 58px;
 }
 
-tabla{
+
+.asignatura{
     
-    width:50%;
-    color: red;
-    
+    font-size: 15px;
+    height: 20%;
+    width: 20%;
+  
 }
 
-tabla tr td{
-    
-    height: 20px;
-    
-    
-}
-
-#formEquivalenciaFIC\\:tablaFic\\:column\\:creditos{
-    
-    font-size: 55px;
+.creditos{
+    font-size: 15px;
     height: 15%;
-    width: 15%;
-    
+    width: 6%;
 }
+
+.periodo{
+    font-size: 15px;
+    height: 15%;
+    width: 8%;
+}
+
+.detalles{
+    font-size: 15px;
+    width: 8%;
+    height: 8%;
+}
+
+.multiple{
+   width:4% ;
+   text-align:center;
+}
+
+
+.añadir{
+    
+    position: absolute;
+    top: 640px;
+    left: 560px;
+    text-align:center; 
+}
+
+.tablaUniversidad{
+    width: 45%;
+    height: 45%;
+    font-size: 15px;
+    position:absolute;
+    top: 58px;
+    left: 650px; 
+}
+
+
+        
+.tablaEquivalencias{
+    height: 65%;
+    width: 60%;
+    position:absolute;
+    top: 690px;
+    left: 265px;
+    text-align: center;
+   
+}
+
+
+        
+    

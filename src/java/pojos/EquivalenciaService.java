@@ -14,6 +14,10 @@ public interface EquivalenciaService {
     public List<Equivalencia> listarEquivalencias();
     
     public void crearGrupoAsignaturas(GrupoAsignatura grupo);
+    
+    public void crearMiembroGrupoAsignatura(MiembroGrupoAsignatura m);
+       
+    
 }
 
 

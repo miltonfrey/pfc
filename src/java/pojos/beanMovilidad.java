@@ -136,7 +136,7 @@ public class beanMovilidad implements Serializable{
        listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
        //listaObject=(ArrayList<Object>)movilidadService.doJoin();
        //Object[] lo=(Object[])listaObject.get(0);
-      //listaO=(ArrayList<Object>)(List<Object>)Arrays.asList(lo);
+      //listaO=(ArrayList<Object>)(List<Object>)Arrays.asList(lo);// no va
      // Universidad us=(Universidad)lo[1];
          //  creaMensaje(us.getNombre(), FacesMessage.SEVERITY_INFO);
         

@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 04-sep-2014 0:25:19 by Hibernate Tools 3.6.0 -->
+<!-- Generated 11-sep-2014 19:42:43 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="pojos.GrupoAsignatura" table="grupo_asignatura" catalog="pfc">
         <id name="idgrupoAsignatura" type="java.lang.Integer">
             <column name="idgrupoAsignatura" />
             <generator class="identity" />
         </id>
-        <set name="miembroGrupoAsignaturas" table="miembro_grupo_asignatura" inverse="true" lazy="true" fetch="select">
+        <set name="miembroGrupoAsignaturas" cascade="save-update" table="miembro_grupo_asignatura" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idGrupoAsignatura" not-null="true" />
+                <column name="idGrupoAsignatura" />
             </key>
             <one-to-many class="pojos.MiembroGrupoAsignatura" />
         </set>

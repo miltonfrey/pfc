@@ -43,12 +43,12 @@ public class beanEquivalencia implements Serializable{
     @ManagedProperty(value="#{equivalenciaService}")
     private EquivalenciaService equivalenciaService;
    
-    private Equivalencia equivalencia;
-    GrupoAsignatura grupoA=new GrupoAsignatura();
-    GrupoAsignatura grupoB=new GrupoAsignatura();
+    private Equivalencia equivalencia=new Equivalencia();
+    private GrupoAsignatura grupoA=new GrupoAsignatura();
+    private GrupoAsignatura grupoB=new GrupoAsignatura();
     
-     Set<MiembroGrupoAsignatura> setMiembrosGrupoAsignaturasA;
-     Set<MiembroGrupoAsignatura> setMiembrosGrupoAsignaturasB;
+    private Set<MiembroGrupoAsignatura> setMiembrosGrupoAsignaturasA;
+    private Set<MiembroGrupoAsignatura> setMiembrosGrupoAsignaturasB;
     
     private ArrayList<Equivalencia>listaEquivalencias;
     
@@ -65,13 +65,7 @@ public class beanEquivalencia implements Serializable{
     public void init(){
         
        listaEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalencias();
-        
-        
-        
-        equivalencia=new Equivalencia();
-        
-        
-        
+       
     }
     
     
@@ -174,79 +168,66 @@ public class beanEquivalencia implements Serializable{
     
     
     
-    
-    
-    
-    
-    
-    public String añadirAsignaturasFic(){
-        
+    public String asignaturasTotales(){
        
-           grupoA=new GrupoAsignatura();
+        DataTable dataTable=(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaFic");
+        DataTable dataTable2=(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaUniversidad");
         
+        selectedAsignaturasFic=(ArrayList < Asignatura >)dataTable.getSelection();
+        selectedAsignaturasUni=(ArrayList<Asignatura>)dataTable2.getSelection();
         
+        if(selectedAsignaturasFic.isEmpty()){
+            
+            creaMensaje("No hay asignaturas de origen", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
+        
+        if(selectedAsignaturasUni.isEmpty()){
+            creaMensaje("No hay asignaturas de destino", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
+       
         MiembroGrupoAsignatura m;
+        
         for(Asignatura a:selectedAsignaturasFic){
-        
-       // MiembroGrupoAsignaturaId id=new MiembroGrupoAsignaturaId(a.getId().getCodAsignatura(),a.getNombreAsignatura());
-        
-        m=new MiembroGrupoAsignatura(a, grupoA);
+       
+        m=new MiembroGrupoAsignatura(a,grupoA);
         grupoA.getMiembroGrupoAsignaturas().add(m);
+        //equivalenciaService.crearGrupoAsignaturas(grupoA);  con cascade save-update no hace falta
+        //equivalenciaService.crearMiembroGrupoAsignatura(m);// con cascade save-update no hace falta
         
         }
-        equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
-         grupoA.getEquivalenciasForGrupoAsignaturaA().add(equivalencia);
         
-        
-        
-        
-         try{
-         if(equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().isEmpty()==false&&equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().isEmpty()==false)
-         crearEquivalencia();
-         }catch(Exception ex){
-             
-         }
-        return "";
-        
-    }
-                
-    
-    
-    
-    public String añadirAsignaturasUniversidad(){
-        
-        
-        
-           grupoB=new GrupoAsignatura();
-        
-       
         for(Asignatura a:selectedAsignaturasUni){
             
-            MiembroGrupoAsignatura m=new MiembroGrupoAsignatura(a,grupoB);
-            grupoB.getMiembroGrupoAsignaturas().add(m);
+        m=new MiembroGrupoAsignatura(a,grupoB);
+        grupoB.getMiembroGrupoAsignaturas().add(m);
+       // equivalenciaService.crearMiembroGrupoAsignatura(m);
             
         }
-         equivalencia.setGrupoAsignaturaByGrupoAsignaturaB(grupoB);
-         grupoB.getEquivalenciasForGrupoAsignaturaB().add(equivalencia);
         
-         try{
-         if(equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().isEmpty()==false&&equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().isEmpty()==false)
+        
+         
          crearEquivalencia();
-         }catch(Exception ex){
-             
-         }
-        return "";
-        
+         return null;
+         
     }
     
     public void crearEquivalencia(){
         
+        equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
+        grupoA.getEquivalenciasForGrupoAsignaturaA().add(equivalencia);
+         
+         equivalencia.setGrupoAsignaturaByGrupoAsignaturaB(grupoB);
+         grupoB.getEquivalenciasForGrupoAsignaturaB().add(equivalencia);       
+        
         
             creaMensaje(" "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().size()+"  /   "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().size(), FacesMessage.SEVERITY_INFO);
+            
             equivalenciaService.crearGrupoAsignaturas(grupoA);
             equivalenciaService.crearGrupoAsignaturas(grupoB);
             equivalenciaService.crearEquivalencia(equivalencia);
-            equivalencia=null;
+            
             listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.listarEquivalencias();
             grupoA=new GrupoAsignatura();
             grupoB=new GrupoAsignatura();
@@ -266,6 +247,9 @@ public class beanEquivalencia implements Serializable{
         
     }
     
+    
+    
+    
   /*  public void limpiar(){
         
         DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaFic");
@@ -279,6 +263,9 @@ public class beanEquivalencia implements Serializable{
         
         
     }
+    
+    
+    
     
     
     public void seleccionaFila(SelectEvent event){

@@ -55,5 +55,12 @@ private SessionFactory sessionFactory;
         
         sessionFactory.getCurrentSession().saveOrUpdate(grupo);
     }
+    @Override
+    public void insertarMiembroGrupoAsignatura(MiembroGrupoAsignatura m){
+        
+        sessionFactory.getCurrentSession().saveOrUpdate(m);
+        
+    }
+    
     
 }

@@ -17,4 +17,7 @@ public interface EquivalenciaDao {
     public List<Equivalencia> listarEquivalencias();
     
     public void insertarGrupoAsignaturas(GrupoAsignatura grupo);
+    
+    public void insertarMiembroGrupoAsignatura(MiembroGrupoAsignatura m);
+    
 }

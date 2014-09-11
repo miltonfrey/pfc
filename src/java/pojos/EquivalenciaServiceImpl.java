@@ -56,6 +56,66 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     
     
-    
-    
-}
+    @Override
+    public void crearMiembroGrupoAsignatura(MiembroGrupoAsignatura m){
+        
+        equivalenciaDao.insertarMiembroGrupoAsignatura(m);
+        
+    }
+            
+            
+}       
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
