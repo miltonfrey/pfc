@@ -6,10 +6,10 @@
 
 package pojos;
 
-import antlr.debug.Event;
+//import antlr.debug.Event;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Set;
+//import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -18,9 +18,9 @@ import javax.faces.bean.ViewScoped;
 
 import javax.faces.context.FacesContext;
 import org.primefaces.component.datatable.DataTable;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.ToggleSelectEvent;
-import org.primefaces.event.UnselectEvent;
+//import org.primefaces.event.SelectEvent;
+//import org.primefaces.event.ToggleSelectEvent;
+//import org.primefaces.event.UnselectEvent;
 //import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -43,12 +43,9 @@ public class beanEquivalencia implements Serializable{
     @ManagedProperty(value="#{equivalenciaService}")
     private EquivalenciaService equivalenciaService;
    
-    private Equivalencia equivalencia=new Equivalencia();
-    private GrupoAsignatura grupoA=new GrupoAsignatura();
-    private GrupoAsignatura grupoB=new GrupoAsignatura();
     
-    private Set<MiembroGrupoAsignatura> setMiembrosGrupoAsignaturasA;
-    private Set<MiembroGrupoAsignatura> setMiembrosGrupoAsignaturasB;
+    
+   
     
     private ArrayList<Equivalencia>listaEquivalencias;
     
@@ -102,10 +99,6 @@ public class beanEquivalencia implements Serializable{
         this.equivalenciaService = equivalenciaService;
     }
     
-    
-    
-    
-    
     //////////////////////////////////////////////////////////////////////////////////////////
     public ArrayList<Asignatura> getSelectedAsignaturasFic() {
         return selectedAsignaturasFic;
@@ -131,13 +124,7 @@ public class beanEquivalencia implements Serializable{
         this.listaEquivalencias = listaEquivalencias;
     }
 
-    public Equivalencia getEquivalencia() {
-        return equivalencia;
-    }
-
-    public void setEquivalencia(Equivalencia equivalencia) {
-        this.equivalencia = equivalencia;
-    }
+    
 
     public ArrayList<Asignatura> getSelectedAsignaturasUni() {
         return selectedAsignaturasUni;
@@ -147,29 +134,13 @@ public class beanEquivalencia implements Serializable{
         this.selectedAsignaturasUni = selectedAsignaturasUni;
     }
 
-    public GrupoAsignatura getGrupoA() {
-        return grupoA;
-    }
-
-    public void setGrupoA(GrupoAsignatura grupoA) {
-        this.grupoA = grupoA;
-    }
-
-    public GrupoAsignatura getGrupoB() {
-        return grupoB;
-    }
-
-    public void setGrupoB(GrupoAsignatura grupoB) {
-        this.grupoB = grupoB;
-    }
     
-    
-    
-    
-    
-    
-    public String asignaturasTotales(){
+     public String asignaturasTotales(){
        
+         Equivalencia equivalencia=new Equivalencia();
+         GrupoAsignatura grupoA=new GrupoAsignatura();
+         GrupoAsignatura grupoB=new GrupoAsignatura();
+        
         DataTable dataTable=(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaFic");
         DataTable dataTable2=(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaUniversidad");
         
@@ -193,8 +164,7 @@ public class beanEquivalencia implements Serializable{
        
         m=new MiembroGrupoAsignatura(a,grupoA);
         grupoA.getMiembroGrupoAsignaturas().add(m);
-        //equivalenciaService.crearGrupoAsignaturas(grupoA);  con cascade save-update no hace falta
-        //equivalenciaService.crearMiembroGrupoAsignatura(m);// con cascade save-update no hace falta
+                                                // con cascade save-update no hace falta salvar el miembro_grupo_asignaturas
         
         }
         
@@ -202,18 +172,9 @@ public class beanEquivalencia implements Serializable{
             
         m=new MiembroGrupoAsignatura(a,grupoB);
         grupoB.getMiembroGrupoAsignaturas().add(m);
-       // equivalenciaService.crearMiembroGrupoAsignatura(m);
+       
             
         }
-        
-        
-         
-         crearEquivalencia();
-         return null;
-         
-    }
-    
-    public void crearEquivalencia(){
         
         equivalencia.setGrupoAsignaturaByGrupoAsignaturaA(grupoA);
         grupoA.getEquivalenciasForGrupoAsignaturaA().add(equivalencia);
@@ -229,9 +190,15 @@ public class beanEquivalencia implements Serializable{
             equivalenciaService.crearEquivalencia(equivalencia);
             
             listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.listarEquivalencias();
-            grupoA=new GrupoAsignatura();
-            grupoB=new GrupoAsignatura();
-            equivalencia=new Equivalencia();
+            
+            return null;      
+         
+         
+         
+    }
+    
+    public void crearEquivalencia(){
+        
         
         
     }
