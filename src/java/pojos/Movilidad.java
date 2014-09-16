@@ -1,5 +1,5 @@
 package pojos;
-// Generated 11-sep-2014 19:42:43 by Hibernate Tools 3.6.0
+// Generated 16-sep-2014 16:59:37 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -29,9 +29,9 @@ public class Movilidad  implements java.io.Serializable {
 
 
      private Integer codMovilidad;
-     private Usuario usuario;
-     private Universidad universidad;
      private Cursoacademico cursoacademico;
+     private Universidad universidad;
+     private Usuario usuario;
      private Date fechaInicio;
      private Date fechaFin;
      private String estado;
@@ -41,17 +41,17 @@ public class Movilidad  implements java.io.Serializable {
     }
 
 	
-    public Movilidad(Usuario usuario, Universidad universidad, Date fechaInicio, Date fechaFin, String estado) {
-        this.usuario = usuario;
+    public Movilidad(Universidad universidad, Usuario usuario, Date fechaInicio, Date fechaFin, String estado) {
         this.universidad = universidad;
+        this.usuario = usuario;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.estado = estado;
     }
-    public Movilidad(Usuario usuario, Universidad universidad, Cursoacademico cursoacademico, Date fechaInicio, Date fechaFin, String estado, Set<Contrato> contratos) {
-       this.usuario = usuario;
-       this.universidad = universidad;
+    public Movilidad(Cursoacademico cursoacademico, Universidad universidad, Usuario usuario, Date fechaInicio, Date fechaFin, String estado, Set<Contrato> contratos) {
        this.cursoacademico = cursoacademico;
+       this.universidad = universidad;
+       this.usuario = usuario;
        this.fechaInicio = fechaInicio;
        this.fechaFin = fechaFin;
        this.estado = estado;
@@ -71,13 +71,13 @@ public class Movilidad  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="loginUsuario", nullable=false)
-    public Usuario getUsuario() {
-        return this.usuario;
+    @JoinColumn(name="cursoAcademico")
+    public Cursoacademico getCursoacademico() {
+        return this.cursoacademico;
     }
     
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCursoacademico(Cursoacademico cursoacademico) {
+        this.cursoacademico = cursoacademico;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -91,13 +91,13 @@ public class Movilidad  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="cursoAcademico")
-    public Cursoacademico getCursoacademico() {
-        return this.cursoacademico;
+    @JoinColumn(name="loginUsuario", nullable=false)
+    public Usuario getUsuario() {
+        return this.usuario;
     }
     
-    public void setCursoacademico(Cursoacademico cursoacademico) {
-        this.cursoacademico = cursoacademico;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -1,5 +1,5 @@
 package pojos;
-// Generated 11-sep-2014 19:42:43 by Hibernate Tools 3.6.0
+// Generated 16-sep-2014 16:59:37 by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -23,18 +23,18 @@ public class Equivalencia  implements java.io.Serializable {
 
 
      private Integer idequivalencia;
-     private GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA;
-     private GrupoAsignatura grupoAsignaturaByGrupoAsignaturaB;
      private Contrato contrato;
+     private GrupoAsignatura grupoAsignaturaByGrupoAsignaturaB;
+     private GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA;
      private String visible;
 
     public Equivalencia() {
     }
 
-    public Equivalencia(GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA, GrupoAsignatura grupoAsignaturaByGrupoAsignaturaB, Contrato contrato, String visible) {
-       this.grupoAsignaturaByGrupoAsignaturaA = grupoAsignaturaByGrupoAsignaturaA;
-       this.grupoAsignaturaByGrupoAsignaturaB = grupoAsignaturaByGrupoAsignaturaB;
+    public Equivalencia(Contrato contrato, GrupoAsignatura grupoAsignaturaByGrupoAsignaturaB, GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA, String visible) {
        this.contrato = contrato;
+       this.grupoAsignaturaByGrupoAsignaturaB = grupoAsignaturaByGrupoAsignaturaB;
+       this.grupoAsignaturaByGrupoAsignaturaA = grupoAsignaturaByGrupoAsignaturaA;
        this.visible = visible;
     }
    
@@ -51,13 +51,13 @@ public class Equivalencia  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="grupoAsignaturaA")
-    public GrupoAsignatura getGrupoAsignaturaByGrupoAsignaturaA() {
-        return this.grupoAsignaturaByGrupoAsignaturaA;
+    @JoinColumn(name="idContrato")
+    public Contrato getContrato() {
+        return this.contrato;
     }
     
-    public void setGrupoAsignaturaByGrupoAsignaturaA(GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA) {
-        this.grupoAsignaturaByGrupoAsignaturaA = grupoAsignaturaByGrupoAsignaturaA;
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -71,13 +71,13 @@ public class Equivalencia  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idContrato")
-    public Contrato getContrato() {
-        return this.contrato;
+    @JoinColumn(name="grupoAsignaturaA")
+    public GrupoAsignatura getGrupoAsignaturaByGrupoAsignaturaA() {
+        return this.grupoAsignaturaByGrupoAsignaturaA;
     }
     
-    public void setContrato(Contrato contrato) {
-        this.contrato = contrato;
+    public void setGrupoAsignaturaByGrupoAsignaturaA(GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA) {
+        this.grupoAsignaturaByGrupoAsignaturaA = grupoAsignaturaByGrupoAsignaturaA;
     }
 
     

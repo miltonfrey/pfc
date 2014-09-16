@@ -1,5 +1,5 @@
 package pojos;
-// Generated 11-sep-2014 19:42:43 by Hibernate Tools 3.6.0
+// Generated 16-sep-2014 16:59:37 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -26,8 +26,8 @@ public class Mensaje  implements java.io.Serializable {
 
 
      private Integer idmensaje;
-     private Usuario usuarioByOrigen;
      private Usuario usuarioByDestino;
+     private Usuario usuarioByOrigen;
      private Date fecha;
      private String tema;
      private String texto;
@@ -39,18 +39,18 @@ public class Mensaje  implements java.io.Serializable {
     }
 
 	
-    public Mensaje(Usuario usuarioByOrigen, Usuario usuarioByDestino, Date fecha, String texto, String leidoDestino, String eliminadoOrigen, String eliminadoDestino) {
-        this.usuarioByOrigen = usuarioByOrigen;
+    public Mensaje(Usuario usuarioByDestino, Usuario usuarioByOrigen, Date fecha, String texto, String leidoDestino, String eliminadoOrigen, String eliminadoDestino) {
         this.usuarioByDestino = usuarioByDestino;
+        this.usuarioByOrigen = usuarioByOrigen;
         this.fecha = fecha;
         this.texto = texto;
         this.leidoDestino = leidoDestino;
         this.eliminadoOrigen = eliminadoOrigen;
         this.eliminadoDestino = eliminadoDestino;
     }
-    public Mensaje(Usuario usuarioByOrigen, Usuario usuarioByDestino, Date fecha, String tema, String texto, String leidoDestino, String eliminadoOrigen, String eliminadoDestino) {
-       this.usuarioByOrigen = usuarioByOrigen;
+    public Mensaje(Usuario usuarioByDestino, Usuario usuarioByOrigen, Date fecha, String tema, String texto, String leidoDestino, String eliminadoOrigen, String eliminadoDestino) {
        this.usuarioByDestino = usuarioByDestino;
+       this.usuarioByOrigen = usuarioByOrigen;
        this.fecha = fecha;
        this.tema = tema;
        this.texto = texto;
@@ -72,16 +72,6 @@ public class Mensaje  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="origen", nullable=false)
-    public Usuario getUsuarioByOrigen() {
-        return this.usuarioByOrigen;
-    }
-    
-    public void setUsuarioByOrigen(Usuario usuarioByOrigen) {
-        this.usuarioByOrigen = usuarioByOrigen;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="destino", nullable=false)
     public Usuario getUsuarioByDestino() {
         return this.usuarioByDestino;
@@ -89,6 +79,16 @@ public class Mensaje  implements java.io.Serializable {
     
     public void setUsuarioByDestino(Usuario usuarioByDestino) {
         this.usuarioByDestino = usuarioByDestino;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="origen", nullable=false)
+    public Usuario getUsuarioByOrigen() {
+        return this.usuarioByOrigen;
+    }
+    
+    public void setUsuarioByOrigen(Usuario usuarioByOrigen) {
+        this.usuarioByOrigen = usuarioByOrigen;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

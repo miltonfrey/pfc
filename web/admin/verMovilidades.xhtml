@@ -20,7 +20,7 @@
                          selection="#{beanMovilidad.selectedMovilidades}"
                          widgetVar="movTable"
                          rowKey="#{movilidad.codMovilidad}">
-                <p:ajax event="rowEdit" listener="#{beanMovilidad.onRowEdit}" update=":formMovilidades:t1 :formMovilidades:msgs"/>
+                <p:ajax event="rowEdit" listener="#{beanMovilidad.onRowEdit}" oncomplete="PF('movTable').unselectAllRows();" update=":formMovilidades:t1 :formMovilidades:msgs"/>
                 <p:ajax event="rowEditCancel" listener="#{beanMovilidad.onRowCancel}" />
                       
                           
@@ -45,7 +45,7 @@
                     <f:facet name="filter">
                         <p:selectOneMenu onchange="PF('movTable').filter()" style="width: 100%">
                             <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{beanMovilidad.estados}"/>
+                            <f:selectItems var="estados" value="#{beanUtilidades.listaEstadosMovilidad}" itemLabel="#{estados.estadoMovilidad}" itemValue="#{estados.estadoMovilidad}"/>
                         </p:selectOneMenu>
                     </f:facet>
                     <p:cellEditor>
@@ -55,7 +55,7 @@
                         <p:selectOneMenu value="#{beanMovilidad.changeEstado}" style="width: 100%"
                                          required="true" requiredMessage="hay que elegir un estado">
                             <f:selectItem itemLabel="seleccionar un estado" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems value="#{beanMovilidad.estados}"/>             
+                            <f:selectItems var="estados2" value="#{beanUtilidades.listaEstadosMovilidad}" itemLabel="#{estados2.estadoMovilidad}" itemValue="#{estados2.estadoMovilidad}"/>             
                         </p:selectOneMenu>
                     </f:facet>
                     </p:cellEditor>

@@ -624,7 +624,7 @@ public class beanUniversidad implements Serializable{
   
   public String creaCursoAcademico(){
       
-      if(cursoAcademico.substring(0, 2).compareTo(cursoAcademico.substring(3, 5))!=-1){
+      if(cursoAcademico.substring(0, 4).compareTo(cursoAcademico.substring(5, 9))!=-1){
           
           creaMensaje("el curso académico no puede empezar más tarde de lo que acaba",FacesMessage.SEVERITY_ERROR);
           return "";

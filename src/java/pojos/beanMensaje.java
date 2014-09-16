@@ -338,7 +338,7 @@ public class beanMensaje implements Serializable{
         Usuario destino=usuarioService.find("admin");
         
         
-        Mensaje m=new Mensaje(user, destino, Calendar.getInstance().getTime(), tema, texto, "no","no","no");
+        Mensaje m=new Mensaje(destino, user, Calendar.getInstance().getTime(), tema, texto, "no","no","no");
         try{
         mensajeService.enviarMensaje(m);
         }catch(Exception ex){
@@ -357,7 +357,7 @@ public class beanMensaje implements Serializable{
     
     public String enviaMensajeUsuario(){
         
-         Mensaje m=new Mensaje(user, selectedUsuario, Calendar.getInstance().getTime(), tema, texto, "no","no","no");
+         Mensaje m=new Mensaje(selectedUsuario,user, Calendar.getInstance().getTime(), tema, texto, "no","no","no");
         try{
         mensajeService.enviarMensaje(m);
         }catch(Exception ex){
@@ -579,7 +579,7 @@ public class beanMensaje implements Serializable{
         return "";
     }
     for(Usuario u:selectedUsuarios){
-        Mensaje mensaje=new Mensaje(user, u, Calendar.getInstance().getTime(), tema, texto, "no", "no", "no");
+        Mensaje mensaje=new Mensaje(u, user, Calendar.getInstance().getTime(), tema, texto, "no", "no", "no");
         try{
         mensajeService.enviarMensaje(mensaje);
         }catch(Exception ex){

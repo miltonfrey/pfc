@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11-sep-2014 19:42:43 by Hibernate Tools 3.6.0 -->
+<!-- Generated 16-sep-2014 16:59:40 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="pojos.Mensaje" table="mensaje" catalog="pfc">
+    <class name="pojos.Mensaje" table="mensaje" catalog="pfc" optimistic-lock="version">
         <id name="idmensaje" type="java.lang.Integer">
             <column name="idmensaje" />
             <generator class="identity" />
         </id>
-        <many-to-one name="usuarioByOrigen" class="pojos.Usuario" fetch="select">
-            <column name="origen" length="20" not-null="true" />
-        </many-to-one>
         <many-to-one name="usuarioByDestino" class="pojos.Usuario" fetch="select">
             <column name="destino" length="20" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarioByOrigen" class="pojos.Usuario" fetch="select">
+            <column name="origen" length="20" not-null="true" />
         </many-to-one>
         <property name="fecha" type="timestamp">
             <column name="fecha" length="19" not-null="true" />

@@ -117,14 +117,8 @@ public class beanMovilidad implements Serializable{
     @PostConstruct
     public void init(){
         
-        ArrayList<String> aux=new ArrayList<String>();
-       aux.add("pendiente");
-       aux.add("rechazada");
-       aux.add("aceptada");
-       aux.add("cancelada");
-       aux.add("terminada");
-       aux.add("en curso");
-       setEstados(aux);
+        
+       
         
        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
       // HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -504,7 +498,7 @@ public class beanMovilidad implements Serializable{
        // Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(), "movilidad: "+changeEstado,"el coordinador ha modificado la movilidad", "no");
         //mensajeService.enviarMensaje(mensaje);
        
-        Mensaje mensaje=new Mensaje(usuario,m.getUsuario() , Calendar.getInstance().getTime(),"cambio de estado de movilidad","destino:"+m.getUniversidad().getNombre()+" \n"+"fecha de inicio:"+sdf.format(m.getFechaInicio())+" \n"+"fecha fin:"+sdf.format(m.getFechaFin())+"\n\n"+ "el estado de la movilidad ahora es: "+m.getEstado(), "no","no","no");
+        Mensaje mensaje=new Mensaje(m.getUsuario() ,usuario, Calendar.getInstance().getTime(),"cambio de estado de movilidad","destino:"+m.getUniversidad().getNombre()+" \n"+"fecha de inicio:"+sdf.format(m.getFechaInicio())+" \n"+"fecha fin:"+sdf.format(m.getFechaFin())+"\n\n"+ "el estado de la movilidad ahora es: "+m.getEstado(), "no","no","no");
         try{
             
             mensajeService.enviarMensaje(mensaje);
@@ -570,19 +564,19 @@ public class beanMovilidad implements Serializable{
                     if(aux.size()>0){
                     for(Movilidad mov:aux){
                         
-                        if(mov.getEstado().equals("pendiente")){
+                        if(mov.getEstado().equals("pendiente")||mov.getEstado().equals("Pendiente")){
                             
                             creaMensaje("hay una movilidad pendiente o en curso, para cancelarla o modificarla contacta con el coordinador", FacesMessage.SEVERITY_ERROR);
                             return null;
                         
                         }
                         
-                       if(mov.getEstado().equals("aceptada")){
+                       if(mov.getEstado().equals("aceptada")||mov.getEstado().equals("Aceptada")||mov.getEstado().equals("en curso")||mov.getEstado().equals("En curso")){
                            i=i+1;
                            enCurso=mov;
                            if(i>1){
                                
-                               creaMensaje("solo se puede tener dos convocatorias en curso", FacesMessage.SEVERITY_ERROR);
+                               creaMensaje("solo se puede tener dos convocatorias en curso o aceptadas como máximo", FacesMessage.SEVERITY_ERROR);
                                return "";
                            }
                            
@@ -612,8 +606,8 @@ public class beanMovilidad implements Serializable{
               String estado="pendiente";
               Universidad u=universidadService.findUniversidad(selectedUniversidad);
               
-              
-              Movilidad m=new Movilidad(usuario,u, ca, fechaInicio, fechaFin, estado,null);
+             
+              Movilidad m=new Movilidad(ca,u, usuario, fechaInicio, fechaFin, estado,null);
               try{
               movilidadService.crearMovilidad(m);
                     
@@ -624,7 +618,7 @@ public class beanMovilidad implements Serializable{
                
                 
                 
-                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getNombre()+" "+usuario.getApellido1()+""
+                Mensaje mensaje=new Mensaje(usuarioService.find("admin"),usuario,  Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getNombre()+" "+usuario.getApellido1()+""
                         + " ha creado una movilidad a "+selectedUniversidad+" entre el "+sdf.format(fechaInicio)+" y "+sdf.format(fechaFin) , "no","no","no");
                 try{
                     mensajeService.enviarMensaje(mensaje);
@@ -660,7 +654,7 @@ public class beanMovilidad implements Serializable{
             
             creaMensaje("movilidad eliminada correctamente, se ha enviado un mensaje al coordinador ", FacesMessage.SEVERITY_INFO);
             
-            Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no","no","no");
+            Mensaje mensaje=new Mensaje(usuarioService.find("admin"),usuario,  Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no","no","no");
             try{
                 mensajeService.enviarMensaje(mensaje);
             }catch(Exception ex){
@@ -671,10 +665,10 @@ public class beanMovilidad implements Serializable{
             
         }else{
          
-            if(selectedMovilidad.getEstado().equals("aceptada")){
+            if(selectedMovilidad.getEstado().equals("aceptada")||selectedMovilidad.getEstado().equals("en curso")||selectedMovilidad.getEstado().equals("Aceptada")||selectedMovilidad.getEstado().equals("En curso")){
                 
                 
-                Mensaje mensaje=new Mensaje(usuario, usuarioService.find("admin"), Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre()+" con fecha de inicio:"+selectedMovilidad.getFechaInicio()+" y fecha fin:"+selectedMovilidad.getFechaFin(), "no","no","no");
+                Mensaje mensaje=new Mensaje( usuarioService.find("admin"),usuario, Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre()+" con fecha de inicio:"+ sdf.format(selectedMovilidad.getFechaInicio())+" y fecha fin:"+sdf.format(selectedMovilidad.getFechaFin()), "no","no","no");
             try{
                 mensajeService.enviarMensaje(mensaje);
             }catch(Exception ex){
@@ -733,7 +727,7 @@ public class beanMovilidad implements Serializable{
         return "";
     }
     for(Movilidad m:selectedMovilidades){
-        Mensaje mensaje=new Mensaje(usuario, m.getUsuario(), Calendar.getInstance().getTime(), tema, texto, "no", "no", "no");
+        Mensaje mensaje=new Mensaje(m.getUsuario(),usuario,  Calendar.getInstance().getTime(), tema, texto, "no", "no", "no");
         try{
         mensajeService.enviarMensaje(mensaje);
         }catch(Exception ex){

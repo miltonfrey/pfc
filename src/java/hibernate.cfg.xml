@@ -10,8 +10,10 @@
     <property name="hibernate.show_sql">true</property>
     <mapping resource="pojos/Pais.hbm.xml"/>
     <mapping resource="pojos/Equivalencia.hbm.xml"/>
+    <mapping resource="pojos/Estado.hbm.xml"/>
     <mapping resource="pojos/Contrato.hbm.xml"/>
     <mapping resource="pojos/Cursoacademico.hbm.xml"/>
+    <mapping resource="pojos/EstadoMovilidad.hbm.xml"/>
     <mapping resource="pojos/Movilidad.hbm.xml"/>
     <mapping resource="pojos/Usuario.hbm.xml"/>
     <mapping resource="pojos/Universidad.hbm.xml"/>
