@@ -8,7 +8,7 @@
             <column name="idgrupoAsignatura" />
             <generator class="identity" />
         </id>
-        <set name="miembroGrupoAsignaturas" cascade="save-update" table="miembro_grupo_asignatura" inverse="true" lazy="true" fetch="select">
+        <set name="miembroGrupoAsignaturas" cascade="save-update,delete" table="miembro_grupo_asignatura" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idGrupoAsignatura" />
             </key>

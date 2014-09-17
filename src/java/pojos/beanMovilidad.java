@@ -627,7 +627,7 @@ public class beanMovilidad implements Serializable{
                 }
                 
                 creaMensaje("movilidad creada", FacesMessage.SEVERITY_INFO);
-                creaMensaje(usuario.getLogin()+ selectedUniversidad+" "+selectedPais+" "+" " + " "+fechaInicio+" "+ fechaFin, FacesMessage.SEVERITY_INFO);
+                creaMensaje(usuario.getLogin()+" a "+ selectedUniversidad+" "+selectedPais+" "+" " + " de "+sdf.format(fechaInicio)+" a "+ sdf.format(fechaFin), FacesMessage.SEVERITY_INFO);
                 selectedUniversidad="";
                 selectedPais="";
                 selectedUniversidad="";
@@ -718,7 +718,11 @@ public class beanMovilidad implements Serializable{
     
     public void activaTexto(){
         
+        if(selectedMovilidades.isEmpty()==false){
         activaTexto=true;
+    }else{
+            creaMensaje("hay que seleccionar al menos un usuario", FacesMessage.SEVERITY_ERROR);
+        }
     }
     
     
@@ -738,6 +742,10 @@ public class beanMovilidad implements Serializable{
     }
         creaMensaje("mensajes enviados correctamente", FacesMessage.SEVERITY_INFO);
         activaTexto=false;
+        tema="";
+        texto="";
+        selectedMovilidades=null;
+        
     return "";
 }
     

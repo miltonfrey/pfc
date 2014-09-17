@@ -322,9 +322,12 @@ public class beanMensaje implements Serializable{
     
     public void activarTexto(){
         
+        if(selectedUsuarios.isEmpty()==false){
         activaTexto=true;
+    }else{
+            creaMensaje("hay que seleccionar al menos un usuario", FacesMessage.SEVERITY_ERROR);
+        }
     }
-    
     
     
     
@@ -419,7 +422,7 @@ public class beanMensaje implements Serializable{
     public void actualizarRecibidos(){
         
         if(user.getLogin().equals("admin")==false){
-            creaMensaje("en user", FacesMessage.SEVERITY_INFO);
+            
         setListaMensajesRecibidos((ArrayList<Mensaje>)mensajeService.mensajesRecibidos("admin", user.getLogin()));
         for(Mensaje m:selectedMensajesRecibidos){
             
@@ -449,13 +452,13 @@ public class beanMensaje implements Serializable{
    
     
     public String eliminarMensajesEnviados(){
-        creaMensaje("en eliminarMensajeEnviado", FacesMessage.SEVERITY_INFO);
+        
         if(selectedMensajesEnviados.isEmpty()){
             return "";
         }
         
         for(Mensaje m:selectedMensajesEnviados){
-            creaMensaje(m.getEliminadoDestino(), FacesMessage.SEVERITY_INFO);
+            
             
             
              Mensaje aux=mensajeService.find(m.getIdmensaje());
@@ -500,7 +503,7 @@ public class beanMensaje implements Serializable{
             
             if(aux!=null){
             aux.setEliminadoDestino("si");
-                creaMensaje(aux.getEliminadoOrigen()+" "+aux.getEliminadoDestino(), FacesMessage.SEVERITY_INFO);
+               
             
             try{
                 
@@ -590,6 +593,9 @@ public class beanMensaje implements Serializable{
     }
         creaMensaje("mensajes enviados correctamente", FacesMessage.SEVERITY_INFO);
         activaTexto=false;
+        selectedUsuarios=null;
+        tema="";
+        texto="";
     return "";
 }
      
