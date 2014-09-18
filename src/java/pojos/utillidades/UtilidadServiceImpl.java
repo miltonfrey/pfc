@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pojos.Cursoacademico;
 import pojos.Estado;
 import pojos.EstadoMovilidad;
 
@@ -60,6 +61,23 @@ public class UtilidadServiceImpl implements UtilidadService,Serializable{
     @Override
     public void eliminaEstadoMovilidad(EstadoMovilidad e){
         sessionFactory.getCurrentSession().delete(e);
+    }
+    
+    @Override
+    public void crearCursoAcademico(Cursoacademico c){
+        
+      sessionFactory.getCurrentSession().saveOrUpdate(c);
+        
+    }
+    
+    @Override
+    public List<Cursoacademico> listaCursoAcademico(){
+        return sessionFactory.getCurrentSession().createQuery("select c from Cursoacademico c").list();
+                
+    }
+    @Override
+    public void eliminaCursoAcademico(Cursoacademico c){
+        sessionFactory.getCurrentSession().delete(c);
     }
     
     

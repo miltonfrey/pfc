@@ -10,7 +10,7 @@
     <h:body>
         
          <h:form id="recibidos">
-           <p:messages id="msgsRecibidos" closable="true" />
+           <p:growl id="msgsRecibidos" />
             
            <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}" rows="10"
                          emptyMessage="no hay mensajes"
@@ -83,7 +83,7 @@
             <br/>
             
             <h:form id="enviados">
-            <p:messages id="msgsEnviados" closable="true"/>
+            <p:growl id="msgsEnviados" />
             <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}" rowKey="#{mensaje.idmensaje}" rows="10"
                          emptyMessage="no hay mensajes"
                          style="margin-bottom:0"

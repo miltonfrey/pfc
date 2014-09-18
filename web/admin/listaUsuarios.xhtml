@@ -15,7 +15,7 @@
        
         <h:form id="formTabla">
             
-            <p:messages closable="true"/>
+            <p:growl />
             
             <p:dataTable id="tabla" var="usuario" value="#{beanUsuario.listaUsuarios}"
                          filteredValue="#{beanUsuario.filteredUsuarios}"
@@ -52,14 +52,14 @@
             <h:outputText value="#{usuario.titulacion}"/>
                 </p:column>
                 
-                <p:column headerText="eliminar">
+               
                
                     <!--<p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false"
                                      value="eliminar" action="{beanUsuario.eliminaUsuarioLista}" icon="edit_icon"  update=":formTabla" >
                         <f:setPropertyActionListener target="{beanUsuario.selectedUsuario}" value="{usuario}" />
                     </p:commandButton>-->
                     
-                </p:column>
+                
                 
                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                
@@ -69,13 +69,7 @@
                          </f:facet>
                 
             </p:dataTable>
-                              
-            
-            <br/>
-            
-            <p:commandButton value="actualizar" action="#{beanUsuario.actualizar()}" update="formTabla"/>
-       
-            
+          
         </h:form>
         
         

@@ -12,7 +12,7 @@
     <h:body>
        
         <h:form id="context">
-            <p:messages closable="true" for="context"/>
+            <p:growl for="context"/>
             
             <p:commandButton value="contextRequest" action="#{beanUsuario.comprobarContext}" ajax="false"/>
             
@@ -20,7 +20,7 @@
         
         <h:form id="form1">
             
-            <p:messages closable="true"/>
+            <p:growl />
             
             <h:outputLink value="crearMovilidad.xhtml">crear movilidad</h:outputLink>
             

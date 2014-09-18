@@ -13,7 +13,7 @@
         
         <h:form id="formMovilidades" onkeypress="return event.keyCode != 13">
             
-            <p:messages id="msgs" closable="true"/>
+            <p:growl id="msgs"/>
             <p:dataTable  id="t1" var="movilidad" value="#{beanMovilidad.listaMovilidades}"
                           emptyMessage="no hay movilidades" editable="true"
                          filteredValue="#{beanMovilidad.filteredMovilidades}"

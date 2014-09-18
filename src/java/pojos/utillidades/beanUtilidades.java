@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import pojos.Cursoacademico;
 import pojos.Estado;
 import pojos.EstadoMovilidad;
 
@@ -40,6 +41,8 @@ public class beanUtilidades {
     private ArrayList<EstadoMovilidad> listaEstadosMovilidad;
     private String estadoMovilidad;
     
+    private String cursoAcademico;
+    private ArrayList<Cursoacademico> listaCursoAcademico;
     
     
     public beanUtilidades() {
@@ -57,7 +60,7 @@ public class beanUtilidades {
           //  if (request.getRequestURI().equals("/pfc/admin/estadosMovilidad.xhtml")==true){
             
             setListaEstadosMovilidad((ArrayList < EstadoMovilidad >)utilidadService.listaEstadosMovilidad());
-         
+            setListaCursoAcademico((ArrayList<Cursoacademico>)utilidadService.listaCursoAcademico());
         //}
       
     //}
@@ -94,6 +97,24 @@ public class beanUtilidades {
     public void setEstadoMovilidad(String estadoMovilidad) {
         this.estadoMovilidad = estadoMovilidad;
     }
+
+    public String getCursoAcademico() {
+        return cursoAcademico;
+    }
+
+    public void setCursoAcademico(String cursoAcademico) {
+        this.cursoAcademico = cursoAcademico;
+    }
+
+    public ArrayList<Cursoacademico> getListaCursoAcademico() {
+        return listaCursoAcademico;
+    }
+
+    public void setListaCursoAcademico(ArrayList<Cursoacademico> listaCursoAcademico) {
+        this.listaCursoAcademico = listaCursoAcademico;
+    }
+    
+    
     
     
     
@@ -165,6 +186,40 @@ public class beanUtilidades {
         estadoMovilidad="";
         return null;
     }
+    
+    public String creaCursoAcademico(){
+        Cursoacademico c=new Cursoacademico(cursoAcademico);
+        try{
+        utilidadService.crearCursoAcademico(c);
+    }catch(Exception ex){
+            creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+            return null;
+            
+    }
+        creaMensaje("curso académico creado correctamente", FacesMessage.SEVERITY_INFO);
+        cursoAcademico="";
+        setListaCursoAcademico((ArrayList<Cursoacademico>)utilidadService.listaCursoAcademico());
+        return null;
+    }
+    
+    public String eliminaCursoAcademico(){
+        
+        Cursoacademico c=new Cursoacademico(cursoAcademico);
+         try{
+        utilidadService.eliminaCursoAcademico(c);
+    }catch(Exception ex){
+            creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+            return null;
+            
+    }
+         cursoAcademico="";
+         setListaCursoAcademico((ArrayList<Cursoacademico>)utilidadService.listaCursoAcademico());
+        creaMensaje("curso académico eliminado correctamente", FacesMessage.SEVERITY_INFO);
+        return null;
+    }
+        
+    
+        
     
     
     

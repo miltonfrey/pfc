@@ -100,7 +100,7 @@ public class MovilidadDaoImpl implements MovilidadDao, Serializable{
         String encurso="en curso";
         String aceptada="aceptada";
         
-        Query q= sessionFactory.getCurrentSession().createQuery("select m from Movilidad m where m.usuario.login=:usuario and m.estado=:encurso or m.estado=:aceptada");
+        Query q= sessionFactory.getCurrentSession().createQuery("select m from Movilidad m where m.usuario.login=:usuario and (m.estado=:encurso or m.estado=:aceptada)");
         q.setParameter("usuario", usuario);
         q.setParameter("encurso", encurso);
         q.setParameter("aceptada", aceptada);
