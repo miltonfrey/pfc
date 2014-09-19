@@ -61,6 +61,33 @@ private SessionFactory sessionFactory;
         sessionFactory.getCurrentSession().saveOrUpdate(m);
         
     }
+    @Override
+    public void creaContrato(Contrato c){
+        
+        sessionFactory.getCurrentSession().save(c);
+    }
+    @Override
+    
+    public void modificaContrato(Contrato c){
+        
+        sessionFactory.getCurrentSession().saveOrUpdate(c);
+      
+    }
+    @Override
+    public List<Contrato> listaContratos(Movilidad m){
+        
+        return sessionFactory.getCurrentSession().createQuery("select c from Contrato c where c.movilidad=:movilidad").setParameter("movilidad", m).list();
+                
+    }
+    @Override
+    public void eliminaContrato(Contrato c){
+        
+        sessionFactory.getCurrentSession().delete(c);
+    }
+    @Override
+    public List<Equivalencia> listarEquivalenciasPorContrato(Contrato c){
+        return sessionFactory.getCurrentSession().createQuery("select e from Equivalencia e where e.contrato=:contrato").setParameter("contrato", c).list();
+    }
     
     
 }

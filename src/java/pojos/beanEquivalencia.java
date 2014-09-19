@@ -61,7 +61,7 @@ public class beanEquivalencia implements Serializable{
     @PostConstruct
     public void init(){
         
-       listaEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalencias();
+       listaEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(beanContrato.getSelectedContrato());
        
     }
     
@@ -180,16 +180,20 @@ public class beanEquivalencia implements Serializable{
         grupoA.getEquivalenciasForGrupoAsignaturaA().add(equivalencia);
          
          equivalencia.setGrupoAsignaturaByGrupoAsignaturaB(grupoB);
-         grupoB.getEquivalenciasForGrupoAsignaturaB().add(equivalencia);       
-        
+         grupoB.getEquivalenciasForGrupoAsignaturaB().add(equivalencia); 
+         
+         equivalencia.setContrato(beanContrato.getSelectedContrato());
+         beanContrato.getSelectedContrato().getEquivalencias().add(equivalencia);
         
             creaMensaje(" "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().size()+"  /   "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().size(), FacesMessage.SEVERITY_INFO);
             
             equivalenciaService.crearGrupoAsignaturas(grupoA);
             equivalenciaService.crearGrupoAsignaturas(grupoB);
             equivalenciaService.crearEquivalencia(equivalencia);
+            equivalenciaService.modificaContrato(beanContrato.getSelectedContrato());
             
-            listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.listarEquivalencias();
+            
+            listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.listarEquivalenciasPorContrato(beanContrato.getSelectedContrato());
             
             return null;      
          
@@ -217,10 +221,11 @@ public class beanEquivalencia implements Serializable{
     
     
     
-  /*  public void limpiar(){
+   /* public void limpiar(){
         
         DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaFic");
-        //dataTable.reset();
+        dataTable.getRowIndex();
+        creaMensaje(""+dataTable.getRowIndex(), FacesMessage.SEVERITY_INFO);
         //dataTable.resetValue();
        // dataTable.setFirst(10);
         //dataTable.reset();
@@ -235,7 +240,7 @@ public class beanEquivalencia implements Serializable{
     
     
     
-    public void seleccionaFila(SelectEvent event){
+   /* public void seleccionaFila(SelectEvent event){
         
         Asignatura a=(Asignatura)event.getObject();
         creaMensaje(a.getNombreAsignatura(), FacesMessage.SEVERITY_INFO);

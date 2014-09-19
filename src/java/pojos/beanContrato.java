@@ -28,8 +28,20 @@ public class beanContrato implements Serializable{
     @ManagedProperty(value="#{asignaturaService}")
     private AsignaturaService asignaturaService;
     
+    @ManagedProperty(value="#{equivalenciaService}")
+    private EquivalenciaService equivalenciaService;
+
     
     private HttpServletRequest request;
+    
+    private boolean nuevo;
+    private boolean visibleContratos;
+    
+    
+    private ArrayList<Contrato> listaContratos;
+    private ArrayList<Contrato> filteredContratos;
+    private Contrato selectedContrato;
+    
     
     private ArrayList<Movilidad> listaMovilidadesValidas;
     private Movilidad selectedMovilidad;
@@ -63,6 +75,17 @@ public class beanContrato implements Serializable{
         
         
     }
+
+    public EquivalenciaService getEquivalenciaService() {
+        return equivalenciaService;
+    }
+
+    public void setEquivalenciaService(EquivalenciaService equivalenciaService) {
+        this.equivalenciaService = equivalenciaService;
+    }
+    
+    
+    
     
     
 
@@ -88,6 +111,48 @@ public class beanContrato implements Serializable{
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     private Usuario user;
+
+    public boolean isNuevo() {
+        return nuevo;
+    }
+
+    public void setNuevo(boolean nuevo) {
+        this.nuevo = nuevo;
+    }
+
+    public boolean isVisibleContratos() {
+        return visibleContratos;
+    }
+
+    public void setVisibleContratos(boolean visibleContratos) {
+        this.visibleContratos = visibleContratos;
+    }
+
+    public ArrayList<Contrato> getListaContratos() {
+        return listaContratos;
+    }
+
+    public void setListaContratos(ArrayList<Contrato> listaContratos) {
+        this.listaContratos = listaContratos;
+    }
+
+    public ArrayList<Contrato> getFilteredContratos() {
+        return filteredContratos;
+    }
+
+    public void setFilteredContratos(ArrayList<Contrato> filteredContratos) {
+        this.filteredContratos = filteredContratos;
+    }
+
+    public Contrato getSelectedContrato() {
+        return selectedContrato;
+    }
+
+    public void setSelectedContrato(Contrato selectedContrato) {
+        this.selectedContrato = selectedContrato;
+    }
+    
+    
     
     
     public Movilidad getSelectedMovilidad() {
@@ -166,7 +231,18 @@ public class beanContrato implements Serializable{
     }
     
     
-    
+    public void verContratos(){
+        
+        visibleContratos=true;
+        listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
+        if(listaContratos.isEmpty())
+            nuevo=true;
+    }
+   
+    public void cerrarContratos(){
+        
+        visibleContratos=false;
+    }
     
     
     
@@ -179,7 +255,15 @@ public class beanContrato implements Serializable{
         
         listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
         listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
-        
+        nuevo=false;
+        visibleContratos=false;
+        if(selectedContrato==null){
+            selectedContrato=new Contrato();
+            equivalenciaService.creaContrato(selectedContrato);
+        }else{
+            
+        }
+            
         return ("elaborarContrato.xhtml?faces-redirect=true");
         
         

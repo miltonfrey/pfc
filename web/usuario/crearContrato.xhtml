@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Crear contrato</title>
     </h:head>
@@ -13,14 +14,13 @@
        
             
         <p:panel>
-            
-            
+        
             <h:outputLabel value="movilidades que pueden crear contrato de: "/>
             <h:outputText value="#{beanMovilidad.usuario.login}"/>
             
         </p:panel>
         
-        
+        <p:outputPanel>
         <h:form id="formMovilidades">
             
             <p:growl id="msgs" />
@@ -66,10 +66,9 @@
                 <p:column headerText="crear contrato">
                     
                     
-                    <p:commandButton value="crear contrato" action="#{beanContrato.crearContrato}" ajax="false">
+                    <p:commandButton value="listar contratos" action="#{beanContrato.verContratos}" update=":panelContratos">
                     
                         <f:setPropertyActionListener value="#{movilidad}" target="#{beanContrato.selectedMovilidad}"/>
-                    
                     
                     </p:commandButton>
                     
@@ -82,11 +81,42 @@
             </p:dataTable>    
          
         </h:form>
+        </p:outputPanel>
         
         
+        <p:outputPanel id="panelContratos">
+        <h:form id="formContratos">
+            <p:growl id="msgsContratos"/>
+            <p:dataTable widgetVar="tablaContratos"
+                         rendered="#{beanContrato.visibleContratos}"  
+                         value="#{beanContrato.listaContratos}"
+                         var="contrato"
+                         filteredValue="#{beanContrato.filteredContratos}"
+                         rowKey="#{contrato.idContrato}">
+                <p:column headerText="fecha" sortBy="#{contrato.fecha}">
+                    <h:outputText value="#{contrato.fecha}"/>
+                </p:column>
+                <p:column headerText="estado" sortBy="#{contrato.estado}">
+                    <h:outputText value="#{contrato.estado}"/>
+                </p:column>
+                <p:column headerText="ver contrato/editar">
+                    <p:commandButton value="ver contrato/editar" action="#{beanContrato.crearContrato}">
+                        <f:setPropertyActionListener value="#{contrato}" target="#{beanContrato.selectedContrato}"/> 
+                    </p:commandButton>
+                </p:column>
+            
+                <f:facet name="footer">
+                    
+                    <p:commandButton value="cerrar" action="#{beanContrato.cerrarContratos}" update=":panelContratos"/>
+                    <p:commandButton value="crear contrato" action="#{beanContrato.crearContrato}" rendered="#{beanContrato.nuevo}" ajax="false"/>
+                </f:facet> 
+            
+            </p:dataTable>
+           
+        </h:form>
+        </p:outputPanel>
         
-        
-        
+       
         
          <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
         

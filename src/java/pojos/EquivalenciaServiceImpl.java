@@ -62,7 +62,29 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
         equivalenciaDao.insertarMiembroGrupoAsignatura(m);
         
     }
-            
+    
+    @Override
+    public void creaContrato(Contrato c){
+        equivalenciaDao.creaContrato(c);
+    }
+    
+    @Override
+    public void modificaContrato(Contrato c){
+        equivalenciaDao.modificaContrato(c);
+    }
+    @Override
+    public List<Contrato> listaContratos(Movilidad m){
+        return equivalenciaDao.listaContratos(m);
+    }
+    @Override
+    public void eliminaContrato(Contrato c){
+        equivalenciaDao.eliminaContrato(c);
+    }
+    @Override
+    public List<Equivalencia> listarEquivalenciasPorContrato(Contrato c){
+        
+        return equivalenciaDao.listarEquivalenciasPorContrato(c);
+    }
             
 }       
             
