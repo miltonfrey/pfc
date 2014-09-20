@@ -92,9 +92,12 @@
                          value="#{beanContrato.listaContratos}"
                          var="contrato"
                          filteredValue="#{beanContrato.filteredContratos}"
-                         rowKey="#{contrato.idContrato}">
+                         rowKey="#{contrato.idContrato}"
+                         emptyMessage="no hay contratos">
                 <p:column headerText="fecha" sortBy="#{contrato.fecha}">
-                    <h:outputText value="#{contrato.fecha}"/>
+                    <h:outputText value="#{contrato.fecha}">
+                                  <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="estado" sortBy="#{contrato.estado}">
                     <h:outputText value="#{contrato.estado}"/>

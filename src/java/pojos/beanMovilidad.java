@@ -642,7 +642,7 @@ public class beanMovilidad implements Serializable{
     
     public String eliminarMovilidad(){
         
-        if(selectedMovilidad.getEstado().equals("pendiente")){
+        if(selectedMovilidad.getEstado().equalsIgnoreCase("pendiente")){
             
             try{
             movilidadService.eliminarMovilidad(selectedMovilidad);
@@ -665,7 +665,7 @@ public class beanMovilidad implements Serializable{
             
         }else{
          
-            if(selectedMovilidad.getEstado().equals("aceptada")||selectedMovilidad.getEstado().equals("en curso")||selectedMovilidad.getEstado().equals("Aceptada")||selectedMovilidad.getEstado().equals("En curso")){
+            if(selectedMovilidad.getEstado().equalsIgnoreCase("aceptada")||selectedMovilidad.getEstado().equalsIgnoreCase("en curso")||selectedMovilidad.getEstado().equals("Aceptada")){
                 
                 
                 Mensaje mensaje=new Mensaje( usuarioService.find("admin"),usuario, Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre()+" con fecha de inicio:"+ sdf.format(selectedMovilidad.getFechaInicio())+" y fecha fin:"+sdf.format(selectedMovilidad.getFechaFin()), "no","no","no");

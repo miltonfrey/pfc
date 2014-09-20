@@ -8,6 +8,7 @@ package pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -259,9 +260,10 @@ public class beanContrato implements Serializable{
         visibleContratos=false;
         if(selectedContrato==null){
             selectedContrato=new Contrato();
+            selectedContrato.setEstado("pendiente");
+            selectedContrato.setFecha(Calendar.getInstance().getTime());
+            selectedContrato.setMovilidad(selectedMovilidad);
             equivalenciaService.creaContrato(selectedContrato);
-        }else{
-            
         }
             
         return ("elaborarContrato.xhtml?faces-redirect=true");
