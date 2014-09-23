@@ -20,20 +20,24 @@ import javax.servlet.http.HttpSession;
 
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class beanContrato implements Serializable{
 
     @ManagedProperty(value="#{movilidadService}")
-    private MovilidadService movilidadService;
+    private transient MovilidadService movilidadService;
     
     @ManagedProperty(value="#{asignaturaService}")
-    private AsignaturaService asignaturaService;
+    private transient AsignaturaService asignaturaService;
     
     @ManagedProperty(value="#{equivalenciaService}")
-    private EquivalenciaService equivalenciaService;
+    private transient EquivalenciaService equivalenciaService;
 
     
+    
+    
     private HttpServletRequest request;
+    private HttpSession session;
+    
     
     private boolean nuevo;
     private boolean visibleContratos;
@@ -64,7 +68,7 @@ public class beanContrato implements Serializable{
     @PostConstruct
     public void init(){
         
-        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+         session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
        
         if((Usuario)session.getAttribute("user")!=null){
            user=(Usuario)session.getAttribute("user");
@@ -236,8 +240,16 @@ public class beanContrato implements Serializable{
         
         visibleContratos=true;
         listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
-        if(listaContratos.isEmpty())
+        
+        if(listaContratos.isEmpty()){
             nuevo=true;
+    }else
+            for (Contrato c: listaContratos){
+        if(c.getEstado().equalsIgnoreCase("pendiente")||c.getEstado().equalsIgnoreCase("rechazado")||c.getEstado().equalsIgnoreCase("aceptado")){
+            nuevo=false;
+            break;
+        }
+    }
     }
    
     public void cerrarContratos(){
@@ -247,25 +259,23 @@ public class beanContrato implements Serializable{
     
     
     
-    
+    public String editarContrato(){
+        
+        selectedContrato.setEstado("pendiente");
+        selectedContrato.setFecha(Calendar.getInstance().getTime());
+        session.setAttribute("contrato", selectedContrato);
+        session.setAttribute("movilidad", selectedMovilidad);
+        return ("elaborarContratoEditado.xhtml?faces-redirect=true");
+        
+    }
     
     
     
     public String crearContrato(){
         
         
-        listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
-        listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
-        nuevo=false;
-        visibleContratos=false;
-        if(selectedContrato==null){
-            selectedContrato=new Contrato();
-            selectedContrato.setEstado("pendiente");
-            selectedContrato.setFecha(Calendar.getInstance().getTime());
-            selectedContrato.setMovilidad(selectedMovilidad);
-            equivalenciaService.creaContrato(selectedContrato);
-        }
-            
+        
+        session.setAttribute("movilidad", selectedMovilidad);
         return ("elaborarContrato.xhtml?faces-redirect=true");
         
         

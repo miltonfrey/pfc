@@ -52,7 +52,7 @@ body.green{
 .añadir{
     
     position: absolute;
-    top: 640px;
+    top: 490px;
     left: 560px;
     text-align:center; 
 }
@@ -70,11 +70,12 @@ body.green{
         
 .tablaEquivalencias{
     height: 65%;
-    width: 60%;
+    width: 45%;
     position:absolute;
-    top: 690px;
-    left: 265px;
+    top: 650px;
+    left:10px;
     text-align: center;
+    font-size: 15px;
    
 }
 
