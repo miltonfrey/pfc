@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      >
     <h:head>
         <title>Detalles Asignatura</title>
     </h:head>
@@ -28,11 +29,11 @@
             <p:outputLabel value="facultad: "/>
             <h:outputText value="#{beanVistaAsignatura.selectedAsignatura.facultad}"/>
             <br/>
-            <p:outputLabel value="info: "/>
-            <p:inputTextarea value="#{beanVistaAsignatura.selectedAsignatura.infoAsigantura}" readonly="true"/>
+            <p:outputLabel value="info: " />
+            <p:inputTextarea value="#{beanVistaAsignatura.selectedAsignatura.infoAsigantura}" readonly="true" rendered="#{not empty beanVistaAsignatura.selectedAsignatura.infoAsigantura}"/>
             <br/>
             <p:outputLabel value="pagina web: "/>
-            <h:outputLink value="#{beanVistaAsignatura.selectedAsignatura.webAsignatura}"> pagina web </h:outputLink>
+            <h:outputLink value="#{beanVistaAsignatura.selectedAsignatura.webAsignatura}" rendered="#{not empty beanVistaAsignatura.selectedAsignatura.webAsignatura}" > pagina web </h:outputLink>
             <br/>
             <p:outputLabel value="titulacion: "/>
             <h:outputText value="#{beanVistaAsignatura.selectedAsignatura.titulacion}"/>
@@ -43,18 +44,11 @@
         
         
         
-        <p:panel>
         
-            <h:form>
-            
-                <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
-            
-            </h:form>
-        </p:panel>
         
         <br />
         
-        <h:outputLink value="elaborarContrato.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
         
         
         
