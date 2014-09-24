@@ -281,11 +281,7 @@ public class beanContrato implements Serializable{
         
     }
     
-    public String detallesAsign(){
-        
-        return "detallesAsign.xhtml?faces-redirect=true";
-        
-    }
+    
     
     
     

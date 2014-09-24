@@ -9,7 +9,6 @@ package pojos;
 //import antlr.debug.Event;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 //import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -55,6 +54,8 @@ public class beanEquivalencia implements Serializable{
     private ArrayList<Asignatura> listaAsignaturasFic;
     private ArrayList<Asignatura>listaAsignaturasUniversidad;
    
+    private Asignatura selectedAsignatura;
+    
     
     private ArrayList<Equivalencia>listaEquivalencias;
     ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
@@ -136,6 +137,16 @@ public class beanEquivalencia implements Serializable{
     public ArrayList<Asignatura> getSelectedAsignaturasFic() {
         return selectedAsignaturasFic;
     }
+
+    public Asignatura getSelectedAsignatura() {
+        return selectedAsignatura;
+    }
+
+    public void setSelectedAsignatura(Asignatura selectedAsignatura) {
+        this.selectedAsignatura = selectedAsignatura;
+    }
+    
+    
 
     public void setSelectedAsignaturasFic(ArrayList<Asignatura> selectedAsignaturasFic) {
         this.selectedAsignaturasFic = selectedAsignaturasFic;
@@ -362,6 +373,13 @@ public class beanEquivalencia implements Serializable{
       }
     }
     */
+    
+    public String detallesAsign(){
+         
+        return "detallesAsign.xhtml";
+        
+    }
+    
     
     public String volver(){
         return "crearContrato.xhtml?faces-redirect=true";

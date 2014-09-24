@@ -64,8 +64,8 @@
                 </p:column>
                 <p:column headerText="detalles" styleClass="detalles">
                     
-                    <p:commandLink value="ver detalles" action="#{beanContrato.detallesAsign}" ajax="false" >
-                    <f:setPropertyActionListener value="#{asigFic}" target="#{beanContrato.selectedAsignatura}"/>
+                    <p:commandLink value="ver detalles" ajax="false" action="#{beanEquivalencia.detallesAsign}" target="_blank"  >
+                        <f:setPropertyActionListener value="#{asigFic}" target="#{beanVistaAsignatura.selectedAsignatura}"/>
                     </p:commandLink>
                     
                 </p:column>
@@ -113,9 +113,9 @@
                 </p:column>
                 <p:column headerText="detalles" styleClass="detalles">
                     
-                    <p:commandLink value="ver detalles" action="#{beanContrato.detallesAsign}" ajax="false" style="width: 85px;height: 35px">
-                        <f:setPropertyActionListener value="#{asigUni}" target="#{beanContrato.selectedAsignatura}"/>
-                    </p:commandLink>
+                    <h:commandLink value="ver detalles" action="#{beanEquivalencia.detallesAsign}" style="width: 85px;height: 35px" target="_blank">
+                        <f:setPropertyActionListener value="#{asigUni}" target="#{beanVistaAsignatura.selectedAsignatura}"/>
+                    </h:commandLink>
                     
                 </p:column>
                 
