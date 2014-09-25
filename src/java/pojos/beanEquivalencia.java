@@ -68,6 +68,8 @@ public class beanEquivalencia implements Serializable{
     private ArrayList<Equivalencia>selectedEquivalencias;
     
     private static int j=0;
+    private boolean verInfo;
+    
     
     public beanEquivalencia() {
         
@@ -228,6 +230,14 @@ public class beanEquivalencia implements Serializable{
         this.nuevoContrato = nuevoContrato;
     }
 
+    public boolean isVerInfo() {
+        return verInfo;
+    }
+
+    public void setVerInfo(boolean verInfo) {
+        this.verInfo = verInfo;
+    }
+
     
     
     
@@ -376,17 +386,17 @@ public class beanEquivalencia implements Serializable{
     }
     */
     
-    public String detallesAsign(){
+    public void detallesAsign(){
          
-        return "detallesAsign.xhtml";
+        verInfo=true;
         
     }
     
-    
-    public String volver(){
-        return "crearContrato.xhtml?faces-redirect=true";
+    public void cerrarDetallesAsign(){
         
+        verInfo=false;
     }
+   
     
      public void creaMensaje(String texto,FacesMessage.Severity s){
             

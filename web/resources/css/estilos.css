@@ -8,6 +8,7 @@ body.green{
     
 }
 
+
 .tablaFic{
     height: 45%;
     width: 45%;
@@ -44,6 +45,14 @@ body.green{
     height: 3%;
 }
 
+.info{
+    text-align: center;
+    font-size: 15px;
+    width: 3%;
+    height: 3%;
+    
+}
+
 .multiple{
    width:3% ;
    text-align:center;
@@ -56,6 +65,19 @@ body.green{
     top: 490px;
     left: 560px;
     text-align:center; 
+}
+
+.areaTexto{
+    
+    position: absolute;
+    top: 535px;
+}
+
+.cerrarAreaTexto{
+    
+    position: absolute;
+    top: 572px;
+    
 }
 
 .tablaUniversidad{
