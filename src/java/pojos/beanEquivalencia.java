@@ -7,6 +7,7 @@
 package pojos;
 
 //import antlr.debug.Event;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 //import java.util.Set;
@@ -15,9 +16,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import org.primefaces.component.datatable.DataTable;
 //import org.primefaces.event.SelectEvent;
 //import org.primefaces.event.ToggleSelectEvent;
@@ -38,8 +39,7 @@ public class beanEquivalencia implements Serializable{
     @ManagedProperty(value="#{asignaturaService}")
     private transient AsignaturaService asignaturaService;
     
-    @ManagedProperty(value="#{beanContrato}")
-    private transient beanContrato beanContrato;
+    
     
     @ManagedProperty(value="#{equivalenciaService}")
     private transient EquivalenciaService equivalenciaService;
@@ -47,6 +47,8 @@ public class beanEquivalencia implements Serializable{
     @ManagedProperty(value="#{mensajeService}")
     private transient MensajeService mensajeService;
    
+    ExternalContext context=FacesContext.getCurrentInstance().getExternalContext();
+    
     private Movilidad selectedMovilidad;
     private Contrato selectedContrato;
     private Contrato nuevoContrato;
@@ -73,15 +75,16 @@ public class beanEquivalencia implements Serializable{
     
     @PostConstruct
     public void init(){
-        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        if(session.getAttribute("movilidad")!=null||session.getAttribute("contrato")!=null){
-            
+        //HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        //if(session.getAttribute("movilidad")!=null||session.getAttribute("contrato")!=null){
+          
+        if(context.getSessionMap().get("movilidad")!=null){
+                
        
-      if(session.getAttribute("nuevo")!=null)
-      nuevoContrato=(Contrato)session.getAttribute("nuevo");
+      
        
-       selectedMovilidad=(Movilidad)session.getAttribute("movilidad");
-       selectedContrato=(Contrato)session.getAttribute("contrato");
+       selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
+       //selectedContrato=(Contrato)session.getAttribute("contrato");
        //session.removeAttribute("movilidad");
        //session.removeAttribute("contrato");
        
@@ -89,6 +92,12 @@ public class beanEquivalencia implements Serializable{
        listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
        listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
     }
+        else
+            try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/crearContrato.xhtml");
+            }catch(IOException ex){
+                    
+                    }
     }
 
     public MensajeService getMensajeService() {
@@ -117,13 +126,6 @@ public class beanEquivalencia implements Serializable{
         this.asignaturaService = asignaturaService;
     }
 
-    public beanContrato getBeanContrato() {
-        return beanContrato;
-    }
-
-    public void setBeanContrato(beanContrato beanContrato) {
-        this.beanContrato = beanContrato;
-    }
 
     public EquivalenciaService getEquivalenciaService() {
         return equivalenciaService;

@@ -273,9 +273,9 @@ public class beanContrato implements Serializable{
     
     public String crearContrato(){
         
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
         
-        
-        session.setAttribute("movilidad", selectedMovilidad);
+        //session.setAttribute("movilidad", selectedMovilidad);
         return ("elaborarContrato.xhtml?faces-redirect=true");
         
         

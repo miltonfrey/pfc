@@ -21,13 +21,13 @@
         </p:panel>
         
         
-        <p:outputPanel>
-            
-           
-        </p:outputPanel>
+         
         
-        <p:outputPanel id="panelFic"> 
-        <h:form id="formEquivalenciaFic">
+        <p:outputPanel id="panelFic">
+        
+            <h:form id="formEquivalenciaFic">
+                
+                <p:outputPanel>
             
             <p:growl id="msgs"/> 
             <p:dataTable id="tablaFic" value="#{beanEquivalencia.listaAsignaturasFic}" var="asigFic" rows="10"
@@ -51,7 +51,7 @@
                 
                 </p:column>
             
-                <p:column id="creditos" headerText="Creditos" sortBy="#{asigFic.creditos}" styleClass="creditos" >
+                <p:column id="creditos" headerText="Cred" sortBy="#{asigFic.creditos}" styleClass="creditos" >
                 
                     <h:outputText value="#{asigFic.creditos}"/>
                 
@@ -62,11 +62,11 @@
                     <h:outputText value="#{asigFic.periodo}"/>
                 
                 </p:column>
-                <p:column headerText="detalles" styleClass="detalles">
+                <p:column headerText="web" styleClass="web">
                     
-                    <p:commandLink value="ver detalles" ajax="false" action="#{beanEquivalencia.detallesAsign}" target="_blank"  >
-                        <f:setPropertyActionListener value="#{asigFic}" target="#{beanVistaAsignatura.selectedAsignatura}"/>
-                    </p:commandLink>
+                    <h:outputLink value="#{asigFic.webAsignatura}" target="_blank" rendered="#{not empty asigFic.webAsignatura}">link</h:outputLink>
+                    
+                    
                     
                 </p:column>
                 
@@ -75,10 +75,18 @@
                 
             </p:dataTable>
        
+            
+            <p:inputTextarea readonly="true" cols="33" rows="4"  style="position: absolute;top: 550px;" value="#{beanEquivalencia.selectedAsignatura.infoAsigantura}"
+                             rendered="#{not empty beanEquivalencia.selectedAsignatura.infoAsigantura }"/>
+            
        
-      
-      
+       </p:outputPanel>
+           
+
         
+                <p:outputPanel>
+      
+            
             <p:dataTable id="tablaUniversidad"
                          emptyMessage="no hay asignaturas"
                          value="#{beanEquivalencia.listaAsignaturasUniversidad}"
@@ -100,7 +108,7 @@
                 
                 </p:column>
             
-                <p:column headerText="creditos" sortBy="#{asigUni.creditos}" styleClass="creditos">
+                <p:column headerText="Cred" sortBy="#{asigUni.creditos}" styleClass="creditos">
                 
                     <h:outputText value="#{asigUni.creditos}"/>
                 
@@ -111,26 +119,30 @@
                     <h:outputText value="#{asigUni.periodo}"/>
                 
                 </p:column>
-                <p:column headerText="detalles" styleClass="detalles">
+                <p:column headerText="web" styleClass="web">
                     
-                    <h:commandLink value="ver detalles" action="#{beanEquivalencia.detallesAsign}" style="width: 85px;height: 35px" target="_blank">
-                        <f:setPropertyActionListener value="#{asigUni}" target="#{beanVistaAsignatura.selectedAsignatura}"/>
-                    </h:commandLink>
+                    <h:outputLink value="#{asigUni.webAsignatura}" target="_blank" rendered="#{not empty asigUni.webAsignatura}">link</h:outputLink>
                     
                 </p:column>
                 
                 <p:column selectionMode="multiple" styleClass="multiple"/>
               
             </p:dataTable>
-            
-                        
-            <p:commandButton styleClass="añadir" id="addBtn" process=":formEquivalenciaFic:" update=":formEquivalenciaFic: :formTablaEquivalencias " value="Añadir" action="#{beanEquivalencia.asignaturasTotales}"  
-                                                oncomplete="PF('asigUniBtn').unselectAllRows();PF('asigUniBtn').filter();PF('asigFicBtn').unselectAllRows();PF('asigFicBtn').filter();PF('equivalenciaTable').unselectAllRows();" />
+                    
+      <p:inputTextarea readonly="true" cols="33" rows="4"  style="position: absolute;top: 550px; left: 950px" value="#{beanEquivalencia.selectedAsignatura.infoAsigantura}"
+      rendered="#{not empty beanEquivalencia.selectedAsignatura.infoAsigantura }"/>
+          
+        </p:outputPanel>             
+            <p:commandButton styleClass="añadir" id="addBtn" process=":formEquivalenciaFic:" update=":formEquivalenciaFic:  :formTablaEquivalencias " value="Añadir" action="#{beanEquivalencia.asignaturasTotales}"  
+                                                oncomplete="PF('asigUniBtn').unselectAllRows();PF('asigUniBtn').filter();PF('asigFicBtn').unselectAllRows();PF('asigFicBtn').filter();PF('equivalenciaTable').unselectAllRows();" /> 
                          
         
-        </h:form>
+             </h:form>
        
-     </p:outputPanel> 
+           </p:outputPanel> 
+        
+            
+       
         
         <h:form id="formTablaEquivalencias">
             
@@ -183,7 +195,7 @@
              <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}" ajax="false"/>
             
         </h:form>
-       </p:panel>
+        </p:panel>
         
         <br />
         
