@@ -300,7 +300,7 @@ public class beanEquivalencia implements Serializable{
             //equivalenciaService.crearGrupoAsignaturas(grupoA);
             //equivalenciaService.crearGrupoAsignaturas(grupoB);
             //equivalenciaService.crearEquivalencia(equivalencia);
-            equivalencia.setIdequivalencia(j+1);
+            equivalencia.setIdequivalencia(j);
             listaAuxEquivalencias.add(equivalencia);
             j++;
             
@@ -327,8 +327,8 @@ public class beanEquivalencia implements Serializable{
             
            for(int i=0;i<selectedEquivalencias.size();i++){
                
-               creaMensaje(selectedEquivalencias.get(i).getVisible(), FacesMessage.SEVERITY_INFO);
-          //listaAuxEquivalencias.remove(selectedEquivalencias.get(i));
+              
+          listaAuxEquivalencias.remove(selectedEquivalencias.get(i));
           
         }
         }
