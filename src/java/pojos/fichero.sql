@@ -46,7 +46,7 @@ CREATE TABLE `asignatura` (
 
 LOCK TABLES `asignatura` WRITE;
 /*!40000 ALTER TABLE `asignatura` DISABLE KEYS */;
-INSERT INTO `asignatura` VALUES (1,'Cálculo',6,'invierno','','https://guiadocente.udc.es/guia_docent/index.php?centre=614&ensenyament=614G01&assignatura=614G01003&any_academic=2014_15&any_academic=2014_15','','','UDC'),(2,'MD',6,'invierno','','https://guiadocente.udc.es/guia_docent/index.php?centre=614&ensenyament=614G01&assignatura=614G01004&any_academic=2014_15&any_academic=2014_15','','','UDC'),(3,'Tecnología de Computadores',6,'primavera','','https://guiadocente.udc.es/guia_docent/index.php?centre=614&ensenyament=614G01&assignatura=614G01007&any_academic=2014_15&any_academic=2014_15','','','UDC'),(4,'rty',6,'anual','','','','','UDC'),(6,'idj',6,'anual','','','','','UDC'),(7,'fsd',6,'anual','','','','','UDC'),(8,'sdf',6,'anual','','','','','UDC'),(9,'vcxv',5,'anual','','','','','UDC'),(10,'sdfs',6,'anual','','','','','UDC'),(11,'vvc',6,'anual','','','','','UDC'),(12,'Matematica discreta',6,'invierno','','','','','ABC'),(1234,'sistemas operativos',6,'invierno','','','','','ABC'),(3456,'Cálculo',6,'invierno','','','','','ABC');
+INSERT INTO `asignatura` VALUES (1,'Cálculo',6,'invierno','','https://guiadocente.udc.es/guia_docent/index.php?centre=614&ensenyament=614G01&assignatura=614G01003&any_academic=2014_15&any_academic=2014_15','','','UDC'),(1,'sistemas operativos',4,'primavera','','','','','UUH'),(2,'MD',6,'invierno','sdfsdf','https://guiadocente.udc.es/guia_docent/index.php?centre=614&ensenyament=614G01&assignatura=614G01004&any_academic=2014_15&any_academic=2014_15','','','UDC'),(3,'Tecnología de Computadores',6,'primavera','','https://guiadocente.udc.es/guia_docent/index.php?centre=614&ensenyament=614G01&assignatura=614G01007&any_academic=2014_15&any_academic=2014_15','','','UDC'),(4,'rty',6,'anual','','','','','UDC'),(6,'idj',6,'anual','','','','','UDC'),(7,'fsd',6,'anual','','','','','UDC'),(8,'sdf',6,'anual','','','','','UDC'),(9,'vcxv',5,'anual','','','','','UDC'),(10,'sdfs',6,'anual','','','','','UDC'),(11,'vvc',6,'anual','','','','','UDC'),(12,'Matematica discreta',6,'invierno','','','','','ABC'),(156,'calculo',6,'anual','','','','','Universidad Hitler'),(1234,'sistemas operativos',6,'invierno','','','','','ABC');
 /*!40000 ALTER TABLE `asignatura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ CREATE TABLE `cursoacademico` (
 
 LOCK TABLES `cursoacademico` WRITE;
 /*!40000 ALTER TABLE `cursoacademico` DISABLE KEYS */;
-INSERT INTO `cursoacademico` VALUES ('2014/2015');
+INSERT INTO `cursoacademico` VALUES ('2014/2015'),('2016/2017');
 /*!40000 ALTER TABLE `cursoacademico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,8 +119,8 @@ CREATE TABLE `equivalencia` (
   KEY `grupoAsignaturasB_idx` (`grupoAsignaturaB`),
   CONSTRAINT `grupoAsignaturasA` FOREIGN KEY (`grupoAsignaturaA`) REFERENCES `grupo_asignatura` (`idgrupoAsignatura`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `grupoAsignaturasB` FOREIGN KEY (`grupoAsignaturaB`) REFERENCES `grupo_asignatura` (`idgrupoAsignatura`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `idContrato` FOREIGN KEY (`idContrato`) REFERENCES `contrato` (`idContrato`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  CONSTRAINT `idContrato` FOREIGN KEY (`idContrato`) REFERENCES `contrato` (`idContrato`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +129,6 @@ CREATE TABLE `equivalencia` (
 
 LOCK TABLES `equivalencia` WRITE;
 /*!40000 ALTER TABLE `equivalencia` DISABLE KEYS */;
-INSERT INTO `equivalencia` VALUES (1,1,2,NULL,NULL);
 /*!40000 ALTER TABLE `equivalencia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +151,7 @@ CREATE TABLE `estado` (
 
 LOCK TABLES `estado` WRITE;
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
-INSERT INTO `estado` VALUES ('aceptado');
+INSERT INTO `estado` VALUES ('aceptado'),('modificado'),('pendiente'),('rechazado');
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +188,7 @@ DROP TABLE IF EXISTS `grupo_asignatura`;
 CREATE TABLE `grupo_asignatura` (
   `idgrupoAsignatura` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idgrupoAsignatura`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +197,6 @@ CREATE TABLE `grupo_asignatura` (
 
 LOCK TABLES `grupo_asignatura` WRITE;
 /*!40000 ALTER TABLE `grupo_asignatura` DISABLE KEYS */;
-INSERT INTO `grupo_asignatura` VALUES (1),(2);
 /*!40000 ALTER TABLE `grupo_asignatura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +222,7 @@ CREATE TABLE `mensaje` (
   KEY `destino_idx` (`destino`),
   CONSTRAINT `destino` FOREIGN KEY (`destino`) REFERENCES `usuario` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `origen` FOREIGN KEY (`origen`) REFERENCES `usuario` (`login`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +231,6 @@ CREATE TABLE `mensaje` (
 
 LOCK TABLES `mensaje` WRITE;
 /*!40000 ALTER TABLE `mensaje` DISABLE KEYS */;
-INSERT INTO `mensaje` VALUES (36,'admin','user1','2014-09-16 22:49:09','cambio de estado de movilidad','destino:ABC \nfecha de inicio:25-08-2014 \nfecha fin:27-11-2014\n\nel estado de la movilidad ahora es: rechazada','si','no','si'),(37,'admin','user1','2014-09-16 22:51:55','cambio de estado de movilidad','destino:ABC \nfecha de inicio:25-08-2014 \nfecha fin:27-11-2014\n\nel estado de la movilidad ahora es: aceptada','si','no','si');
 /*!40000 ALTER TABLE `mensaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,8 +250,8 @@ CREATE TABLE `miembro_grupo_asignatura` (
   UNIQUE KEY `codAsignatura` (`codAsignatura`,`nombreUniversidad`,`idGrupoAsignatura`),
   KEY `grupoAsignatura` (`idGrupoAsignatura`),
   CONSTRAINT `asignatura` FOREIGN KEY (`codAsignatura`, `nombreUniversidad`) REFERENCES `asignatura` (`codAsignatura`, `nombreUniversidad`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `grupoAsignatura` FOREIGN KEY (`idGrupoAsignatura`) REFERENCES `grupo_asignatura` (`idgrupoAsignatura`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  CONSTRAINT `grupoAsignatura` FOREIGN KEY (`idGrupoAsignatura`) REFERENCES `grupo_asignatura` (`idgrupoAsignatura`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +260,6 @@ CREATE TABLE `miembro_grupo_asignatura` (
 
 LOCK TABLES `miembro_grupo_asignatura` WRITE;
 /*!40000 ALTER TABLE `miembro_grupo_asignatura` DISABLE KEYS */;
-INSERT INTO `miembro_grupo_asignatura` VALUES (1,7,'UDC',1),(3,3456,'ABC',2);
 /*!40000 ALTER TABLE `miembro_grupo_asignatura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,7 +294,7 @@ CREATE TABLE `movilidad` (
 
 LOCK TABLES `movilidad` WRITE;
 /*!40000 ALTER TABLE `movilidad` DISABLE KEYS */;
-INSERT INTO `movilidad` VALUES (1,'2014-08-25 00:00:00','2014-11-27 00:00:00','aceptada','user1','ABC','2014/2015');
+INSERT INTO `movilidad` VALUES (1,'2014-08-25 00:00:00','2014-11-27 00:00:00','aceptada','user1','ABC','2014/2015'),(4,'2015-02-04 00:00:00','2015-07-08 00:00:00','aceptada','user1','ABC','2014/2015');
 /*!40000 ALTER TABLE `movilidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -352,7 +348,7 @@ CREATE TABLE `universidad` (
 
 LOCK TABLES `universidad` WRITE;
 /*!40000 ALTER TABLE `universidad` DISABLE KEYS */;
-INSERT INTO `universidad` VALUES ('ABC','Alemania','','','GER-071'),('UDC','España','','','ES-001'),('UUH','Alemania','','','GER-073');
+INSERT INTO `universidad` VALUES ('ABC','Alemania','','','GER-071'),('UDC','España','','','ES-001'),('Universidad Hitler','Alemania','','','GER-001'),('UUH','Alemania','','','GER-073');
 /*!40000 ALTER TABLE `universidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,7 +377,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('admin','admin',0,'admin','','',NULL),('user1','pass1',1,'GEI','n1','a1',''),('user2','a',1,'GEI','s','s','');
+INSERT INTO `usuario` VALUES ('admin','admin',0,'admin','','',NULL),('user1','pass1',1,'GEI','n1','a1','');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -394,4 +390,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-16 22:56:12
+-- Dump completed on 2014-09-29 19:54:08
