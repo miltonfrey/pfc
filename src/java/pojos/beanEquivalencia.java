@@ -10,6 +10,9 @@ package pojos;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 //import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -33,6 +36,9 @@ import org.primefaces.component.datatable.DataTable;
 @ViewScoped
 public class beanEquivalencia implements Serializable{
 
+    
+    
+    
      @ManagedProperty(value="#{movilidadService}")
     private transient MovilidadService movilidadService;
     
@@ -53,6 +59,9 @@ public class beanEquivalencia implements Serializable{
     private Contrato selectedContrato;
     private Contrato nuevoContrato;
     
+    Equivalencia equivalencia;
+    
+    
     private ArrayList<Asignatura> listaAsignaturasFic;
     private ArrayList<Asignatura>listaAsignaturasUniversidad;
    
@@ -69,6 +78,7 @@ public class beanEquivalencia implements Serializable{
     
     private static int j=0;
     private boolean verInfo;
+    private boolean verConfirmar=true;
     
     
     public beanEquivalencia() {
@@ -86,6 +96,7 @@ public class beanEquivalencia implements Serializable{
       
        
        selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
+       context.getSessionMap().remove("movilidad");
        //selectedContrato=(Contrato)session.getAttribute("contrato");
        //session.removeAttribute("movilidad");
        //session.removeAttribute("contrato");
@@ -238,6 +249,14 @@ public class beanEquivalencia implements Serializable{
         this.verInfo = verInfo;
     }
 
+    public boolean isVerConfirmar() {
+        return verConfirmar;
+    }
+
+    public void setVerConfirmar(boolean verConfirmar) {
+        this.verConfirmar = verConfirmar;
+    }
+
     
     
     
@@ -248,12 +267,14 @@ public class beanEquivalencia implements Serializable{
                  
          
          
-         Equivalencia equivalencia=new Equivalencia();
+          equivalencia=new Equivalencia();
          GrupoAsignatura grupoA=new GrupoAsignatura();
          GrupoAsignatura grupoB=new GrupoAsignatura();
+          MiembroGrupoAsignatura m;
         
         DataTable dataTable=(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaFic");
         DataTable dataTable2=(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaUniversidad");
+        
         
         selectedAsignaturasFic=(ArrayList < Asignatura >)dataTable.getSelection();
         selectedAsignaturasUni=(ArrayList<Asignatura>)dataTable2.getSelection();
@@ -269,7 +290,7 @@ public class beanEquivalencia implements Serializable{
             return null;
         }
        
-        MiembroGrupoAsignatura m;
+        
         
         for(Asignatura a:selectedAsignaturasFic){
        
@@ -295,7 +316,7 @@ public class beanEquivalencia implements Serializable{
          
          
         
-            creaMensaje(" "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().size()+"  /   "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().size(), FacesMessage.SEVERITY_INFO);
+            //creaMensaje(" "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().size()+"  /   "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().size(), FacesMessage.SEVERITY_INFO);
             
             //equivalenciaService.crearGrupoAsignaturas(grupoA);
             //equivalenciaService.crearGrupoAsignaturas(grupoB);
@@ -312,9 +333,49 @@ public class beanEquivalencia implements Serializable{
          
     }
     
-    public void confirmarContrato(){
+    public String confirmarContrato(){
+        if(listaAuxEquivalencias.isEmpty())
+            return null;
+        
+        Contrato c=new Contrato();
+        c.setMovilidad(selectedMovilidad);
+        c.setFecha(Calendar.getInstance().getTime());
+        Set<Equivalencia>setE=new HashSet<Equivalencia>(listaAuxEquivalencias);
+        c.setEquivalencias(setE);
+        c.setEstado("pendiente");
+        try{
+        equivalenciaService.creaContrato(c);
+        }catch(Exception ex){
+            
+            creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
+        
+        try{
+        for(Equivalencia e:listaAuxEquivalencias){
+            
+            
+            
+            equivalenciaService.crearGrupoAsignaturas(e.getGrupoAsignaturaByGrupoAsignaturaA());
+            equivalenciaService.crearGrupoAsignaturas(e.getGrupoAsignaturaByGrupoAsignaturaB());
+            e.setContrato(c);
+            equivalenciaService.crearEquivalencia(e);
+          
+           
+          //c.getEquivalencias().add(e);
+         
+        }
+        }catch(Exception ex){
+            creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
+            ex.printStackTrace();
+            return null;
+        } 
         
         
+        
+        creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+        verConfirmar=false;
+        return null;
         
     }
     

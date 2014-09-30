@@ -149,7 +149,8 @@
                          
         </p:outputPanel>             
             <p:commandButton styleClass="añadir" id="addBtn" process=":formEquivalenciaFic:" update=":formEquivalenciaFic:  :formTablaEquivalencias " value="Añadir" action="#{beanEquivalencia.asignaturasTotales}"  
-                                                oncomplete="PF('asigUniBtn').unselectAllRows();PF('asigUniBtn').filter();PF('asigFicBtn').unselectAllRows();PF('asigFicBtn').filter();PF('equivalenciaTable').unselectAllRows();" /> 
+                                                oncomplete="PF('asigUniBtn').unselectAllRows();PF('asigUniBtn').filter();PF('asigFicBtn').unselectAllRows();PF('asigFicBtn').filter();PF('equivalenciaTable').unselectAllRows();"
+                                                rendered="#{beanEquivalencia.verConfirmar}"/> 
                          
         
              </h:form>
@@ -187,12 +188,13 @@
                     </ui:repeat>
                 </p:column>
                 
-                <p:column selectionMode="multiple" styleClass="multiple"/>
+                <p:column selectionMode="multiple" styleClass="multiple" rendered="#{beanEquivalencia.verConfirmar}"/>
                
-                         <f:facet name="footer">
+                <f:facet name="footer" rendered="#{beanEquivalencia.verConfirmar}">
                              <p:commandButton id="deleteBtn"  process=":formTablaEquivalencias:" update=":formTablaEquivalencias: :formEquivalenciaFic:msgs"  icon="ui-icon-search" value="Borrar" action="#{beanEquivalencia.eliminaEquivalenciasLista}"
-                                              oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
-                             <p:commandButton id="confirmBtn" value="confirmar contrato" process=":formTablaEquivalencias" action="#{beanEquivalencia.confirmarContrato}"/>
+                                              oncomplete="PF('equivalenciaTable').unselectAllRows();" rendered="#{beanEquivalencia.verConfirmar}"/>
+                             <p:commandButton id="confirmBtn" value="confirmar contrato" process=":formTablaEquivalencias" action="#{beanEquivalencia.confirmarContrato}" update=":formEquivalenciaFic: :formTablaEquivalencias" oncomplete="PF('equivalenciaTable').unselectAllRows();"
+                                              rendered="#{beanEquivalencia.verConfirmar}"/>
                                
                          </f:facet>
            

@@ -11,10 +11,10 @@
         <many-to-one name="contrato" class="pojos.Contrato" fetch="select">
             <column name="idContrato" />
         </many-to-one>
-        <many-to-one name="grupoAsignaturaByGrupoAsignaturaB" class="pojos.GrupoAsignatura" fetch="select">
+        <many-to-one name="grupoAsignaturaByGrupoAsignaturaB"  class="pojos.GrupoAsignatura" fetch="select">
             <column name="grupoAsignaturaB" />
         </many-to-one>
-        <many-to-one name="grupoAsignaturaByGrupoAsignaturaA" class="pojos.GrupoAsignatura" fetch="select">
+        <many-to-one name="grupoAsignaturaByGrupoAsignaturaA"  class="pojos.GrupoAsignatura" fetch="select">
             <column name="grupoAsignaturaA" />
         </many-to-one>
         <property name="visible" type="string">
