@@ -173,6 +173,7 @@
                          
                 <f:facet name="header">LISTA DE EQUIVALENCIAS</f:facet>
                 
+                
                 <p:column headerText="UDC" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaByGrupoAsignaturaA.miembroGrupoAsignaturas.toArray()}" var="asignatura">
                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}"/>

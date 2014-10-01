@@ -14,7 +14,7 @@
         <many-to-one name="universidad" class="pojos.Universidad" fetch="select">
             <column name="nombreUniversidad" length="45" not-null="true" />
         </many-to-one>
-        <many-to-one name="usuario" class="pojos.Usuario" lazy="false" fetch="join">
+        <many-to-one name="usuario" class="pojos.Usuario" lazy="false" fetch="select">
             <column name="loginUsuario" length="20" not-null="true" />
         </many-to-one>
         <property name="fechaInicio" type="timestamp">

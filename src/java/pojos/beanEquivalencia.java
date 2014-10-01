@@ -101,7 +101,6 @@ public class beanEquivalencia implements Serializable{
         
        selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
        context.getSessionMap().remove("movilidad");
-       listaEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato);
        listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
        listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
     }
@@ -362,14 +361,56 @@ public class beanEquivalencia implements Serializable{
         
     }
     
+    public String editarContrato(){
+        if(listaAuxEquivalencias.isEmpty())
+            return null;
+        
+        
+       
+        selectedContrato.setFecha(Calendar.getInstance().getTime());
+        Set<Equivalencia>setE=new HashSet<Equivalencia>(listaAuxEquivalencias);
+        selectedContrato.setEquivalencias(setE);
+        selectedContrato.setEstado("pendiente");
+        try{
+        equivalenciaService.modificaContrato(selectedContrato);
+        }catch(Exception ex){
+            
+            creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
+        
+        try{
+        for(Equivalencia e:listaAuxEquivalencias){
+            
+            if(selectedContrato.getEquivalencias().contains(e)==false){
+            equivalenciaService.crearGrupoAsignaturas(e.getGrupoAsignaturaByGrupoAsignaturaA());
+            equivalenciaService.crearGrupoAsignaturas(e.getGrupoAsignaturaByGrupoAsignaturaB());
+            e.setContrato(selectedContrato);
+            equivalenciaService.crearEquivalencia(e);
+            }
+          
+        }
+        }catch(Exception ex){
+            creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
+            return null;
+        } 
+        
+        creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+        verConfirmar=false;
+        return null;
+        
+    }
+    
+    
+    
+    
     
     
     public String eliminaEquivalenciasLista(){
         if(selectedEquivalencias.isEmpty()==false){
             
            for(int i=0;i<selectedEquivalencias.size();i++){
-               
-              
+           
           listaAuxEquivalencias.remove(selectedEquivalencias.get(i));
           
         }
@@ -378,8 +419,6 @@ public class beanEquivalencia implements Serializable{
         return null;
         
     }
-    
-    
     
     
    /* public void limpiar(){

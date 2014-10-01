@@ -3,7 +3,9 @@
 package pojos;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,8 +84,25 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     @Override
     public List<Equivalencia> listarEquivalenciasPorContrato(Contrato c){
+        List<Equivalencia> listaEquivalenciasPorcontrato=equivalenciaDao.listarEquivalenciasPorContrato(c);
+        for(Equivalencia e:listaEquivalenciasPorcontrato){
         
-        return equivalenciaDao.listarEquivalenciasPorContrato(c);
+        Hibernate.initialize(e.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas());
+        Iterator i=e.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().iterator();
+        while(i.hasNext()){
+            MiembroGrupoAsignatura m=(MiembroGrupoAsignatura)i.next();
+            Hibernate.initialize(m.getAsignatura());
+        }
+        Hibernate.initialize(e.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas());
+        Iterator j=e.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().iterator();
+        while(j.hasNext()){
+            MiembroGrupoAsignatura m=(MiembroGrupoAsignatura)j.next();
+            Hibernate.initialize(m.getAsignatura());
+        }
+        
+        
+        }
+        return listaEquivalenciasPorcontrato;
     }
             
 }       
