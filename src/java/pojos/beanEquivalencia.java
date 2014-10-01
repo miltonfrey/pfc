@@ -20,13 +20,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
-
 import javax.faces.context.FacesContext;
 import org.primefaces.component.datatable.DataTable;
-//import org.primefaces.event.SelectEvent;
-//import org.primefaces.event.ToggleSelectEvent;
-//import org.primefaces.event.UnselectEvent;
-//import javax.servlet.http.HttpServletRequest;
+
 
 /**
  *

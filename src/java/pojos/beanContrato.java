@@ -12,7 +12,6 @@ import java.util.Calendar;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +34,7 @@ public class beanContrato implements Serializable{
     
     
     
-    private HttpServletRequest request;
+    
     private HttpSession session;
     
     
@@ -50,16 +49,11 @@ public class beanContrato implements Serializable{
     
     private ArrayList<Movilidad> listaMovilidadesValidas;
     private Movilidad selectedMovilidad;
-    private Asignatura selectedAsignatura;
+   
     
     
     
-    private ArrayList<Asignatura>listaAsignaturasUniversidad;
-    private ArrayList<Asignatura>listaAsignaturasFic;
     
-    private ArrayList<Asignatura> selectedAsignaturas;
-    private ArrayList<Asignatura> filteredAsignaturasFic;
-    private ArrayList<Asignatura> filteredAsignaturasUni;
     
     
     public beanContrato() {
@@ -184,56 +178,6 @@ public class beanContrato implements Serializable{
         this.user = user;
     }
 
-    public ArrayList<Asignatura> getListaAsignaturasUniversidad() {
-    
-        return listaAsignaturasUniversidad;
-    }
-
-    public void setListaAsignaturasUniversidad(ArrayList<Asignatura> listaAsignaturasUniversidad) {
-        this.listaAsignaturasUniversidad = listaAsignaturasUniversidad;
-    }
-
-    public ArrayList<Asignatura> getListaAsignaturasFic() {
-        return listaAsignaturasFic;
-    }
-
-    public void setListaAsignaturasFic(ArrayList<Asignatura> listaAsignaturasFic) {
-        this.listaAsignaturasFic = listaAsignaturasFic;
-    }
-
-    public ArrayList<Asignatura> getSelectedAsignaturas() {
-        return selectedAsignaturas;
-    }
-
-    public void setSelectedAsignaturas(ArrayList<Asignatura> selectedAsignaturas) {
-        this.selectedAsignaturas = selectedAsignaturas;
-    }
-
-    public ArrayList<Asignatura> getFilteredAsignaturasFic() {
-        return filteredAsignaturasFic;
-    }
-
-    public void setFilteredAsignaturasFic(ArrayList<Asignatura> filteredAsignaturasFic) {
-        this.filteredAsignaturasFic = filteredAsignaturasFic;
-    }
-
-    public ArrayList<Asignatura> getFilteredAsignaturasUni() {
-        return filteredAsignaturasUni;
-    }
-
-    public void setFilteredAsignaturasUni(ArrayList<Asignatura> filteredAsignaturasUni) {
-        this.filteredAsignaturasUni = filteredAsignaturasUni;
-    }
-
-   
-
-    public Asignatura getSelectedAsignatura() {
-        return selectedAsignatura;
-    }
-
-    public void setSelectedAsignatura(Asignatura selectedAsignatura) {
-        this.selectedAsignatura = selectedAsignatura;
-    }
     
     
     public void verContratos(){
@@ -274,8 +218,6 @@ public class beanContrato implements Serializable{
     public String crearContrato(){
         
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
-        
-        //session.setAttribute("movilidad", selectedMovilidad);
         return ("elaborarContrato.xhtml?faces-redirect=true");
         
         
