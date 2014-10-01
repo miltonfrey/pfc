@@ -85,7 +85,8 @@
         </h:form>
         </p:outputPanel>
         
-        
+        <br/>
+        <br/>
         <p:outputPanel id="panelContratos">
         <h:form id="formContratos">
             <p:growl id="msgsContratos"/>
@@ -108,6 +109,16 @@
                     <p:commandButton value="ver contrato/editar" action="#{beanContrato.editarContrato}" ajax="false">
                         <f:setPropertyActionListener value="#{contrato}" target="#{beanContrato.selectedContrato}"/> 
                     </p:commandButton>
+                </p:column>
+                <p:column headerText="eliminar">
+                    
+                    <p:commandButton value="eliminar" action="#{beanContrato.eliminarContrato}" update=":panelContratos" rendered="#{contrato.estado eq 'pendiente'||contrato.estado eq 'rechazado'}"
+                                     onclick="if (! confirm('¿seguro que quieres borrar?')) return false" oncomplete="PF('tablaContratos').filter();">
+                    
+                        <f:setPropertyActionListener target="#{beanContrato.selectedContrato}" value="#{contrato}"/>
+                    
+                    </p:commandButton>  
+                    
                 </p:column>
             
                 <f:facet name="footer">

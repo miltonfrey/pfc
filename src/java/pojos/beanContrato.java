@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -201,16 +202,34 @@ public class beanContrato implements Serializable{
         visibleContratos=false;
     }
     
-    
-    
     public String editarContrato(){
         
-        selectedContrato.setEstado("pendiente");
-        selectedContrato.setFecha(Calendar.getInstance().getTime());
-        session.setAttribute("contrato", selectedContrato);
-        session.setAttribute("movilidad", selectedMovilidad);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
+       
+        
         return ("elaborarContratoEditado.xhtml?faces-redirect=true");
         
+    }
+    
+    
+    public String eliminarContrato(){
+        
+        try{
+            
+            equivalenciaService.eliminaContrato(selectedContrato);
+            
+           }catch(Exception ex){
+               
+               creaMensaje("error al eliminar contrato", FacesMessage.SEVERITY_ERROR);
+               return null;
+           }
+        
+        creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);
+        listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
+        if(listaContratos.isEmpty())
+            nuevo=true;
+        return null;
     }
     
     
@@ -223,6 +242,13 @@ public class beanContrato implements Serializable{
         
     }
     
+    public void creaMensaje(String texto,FacesMessage.Severity s){
+            
+            FacesContext context=FacesContext.getCurrentInstance();
+            FacesMessage message=new FacesMessage(texto);
+            message.setSeverity(s);
+            context.addMessage(null, message);
+        }
     
     
     

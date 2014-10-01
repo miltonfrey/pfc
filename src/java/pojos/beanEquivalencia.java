@@ -21,6 +21,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import org.hibernate.Hibernate;
 import org.primefaces.component.datatable.DataTable;
 
 
@@ -53,7 +54,7 @@ public class beanEquivalencia implements Serializable{
     
     private Movilidad selectedMovilidad;
     private Contrato selectedContrato;
-    private Contrato nuevoContrato;
+    
     
     Equivalencia equivalencia;
     
@@ -65,7 +66,9 @@ public class beanEquivalencia implements Serializable{
     
     
     private ArrayList<Equivalencia>listaEquivalencias;
-    ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
+    private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
+    
+    private ArrayList<Equivalencia> listaEquivalenciasContrato;
     
     private ArrayList<Asignatura>selectedAsignaturasFic;
     private ArrayList<Asignatura> selectedAsignaturasUni;
@@ -87,16 +90,17 @@ public class beanEquivalencia implements Serializable{
         //if(session.getAttribute("movilidad")!=null||session.getAttribute("contrato")!=null){
           
         if(context.getSessionMap().get("movilidad")!=null){
-                
-       
-      
-       
+            
+            if(context.getSessionMap().get("contrato")!=null){
+                selectedContrato=(Contrato)context.getSessionMap().get("contrato");
+              context.getSessionMap().remove("contrato");
+              listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato);
+              
+            }
+            
+        
        selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
        context.getSessionMap().remove("movilidad");
-       //selectedContrato=(Contrato)session.getAttribute("contrato");
-       //session.removeAttribute("movilidad");
-       //session.removeAttribute("contrato");
-       
        listaEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato);
        listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
        listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
@@ -229,13 +233,7 @@ public class beanEquivalencia implements Serializable{
         this.selectedContrato = selectedContrato;
     }
 
-    public Contrato getNuevoContrato() {
-        return nuevoContrato;
-    }
-
-    public void setNuevoContrato(Contrato nuevoContrato) {
-        this.nuevoContrato = nuevoContrato;
-    }
+   
 
     public boolean isVerInfo() {
         return verInfo;
@@ -253,16 +251,20 @@ public class beanEquivalencia implements Serializable{
         this.verConfirmar = verConfirmar;
     }
 
+    public ArrayList<Equivalencia> getListaEquivalenciasContrato() {
+        return listaEquivalenciasContrato;
+    }
+
+    public void setListaEquivalenciasContrato(ArrayList<Equivalencia> listaEquivalenciasContrato) {
+        this.listaEquivalenciasContrato = listaEquivalenciasContrato;
+    }
+
     
     
     
     
      public String asignaturasTotales(){
        
-         
-                 
-         
-         
           equivalencia=new Equivalencia();
          GrupoAsignatura grupoA=new GrupoAsignatura();
          GrupoAsignatura grupoB=new GrupoAsignatura();
@@ -309,19 +311,12 @@ public class beanEquivalencia implements Serializable{
          
          equivalencia.setGrupoAsignaturaByGrupoAsignaturaB(grupoB);
          grupoB.getEquivalenciasForGrupoAsignaturaB().add(equivalencia); 
-         
-         
         
-            //creaMensaje(" "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().size()+"  /   "+equivalencia.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().size(), FacesMessage.SEVERITY_INFO);
-            
-            //equivalenciaService.crearGrupoAsignaturas(grupoA);
-            //equivalenciaService.crearGrupoAsignaturas(grupoB);
-            //equivalenciaService.crearEquivalencia(equivalencia);
             equivalencia.setIdequivalencia(j);
             listaAuxEquivalencias.add(equivalencia);
             j++;
             
-            //listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato);
+            
             
             return null;      
          
@@ -349,33 +344,23 @@ public class beanEquivalencia implements Serializable{
         
         try{
         for(Equivalencia e:listaAuxEquivalencias){
-            
-            
-            
+          
             equivalenciaService.crearGrupoAsignaturas(e.getGrupoAsignaturaByGrupoAsignaturaA());
             equivalenciaService.crearGrupoAsignaturas(e.getGrupoAsignaturaByGrupoAsignaturaB());
             e.setContrato(c);
             equivalenciaService.crearEquivalencia(e);
           
-           
-          //c.getEquivalencias().add(e);
-         
         }
         }catch(Exception ex){
             creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
-            ex.printStackTrace();
             return null;
         } 
-        
-        
         
         creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
         verConfirmar=false;
         return null;
         
     }
-    
-    
     
     
     

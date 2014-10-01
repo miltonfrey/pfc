@@ -11,7 +11,18 @@
         <h:outputScript library="js" name="funciones.js"/>
     </h:head>
     <h:body>
+         <p:panel>
+        
+            <h:outputLabel value="Última modificación: "/>
+            <h:outputText value="#{beanEquivalencia.selectedContrato.fecha}">
+                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+            </h:outputText>    
+            
+        </p:panel>
+        
+        
          
+        
         <p:outputPanel id="panelFic">
         
             <h:form id="formEquivalenciaFic">
@@ -210,4 +221,5 @@
         
     </h:body>
 </html>
+
 
