@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-sep-2014 16:59:40 by Hibernate Tools 4.3.1 -->
+<!-- Generated 02-oct-2014 14:56:37 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojos.Asignatura" table="asignatura" catalog="pfc" optimistic-lock="version">
         <composite-id name="id" class="pojos.AsignaturaId">
@@ -36,12 +36,19 @@
         <property name="titulacion" type="string">
             <column name="titulacion" length="45" />
         </property>
-        <set name="miembroGrupoAsignaturas" table="miembro_grupo_asignatura" inverse="true" lazy="true" fetch="select">
+        <set name="miembroGrupoAsignaturaAs" table="miembro_grupo_asignatura_a" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="codAsignatura" />
                 <column name="nombreUniversidad" length="45" />
             </key>
-            <one-to-many class="pojos.MiembroGrupoAsignatura" />
+            <one-to-many class="pojos.MiembroGrupoAsignaturaA" />
+        </set>
+        <set name="miembroGrupoAsignaturaBs" table="miembro_grupo_asignatura_b" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="codAsignatura" />
+                <column name="nombreUniversidad" length="45" />
+            </key>
+            <one-to-many class="pojos.MiembroGrupoAsignaturaB" />
         </set>
     </class>
 </hibernate-mapping>

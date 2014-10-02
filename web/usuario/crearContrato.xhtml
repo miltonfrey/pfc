@@ -99,7 +99,7 @@
                          emptyMessage="no hay contratos">
                 <p:column headerText="fecha" sortBy="#{contrato.fecha}">
                     <h:outputText value="#{contrato.fecha}">
-                                  <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                  <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="estado" sortBy="#{contrato.estado}">

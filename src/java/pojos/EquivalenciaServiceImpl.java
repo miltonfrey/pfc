@@ -3,6 +3,7 @@
 package pojos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -52,18 +53,24 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     
     @Override
-    public void crearGrupoAsignaturas(GrupoAsignatura grupo){
+    public void crearGrupoAsignaturasA(GrupoAsignaturaA grupo){
         
-        equivalenciaDao.insertarGrupoAsignaturas(grupo);
+        equivalenciaDao.insertarGrupoAsignaturasA(grupo);
+    }
+    
+    @Override
+    public void crearGrupoAsignaturasB(GrupoAsignaturaB grupo){
+        
+        equivalenciaDao.insertarGrupoAsignaturasB(grupo);
     }
     
     
-    @Override
+   /* @Override
     public void crearMiembroGrupoAsignatura(MiembroGrupoAsignatura m){
         
         equivalenciaDao.insertarMiembroGrupoAsignatura(m);
         
-    }
+    }*/
     
     @Override
     public void creaContrato(Contrato c){
@@ -83,26 +90,36 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
         equivalenciaDao.eliminaContrato(c);
     }
     @Override
-    public List<Equivalencia> listarEquivalenciasPorContrato(Contrato c){
-        List<Equivalencia> listaEquivalenciasPorcontrato=equivalenciaDao.listarEquivalenciasPorContrato(c);
-        for(Equivalencia e:listaEquivalenciasPorcontrato){
+    public List<Equivalencia> listarEquivalenciasPorContrato(Integer id){
+        List<Equivalencia> listaEquivalenciasPorcontrato=equivalenciaDao.listarEquivalenciasPorContrato(id);
         
-        Hibernate.initialize(e.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas());
-        Iterator i=e.getGrupoAsignaturaByGrupoAsignaturaB().getMiembroGrupoAsignaturas().iterator();
+        for(Equivalencia e:listaEquivalenciasPorcontrato){    
+        Hibernate.initialize(e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs());
+        Iterator i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
         while(i.hasNext()){
-            MiembroGrupoAsignatura m=(MiembroGrupoAsignatura)i.next();
+            MiembroGrupoAsignaturaB m=(MiembroGrupoAsignaturaB)i.next();
             Hibernate.initialize(m.getAsignatura());
         }
-        Hibernate.initialize(e.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas());
-        Iterator j=e.getGrupoAsignaturaByGrupoAsignaturaA().getMiembroGrupoAsignaturas().iterator();
+        Hibernate.initialize(e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs());
+        Iterator j=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
         while(j.hasNext()){
-            MiembroGrupoAsignatura m=(MiembroGrupoAsignatura)j.next();
+            MiembroGrupoAsignaturaA m=(MiembroGrupoAsignaturaA)j.next();
             Hibernate.initialize(m.getAsignatura());
         }
+        
+        
         
         
         }
         return listaEquivalenciasPorcontrato;
+        
+    }
+    
+    @Override
+    public Contrato findContrato(Integer id){
+        Contrato c=equivalenciaDao.findContrato(id);
+        Hibernate.initialize(c.getEquivalencias());
+        return c;
     }
             
 }       

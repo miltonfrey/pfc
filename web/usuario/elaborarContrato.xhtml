@@ -163,14 +163,14 @@
                 <f:facet name="header">LISTA DE EQUIVALENCIAS</f:facet>
                 
                 <p:column headerText="UDC" styleClass="asignatura">
-                    <ui:repeat value="#{equivalencia.grupoAsignaturaByGrupoAsignaturaA.miembroGrupoAsignaturas.toArray()}" var="asignatura">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}"/>
                         <br/>
                     </ui:repeat>
                 </p:column>
                 
                 <p:column headerText="#{beanEquivalencia.selectedMovilidad.universidad.nombre}" styleClass="asignatura">
-                    <ui:repeat value="#{equivalencia.grupoAsignaturaByGrupoAsignaturaB.miembroGrupoAsignaturas.toArray()}" var="asignatura">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura} "/>
                         
                         <br/>

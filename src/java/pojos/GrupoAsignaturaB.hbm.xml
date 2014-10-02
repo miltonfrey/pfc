@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-oct-2014 14:56:37 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.GrupoAsignaturaB" table="grupo_asignatura_b" catalog="pfc" optimistic-lock="version">
+        <id name="idequivalencia" type="java.lang.Integer">
+            <column name="idequivalencia" />
+            <generator class="foreign">
+                <param name="property">equivalencia</param>
+            </generator>
+        </id>
+        <one-to-one name="equivalencia" class="pojos.Equivalencia" constrained="true"></one-to-one>
+        <set name="miembroGrupoAsignaturaBs" cascade="save-update,delete" table="miembro_grupo_asignatura_b" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idGrupoAsignaturaB" />
+            </key>
+            <one-to-many class="pojos.MiembroGrupoAsignaturaB" />
+        </set>
+    </class>
+</hibernate-mapping>

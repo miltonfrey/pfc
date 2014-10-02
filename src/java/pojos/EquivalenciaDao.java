@@ -22,10 +22,11 @@ public interface EquivalenciaDao {
    public void eliminarEquivalencia(Equivalencia e);
     public void actualizarEquivalencia(Equivalencia e);
     public List<Equivalencia> listarEquivalencias();
-    public List<Equivalencia> listarEquivalenciasPorContrato(Contrato c);
+    public List<Equivalencia> listarEquivalenciasPorContrato(Integer id);
     
-    public void insertarGrupoAsignaturas(GrupoAsignatura grupo);
-    
-    public void insertarMiembroGrupoAsignatura(MiembroGrupoAsignatura m);
+    public void insertarGrupoAsignaturasA(GrupoAsignaturaA grupo);
+    public void insertarGrupoAsignaturasB(GrupoAsignaturaB grupo);
+   // public void insertarMiembroGrupoAsignatura(MiembroGrupoAsignatura m);
+    public Contrato findContrato(Integer id);
     
 }

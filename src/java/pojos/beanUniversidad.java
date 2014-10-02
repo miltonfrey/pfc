@@ -382,7 +382,7 @@ public class beanUniversidad implements Serializable{
         
         
        
-        Asignatura a=new Asignatura(id,uni, nombreAsignatura, creditosAsignatura.shortValue(),periodoAsignatura,infoAsignatura,webAsignatura,facultadAsignatura,titulacionAsignatura,null);
+        Asignatura a=new Asignatura(id,uni, nombreAsignatura, creditosAsignatura.shortValue(),periodoAsignatura,infoAsignatura,webAsignatura,facultadAsignatura,titulacionAsignatura,null,null);
         
         try{
             

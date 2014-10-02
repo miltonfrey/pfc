@@ -1,5 +1,5 @@
 package pojos;
-// Generated 16-sep-2014 16:59:37 by Hibernate Tools 4.3.1
+// Generated 02-oct-2014 14:56:35 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -34,7 +34,8 @@ public class Asignatura  implements java.io.Serializable {
      private String webAsignatura;
      private String facultad;
      private String titulacion;
-     private Set<MiembroGrupoAsignatura> miembroGrupoAsignaturas = new HashSet<MiembroGrupoAsignatura>(0);
+     private Set<MiembroGrupoAsignaturaA> miembroGrupoAsignaturaAs = new HashSet<MiembroGrupoAsignaturaA>(0);
+     private Set<MiembroGrupoAsignaturaB> miembroGrupoAsignaturaBs = new HashSet<MiembroGrupoAsignaturaB>(0);
 
     public Asignatura() {
     }
@@ -44,7 +45,7 @@ public class Asignatura  implements java.io.Serializable {
         this.id = id;
         this.universidad = universidad;
     }
-    public Asignatura(AsignaturaId id, Universidad universidad, String nombreAsignatura, Short creditos, String periodo, String infoAsigantura, String webAsignatura, String facultad, String titulacion, Set<MiembroGrupoAsignatura> miembroGrupoAsignaturas) {
+    public Asignatura(AsignaturaId id, Universidad universidad, String nombreAsignatura, Short creditos, String periodo, String infoAsigantura, String webAsignatura, String facultad, String titulacion, Set<MiembroGrupoAsignaturaA> miembroGrupoAsignaturaAs, Set<MiembroGrupoAsignaturaB> miembroGrupoAsignaturaBs) {
        this.id = id;
        this.universidad = universidad;
        this.nombreAsignatura = nombreAsignatura;
@@ -54,7 +55,8 @@ public class Asignatura  implements java.io.Serializable {
        this.webAsignatura = webAsignatura;
        this.facultad = facultad;
        this.titulacion = titulacion;
-       this.miembroGrupoAsignaturas = miembroGrupoAsignaturas;
+       this.miembroGrupoAsignaturaAs = miembroGrupoAsignaturaAs;
+       this.miembroGrupoAsignaturaBs = miembroGrupoAsignaturaBs;
     }
    
      @EmbeddedId
@@ -152,12 +154,21 @@ public class Asignatura  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="asignatura")
-    public Set<MiembroGrupoAsignatura> getMiembroGrupoAsignaturas() {
-        return this.miembroGrupoAsignaturas;
+    public Set<MiembroGrupoAsignaturaA> getMiembroGrupoAsignaturaAs() {
+        return this.miembroGrupoAsignaturaAs;
     }
     
-    public void setMiembroGrupoAsignaturas(Set<MiembroGrupoAsignatura> miembroGrupoAsignaturas) {
-        this.miembroGrupoAsignaturas = miembroGrupoAsignaturas;
+    public void setMiembroGrupoAsignaturaAs(Set<MiembroGrupoAsignaturaA> miembroGrupoAsignaturaAs) {
+        this.miembroGrupoAsignaturaAs = miembroGrupoAsignaturaAs;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="asignatura")
+    public Set<MiembroGrupoAsignaturaB> getMiembroGrupoAsignaturaBs() {
+        return this.miembroGrupoAsignaturaBs;
+    }
+    
+    public void setMiembroGrupoAsignaturaBs(Set<MiembroGrupoAsignaturaB> miembroGrupoAsignaturaBs) {
+        this.miembroGrupoAsignaturaBs = miembroGrupoAsignaturaBs;
     }
 
 

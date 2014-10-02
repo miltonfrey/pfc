@@ -1,7 +1,8 @@
 package pojos;
-// Generated 16-sep-2014 16:59:37 by Hibernate Tools 4.3.1
+// Generated 02-oct-2014 14:56:35 by Hibernate Tools 4.3.1
 
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,18 +26,18 @@ public class Equivalencia  implements java.io.Serializable {
 
      private Integer idequivalencia;
      private Contrato contrato;
-     private GrupoAsignatura grupoAsignaturaByGrupoAsignaturaB;
-     private GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA;
      private String visible;
+     private GrupoAsignaturaB grupoAsignaturaB;
+     private GrupoAsignaturaA grupoAsignaturaA;
 
     public Equivalencia() {
     }
 
-    public Equivalencia(Contrato contrato, GrupoAsignatura grupoAsignaturaByGrupoAsignaturaB, GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA, String visible) {
+    public Equivalencia(Contrato contrato, String visible, GrupoAsignaturaB grupoAsignaturaB, GrupoAsignaturaA grupoAsignaturaA) {
        this.contrato = contrato;
-       this.grupoAsignaturaByGrupoAsignaturaB = grupoAsignaturaByGrupoAsignaturaB;
-       this.grupoAsignaturaByGrupoAsignaturaA = grupoAsignaturaByGrupoAsignaturaA;
        this.visible = visible;
+       this.grupoAsignaturaB = grupoAsignaturaB;
+       this.grupoAsignaturaA = grupoAsignaturaA;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -60,26 +62,6 @@ public class Equivalencia  implements java.io.Serializable {
         this.contrato = contrato;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="grupoAsignaturaB")
-    public GrupoAsignatura getGrupoAsignaturaByGrupoAsignaturaB() {
-        return this.grupoAsignaturaByGrupoAsignaturaB;
-    }
-    
-    public void setGrupoAsignaturaByGrupoAsignaturaB(GrupoAsignatura grupoAsignaturaByGrupoAsignaturaB) {
-        this.grupoAsignaturaByGrupoAsignaturaB = grupoAsignaturaByGrupoAsignaturaB;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="grupoAsignaturaA")
-    public GrupoAsignatura getGrupoAsignaturaByGrupoAsignaturaA() {
-        return this.grupoAsignaturaByGrupoAsignaturaA;
-    }
-    
-    public void setGrupoAsignaturaByGrupoAsignaturaA(GrupoAsignatura grupoAsignaturaByGrupoAsignaturaA) {
-        this.grupoAsignaturaByGrupoAsignaturaA = grupoAsignaturaByGrupoAsignaturaA;
-    }
-
     
     @Column(name="visible", length=2)
     public String getVisible() {
@@ -88,6 +70,46 @@ public class Equivalencia  implements java.io.Serializable {
     
     public void setVisible(String visible) {
         this.visible = visible;
+    }
+
+@OneToOne(fetch=FetchType.LAZY, mappedBy="equivalencia")
+    public GrupoAsignaturaB getGrupoAsignaturaB() {
+        return this.grupoAsignaturaB;
+    }
+    
+    public void setGrupoAsignaturaB(GrupoAsignaturaB grupoAsignaturaB) {
+        this.grupoAsignaturaB = grupoAsignaturaB;
+    }
+
+@OneToOne(fetch=FetchType.LAZY, mappedBy="equivalencia")
+    public GrupoAsignaturaA getGrupoAsignaturaA() {
+        return this.grupoAsignaturaA;
+    }
+    
+    public void setGrupoAsignaturaA(GrupoAsignaturaA grupoAsignaturaA) {
+        this.grupoAsignaturaA = grupoAsignaturaA;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.idequivalencia);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Equivalencia other = (Equivalencia) obj;
+        if (!Objects.equals(this.idequivalencia, other.idequivalencia)) {
+            return false;
+        }
+        return true;
     }
 
 

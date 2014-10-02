@@ -33,7 +33,7 @@ private SessionFactory sessionFactory;
     @Override
     public void actualizarEquivalencia(Equivalencia e){
         
-        sessionFactory.getCurrentSession().saveOrUpdate(e);
+        sessionFactory.getCurrentSession().update(e);
     }
     
     @Override
@@ -50,17 +50,23 @@ private SessionFactory sessionFactory;
         return sessionFactory.getCurrentSession().createQuery("select e from Equivalencia e").list();
     }
     @Override
-    public void insertarGrupoAsignaturas(GrupoAsignatura grupo){
+    public void insertarGrupoAsignaturasA(GrupoAsignaturaA grupo){
         
         
         sessionFactory.getCurrentSession().saveOrUpdate(grupo);
     }
-    @Override
-    public void insertarMiembroGrupoAsignatura(MiembroGrupoAsignatura m){
+     @Override
+    public void insertarGrupoAsignaturasB(GrupoAsignaturaB grupo){
+        
+        
+        sessionFactory.getCurrentSession().saveOrUpdate(grupo);
+    }
+   /* @Override
+    public void insertarMiembroGrupoAsignatura(MiembroGrupoAsignaturaA m){
         
         sessionFactory.getCurrentSession().saveOrUpdate(m);
         
-    }
+    }*/
     @Override
     public void creaContrato(Contrato c){
         
@@ -85,9 +91,14 @@ private SessionFactory sessionFactory;
         sessionFactory.getCurrentSession().delete(c);
     }
     @Override
-    public List<Equivalencia> listarEquivalenciasPorContrato(Contrato c){
-        return sessionFactory.getCurrentSession().createQuery("select e from Equivalencia e where e.contrato=:contrato").setParameter("contrato", c).list();
+    public List<Equivalencia> listarEquivalenciasPorContrato(Integer id){
+        
+        return sessionFactory.getCurrentSession().createQuery("select e from Equivalencia e where e.contrato.idContrato=:id").setParameter("id", id).list();
     }
-    
+    @Override
+    public Contrato findContrato(Integer id){
+        
+        return (Contrato)sessionFactory.getCurrentSession().createQuery("select c from Contrato c where c.idContrato=:contrato").setParameter("contrato", id).uniqueResult();
+    }
     
 }
