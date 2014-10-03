@@ -33,7 +33,7 @@ public class beanEquivalencia implements Serializable{
 
     
     @ManagedProperty(value="#{usuarioService}")
-    private transient UsuarioService UsuarioService;
+    private transient UsuarioService usuarioService;
     
      @ManagedProperty(value="#{movilidadService}")
     private transient MovilidadService movilidadService;
@@ -123,12 +123,14 @@ public class beanEquivalencia implements Serializable{
     }
 
     public UsuarioService getUsuarioService() {
-        return UsuarioService;
+        return usuarioService;
     }
 
-    public void setUsuarioService(UsuarioService UsuarioService) {
-        this.UsuarioService = UsuarioService;
+    public void setUsuarioService(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
+
+   
     
     
 
@@ -372,7 +374,7 @@ public class beanEquivalencia implements Serializable{
         } 
         
         creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
-        Mensaje m=new Mensaje(UsuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha creado un contrato","no","no","no");
+        Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha creado un contrato","no","no","no");
         mensajeService.enviarMensaje(m);
         verConfirmar=false;
         return null;
@@ -427,7 +429,7 @@ public class beanEquivalencia implements Serializable{
        
     }
      creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
-     Mensaje m=new Mensaje(UsuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
+     Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
      mensajeService.enviarMensaje(m);
         verConfirmar=false;
         return null;
