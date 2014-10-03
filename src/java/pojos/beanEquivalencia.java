@@ -19,8 +19,9 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import org.primefaces.component.datatable.DataTable;
-import org.hibernate.Hibernate;
+
 
 /**
  *
@@ -31,7 +32,8 @@ import org.hibernate.Hibernate;
 public class beanEquivalencia implements Serializable{
 
     
-    
+    @ManagedProperty(value="#{usuarioService}")
+    private transient UsuarioService UsuarioService;
     
      @ManagedProperty(value="#{movilidadService}")
     private transient MovilidadService movilidadService;
@@ -39,19 +41,18 @@ public class beanEquivalencia implements Serializable{
     @ManagedProperty(value="#{asignaturaService}")
     private transient AsignaturaService asignaturaService;
     
-    
-    
     @ManagedProperty(value="#{equivalenciaService}")
     private transient EquivalenciaService equivalenciaService;
     
     @ManagedProperty(value="#{mensajeService}")
     private transient MensajeService mensajeService;
-   
-    ExternalContext context=FacesContext.getCurrentInstance().getExternalContext();
     
+   
+    ExternalContext context;
+    HttpSession session;
     private Movilidad selectedMovilidad;
     private Contrato selectedContrato;
-    
+    private Usuario user;
     
     Equivalencia equivalencia;
     
@@ -85,7 +86,11 @@ public class beanEquivalencia implements Serializable{
     public void init(){
         //HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         //if(session.getAttribute("movilidad")!=null||session.getAttribute("contrato")!=null){
-          
+        context=FacesContext.getCurrentInstance().getExternalContext();  
+        session=(HttpSession)context.getSession(false);
+        
+        user=(Usuario)session.getAttribute("user");
+        
         if(context.getSessionMap().get("movilidad")!=null){
             
             if(context.getSessionMap().get("contrato")!=null){
@@ -115,6 +120,14 @@ public class beanEquivalencia implements Serializable{
 
     public void setMensajeService(MensajeService mensajeService) {
         this.mensajeService = mensajeService;
+    }
+
+    public UsuarioService getUsuarioService() {
+        return UsuarioService;
+    }
+
+    public void setUsuarioService(UsuarioService UsuarioService) {
+        this.UsuarioService = UsuarioService;
     }
     
     
@@ -359,6 +372,8 @@ public class beanEquivalencia implements Serializable{
         } 
         
         creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+        Mensaje m=new Mensaje(UsuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha creado un contrato","no","no","no");
+        mensajeService.enviarMensaje(m);
         verConfirmar=false;
         return null;
         
@@ -412,6 +427,8 @@ public class beanEquivalencia implements Serializable{
        
     }
      creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+     Mensaje m=new Mensaje(UsuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
+     mensajeService.enviarMensaje(m);
         verConfirmar=false;
         return null;
     
