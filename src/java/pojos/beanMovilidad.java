@@ -58,15 +58,7 @@ public class beanMovilidad implements Serializable{
      
      @ManagedProperty(value="#{mensajeService}")
      private transient MensajeService mensajeService;
-  /*  private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-          stream.defaultReadObject();
-          FacesContext context = FacesContext.getCurrentInstance();
-          universidadService = (UniversidadService)context.getApplication()                            //esto parece no ser necesario
-                .evaluateExpressionGet(context, "#{universidadService}", UniversidadService.class);
-          movilidadService = (MovilidadService)context.getApplication()
-                .evaluateExpressionGet(context, "#{movilidadService}", MovilidadService.class);
-       }
-    */
+  
     
     private Usuario usuario;
     private Date fechaInicio;
@@ -571,7 +563,7 @@ public class beanMovilidad implements Serializable{
                         
                         }
                         
-                       if(mov.getEstado().equals("aceptada")||mov.getEstado().equals("Aceptada")||mov.getEstado().equals("en curso")||mov.getEstado().equals("En curso")){
+                       if(mov.getEstado().equalsIgnoreCase("aceptada")){
                            i=i+1;
                            enCurso=mov;
                            if(i>1){
@@ -665,7 +657,7 @@ public class beanMovilidad implements Serializable{
             
         }else{
          
-            if(selectedMovilidad.getEstado().equalsIgnoreCase("aceptada")||selectedMovilidad.getEstado().equalsIgnoreCase("en curso")||selectedMovilidad.getEstado().equals("Aceptada")){
+            if(selectedMovilidad.getEstado().equalsIgnoreCase("aceptada")){
                 
                 
                 Mensaje mensaje=new Mensaje( usuarioService.find("admin"),usuario, Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre()+" con fecha de inicio:"+ sdf.format(selectedMovilidad.getFechaInicio())+" y fecha fin:"+sdf.format(selectedMovilidad.getFechaFin()), "no","no","no");

@@ -76,19 +76,32 @@
                          <f:facet name="footer">
                              <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formMovilidades:" icon="ui-icon-search" value="Eliminar" action="#{beanMovilidad.eliminaMovilidadLista}" 
                                  oncomplete="PF('movTable').filter()"/>
-                             <p:commandButton value="enviar mensaje" action="#{beanMovilidad.activaTexto}" update=":formMovilidades:panelTexto :formMovilidades:msgs"/>  
+                             <p:commandButton value="enviar mensaje" action="#{beanMovilidad.activaTexto}" update=":formMensajes:panelTexto :formMovilidades:msgs"/>  
                          </f:facet>
+                
+                <p:column headerText="contratos">
+                    
+                    <p:commandButton value="ver contratos" action="#{beanContrato.verContratosAdmin}" ajax="false">
+                    
+                        <f:setPropertyActionListener value="#{movilidad}" target="#{beanContrato.selectedMovilidad}"/>
+                        
+                    </p:commandButton>
+                    
+                </p:column>
                 
                 
             </p:dataTable>
             
+        </h:form>
+        
+        <h:form id="formMensajes">    
             <p:outputPanel id="panelTexto">
             <p:outputLabel value="tema" rendered="#{beanMovilidad.activaTexto}"/>
             <p:inputText value="#{beanMovilidad.tema}" rendered="#{beanMovilidad.activaTexto}"/>
             <p:outputLabel value="texto" rendered="#{beanMovilidad.activaTexto}"/>
             <p:inputTextarea value="#{beanMovilidad.texto}" required="true" requiredMessage="el texto no puede estar vacío" rendered="#{beanMovilidad.activaTexto}"/>
-            <p:commandButton value="enviar" action="#{beanMovilidad.enviarMensajesVarios}" update=":formMovilidades" oncomplete="PF('movTable').unselectAllRows();" rendered="#{beanMovilidad.activaTexto}"/>
-            <p:commandButton id="cancelBtn" value="cancelar" action="#{beanMovilidad.cancelar}" process="cancelBtn" update=":formMovilidades" rendered="#{beanMovilidad.activaTexto}"/>
+            <p:commandButton value="enviar" action="#{beanMovilidad.enviarMensajesVarios}" update=":formMovilidades :formMensajes" oncomplete="PF('movTable').unselectAllRows();" rendered="#{beanMovilidad.activaTexto}"/>
+            <p:commandButton id="cancelBtn" value="cancelar" action="#{beanMovilidad.cancelar}" process="cancelBtn" update=":formMensajes" rendered="#{beanMovilidad.activaTexto}"/>
             </p:outputPanel> 
         </h:form>
             

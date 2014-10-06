@@ -26,7 +26,7 @@
         <property name="estado" type="string">
             <column name="estado" length="10" not-null="true" />
         </property>
-        <set name="contratos" table="contrato" inverse="true" lazy="true" fetch="select">
+        <set name="contratos" table="contrato" cascade="delete" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idMovilidad" />
             </key>

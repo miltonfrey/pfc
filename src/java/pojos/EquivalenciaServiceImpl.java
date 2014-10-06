@@ -3,7 +3,6 @@
 package pojos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -18,6 +17,8 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     
     @Autowired
     private EquivalenciaDao equivalenciaDao;
+    
+   
 
     public EquivalenciaDao getEquivalenciaDao() {
         return equivalenciaDao;
@@ -26,7 +27,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     public void setEquivalenciaDao(EquivalenciaDao equivalenciaDao) {
         this.equivalenciaDao = equivalenciaDao;
     }
-    
+
     @Override
     public void crearEquivalencia(Equivalencia e){
         
@@ -75,6 +76,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     @Override
     public void creaContrato(Contrato c){
         equivalenciaDao.creaContrato(c);
+        
     }
     
     @Override
@@ -87,7 +89,10 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     @Override
     public void eliminaContrato(Contrato c){
+        
+        
         equivalenciaDao.eliminaContrato(c);
+       
     }
     @Override
     public List<Equivalencia> listarEquivalenciasPorContrato(Integer id){
@@ -117,6 +122,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     
     @Override
     public Contrato findContrato(Integer id){
+        
         Contrato c=equivalenciaDao.findContrato(id);
         Hibernate.initialize(c.getEquivalencias());
         return c;

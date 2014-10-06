@@ -3,15 +3,97 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <h:head>
         <title>Ver contratos</title>
     </h:head>
     <h:body>
         
         
-        <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+       
             
+        <p:panel>
+        
+            <h:outputLabel value="movilidades que pueden crear contrato de: "/>
+            <h:outputText value="#{beanMovilidad.usuario.login}"/>
+            
+        </p:panel>
+        
+        
+        
+        <br/>
+        <br/>
+        <p:outputPanel id="panelContratos">
+        <h:form id="formContratos">
+            
+            <p:dataTable widgetVar="tablaContratos"
+                         
+                         value="#{beanContrato.listaContratos}"
+                         var="contrato"
+                         filteredValue="#{beanContrato.filteredContratos}"
+                         rowKey="#{contrato.idContrato}"
+                         emptyMessage="no hay contratos">
+                <p:column headerText="fecha" sortBy="#{contrato.fecha}">
+                    <h:outputText value="#{contrato.fecha}">
+                                  <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="estado" sortBy="#{contrato.estado}">
+                    <h:outputText value="#{contrato.estado}"/>
+                </p:column>
+                <p:column headerText="ver contrato">
+                    <p:commandButton value="ver contrato" action="#{beanContrato.seleccionarContratoAdmin}" ajax="false">
+                        <f:setPropertyActionListener value="#{contrato}" target="#{beanContrato.selectedContrato}"/> 
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="eliminar">
+                    
+                    <p:commandButton value="eliminar" action="#{beanContrato.eliminarContrato}" update=":panelContratos" rendered="#{contrato.estado eq 'pendiente'||contrato.estado eq 'rechazado'}"
+                                     onclick="if (! confirm('¿seguro que quieres borrar?')) return false" oncomplete="PF('tablaContratos').filter();">
+                    
+                        <f:setPropertyActionListener target="#{beanContrato.selectedContrato}" value="#{contrato}"/>
+                    
+                    </p:commandButton>  
+                    
+                </p:column>
+                
+                <p:column filterBy="#{contrato.estado}" filterMatchMode="exact" headerText="ver estado" >
+                
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('tablaContratos').filter()" style="width: 100%">
+                            <f:selectItem itemLabel="todos" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems var="estados" value="#{beanUtilidades.listaEstados}" itemLabel="#{estados.estado}" itemValue="#{estados.estado}"/>
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{estados.estado}"/></f:facet>
+                    <f:facet name="input">
+                        
+                        <p:selectOneMenu value="#{beanContrato.changeEstado}" style="width: 100%"
+                                         required="true" requiredMessage="hay que elegir un estado">
+                            <f:selectItem itemLabel="seleccionar un estado" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems var="estados2" value="#{beanUtilidades.listaEstados}" itemLabel="#{estados2.estado}" itemValue="#{estados2.estado}"/>             
+                        </p:selectOneMenu>
+                    </f:facet>
+                    </p:cellEditor>
+                </p:column>     
+                    
+                    
+               
+            
+            </p:dataTable>
+           
+        </h:form>
+        </p:outputPanel>
+        
+       
+        
+         <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
+        
+        
         
         <p:panel>
              <h:form>
@@ -23,6 +105,4 @@
         
     </h:body>
 </html>
-
-
 

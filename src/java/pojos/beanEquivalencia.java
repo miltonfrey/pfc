@@ -48,8 +48,8 @@ public class beanEquivalencia implements Serializable{
     private transient MensajeService mensajeService;
     
    
-    ExternalContext context;
-    HttpSession session;
+    private ExternalContext context=FacesContext.getCurrentInstance().getExternalContext();
+    private HttpSession session=(HttpSession)context.getSession(false);
     private Movilidad selectedMovilidad;
     private Contrato selectedContrato;
     private Usuario user;
@@ -84,35 +84,62 @@ public class beanEquivalencia implements Serializable{
     
     @PostConstruct
     public void init(){
-        //HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        //if(session.getAttribute("movilidad")!=null||session.getAttribute("contrato")!=null){
-        context=FacesContext.getCurrentInstance().getExternalContext();  
-        session=(HttpSession)context.getSession(false);
-        
+      
+       if((Usuario)session.getAttribute("user")!=null){
+           
+           
+           
+       
         user=(Usuario)session.getAttribute("user");
         
-        if(context.getSessionMap().get("movilidad")!=null){
-            
-            if(context.getSessionMap().get("contrato")!=null){
-                selectedContrato=(Contrato)context.getSessionMap().get("contrato");
-              context.getSessionMap().remove("contrato");
-              listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
-              
-            }
-            
         
-       selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
-       context.getSessionMap().remove("movilidad");
-       listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
-       listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
-    }
-        else
-            try{
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/crearContrato.xhtml");
+        if(context.getSessionMap().containsKey("movilidad")){
+        selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
+        context.getSessionMap().remove("movilidad");
+        listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
+        listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
+        
+         if(context.getSessionMap().containsKey("contrato")){
+        selectedContrato=(Contrato)context.getSessionMap().get("contrato");
+        listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
+        context.getSessionMap().remove("contrato");
+         }
+        }
+        
+        
+        else{
+             try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/verMisMovilidades.xhtml");
             }catch(IOException ex){
                     
                     }
     }
+         
+       }  
+       
+        
+       else if((Usuario)session.getAttribute("admin")!=null){
+           
+           
+       
+           if(context.getSessionMap().containsKey("movilidad")&&context.getSessionMap().containsKey("contrato")){
+           user=(Usuario)session.getAttribute("admin");
+           selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
+           selectedContrato=(Contrato)context.getSessionMap().get("contrato");
+           context.getSessionMap().remove("contrato");
+           context.getSessionMap().remove("movilidad");
+         
+        }
+       else{
+            try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/verMovilidades.xhtml");
+            }catch(IOException ex){
+                    
+                    }
+    }
+       } 
+    }
+    
 
     public MensajeService getMensajeService() {
         return mensajeService;
@@ -317,6 +344,8 @@ public class beanEquivalencia implements Serializable{
        
             
         }
+        equivalencia.setVisible("no");
+        equivalencia.setIdequivalencia(j);
         
         equivalencia.setGrupoAsignaturaA(grupoA);
         grupoA.setEquivalencia(equivalencia);
@@ -324,7 +353,8 @@ public class beanEquivalencia implements Serializable{
          equivalencia.setGrupoAsignaturaB(grupoB);
          grupoB.setEquivalencia(equivalencia); 
         
-            equivalencia.setIdequivalencia(j);
+            
+           
             listaAuxEquivalencias.add(equivalencia);
             j++;
             
@@ -408,8 +438,6 @@ public class beanEquivalencia implements Serializable{
            
         }
         
-        
-        
         for(Equivalencia e:listaAuxEquivalencias){
             
          if(c.getEquivalencias().contains(e)==false){   
@@ -430,7 +458,7 @@ public class beanEquivalencia implements Serializable{
     }
      creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
-     mensajeService.enviarMensaje(m);
+     
         verConfirmar=false;
         return null;
     

@@ -85,19 +85,73 @@
                                       icon="edit_icon"  oncomplete="PF('movTable').filter()"> <!--clearFilters() tb vale-->
                         <f:setPropertyActionListener value="#{movilidad}" target="#{beanMovilidad.selectedMovilidad}"/>
                     
-                    
-                    
                     </p:commandButton>
                     
-                    
-                    
                 </p:column>
+                
+                 <p:column headerText="ver contratos">
+                         
+                     <p:commandButton value="contratos" action="#{beanContrato.verContratos}" update=":panelContratos" rendered="#{movilidad.estado eq 'aceptada'}">
+                         
+                             <f:setPropertyActionListener value="#{movilidad}" target="#{beanContrato.selectedMovilidad}"/>
+                             
+                         </p:commandButton>
+                         
+                         
+                     </p:column>
                 
                 
             </p:dataTable> 
             
             
         </h:form>
+        <br/>
+        <br/>
+        
+         <p:outputPanel id="panelContratos">
+        <h:form id="formContratos">
+            
+            <p:dataTable widgetVar="tablaContratos"
+                         rendered="#{beanContrato.visibleContratos}"  
+                         value="#{beanContrato.listaContratos}"
+                         var="contrato"
+                         filteredValue="#{beanContrato.filteredContratos}"
+                         rowKey="#{contrato.idContrato}"
+                         emptyMessage="no hay contratos">
+                <p:column headerText="fecha" sortBy="#{contrato.fecha}">
+                    <h:outputText value="#{contrato.fecha}">
+                                  <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="estado" sortBy="#{contrato.estado}">
+                    <h:outputText value="#{contrato.estado}"/>
+                </p:column>
+                <p:column headerText="ver contrato/editar">
+                    <p:commandButton value="ver contrato/editar" action="#{beanContrato.editarContrato}" ajax="false">
+                        <f:setPropertyActionListener value="#{contrato}" target="#{beanContrato.selectedContrato}"/> 
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="eliminar">
+                    
+                    <p:commandButton value="eliminar" action="#{beanContrato.eliminarContrato}" update=":panelContratos" rendered="#{contrato.estado eq 'pendiente'||contrato.estado eq 'rechazado'}"
+                                     onclick="if (! confirm('¿seguro que quieres borrar?')) return false" oncomplete="PF('tablaContratos').filter();">
+                    
+                        <f:setPropertyActionListener target="#{beanContrato.selectedContrato}" value="#{contrato}"/>
+                    
+                    </p:commandButton>  
+                    
+                </p:column>
+            
+                <f:facet name="footer">
+                    
+                    <p:commandButton value="cerrar" action="#{beanContrato.cerrarContratos}" update=":panelContratos"/>
+                    <p:commandButton value="crear contrato" action="#{beanContrato.crearContrato}" rendered="#{beanContrato.nuevo}" ajax="false"/>
+                </f:facet> 
+            
+            </p:dataTable>
+           
+        </h:form>
+        </p:outputPanel>
         
         
         <br/>
