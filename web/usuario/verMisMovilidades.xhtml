@@ -8,7 +8,7 @@
     <h:head>
         <title>Mis movilidades</title>
     </h:head>
-    <h:body>
+    <h:body onload="PF('movTable').filter()">
         
         <p:panel>
             
@@ -22,12 +22,13 @@
         
         <h:form id="formMovilidad">
             
-            <p:growl/>
+            <p:growl id="msgs"/>
             
             <p:dataTable id="t1" var="movilidad" value="#{beanMovilidad.listaMisMovilidades}"
                          emptyMessage="no hay movilidades"
                          filteredValue="#{beanMovilidad.filteredMovilidades}"
-                         widgetVar="movTable">
+                         widgetVar="movTable"
+                         rowKey="#{movilidad.codMovilidad}">
                 
                 <p:panel>
                     
@@ -79,7 +80,7 @@
                     </h:outputText>
                 </p:column>
                 
-                 <p:column headerText="eliminar">
+                <p:column headerText="eliminar">
                     
                     <p:commandButton  value="eliminar" action="#{beanMovilidad.eliminarMovilidad}" update=":formMovilidad" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
                                       icon="edit_icon"  oncomplete="PF('movTable').filter()"> <!--clearFilters() tb vale-->
@@ -99,7 +100,7 @@
                          
                          
                      </p:column>
-                
+                 
                 
             </p:dataTable> 
             

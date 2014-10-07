@@ -6,10 +6,76 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Gestionar contrato</title>
+        <title>Gestión de contrato</title>
+        <h:outputStylesheet library="css" name="estilos.css"/>
+        <h:outputScript library="js" name="funciones.js"/>
     </h:head>
     <h:body>
-        Hello from Facelets
+      
+        <h:form id="formTablaEquivalencias">
+            <p:growl id="msgs" />
+               <p:dataTable id="tablaEquivalenciasAdmin"
+                         emptyMessage="no hay equivalencias"
+                         selection="#{beanEquivalencia.selectedEquivalencias}"
+                         value="#{beanEquivalencia.listaAuxEquivalencias}"
+                         var="equivalencia"
+                         styleClass="tablaEquivalenciasAdmin"
+                         rowKey="#{equivalencia.idequivalencia}"
+                         widgetVar="equivalenciaTable">
+                         
+                <f:facet name="header">LISTA DE EQUIVALENCIAS</f:facet>
+                
+                <p:column headerText="UDC" styleClass="asignatura">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
+                        <h:outputText value="#{asignatura.asignatura.nombreAsignatura}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                
+                <p:column headerText="#{beanEquivalencia.selectedMovilidad.universidad.nombre}" styleClass="asignatura">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
+                        <h:outputText value="#{asignatura.asignatura.nombreAsignatura} "/>
+                        
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                <p:column headerText="visible" sortBy="#{equivalencia.visible}">
+                    
+                    <h:outputText value="#{equivalencia.visible}"/>
+                    
+                </p:column>
+                <p:column selectionMode="multiple" styleClass="multiple"/>
+                <f:facet name="footer">
+                    <p:commandButton style="float:left " id="publicaBtn"  process=":formTablaEquivalencias:" update=":formTablaEquivalencias:" icon="ui-icon-search" value="publicar" action="#{beanEquivalencia.publicarEquivalencia}"
+                                              oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
+                    <p:commandButton style="float:right"  process=":formTablaEquivalencias:" update=":formTablaEquivalencias" icon="ui-icon-search" value="invisible" action="#{beanEquivalencia.noPublicar}"
+                                   oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
+                    
+                    
+                     
+                </f:facet>
+           
+            </p:dataTable>
+            
+        </h:form>
+
+    
+    
+       
+      
+        <p:panel>
+         <h:form>
+            
+             <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}" ajax="false"/>
+            
+        </h:form>
+        </p:panel>
+        
+        <br />
+        
+        
+        <h:outputLink value="verMovilidades.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
     </h:body>
 </html>
 

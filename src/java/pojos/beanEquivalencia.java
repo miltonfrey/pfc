@@ -86,12 +86,8 @@ public class beanEquivalencia implements Serializable{
     public void init(){
       
        if((Usuario)session.getAttribute("user")!=null){
-           
-           
-           
-       
+      
         user=(Usuario)session.getAttribute("user");
-        
         
         if(context.getSessionMap().containsKey("movilidad")){
         selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
@@ -117,22 +113,21 @@ public class beanEquivalencia implements Serializable{
          
        }  
        
-        
        else if((Usuario)session.getAttribute("admin")!=null){
-           
-           
-       
+        
            if(context.getSessionMap().containsKey("movilidad")&&context.getSessionMap().containsKey("contrato")){
            user=(Usuario)session.getAttribute("admin");
            selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
            selectedContrato=(Contrato)context.getSessionMap().get("contrato");
            context.getSessionMap().remove("contrato");
            context.getSessionMap().remove("movilidad");
+           listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
+              
          
         }
        else{
             try{
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/verMovilidades.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
             }catch(IOException ex){
                     
                     }
@@ -481,51 +476,55 @@ public class beanEquivalencia implements Serializable{
     }
     
     
-   /* public void limpiar(){
-        
-        DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaFic");
-        dataTable.getRowIndex();
-        creaMensaje(""+dataTable.getRowIndex(), FacesMessage.SEVERITY_INFO);
-        //dataTable.resetValue();
-       // dataTable.setFirst(10);
-        //dataTable.reset();
-        //dataTable.resetValue();
-        //dataTable.setFilters(null);
-        //dataTable.findSelectedRowKeys();
-        
-        
-    }
-    
-    
-    
-    
-    
-   /* public void seleccionaFila(SelectEvent event){
-        
-        Asignatura a=(Asignatura)event.getObject();
-        creaMensaje(a.getNombreAsignatura(), FacesMessage.SEVERITY_INFO);
-        
-        
-    }
-    
-    public void deseleccionarFila(UnselectEvent event){
-        
-        Asignatura a=(Asignatura)event.getObject();
-        creaMensaje(a.getNombreAsignatura(), FacesMessage.SEVERITY_INFO);
-        
-    }
-    
-    public void unToggle(ToggleSelectEvent event){
-        
-      DataTable dataTable=(DataTable)event.getSource();
+   public void rechazarContratoAdmin(){
       
-      ArrayList<Asignatura> aux=(ArrayList < Asignatura >)dataTable.getSelection();
-      for(Asignatura a:aux){
-          
-          creaMensaje(a.getNombreAsignatura(), FacesMessage.SEVERITY_INFO);
-      }
+        creaMensaje(""+selectedMovilidad.getCodMovilidad()+" "+selectedContrato.getIdContrato(), FacesMessage.SEVERITY_INFO);
+       
+   }
+    
+    
+    public String publicarEquivalencia(){
+        
+        if(selectedEquivalencias.isEmpty()){
+            return null;
+        }
+        
+        for(Equivalencia e:listaAuxEquivalencias){
+            e.setVisible("si");
+            try{
+                equivalenciaService.actualizarEquivalencia(e);
+            }catch(Exception ex){
+                creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+                return null;
+            }
+        }
+        creaMensaje("Las equivalencias han sido publicadas", FacesMessage.SEVERITY_INFO);
+        return null;
     }
-    */
+    
+    
+    public String noPublicar(){
+        
+         if(selectedEquivalencias.isEmpty()){
+            return null;
+        }
+        
+        for(Equivalencia e:listaAuxEquivalencias){
+            e.setVisible("no");
+            try{
+                equivalenciaService.actualizarEquivalencia(e);
+            }catch(Exception ex){
+                creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+                return null;
+            }
+        }
+        creaMensaje("Las equivalencias seleccionadas ya no son públicas", FacesMessage.SEVERITY_INFO);
+        return null;
+        
+        
+    }
+    
+   
     
     public void detallesAsign(){
          

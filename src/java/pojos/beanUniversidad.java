@@ -403,7 +403,7 @@ public class beanUniversidad implements Serializable{
         infoAsignatura="";
         webAsignatura="";
         listaAsignaturas=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
-        //filteredAsignaturas=null;
+        
         return "";
     }
     

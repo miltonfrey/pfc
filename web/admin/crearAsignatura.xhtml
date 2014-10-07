@@ -16,7 +16,7 @@
                 
                      <p:panel>
                          <p:selectOneMenu id="pais" value="#{beanUniversidad.paisStr}" required="true" requiredMessage="hay que introducir un pais">
-                        <p:ajax  listener="#{beanUniversidad.onChangePais}" update=":formUniversidad :formDetalles"/>
+                             <p:ajax  listener="#{beanUniversidad.onChangePais}" update=":formUniversidad :formDetalles :formTabla :formAsignatura"/>
                         <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
                         <f:selectItems value="#{beanUniversidad.listaPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.nombre}"/>
             
@@ -28,7 +28,7 @@
                 <p:outputPanel id="universidad" >
                     <p:selectOneMenu  value="#{beanUniversidad.universidadStr}" rendered="#{beanUniversidad.checkPaisStr}" required="true" requiredMessage="hay que introducir una universidad"  >
                 
-                        <p:ajax listener="#{beanUniversidad.onChangeUniversidad}" update=":formTabla :formAsignatura :formUniversidad "/>
+                        <p:ajax listener="#{beanUniversidad.onChangeUniversidad}" update=":formTabla :formAsignatura :formUniversidad" oncomplete="PF('asignaturaBtn').filter();"/>
                 <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" id="uni3" />
                 <f:selectItems value="#{beanUniversidad.listaUniversidades}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"/>
             

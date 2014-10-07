@@ -108,10 +108,7 @@ public class beanMovilidad implements Serializable{
     
     @PostConstruct
     public void init(){
-        
-        
-       
-        
+    
        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
       // HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
        
@@ -691,7 +688,8 @@ public class beanMovilidad implements Serializable{
         }
         
         actualizarTodasMovilidades();
-        return "";
+        creaMensaje("movilidad eliminada correctamente", FacesMessage.SEVERITY_INFO);
+        return null;
         
     }
     

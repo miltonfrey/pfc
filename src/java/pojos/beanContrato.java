@@ -33,9 +33,9 @@ public class beanContrato implements Serializable{
 
     
     
-    private ExternalContext context=FacesContext.getCurrentInstance().getExternalContext();
+    private ExternalContext context;
     
-    private HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+    private HttpSession session;
     
     
     private boolean nuevo;
@@ -58,10 +58,11 @@ public class beanContrato implements Serializable{
     @PostConstruct
     public void init(){
         
-        
+       context=FacesContext.getCurrentInstance().getExternalContext();
+       session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
        
         if((Usuario)session.getAttribute("user")!=null){
-           user=(Usuario)session.getAttribute("user");
+        user=(Usuario)session.getAttribute("user");
            //listaMovilidadesValidas=(ArrayList<Movilidad>)movilidadService.listarMovilidadesValidas(user.getLogin());
         }else{
             
@@ -254,11 +255,13 @@ public class beanContrato implements Serializable{
     
     
     public String verContratosAdmin(){
+       
+        
         
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
         
         return ("verContratos.xhtml?faces-redirect=true");
-        
+       
     }
     
     public String seleccionarContratoAdmin(){
