@@ -240,6 +240,8 @@ public class beanContrato implements Serializable{
         listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
         if(listaContratos.isEmpty())
             nuevo=true;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("contrato");
+        selectedContrato=null;
         return null;
     }
     

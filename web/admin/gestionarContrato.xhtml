@@ -12,6 +12,13 @@
     </h:head>
     <h:body>
       
+        <p:panel id="panelEstado">
+            <p:outputLabel value="estado del contrato: "/>
+            <h:outputText value="#{beanEquivalencia.selectedContrato.estado}"/>
+            
+        </p:panel>
+        
+        
         <h:form id="formTablaEquivalencias">
             <p:growl id="msgs" />
                <p:dataTable id="tablaEquivalenciasAdmin"
@@ -27,41 +34,62 @@
                 
                 <p:column headerText="UDC" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
-                        <h:outputText value="#{asignatura.asignatura.nombreAsignatura}"/>
+                        <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
                         <br/>
                     </ui:repeat>
                 </p:column>
                 
                 <p:column headerText="#{beanEquivalencia.selectedMovilidad.universidad.nombre}" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
-                        <h:outputText value="#{asignatura.asignatura.nombreAsignatura} "/>
-                        
+                        <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
                         <br/>
                     </ui:repeat>
                 </p:column>
-                <p:column headerText="visible" sortBy="#{equivalencia.visible}">
+                <p:column styleClass="visible" headerText="visible" sortBy="#{equivalencia.visible}">
                     
                     <h:outputText value="#{equivalencia.visible}"/>
                     
                 </p:column>
                 <p:column selectionMode="multiple" styleClass="multiple"/>
                 <f:facet name="footer">
-                    <p:commandButton style="float:left " id="publicaBtn"  process=":formTablaEquivalencias:" update=":formTablaEquivalencias:" icon="ui-icon-search" value="publicar" action="#{beanEquivalencia.publicarEquivalencia}"
+                    <p:commandButton  id="publicaBtn"  update=":formTablaEquivalencias:" icon="ui-icon-search" value="publicar" action="#{beanEquivalencia.publicarEquivalencia}"
                                               oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
-                    <p:commandButton style="float:right"  process=":formTablaEquivalencias:" update=":formTablaEquivalencias" icon="ui-icon-search" value="invisible" action="#{beanEquivalencia.noPublicar}"
+                    <p:commandButton   process=":formTablaEquivalencias:" update=":formTablaEquivalencias" icon="ui-icon-search" value="invisible" action="#{beanEquivalencia.noPublicar}"
                                    oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
                     
-                    
-                     
                 </f:facet>
            
             </p:dataTable>
             
         </h:form>
-
+        <br/>
+        
+        
+        <p:outputPanel>
+            <p:outputLabel value="Cambiar estado del contrato"/>
+        <h:form id="aprobarContrato">
+            
+            
+            <p:selectOneMenu value="#{beanEquivalencia.apruebaOrechaza}" required="true"
+                             requiredMessage="hay que seleccionar un estado">
+            
+                <f:selectItem noSelectionOption="true" itemValue="#{null}" itemLabel="selecciona una opción"/>
+                <f:selectItems value="#{beanUtilidades.listaEstados}" var="estado" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
+            
+            
+            </p:selectOneMenu>
+            <br/>
+           
+             <p:commandButton value="enviar" action="#{beanEquivalencia.cambiarEstadoContrato}" update=":formTablaEquivalencias:msgs :panelEstado"/>
+         
+             
+          
+        </h:form>
+        </p:outputPanel>   
     
     
-       
+       <br/>
+       <br/>
       
         <p:panel>
          <h:form>
@@ -74,7 +102,7 @@
         <br />
         
         
-        <h:outputLink value="verMovilidades.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        <h:outputLink value="verContratos.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
         
     </h:body>
 </html>

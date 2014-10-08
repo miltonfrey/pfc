@@ -103,16 +103,23 @@ body.green{
 }
 
 .tablaEquivalenciasAdmin{
-    top: 200px;
-    left: 200px;
+    //top: 200px;
+    //left: 200px;
     height: 65%;
     width: 60%;
-    position:absolute;
+    position:relative;
     text-align: center;
     font-size: 15px;
     
 }
 
-
+.visible{
+    
+    
+    font-size: 15px;
+    height: 15%;
+    width: 3%;
+    
+}
         
     

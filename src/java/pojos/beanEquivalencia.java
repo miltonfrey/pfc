@@ -48,10 +48,11 @@ public class beanEquivalencia implements Serializable{
     private transient MensajeService mensajeService;
     
    
-    private ExternalContext context=FacesContext.getCurrentInstance().getExternalContext();
-    private HttpSession session=(HttpSession)context.getSession(false);
+    private ExternalContext context;
+    private HttpSession session;
     private Movilidad selectedMovilidad;
     private Contrato selectedContrato;
+    private Contrato contratoComparado;
     private Usuario user;
     
     Equivalencia equivalencia;
@@ -65,11 +66,15 @@ public class beanEquivalencia implements Serializable{
     
     private ArrayList<Equivalencia>listaEquivalencias;
     private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
+    private ArrayList<Equivalencia> listaAuxEquivalenciasComparado;
     
     private ArrayList<Equivalencia> listaEquivalenciasContrato;
     
     private ArrayList<Asignatura>selectedAsignaturasFic;
     private ArrayList<Asignatura> selectedAsignaturasUni;
+    
+    private ArrayList<Asignatura>filteredAsignaturasFic;
+    private ArrayList<Asignatura>filteredAsignaturasUni;
     
     private ArrayList<Equivalencia>selectedEquivalencias;
     
@@ -77,6 +82,7 @@ public class beanEquivalencia implements Serializable{
     private boolean verInfo;
     private boolean verConfirmar=true;
     
+    private String apruebaOrechaza;
     
     public beanEquivalencia() {
         
@@ -84,7 +90,10 @@ public class beanEquivalencia implements Serializable{
     
     @PostConstruct
     public void init(){
-      
+        context=FacesContext.getCurrentInstance().getExternalContext();
+        session=(HttpSession)context.getSession(false);
+        
+        
        if((Usuario)session.getAttribute("user")!=null){
       
         user=(Usuario)session.getAttribute("user");
@@ -114,16 +123,22 @@ public class beanEquivalencia implements Serializable{
        }  
        
        else if((Usuario)session.getAttribute("admin")!=null){
-        
+           
            if(context.getSessionMap().containsKey("movilidad")&&context.getSessionMap().containsKey("contrato")){
            user=(Usuario)session.getAttribute("admin");
            selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
            selectedContrato=(Contrato)context.getSessionMap().get("contrato");
-           context.getSessionMap().remove("contrato");
-           context.getSessionMap().remove("movilidad");
+           //context.getSessionMap().remove("contrato");
+           //context.getSessionMap().remove("movilidad");
            listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
               
+           if(context.getSessionMap().containsKey("contratoComparado")){
+        contratoComparado=(Contrato)context.getSessionMap().get("contratoComparado");
+        listaAuxEquivalenciasComparado=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(contratoComparado.getIdContrato());
+        context.getSessionMap().remove("contratoComparado");
          
+           }
+           
         }
        else{
             try{
@@ -151,10 +166,6 @@ public class beanEquivalencia implements Serializable{
     public void setUsuarioService(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-
-   
-    
-    
 
     public MovilidadService getMovilidadService() {
         return movilidadService;
@@ -200,6 +211,26 @@ public class beanEquivalencia implements Serializable{
         this.selectedAsignaturasFic = selectedAsignaturasFic;
     }
 
+    public ArrayList<Asignatura> getFilteredAsignaturasFic() {
+        return filteredAsignaturasFic;
+    }
+
+    public void setFilteredAsignaturasFic(ArrayList<Asignatura> filteredAsignaturasFic) {
+        this.filteredAsignaturasFic = filteredAsignaturasFic;
+    }
+
+    public ArrayList<Asignatura> getFilteredAsignaturasUni() {
+        return filteredAsignaturasUni;
+    }
+
+    public void setFilteredAsignaturasUni(ArrayList<Asignatura> filteredAsignaturasUni) {
+        this.filteredAsignaturasUni = filteredAsignaturasUni;
+    }
+
+    
+    
+    
+    
     public ArrayList<Equivalencia> getSelectedEquivalencias() {
         return selectedEquivalencias;
     }
@@ -222,6 +253,14 @@ public class beanEquivalencia implements Serializable{
 
     public void setListaAuxEquivalencias(ArrayList<Equivalencia> listaAuxEquivalencias) {
         this.listaAuxEquivalencias = listaAuxEquivalencias;
+    }
+
+    public ArrayList<Equivalencia> getListaAuxEquivalenciasComparado() {
+        return listaAuxEquivalenciasComparado;
+    }
+
+    public void setListaAuxEquivalenciasComparado(ArrayList<Equivalencia> listaAuxEquivalenciasComparado) {
+        this.listaAuxEquivalenciasComparado = listaAuxEquivalenciasComparado;
     }
 
     
@@ -266,6 +305,24 @@ public class beanEquivalencia implements Serializable{
         this.selectedContrato = selectedContrato;
     }
 
+    public Contrato getContratoComparado() {
+        return contratoComparado;
+    }
+
+    public void setContratoComparado(Contrato contratoComparado) {
+        this.contratoComparado = contratoComparado;
+    }
+
+    public String getApruebaOrechaza() {
+        return apruebaOrechaza;
+    }
+
+    public void setApruebaOrechaza(String apruebaOrechaza) {
+        this.apruebaOrechaza = apruebaOrechaza;
+    }
+
+    
+    
    
 
     public boolean isVerInfo() {
@@ -292,9 +349,6 @@ public class beanEquivalencia implements Serializable{
         this.listaEquivalenciasContrato = listaEquivalenciasContrato;
     }
 
-    
-    
-    
     
      public String asignaturasTotales(){
        
@@ -402,6 +456,7 @@ public class beanEquivalencia implements Serializable{
         Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha creado un contrato","no","no","no");
         mensajeService.enviarMensaje(m);
         verConfirmar=false;
+        
         return null;
         
     }
@@ -489,7 +544,7 @@ public class beanEquivalencia implements Serializable{
             return null;
         }
         
-        for(Equivalencia e:listaAuxEquivalencias){
+        for(Equivalencia e:selectedEquivalencias){
             e.setVisible("si");
             try{
                 equivalenciaService.actualizarEquivalencia(e);
@@ -509,7 +564,7 @@ public class beanEquivalencia implements Serializable{
             return null;
         }
         
-        for(Equivalencia e:listaAuxEquivalencias){
+        for(Equivalencia e:selectedEquivalencias){
             e.setVisible("no");
             try{
                 equivalenciaService.actualizarEquivalencia(e);
@@ -522,6 +577,28 @@ public class beanEquivalencia implements Serializable{
         return null;
         
         
+    }
+    
+    
+    public String cambiarEstadoContrato(){
+        
+        creaMensaje(selectedContrato.getEstado(), FacesMessage.SEVERITY_INFO);
+        
+        selectedContrato.setEstado(apruebaOrechaza);
+        try{
+            
+            equivalenciaService.modificaContrato(selectedContrato);
+            
+        }catch(Exception ex){
+            ex.printStackTrace();
+            creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+            
+            return null;
+        }
+        creaMensaje("contrato modificado correctamente", FacesMessage.SEVERITY_INFO);
+        context.getSessionMap().remove("contrato");
+        
+        return null;
     }
     
    
@@ -545,5 +622,8 @@ public class beanEquivalencia implements Serializable{
             message.setSeverity(s);
             context.addMessage(null, message);
         }
+     
+     
+     
     
 }
