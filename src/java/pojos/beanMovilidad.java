@@ -553,9 +553,9 @@ public class beanMovilidad implements Serializable{
                     if(aux.size()>0){
                     for(Movilidad mov:aux){
                         
-                        if(mov.getEstado().equals("pendiente")||mov.getEstado().equals("Pendiente")){
+                        if(mov.getEstado().equalsIgnoreCase("pendiente")){
                             
-                            creaMensaje("hay una movilidad pendiente o en curso, para cancelarla o modificarla contacta con el coordinador", FacesMessage.SEVERITY_ERROR);
+                            creaMensaje("hay una movilidad pendiente que debe ser aceptada por el coordinador o eliminada", FacesMessage.SEVERITY_ERROR);
                             return null;
                         
                         }
@@ -565,7 +565,7 @@ public class beanMovilidad implements Serializable{
                            enCurso=mov;
                            if(i>1){
                                
-                               creaMensaje("solo se puede tener dos convocatorias en curso o aceptadas como máximo", FacesMessage.SEVERITY_ERROR);
+                               creaMensaje("solo se puede tener dos convocatorias aceptadas como máximo", FacesMessage.SEVERITY_ERROR);
                                return "";
                            }
                            
@@ -584,7 +584,7 @@ public class beanMovilidad implements Serializable{
                     }
                     Cursoacademico ca=new Cursoacademico();
                     
-                    if(cal1.get(2)>6){
+                    if(cal1.get(2)>8){
                        
                         ca.setCursoAcademico(cal1.get(1)+"/"+(cal1.get(1)+1));
                     }else{
@@ -650,9 +650,9 @@ public class beanMovilidad implements Serializable{
                 creaMensaje("se ha producido un error enviando el mensaje", FacesMessage.SEVERITY_ERROR);
                 return "";
             }
-            actualizar();
             
-        }else{
+            
+        }else
          
             if(selectedMovilidad.getEstado().equalsIgnoreCase("aceptada")){
                 
@@ -666,11 +666,27 @@ public class beanMovilidad implements Serializable{
             }
                 creaMensaje("se ha enviado un mensaje al coordinador para su cancelación", FacesMessage.SEVERITY_INFO);
             return "";
-        }
         
-        }
-        return "";
+             
+        }else
+                if(selectedMovilidad.getEstado().equalsIgnoreCase("rechazada")){
+                    
+                     try{
+            movilidadService.eliminarMovilidad(selectedMovilidad);
+            }catch(Exception ex){
+                
+                creaMensaje("se ha producido un error eliminando la movilidad", FacesMessage.SEVERITY_ERROR);
+                return null;
+            }
+                  actualizar();
+                  return null;  
+                }
+            
+        
+        return null;
+        
     }
+    
         
     public String eliminaMovilidadLista(){
         

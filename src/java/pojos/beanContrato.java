@@ -40,6 +40,7 @@ public class beanContrato implements Serializable{
     
     private boolean nuevo;
     private boolean visibleContratos;
+    private boolean verAceptado;
     
     private Estado changeEstado;
     
@@ -119,6 +120,17 @@ public class beanContrato implements Serializable{
         return nuevo;
     }
 
+    public boolean isVerAceptado() {
+        return verAceptado;
+    }
+
+    public void setVerAceptado(boolean verAceptado) {
+        this.verAceptado = verAceptado;
+    }
+    
+    
+    
+
     public void setNuevo(boolean nuevo) {
         this.nuevo = nuevo;
     }
@@ -193,19 +205,36 @@ public class beanContrato implements Serializable{
   
     
     public void verContratos(){
-        
+        verAceptado=true;
         visibleContratos=true;
-        listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
         
+        try{
+        listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
         if(listaContratos.isEmpty()){
             nuevo=true;
     }else
             for (Contrato c: listaContratos){
+                
         if(c.getEstado().equalsIgnoreCase("pendiente")||c.getEstado().equalsIgnoreCase("rechazado")||c.getEstado().equalsIgnoreCase("aceptado")){
             nuevo=false;
             break;
         }
     }
+        
+        for(Contrato c:listaContratos){
+            
+            if(c.getEstado().equalsIgnoreCase("pendiente")){
+                verAceptado=false;
+               
+                break;
+            }
+        }
+        
+         System.out.println(""+verAceptado);
+        
     }
    
     public void cerrarContratos(){
@@ -213,15 +242,7 @@ public class beanContrato implements Serializable{
         visibleContratos=false;
     }
     
-    public String editarContrato(){
-        
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
-       
-        
-        return ("elaborarContratoEditado.xhtml?faces-redirect=true");
-        
-    }
+    
     
     
     public String eliminarContrato(){
@@ -242,6 +263,8 @@ public class beanContrato implements Serializable{
             nuevo=true;
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("contrato");
         selectedContrato=null;
+        visibleContratos=false;
+        //verAceptado=false;
         return null;
     }
     
@@ -254,6 +277,27 @@ public class beanContrato implements Serializable{
         
         
     }
+    
+    public String editarContrato(){
+        
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
+       
+        
+        return ("elaborarContratoEditadoB.xhtml?faces-redirect=true");
+        
+    }
+    
+    
+     public String crearContratoDesdeAceptado(){
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad",selectedMovilidad);
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("comparado", "true");
+         return ("crearContratoDesdeAceptado.xhtml?faces-redirect=true");
+         
+     }
+    
+    
     
     
     public String verContratosAdmin(){
@@ -281,7 +325,11 @@ public class beanContrato implements Serializable{
             context.addMessage(null, message);
         }
     
-    
+    public void action(){
+        
+        creaMensaje(""+selectedContrato.getIdContrato()+" "+selectedMovilidad.getCodMovilidad(), FacesMessage.SEVERITY_INFO);
+        
+    }
     
     
     

@@ -98,7 +98,8 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     public List<Equivalencia> listarEquivalenciasPorContrato(Integer id){
         List<Equivalencia> listaEquivalenciasPorcontrato=equivalenciaDao.listarEquivalenciasPorContrato(id);
         
-        for(Equivalencia e:listaEquivalenciasPorcontrato){    
+        for(Equivalencia e:listaEquivalenciasPorcontrato){ 
+            
         Hibernate.initialize(e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs());
         Iterator i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
         while(i.hasNext()){

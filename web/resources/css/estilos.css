@@ -123,3 +123,24 @@ body.green{
 }
         
     
+.tablaEquivalenciasAceptado{
+    top: 700px;
+    //left: 140px;
+    height: 45%;
+    width: 45%;
+    position:absolute;
+    text-align: center;
+    font-size: 15px;
+  
+}
+
+.tablaEquivalenciasAceptadoNuevo{
+    top: 700px;
+    left: 650px;
+    height: 45%;
+    width: 45%;
+    position:absolute;
+    text-align: center;
+    font-size: 15px;
+  
+}
