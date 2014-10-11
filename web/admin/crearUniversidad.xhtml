@@ -10,6 +10,7 @@
     <h:head>
         <title>crear universidad</title>
         <h:outputScript library="js" name="funciones.js"/>
+        <h:outputStylesheet library="css" name="estilos.css"/>
         
     </h:head>
     <h:body>
@@ -18,10 +19,14 @@
             
             <h:form id="formUniversidad">
                 
+                
+                 
                 <p:growl/>
                 
-                <p:outputLabel value="pais" for="p1"/>
-                <p:selectOneMenu id="p1" value="#{beanUniversidad.paisStr}"
+                <h:panelGrid columns="2" cellpadding="5">
+                
+                    <p:outputLabel  value="pais" />
+                    <p:selectOneMenu id="p1" value="#{beanUniversidad.paisStr}"
                                  required="true"
                                  requiredMessage="el campo pais está vacío">
                                  
@@ -31,43 +36,43 @@
                     
                 </p:selectOneMenu>
                 
-                <br/>
                 
-                <p:outputLabel value="nombre"/>
+                
+                <p:outputLabel value="nombre" style="text-align: left"/>
                 <p:inputText value="#{beanUniversidad.nombre}"
                              required="true"
                              requiredMessage="el campo nombre está vacío">
                     
                 </p:inputText>
                 
-                <br/>
                 
-                <p:outputLabel value="código universidad"/>
+                
+               <p:outputLabel value="código universidad"/>
                 <p:inputText value="#{beanUniversidad.codUniversidad}"
                              required="true"
                              requiredMessage="el campo Coduniversidad está vacío">
                     
                 </p:inputText>
+               
                 
-                <br/>
-                
-                             
-                <p:outputLabel value="información adicional"/>
-                <p:inputTextarea value="#{beanUniversidad.info}"/>
-                
-                <br/>
-                
+               
                 <p:outputLabel value="pagina web"/>
                 <p:inputText value="#{beanUniversidad.web}"/>
                 
-                <br/>
+                
+                 <p:outputLabel  value="información adicional"/>
+                <p:inputTextarea value="#{beanUniversidad.info}"/>
+                
+                
+                </h:panelGrid>
                 
                 <p:commandButton value="crear universidad" action="#{beanUniversidad.creaUniversidad}" update=":formUniversidad"/>
                 
             <br/>
             <br/>  
+            <br/>
                 <p:dataTable id="universidadTable" var="universidad" value="#{beanUniversidad.listaUniversidades}"  emptyMessage="No hay universidades" 
-                             widgetVar="uniBtn">
+                             widgetVar="uniBtn" paginator="true" rows="10">
                 
                     <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
                         
@@ -109,8 +114,7 @@
             </h:form>
             
             
-        
-        
+       
         
        
             
