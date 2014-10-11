@@ -106,13 +106,15 @@
             
         </h:form>
         
+        <br/>
+        
         <h:form id="formMensajes">    
             <p:outputPanel id="panelTexto">
             <p:outputLabel value="tema" rendered="#{beanMovilidad.activaTexto}"/>
-            <p:inputText value="#{beanMovilidad.tema}" rendered="#{beanMovilidad.activaTexto}"/>
-            <p:outputLabel value="texto" rendered="#{beanMovilidad.activaTexto}"/>
-            <p:inputTextarea value="#{beanMovilidad.texto}" required="true" requiredMessage="el texto no puede estar vacío" rendered="#{beanMovilidad.activaTexto}"/>
-            <p:commandButton value="enviar" action="#{beanMovilidad.enviarMensajesVarios}" update=":formMovilidades :formMensajes" oncomplete="PF('movTable').unselectAllRows();" rendered="#{beanMovilidad.activaTexto}"/>
+            <p:inputText value="#{beanMovilidad.tema}" rendered="#{beanMovilidad.activaTexto}"/><br/><br/>
+           
+            <p:inputTextarea value="#{beanMovilidad.texto}" required="true" requiredMessage="el texto no puede estar vacío" rendered="#{beanMovilidad.activaTexto}" cols="40" rows="10"/>
+            <p:commandButton value="enviar" action="#{beanMovilidad.enviarMensajesVarios}" update=":formMovilidades :formMensajes" oncomplete="PF('movTable').unselectAllRows();" rendered="#{beanMovilidad.activaTexto}" />
             <p:commandButton id="cancelBtn" value="cancelar" action="#{beanMovilidad.cancelar}" process="cancelBtn" update=":formMensajes" rendered="#{beanMovilidad.activaTexto}"/>
             </p:outputPanel> 
         </h:form>
