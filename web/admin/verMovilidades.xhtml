@@ -7,6 +7,8 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Ver movilidades</title>
+        <h:outputStylesheet library="css" name="estilos.css"/>
+        
     </h:head>
     <h:body onload="PF('movTable').filter()">
         
@@ -24,25 +26,30 @@
                          >
                 <p:ajax event="rowEdit" listener="#{beanMovilidad.onRowEdit}" oncomplete="PF('movTable').unselectAllRows();PF('movTable').filter();" update=":formMovilidades:t1 :formMovilidades:msgs"/>
                 <p:ajax event="rowEditCancel" listener="#{beanMovilidad.onRowCancel}" />
-                      
+                   
+                <p:column headerText="login" sortBy="#{movilidad.usuario.login}" styleClass="movilidadAdmin" filterBy="#{movilidad.usuario.login}">
+                    
+                    <h:outputText value="#{movilidad.usuario.login}"/>
+                </p:column>
+                
                           
-                <p:column headerText="nombre" sortBy="#{movilidad.usuario.nombre}">
+                <p:column headerText="nombre" sortBy="#{movilidad.usuario.nombre}" styleClass="movilidadAdmin">
                     
                     <h:outputText value="#{movilidad.usuario.nombre}"/>
                 </p:column>
                 
-                <p:column headerText="apellido" sortBy="#{movilidad.usuario.apellido1}" filterBy="#{movilidad.usuario.apellido1}" filterMatchMode="contains">
+                <p:column headerText="apellido" sortBy="#{movilidad.usuario.apellido1}" filterBy="#{movilidad.usuario.apellido1}" filterMatchMode="contains" styleClass="movilidadAdmin">
                     
                     <h:outputText value="#{movilidad.usuario.apellido1}"/>
                 </p:column>
                 
-                <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}">
+                <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}" styleClass="movilidadAdmin">
                     
                     <h:outputText value="#{movilidad.universidad.nombre}"/>
                     
                 </p:column>
               
-                <p:column filterBy="#{movilidad.estado}" filterMatchMode="exact" headerText="ver estado" >
+                <p:column filterBy="#{movilidad.estado}" filterMatchMode="exact" headerText="estado" styleClass="movilidadAdmin" >
                 
                     <f:facet name="filter">
                         <p:selectOneMenu onchange="PF('movTable').filter()" style="width: 100%">
@@ -63,15 +70,18 @@
                     </p:cellEditor>
                 </p:column>
                 
-                <p:column headerText="curso académico" sortBy="#{movilidad.cursoacademico.cursoAcademico}">
+                 <p:column headerText="modificar" styleClass="movilidadAdmin">
+                        <p:rowEditor/>
+                </p:column>
+                
+                
+                <p:column headerText="curso académico" sortBy="#{movilidad.cursoacademico.cursoAcademico}" styleClass="movilidadAdmin">
                 
                     <h:outputText value="#{movilidad.cursoacademico.cursoAcademico}"/>
                     
                 </p:column>
                 
-                 <p:column headerText="modificar estado">
-                        <p:rowEditor/>
-                </p:column>
+               
                 
                 
                
@@ -81,9 +91,9 @@
                              <p:commandButton value="enviar mensaje" action="#{beanMovilidad.activaTexto}" update=":formMensajes:panelTexto :formMovilidades:msgs"/>  
                          </f:facet>
                 
-                <p:column headerText="contratos">
+                <p:column headerText="contratos" styleClass="movilidadAdmin">
                     
-                    <p:commandButton value="ver contratos" action="#{beanContrato.verContratosAdmin}" ajax="false" rendered="#{movilidad.estado eq 'aceptada'||movilidad.estado eq 'cancelada'||movilidad.estado eq 'terminada'}">
+                    <p:commandButton value="contratos" action="#{beanContrato.verContratosAdmin}" ajax="false" rendered="#{movilidad.estado eq 'aceptada'||movilidad.estado eq 'cancelada'||movilidad.estado eq 'terminada'}">
                     
                         <f:setPropertyActionListener value="#{movilidad}" target="#{beanContrato.selectedMovilidad}"/>
                         
@@ -91,7 +101,7 @@
                     
                 </p:column>
                 
-                <p:column headerText="selección" selectionMode="multiple" style="width:16px;text-align:center"/>
+                <p:column selectionMode="multiple" styleClass="multiple"/>
             </p:dataTable>
             
         </h:form>
