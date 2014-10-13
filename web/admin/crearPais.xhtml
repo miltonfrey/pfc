@@ -26,7 +26,7 @@
             <p:outputPanel id="panelTable" >
                 
                 <p:dataTable id="tabla1" value="#{beanUniversidad.listaPaises}" var="pais"
-                             emptyMessage="no se han recuperado países"
+                             emptyMessage="no se han recuperado países" paginator="true" rows="10"
                              >
                     
                     <p:column headerText="pais" sortBy="#{pais.nombre}">

@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Ver movilidades</title>
-        <h:outputStylesheet library="css" name="estilos.css"/>
+        <h:outputStylesheet library="css" name="movilidadAdmin.css"/>
         
     </h:head>
     <h:body onload="PF('movTable').filter()">
@@ -27,29 +27,29 @@
                 <p:ajax event="rowEdit" listener="#{beanMovilidad.onRowEdit}" oncomplete="PF('movTable').unselectAllRows();PF('movTable').filter();" update=":formMovilidades:t1 :formMovilidades:msgs"/>
                 <p:ajax event="rowEditCancel" listener="#{beanMovilidad.onRowCancel}" />
                    
-                <p:column headerText="login" sortBy="#{movilidad.usuario.login}" styleClass="movilidadAdmin" filterBy="#{movilidad.usuario.login}">
+                <p:column headerText="login" sortBy="#{movilidad.usuario.login}" styleClass="login" filterBy="#{movilidad.usuario.login}">
                     
                     <h:outputText value="#{movilidad.usuario.login}"/>
                 </p:column>
                 
                           
-                <p:column headerText="nombre" sortBy="#{movilidad.usuario.nombre}" styleClass="movilidadAdmin">
+                <p:column headerText="nombre" sortBy="#{movilidad.usuario.nombre}" styleClass="nombre">
                     
                     <h:outputText value="#{movilidad.usuario.nombre}"/>
                 </p:column>
                 
-                <p:column headerText="apellido" sortBy="#{movilidad.usuario.apellido1}" filterBy="#{movilidad.usuario.apellido1}" filterMatchMode="contains" styleClass="movilidadAdmin">
+                <p:column headerText="apellido" sortBy="#{movilidad.usuario.apellido1}" filterBy="#{movilidad.usuario.apellido1}" filterMatchMode="contains" styleClass="apellido1">
                     
                     <h:outputText value="#{movilidad.usuario.apellido1}"/>
                 </p:column>
                 
-                <p:column headerText="universidad" sortBy="#{movilidad.universidad.nombre}" styleClass="movilidadAdmin">
+                <p:column headerText="destino" sortBy="#{movilidad.universidad.nombre}" styleClass="universidad">
                     
                     <h:outputText value="#{movilidad.universidad.nombre}"/>
                     
                 </p:column>
               
-                <p:column filterBy="#{movilidad.estado}" filterMatchMode="exact" headerText="estado" styleClass="movilidadAdmin" >
+                <p:column filterBy="#{movilidad.estado}" filterMatchMode="exact" headerText="estado" styleClass="estado" >
                 
                     <f:facet name="filter">
                         <p:selectOneMenu onchange="PF('movTable').filter()" style="width: 100%">
@@ -70,18 +70,35 @@
                     </p:cellEditor>
                 </p:column>
                 
-                 <p:column headerText="modificar" styleClass="movilidadAdmin">
+                 <p:column headerText="cambiar" styleClass="cambiar">
                         <p:rowEditor/>
                 </p:column>
                 
                 
-                <p:column headerText="curso académico" sortBy="#{movilidad.cursoacademico.cursoAcademico}" styleClass="movilidadAdmin">
+                <p:column headerText="curso académico" sortBy="#{movilidad.cursoacademico.cursoAcademico}" styleClass="cursoAcademico">
                 
                     <h:outputText value="#{movilidad.cursoacademico.cursoAcademico}"/>
                     
                 </p:column>
                 
-               
+                <p:column headerText="inicio" sortBy="#{movilidad.fechaInicio}" styleClass="fecha">
+                
+                    <h:outputText value="#{movilidad.fechaInicio}">
+                    
+                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                
+                </p:column>
+                
+                
+                <p:column headerText="inicio" sortBy="#{movilidad.fechaFin}" styleClass="fecha">
+                
+                    <h:outputText value="#{movilidad.fechaFin}">
+                    
+                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                
+                </p:column>
                 
                 
                
@@ -91,7 +108,7 @@
                              <p:commandButton value="enviar mensaje" action="#{beanMovilidad.activaTexto}" update=":formMensajes:panelTexto :formMovilidades:msgs"/>  
                          </f:facet>
                 
-                <p:column headerText="contratos" styleClass="movilidadAdmin">
+                <p:column headerText="contratos" styleClass="contratos">
                     
                     <p:commandButton value="contratos" action="#{beanContrato.verContratosAdmin}" ajax="false" rendered="#{movilidad.estado eq 'aceptada'||movilidad.estado eq 'cancelada'||movilidad.estado eq 'terminada'}">
                     
@@ -119,11 +136,9 @@
             </p:outputPanel> 
         </h:form>
             
-            <br/>
+            <br/><br/>
             
-            <h:outputLink value="escribeMensaje.xhtml">Escribir mensaje a alumno</h:outputLink>
-            <br/>
-            <br/>
+           
             
             
              <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>

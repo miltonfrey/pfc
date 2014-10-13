@@ -1,0 +1,67 @@
+.login{
+    
+    width: 5%;
+    font-size: 15px;
+    
+}
+
+.nombre{
+    
+    width: 6%;
+    font-size: 15px;
+    
+}
+
+
+.apellido1{
+    
+    width: 7%;
+    font-size: 15px;
+    
+}
+
+.universidad{
+    
+   width: 7%;
+   font-size: 15px;  
+    
+}
+
+
+.estado{
+    
+    width: 6%;
+   font-size: 15px;  
+    
+}
+
+.contratos{
+    
+    width: 5%;
+   font-size: 15px;  
+    
+}
+
+.cambiar{
+    
+   width: 3%;
+   font-size: 15px;  
+}
+
+.multiple{
+   width:3% ;
+   text-align:center;
+}
+
+.cursoAcademico{
+    
+    
+    width: 4%;
+    font-size: 15px;
+}
+
+.fecha{
+    
+    width: 4%;
+    font-size: 15px;
+}

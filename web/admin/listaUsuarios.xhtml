@@ -7,6 +7,8 @@
       
     <h:head>
         
+        <h:outputStylesheet library="css" name="estilos.css"/>
+        
     <!--    <script type='text/javascript' src=""/> -->
        
         <title>lista de usuarios</title>
@@ -24,24 +26,29 @@
                          emptyMessage="no se han encontrado usuarios"
                          rowKey="#{usuario.login}">
                 
-                <p:column headerText="login" sortBy="#{usuario.nombre}" filterBy="#{usuario.login}" filterMatchMode="contains">
+                <p:column headerText="login" sortBy="#{usuario.nombre}" filterBy="#{usuario.login}" filterMatchMode="contains" styleClass="campoUsuario">
                     
                     <h:outputText value="#{usuario.login}"/>
                 </p:column>
             
-                <p:column headerText="nombre" sortBy="#{usuario.nombre}" filterBy="#{usuario.nombre}" filterMatchMode="contains">
+                <p:column headerText="nombre" sortBy="#{usuario.nombre}" filterBy="#{usuario.nombre}" filterMatchMode="contains" styleClass="campoUsuario">
                 
                           <h:outputText value="#{usuario.nombre}"/>
                           
                 </p:column>
                 
-                <p:column headerText="apellido" sortBy="#{usuario.apellido1}" filterBy="#{usuario.apellido1}" filterMatchMode="contains">
+                <p:column headerText="apellido" sortBy="#{usuario.apellido1}" filterBy="#{usuario.apellido1}" filterMatchMode="contains" styleClass="campoUsuario">
                 
                     <h:outputText value="#{usuario.apellido1}"/>
                 
                 </p:column>
+                
+                <p:column headerText="apellido2" sortBy="#{usuario.apellido2}" styleClass="campoUsuario">
+                
+                    <h:outputText value="#{usuario.apellido2}"/>
+                </p:column> 
                           
-                <p:column headerText="titulacion" filterBy="#{usuario.titulacion}" filterMatchMode="exact">
+                <p:column headerText="titulacion" filterBy="#{usuario.titulacion}" filterMatchMode="exact" styleClass="campoUsuario">
                     <f:facet name="filter">
                         <p:selectOneMenu onchange="PF('usTable').filter()">
                     <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
@@ -61,7 +68,7 @@
                     
                 
                 
-                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                    <p:column selectionMode="multiple" styleClass="multiple"/>
                
                          <f:facet name="footer">
                              <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Borrar" action="#{beanUsuario.eliminaUsuariosLista}" 

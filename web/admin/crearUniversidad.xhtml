@@ -23,12 +23,14 @@
                  
                 <p:growl/>
                 
-                <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid columns="2" cellpadding="6">
                 
                     <p:outputLabel  value="pais" />
                     <p:selectOneMenu id="p1" value="#{beanUniversidad.paisStr}"
                                  required="true"
-                                 requiredMessage="el campo pais está vacío">
+                                 requiredMessage="el campo pais está vacío"
+                                 >
+                        <p:ajax event="change" listener="#{beanUniversidad.onChangePaisUni}" update="formUniversidad:universidadTable" process="@this"/>
                                  
                     
                     <f:selectItem itemLabel="elige un pais" noSelectionOption="true"/>

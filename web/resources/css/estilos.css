@@ -153,16 +153,57 @@ body.green{
     
 }
 
-.mensajeTema{
+
+
+.codAsignatura{
     
+    width: 5%;
+    font-size: 15px;
+}
+
+.nombreAsignatura{
+    width: 8%;
+    font-size: 15px;
     
+}
+
+.periodoAsignatura{
+    
+    width: 6%;
+    font-size: 15px;
+}
+
+.creditosAsignatura{
+    
+    width: 6%;
+    font-size: 15px;
+        
+    
+}
+
+.detallesAsignatura{
+    
+    width: 8%;
+    font-size: 15px;
+    
+}
+
+.webAsignatura{
+    
+    width: 6%;
+    font-size: 15px;
     
 }
 
 
-mensajeTexto{
+
+////////////////////////////////////////////////////////////////////////////////
+
+.campoUsuario{
     
     
-    
+     
+    width: 8%;
+    font-size: 15px;
     
 }

@@ -9,37 +9,35 @@
     <h:head>
         <title>pagina autenticacion admin</title>
         
-        
- 
-
-        
-        
+    
     </h:head>
     <h:body>
-       
-        <h:form>
-            <p:panel id="p1">
+        <p:panel>
+        <h:form id="p1">
+            
+                <h:panelGrid columns="2" cellpadding="6">
                 <p:focus context="p1"/>
             <p:growl/>
-            <p:panel>
+            
                   <p:outputLabel value="login"/>
-                  <h:inputText value="#{beanUsuario.login}"
+                  <p:inputText value="#{beanUsuario.login}"
                          required="true"
                          requiredMessage="el campo login esta vacio"
                          autocomplete="false"/>
                       
-            <br/>
-            <br/>
+           
             <p:outputLabel value="password"/>
             <p:password value="#{beanUsuario.password}"
                         required="true"
                         requiredMessage="el campo password esta vacio"/>
-            </p:panel>
+           
             
             <p:commandButton value="autenticar" action="#{beanUsuario.autenticarAdmin()}" ajax="false"/>
-            </p:panel>
+                </h:panelGrid>
+            
         </h:form>
-        <br/>
+        </p:panel>
+        <br/><br/>
         
         <h:outputLink value="principal.xhtml"><img src="resources/iniciar-icono-4628-48.png"/></h:outputLink>
         

@@ -100,7 +100,7 @@ public class beanUniversidad implements Serializable{
     public void init(){
         //setListaUniversidades((ArrayList<Universidad>)universidadService.listar());
         setListaPaises((ArrayList<Pais>)universidadService.listaPaises());
-        setListaUniversidades((ArrayList<Universidad>)universidadService.listaUniversidades());
+        //setListaUniversidades((ArrayList<Universidad>)universidadService.listarPorPais(paisStr));
         HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         if (request.getRequestURI().equals("/pfc/admin/crearCursoAcademico.xhtml")==true){
             
@@ -216,7 +216,11 @@ public class beanUniversidad implements Serializable{
     }
 
    
+    public void onChangePaisUni(){
     
+    
+    listaUniversidades=(ArrayList < Universidad >)universidadService.listarPorPais(paisStr);
+}
    
    
     public ArrayList<Pais> getListaPaises() {
