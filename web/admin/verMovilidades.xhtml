@@ -22,7 +22,8 @@
                          filteredValue="#{beanMovilidad.filteredMovilidades}"
                          selection="#{beanMovilidad.selectedMovilidades}"
                          widgetVar="movTable"
-                         rowKey="#{movilidad.codMovilidad}"
+                         rowKey="#{movilidad.codMovilidad}" 
+                         
                          >
                 <p:ajax event="rowEdit" listener="#{beanMovilidad.onRowEdit}" oncomplete="PF('movTable').unselectAllRows();PF('movTable').filter();" update=":formMovilidades:t1 :formMovilidades:msgs"/>
                 <p:ajax event="rowEditCancel" listener="#{beanMovilidad.onRowCancel}" />

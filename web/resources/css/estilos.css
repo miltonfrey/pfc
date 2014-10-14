@@ -159,25 +159,28 @@ body.green{
     
     width: 5%;
     font-size: 15px;
+    text-align: center;
+   
 }
 
 .nombreAsignatura{
     width: 8%;
     font-size: 15px;
-    
+   text-align: center;
 }
 
 .periodoAsignatura{
     
     width: 6%;
     font-size: 15px;
+    text-align: center;
 }
 
 .creditosAsignatura{
     
     width: 6%;
     font-size: 15px;
-        
+    text-align: center;
     
 }
 
@@ -185,14 +188,14 @@ body.green{
     
     width: 8%;
     font-size: 15px;
-    
+    text-align: center;
 }
 
 .webAsignatura{
     
     width: 6%;
     font-size: 15px;
-    
+    text-align: center;
 }
 
 
@@ -206,4 +209,10 @@ body.green{
     width: 8%;
     font-size: 15px;
     
+}
+ .ui-datatable.borderless  .ui-datatable-data tr,
+.ui-datatable.borderless .ui-datatable-data-empty tr,
+.ui-datatable.borderless .ui-datatable-data td,
+.ui-datatable.borderless .ui-datatable-data-empty td {
+    border-style: none;
 }

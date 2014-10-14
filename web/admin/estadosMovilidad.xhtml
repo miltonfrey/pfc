@@ -10,29 +10,36 @@
     </h:head>
     <h:body>
         
-        <p:outputPanel>
+        
         <h:form id="formEstado">
             
             <p:growl id="messages1" />
             
-            <p:outputLabel value="Estado"/>
-            <p:inputText id="msk1" value="#{beanUtilidades.estadoMovilidad}" 
+            <h:panelGrid frame="border" columns="2" cellpadding="6">
+            
+                    <p:outputLabel value="Estado"/>
+                    <p:inputText id="msk1" value="#{beanUtilidades.estadoMovilidad}" 
                          required="true"
                          requiredMessage="el campo estado está vacío"/>
-             <br/>
-             <p:commandButton id="insBtn" value="crear estado" action="#{beanUtilidades.creaEstadoMovilidad}" ajax="false" process=":formEstado"/>
+                    <h:outputLabel value=""/>
+                    <p:commandButton id="insBtn" value="crear estado" action="#{beanUtilidades.creaEstadoMovilidad}" ajax="false" process=":formEstado"/>
+             
+                </h:panelGrid>
+             
         </h:form>
              <br/>
              <br/>
         <h:form id="formListaEstados">
+            <h:panelGrid columns="2" cellpadding="6" >
              <p:selectOneMenu id="m1" value="#{beanUtilidades.estadoMovilidad}" required="true" requiredMessage="hay que elegir un estado">
                  <f:selectItem itemValue="#{null}" itemLabel="lista de estados" noSelectionOption="true"/>
                  <f:selectItems id="sel1" var="estado" value="#{beanUtilidades.listaEstadosMovilidad}" itemLabel="#{estado.estadoMovilidad}" itemValue="#{estado.estadoMovilidad}"/>
              </p:selectOneMenu>
              
              <p:commandButton id="delBtn" value="eliminar estado" action="#{beanUtilidades.eliminaEstadoMovilidad}" ajax="false" process=":formListaEstados" />
+            </h:panelGrid>
         </h:form>
-        </p:outputPanel>
+        
       <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>  <!--tb vale img src-->
         
        <br/>

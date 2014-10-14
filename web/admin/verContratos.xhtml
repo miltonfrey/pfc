@@ -8,6 +8,7 @@
       xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <h:head>
         <title>Ver contratos</title>
+        <h:outputStylesheet library="css" name="estilos.css"/>
     </h:head>
     <h:body onload="PF('tablaContratos').filter();">
         
@@ -21,7 +22,19 @@
             
             <h:outputText value=" #{beanContrato.selectedMovilidad.usuario.apellido1}"/>
             <br/>
+            <h:outputLabel value="Destino: "/>
+            <h:outputText value=" #{beanContrato.selectedMovilidad.universidad.nombre} "/><br/>
+            <p:outputLabel value="inicio: "/>
+            <h:outputText value="#{beanContrato.selectedMovilidad.fechaInicio}">
             
+                <f:convertDateTime pattern="dd-MM-yyyy"/>
+            </h:outputText><br/>
+             
+            <p:outputLabel value="fin: "/>               
+            <h:outputText value="#{beanContrato.selectedMovilidad.fechaFin}">
+                
+                <f:convertDateTime pattern="dd-MM-yyyy"/>
+            </h:outputText>
         </p:panel>
         
         
@@ -40,7 +53,8 @@
                          var="contrato"
                          filteredValue="#{beanContrato.filteredContratos}"
                          rowKey="#{contrato.idContrato}"
-                         emptyMessage="no hay contratos">
+                         emptyMessage="no hay contratos"
+                         styleClass="borderless">
                 <p:column headerText="fecha" sortBy="#{contrato.fecha}">
                     <h:outputText value="#{contrato.fecha}">
                                   <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>

@@ -10,48 +10,49 @@
     </h:head>
     <h:body>
         
-        <p:outputPanel>
+        
         <h:form id="formEstado">
             
             <p:growl id="messages1" />
             
-            <p:outputLabel value="Estado"/>
-            <p:inputText id="msk1" value="#{beanUtilidades.estado}" 
+            <h:panelGrid columns="2" cellpadding="6">
+            
+                <p:outputLabel value="Estado"/>
+                <p:inputText id="msk1" value="#{beanUtilidades.estado}" 
                          required="true"
                          requiredMessage="el campo estado está vacío"/>
-             <br/>
-             <p:commandButton id="insBtn" value="crear estado" action="#{beanUtilidades.creaEstado}" ajax="false" process=":formEstado"/>
-        </h:form>
-             <br/>
-             <br/>
-             <h:form id="formListaEstados">
-             <p:selectOneMenu id="m1" value="#{beanUtilidades.estado}" required="true" requiredMessage="hay que elegir un estado">
-                 <f:selectItem itemValue="#{null}" itemLabel="lista de estados" noSelectionOption="true"/>
-                 <f:selectItems id="sel1" var="estado" value="#{beanUtilidades.listaEstados}" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
-             </p:selectOneMenu>
+                <h:outputLabel value=""/>
+                <p:commandButton id="insBtn" value="crear estado" action="#{beanUtilidades.creaEstado}" ajax="false" process=":formEstado"/>
+            </h:panelGrid>
+         </h:form>
+        
+        
              
-             <p:commandButton id="delBtn" value="eliminar estado" action="#{beanUtilidades.eliminaEstado}" ajax="false" process=":formListaEstados" />
-        </h:form>
-        </p:outputPanel>
+             <br/><br/>
+             
+             
+             <h:form id="formListaEstados">
+                <h:panelGrid columns="2" cellpadding="6">
+                 <p:selectOneMenu id="m1" value="#{beanUtilidades.estado}" required="true" requiredMessage="hay que elegir un estado">
+                  <f:selectItem itemValue="#{null}" itemLabel="lista de estados" noSelectionOption="true"/>
+                  <f:selectItems id="sel1" var="estado" value="#{beanUtilidades.listaEstados}" itemLabel="#{estado.estado}" itemValue="#{estado.estado}"/>
+                 </p:selectOneMenu>
+             
+                 <p:commandButton id="delBtn" value="eliminar estado" action="#{beanUtilidades.eliminaEstado}" ajax="false" process=":formListaEstados" />
+                </h:panelGrid>
+            </h:form>
+        
       <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>  <!--tb vale img src-->
         
-       <br/>
-       <br/>
+       
+       <br/><br/>
        
        <h:form id="f1">
           
            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}" update="f1" ajax="false"/>
             
         </h:form>
-        
-       
-       <h:form id="f2">
-           
-           <p:commandButton value="request" action="#{beanUtilidades.request}" process=":f2" update=":f2" ajax="true"/>
-            
-        </h:form>
-        
-        
+    
     </h:body>
 </html>
 
