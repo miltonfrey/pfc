@@ -15,10 +15,10 @@
        
                 
                  <h:form id="formMovilidad"> 
+                     
                      <p:growl  id="msgs1"  />
                 
-                
-                     <p:panel>
+                        <p:outputPanel>
                          
                          
                          <p:selectOneMenu id="pais" value="#{beanMovilidad.selectedPais}" required="true" requiredMessage="hay que introducir un pais">
@@ -28,13 +28,13 @@
             
             
                         </p:selectOneMenu>
-                     </p:panel> 
+                     </p:outputPanel> 
                
                 
                 <p:outputPanel id="universidad" >
                     <p:selectOneMenu  value="#{beanMovilidad.selectedUniversidad}" rendered="#{beanMovilidad.checkPais}" required="true" requiredMessage="hay que introducir una universidad"  >
                 
-                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update=":formMovilidad: "/>
+                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update=":formMovilidad:info "/>
                 <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" />
                 <f:selectItems value="#{beanMovilidad.listaUniversidades}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"
                                />
@@ -44,10 +44,22 @@
             <br/>
                 
             
+            <h:panelGrid id="info" columns="6" cellpadding="6">
+                
+                <h:outputLabel value="web: "  rendered="#{not empty beanMovilidad.universidad.web}" />
+                <h:outputLink value="#{beanMovilidad.universidad.web}" rendered="#{not empty beanMovilidad.universidad.web}">link</h:outputLink>
+                <h:outputLabel value="información adicional"  rendered="#{not empty beanMovilidad.universidad.info}"/>
+                <h:inputTextarea value="#{beanMovilidad.universidad.info}" readonly="true" rows="10" cols="10" rendered="#{not empty beanMovilidad.universidad.info}"/>
+                
+                
+                
+                
+            </h:panelGrid>
             
-            <p:outputPanel id="horario">
+            
+            <h:panelGrid id="horario" columns="2" cellpadding="6">
               
-                <p:outputLabel for="cal1" value="Fecha de inicio"/>
+                <p:outputLabel value="Fecha de inicio"/>
                 <p:calendar id="cal1" value="#{beanMovilidad.fechaInicio}" 
                             
                             required="true"
@@ -60,8 +72,8 @@
                 
                 </p:calendar>
                
-                <br/>
-                <p:outputLabel for="cal2" value="fecha de fin"/>
+                
+                <p:outputLabel  value="fecha de fin"/>
                 <p:calendar id="cal2" value="#{beanMovilidad.fechaFin}" 
                             
                             required="true"
@@ -75,11 +87,11 @@
                 
                 </p:calendar>
                  
-            </p:outputPanel>
+            
             
             
             <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" ajax="false" update=":formMovilidad"/>
-            
+            </h:panelGrid>  
                 
         </h:form>
    

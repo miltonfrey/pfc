@@ -79,6 +79,7 @@ public class beanMovilidad implements Serializable{
     private String selectedPais;
     
     private String selectedUniversidad;
+    private Universidad universidad;
     private Movilidad selectedMovilidad;
     private Movilidad antiguaMovilidad;
     private ArrayList<Universidad> listaUniversidades;
@@ -229,6 +230,14 @@ public class beanMovilidad implements Serializable{
 
     public void setActivaTexto(boolean activaTexto) {
         this.activaTexto = activaTexto;
+    }
+
+    public Universidad getUniversidad() {
+        return universidad;
+    }
+
+    public void setUniversidad(Universidad universidad) {
+        this.universidad = universidad;
     }
     
     
@@ -448,11 +457,7 @@ public class beanMovilidad implements Serializable{
     public void onDropboxchangeUni(){
         
         
-        //checkUni=true;
-        
-        //listaUniversidades=(ArrayList<St>)universidadService.listarPorUniversidadStr(selectedUniversidad);
-       // Collections.sort(listaUniversidadsStr);
-      
+        universidad=universidadService.findUniversidad(selectedUniversidad);
         
     }
     
@@ -500,10 +505,7 @@ public class beanMovilidad implements Serializable{
                
     }
     
-    public void onRowCancel(){
-        
-        
-    }
+    
 
    
     

@@ -11,25 +11,31 @@
     </h:head>
     <h:body>
        
-        <h:form>
-            <p:growl />
-            <p:panel id="panel1">
-                <p:focus for="panel1"/>
-            <p:outputLabel value="login"/>
-            <h:inputText value="#{beanUsuario.login}"
+        <p:panel>
+        <h:form id="p1">
+            
+                <h:panelGrid columns="2" cellpadding="6">
+                <p:focus context="p1"/>
+            <p:growl/>
+            
+                  <p:outputLabel value="login"/>
+                  <p:inputText value="#{beanUsuario.login}"
                          required="true"
-                         requiredMessage="el campo login esta vacio"/>
-            <br/>
-            <br/>
-            <p:outputLabel value="password" />
+                         requiredMessage="el campo login esta vacio"
+                         autocomplete="true"/>
+                      
+           
+            <p:outputLabel value="password"/>
             <p:password value="#{beanUsuario.password}"
                         required="true"
                         requiredMessage="el campo password esta vacio"/>
-            </p:panel>
+           
             
             <p:commandButton value="autenticar" action="#{beanUsuario.autenticarUsuario}" ajax="false"/>
+                </h:panelGrid>
             
         </h:form>
+        </p:panel>
         
         <br/>
         <br/>

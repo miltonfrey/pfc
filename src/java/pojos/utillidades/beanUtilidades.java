@@ -6,14 +6,16 @@
 package pojos.utillidades;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import pojos.Cursoacademico;
 import pojos.Estado;
 import pojos.EstadoMovilidad;
@@ -21,8 +23,8 @@ import pojos.EstadoMovilidad;
 
 
 @ManagedBean
-@RequestScoped
-public class beanUtilidades {
+@ViewScoped
+public class beanUtilidades implements Serializable{
 
     @ManagedProperty(value="#{utilidadService}")
     private transient UtilidadService utilidadService;
@@ -238,6 +240,17 @@ public class beanUtilidades {
          HttpServletRequest request=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
          creaMensaje(request.getRequestURI(), FacesMessage.SEVERITY_INFO);
      }
-    
+     
+     
+    public String salir(){
+            
+            
+            
+            HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            session.invalidate();
+            return("/principal.xhtml?faces-redirect=true");
+            
+            
+        }
     
 }

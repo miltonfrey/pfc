@@ -17,31 +17,33 @@
         
         
             
-            <h:form id="formUniversidad">
-                
-                
-                 
-                <p:growl/>
+          <h:form id="formPais">
+             
+             <p:growl id="msgs"/>
                 
                 <h:panelGrid columns="2" cellpadding="6">
                 
                     <p:outputLabel  value="pais" />
-                    <p:selectOneMenu id="p1" value="#{beanUniversidad.paisStr}"
+                    <p:selectOneMenu id="p1" value="#{crearUniversidadBean.paisStr}"
                                  required="true"
                                  requiredMessage="el campo pais está vacío"
                                  >
-                        <p:ajax event="change" listener="#{beanUniversidad.onChangePaisUni}" update="formUniversidad:universidadTable" process="@this"/>
+                        <p:ajax event="change" listener="#{crearUniversidadBean.onChangePais}" update=":formTabla:"/>
                                  
                     
                     <f:selectItem itemLabel="elige un pais" noSelectionOption="true"/>
-                    <f:selectItems var="pais" value="#{beanUniversidad.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}" />
+                    <f:selectItems var="pais" value="#{crearUniversidadBean.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}" />
                     
                 </p:selectOneMenu>
                 
-                
+                </h:panelGrid>
+          </h:form>
+        
+                <h:form id="formUniversidad">
+                    <h:panelGrid columns="2" cellpadding="6">
                 
                 <p:outputLabel value="nombre" style="text-align: left"/>
-                <p:inputText value="#{beanUniversidad.nombre}"
+                <p:inputText value="#{crearUniversidadBean.nombre}"
                              required="true"
                              requiredMessage="el campo nombre está vacío">
                     
@@ -50,7 +52,7 @@
                 
                 
                <p:outputLabel value="código universidad"/>
-                <p:inputText value="#{beanUniversidad.codUniversidad}"
+               <p:inputText value="#{crearUniversidadBean.codUniversidad}"
                              required="true"
                              requiredMessage="el campo Coduniversidad está vacío">
                     
@@ -59,77 +61,97 @@
                 
                
                 <p:outputLabel value="pagina web"/>
-                <p:inputText value="#{beanUniversidad.web}"/>
+                <p:inputText value="#{crearUniversidadBean.web}"/>
                 
                 
                  <p:outputLabel  value="información adicional"/>
-                <p:inputTextarea value="#{beanUniversidad.info}"/>
+                 <p:inputTextarea value="#{crearUniversidadBean.info}"/>
                 
-                
-                </h:panelGrid>
-                
-                <p:commandButton value="crear universidad" action="#{beanUniversidad.creaUniversidad}" update=":formUniversidad"/>
-                
-            <br/>
-            <br/>  
-            <br/>
-                <p:dataTable id="universidadTable" var="universidad" value="#{beanUniversidad.listaUniversidades}"  emptyMessage="No hay universidades" 
-                             widgetVar="uniBtn" paginator="true" rows="10">
-                
-                    <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
-                        
-                        <h:outputText value="#{universidad.codUniversidad}"/>
-                            
-                        
-                    </p:column>
-                         
-                    <p:column headerText="universidad" sortBy="#{universidad.nombre}">
-                        
-                            
-                        <h:outputText value="#{universidad.nombre}"/>
-                        
-                        
-                    </p:column>
-                    
-                    <p:column sortBy="#{universidad.pais.nombre}" headerText="pais">
-                    
-                        <h:outputText value="#{universidad.pais.nombre}"/>
-                         
-                    </p:column>
-                    
-                
-                    
-                    
-                    <p:column headerText="Eliminar">
-                                                      
-                    <p:commandButton id="b1" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
-                                     value="eliminar" action="#{beanUniversidad.eliminaUniversidadLista}" process="b1" icon="edit_icon" update=":formUniversidad">
-                                    
-                                     
-                        <f:setPropertyActionListener target="#{beanUniversidad.selectedUniversidad}" value="#{universidad}" /> <!--es como un listener-->
-                    </p:commandButton>
-                    
-                </p:column>
-                
-                </p:dataTable>
+                 <p:commandButton value="crear universidad" action="#{crearUniversidadBean.creaUniversidad}" update=":formTabla :formUniversidad :formDetalles :formPais:msgs"/>
+              </h:panelGrid>
+          </h:form>
+              
+                 <br/><br/> 
+                 
+                 <h:form id="formTabla">
+                     <p:dataTable id="universidadTable" var="universidad" value="#{crearUniversidadBean.listaUniversidades}"  emptyMessage="No hay universidades" 
+                             widgetVar="universidadTable" paginator="true" rows="10"
+                             selection="#{crearUniversidadBean.selectedUniversidades}"
+                             rowKey="#{universidad.nombre}">
                              
-            </h:form>
+                
+                           <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
+                        
+                              <h:outputText value="#{universidad.codUniversidad}"/>
+                            
+                           </p:column>
+                         
+                           <p:column headerText="universidad" sortBy="#{universidad.nombre}">
+                        
+                            
+                              <h:outputText value="#{universidad.nombre}"/>
+                        
+                        
+                           </p:column>
+                    
+                           <p:column sortBy="#{universidad.pais.nombre}" headerText="pais">
+                    
+                              <h:outputText value="#{universidad.pais.nombre}"/>
+                         
+                           </p:column>
+                    
+                           
+                                           
+                               <p:column headerText="ver detalles/editar">
+                                   
+                                   <p:commandButton value="ver detalles/editar" action="#{crearUniversidadBean.verDetalles}" update=":formDetalles">
+                                   
+                                       <f:setPropertyActionListener value="#{universidad}" target="#{crearUniversidadBean.selectedUniversidad}"/>
+                                       
+                                   </p:commandButton>
+                                   
+                               </p:column>   
+                         
+                         <p:column selectionMode="multiple" styleClass="multiple"/>
+                               
+                               <f:facet name="footer">
+                                <p:commandButton id="b1" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
+                                                 value="eliminar" action="#{crearUniversidadBean.eliminaUniversidadLista}"  icon="edit_icon" update=":formTabla :formPais:msgs :formDetalles"
+                                     oncomplete="PF('universidadTable').unselectAllRows();"/>
+                               
+                               </f:facet>
+                
+                       </p:dataTable>
+                             
+                  </h:form>
+            
+            <br/><br/>
+            
+           <h:form id="formDetalles">
+               <h:panelGrid id="detallesAsignatura" columns="2" cellpadding="6" rendered="#{crearUniversidadBean.checkDetalles}">
+                
+                <p:outputLabel value="codUniversidad" />
+                <p:inputText value="#{crearUniversidadBean.selectedUniversidad.codUniversidad}" />
+                 
+                <p:outputLabel value="web" />
+                <p:inputText value="#{crearUniversidadBean.selectedUniversidad.web}" />
+                <p:outputLabel value="info" />
+                <p:inputTextarea value="#{crearUniversidadBean.selectedUniversidad.info}" />
+                
+                
+                
+                <p:commandButton process=":formDetalles:" id="actualizaBtn" value="editar" action="#{crearUniversidadBean.editar()}" update=":formDetalles: :formTabla: :formPais:msgs"
+                                 rendered="#{crearUniversidadBean.checkDetalles}" />
+                <p:commandButton id="cancelBtn" value="cerrar" action="#{crearUniversidadBean.cerrar}" update=":formDetalles" process="cancelBtn"
+                                 rendered="#{crearUniversidadBean.checkDetalles}" />
+                
+            </h:panelGrid>
             
             
-       
+            
         
-       
-            
-            
-            
-            
-            
-                
-                <br/>
-                
-                
-                <h:form>
-                <p:commandButton value="salir" action="#{beanUsuario.salir}" ajax="false"/>
+                    <br/><br/>
+                    <p:commandButton value="salir" action="#{beanUtilidades.salir}" ajax="false"/>
             </h:form>
             
             

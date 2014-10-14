@@ -15,17 +15,17 @@
             
                 <p:growl  />
             
-            <p:inputText value="#{beanUniversidad.paisStr}"
+            <p:inputText value="#{beanPais.paisStr}"
                          required="true"
                          requiredMessage="el campo pais está vacío"/>
-            <p:commandButton value="crear país" action="#{beanUniversidad.creaPais()}" update="formPais"/>
+            <p:commandButton value="crear país" action="#{beanPais.creaPais}" update="formPais"/>
             
             </p:outputPanel>
             <br/>
             
             <p:outputPanel id="panelTable" >
                 
-                <p:dataTable id="tabla1" value="#{beanUniversidad.listaPaises}" var="pais"
+                <p:dataTable id="tabla1" value="#{beanPais.listaPaises}" var="pais"
                              emptyMessage="no se han recuperado países" paginator="true" rows="10"
                              >
                     
@@ -36,10 +36,10 @@
                     </p:column>
                     <p:column headerText="eliminar">
                         
-                        <p:commandButton id="button1" value="eliminar" action="#{beanUniversidad.eliminaPais}" update=":formPais"
+                        <p:commandButton id="button1" value="eliminar" action="#{beanPais.eliminaPais}" update=":formPais"
                                          process="button1"  
                                          onclick= "if (! confirm('¿seguro que quieres borrar?'))return false">
-                            <f:setPropertyActionListener target="#{beanUniversidad.pais}" value="#{pais}"/>
+                            <f:setPropertyActionListener target="#{beanPais.pais}" value="#{pais}"/>
                         
                         </p:commandButton>
                         
@@ -64,7 +64,7 @@
         
         <p:panel>
              <h:form>
-                 <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+                 <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir()}"/>
             </h:form>
         </p:panel>
         
