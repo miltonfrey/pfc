@@ -15,5 +15,5 @@ public interface UsuarioDao {
     public void delete(Usuario u)throws Exception;
     public List<Usuario> listar();
     public void insertarUsuario(Usuario u)throws org.springframework.dao.DataIntegrityViolationException;
-    
+    public void actualizar(Usuario u);
 }

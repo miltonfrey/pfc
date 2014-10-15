@@ -8,10 +8,10 @@
             <column name="idmensaje" />
             <generator class="identity" />
         </id>
-        <many-to-one name="usuarioByDestino" class="pojos.Usuario" fetch="select">
+        <many-to-one name="usuarioByDestino" class="pojos.Usuario" lazy="false" fetch="select">
             <column name="destino" length="20" not-null="true" />
         </many-to-one>
-        <many-to-one name="usuarioByOrigen" class="pojos.Usuario" fetch="select">
+        <many-to-one name="usuarioByOrigen" class="pojos.Usuario" lazy="false" fetch="select">
             <column name="origen" length="20" not-null="true" />
         </many-to-one>
         <property name="fecha" type="timestamp">

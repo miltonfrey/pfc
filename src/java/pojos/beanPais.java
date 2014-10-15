@@ -50,9 +50,6 @@ public class beanPais implements Serializable{
         
         setListaPaises((ArrayList<Pais>)universidadService.listaPaises());
         
-        
-       
-        
     }
 
     public String getPaisStr() {

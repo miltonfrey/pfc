@@ -19,9 +19,9 @@
             
             <p:growl />
             
-            <p:dataTable id="tabla" var="usuario" value="#{beanUsuario.listaUsuarios}"
-                         filteredValue="#{beanUsuario.filteredUsuarios}"
-                         selection="#{beanUsuario.selectedUsuarios}"
+            <p:dataTable id="tabla" var="usuario" value="#{eliminarUsuario.listaUsuarios}"
+                         filteredValue="#{eliminarUsuario.filteredUsuarios}"
+                         selection="#{eliminarUsuario.selectedUsuarios}"
                          widgetVar="usTable"
                          emptyMessage="no se han encontrado usuarios"
                          rowKey="#{usuario.login}">
@@ -52,26 +52,17 @@
                     <f:facet name="filter">
                         <p:selectOneMenu onchange="PF('usTable').filter()">
                     <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
-                    <f:selectItems value="#{beanUsuario.listaTitulaciones}" />
+                    <f:selectItems value="#{crearUsuarioBean.listaTitulaciones}" />
                 </p:selectOneMenu>
             </f:facet>
             
             <h:outputText value="#{usuario.titulacion}"/>
                 </p:column>
                 
-               
-               
-                    <!--<p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false"
-                                     value="eliminar" action="{beanUsuario.eliminaUsuarioLista}" icon="edit_icon"  update=":formTabla" >
-                        <f:setPropertyActionListener target="{beanUsuario.selectedUsuario}" value="{usuario}" />
-                    </p:commandButton>-->
-                    
-                
-                
                     <p:column selectionMode="multiple" styleClass="multiple"/>
                
                          <f:facet name="footer">
-                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Borrar" action="#{beanUsuario.eliminaUsuariosLista}" 
+                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Borrar" action="#{eliminarUsuario.eliminaUsuariosLista}" 
                                  oncomplete="PF('usTable').filter()"/>
                          </f:facet>
                 
@@ -92,7 +83,7 @@
                 
         <h:form>
             
-            <p:commandButton value="cerrar sesión" action="#{beanUsuario.salir()}"/>
+            <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir}" ajax="false"/>
             
         </h:form>
             </p:panel>

@@ -189,20 +189,31 @@ public class beanUtilidades implements Serializable{
         return null;
     }
     
+   
+    
     public String creaCursoAcademico(){
-        Cursoacademico c=new Cursoacademico(cursoAcademico);
-        try{
-        utilidadService.crearCursoAcademico(c);
-    }catch(Exception ex){
-            creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-            return null;
-            
-    }
-        creaMensaje("curso académico creado correctamente", FacesMessage.SEVERITY_INFO);
+      
+      if(cursoAcademico.substring(0, 4).compareTo(cursoAcademico.substring(5, 9))!=-1){
+          
+          creaMensaje("el curso académico no puede empezar más tarde de lo que acaba",FacesMessage.SEVERITY_ERROR);
+          return null;
+      }
+      
+      try{
+          Cursoacademico c=new Cursoacademico(cursoAcademico);
+          utilidadService.crearCursoAcademico(c);
+          
+      }catch(Exception ex){
+          
+          creaMensaje("El año "+cursoAcademico+" ya existe", FacesMessage.SEVERITY_ERROR);
+          return null;
+      }
+        creaMensaje("curso creado correctamente", FacesMessage.SEVERITY_INFO);
         cursoAcademico="";
-        setListaCursoAcademico((ArrayList<Cursoacademico>)utilidadService.listaCursoAcademico());
-        return null;
+      return null;
     }
+      
+    
     
     public String eliminaCursoAcademico(){
         

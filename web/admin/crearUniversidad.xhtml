@@ -32,7 +32,7 @@
                                  
                     
                     <f:selectItem itemLabel="elige un pais" noSelectionOption="true"/>
-                    <f:selectItems var="pais" value="#{crearUniversidadBean.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}" />
+                    <f:selectItems var="pais" value="#{beanPais.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}" />
                     
                 </p:selectOneMenu>
                 
@@ -67,7 +67,8 @@
                  <p:outputLabel  value="información adicional"/>
                  <p:inputTextarea value="#{crearUniversidadBean.info}"/>
                 
-                 <p:commandButton value="crear universidad" action="#{crearUniversidadBean.creaUniversidad}" update=":formTabla :formUniversidad :formDetalles :formPais:msgs"/>
+                 <p:commandButton value="crear universidad" action="#{crearUniversidadBean.creaUniversidad}" update=":formTabla :formUniversidad :formDetalles :formPais:msgs"
+                                  oncomplete="PF('universidadTable').unselectAllRows();"/>
               </h:panelGrid>
           </h:form>
               
@@ -77,7 +78,8 @@
                      <p:dataTable id="universidadTable" var="universidad" value="#{crearUniversidadBean.listaUniversidades}"  emptyMessage="No hay universidades" 
                              widgetVar="universidadTable" paginator="true" rows="10"
                              selection="#{crearUniversidadBean.selectedUniversidades}"
-                             rowKey="#{universidad.nombre}">
+                             rowKey="#{universidad.nombre}"
+                             lazy="true">
                              
                 
                            <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
@@ -86,7 +88,7 @@
                             
                            </p:column>
                          
-                           <p:column headerText="universidad" sortBy="#{universidad.nombre}">
+                           <p:column headerText="nombre" sortBy="#{universidad.nombre}">
                         
                             
                               <h:outputText value="#{universidad.nombre}"/>
@@ -148,16 +150,12 @@
             </h:panelGrid>
             
             
-            
+             <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
         
                     <br/><br/>
                     <p:commandButton value="salir" action="#{beanUtilidades.salir}" ajax="false"/>
             </h:form>
-            
-            
-            
-            
-            
+           
         
         <br/>
         
@@ -165,7 +163,7 @@
         
         
         
-        <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+       
         
         
     </h:body>

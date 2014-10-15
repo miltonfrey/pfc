@@ -15,6 +15,6 @@ public interface UsuarioService {
     public boolean delete(Usuario u);
     public List<Usuario> listar();
     public void insertarUsuario(Usuario u);
-    
+    public void actualizar(Usuario u);
     
 }

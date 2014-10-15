@@ -23,16 +23,18 @@ public class crearUniversidadBean implements Serializable{
     @ManagedProperty(value="#{beanUtilidades}")
     private beanUtilidades beanUtilidades;
     
+    
+    
     public crearUniversidadBean() {
     }
     
     @PostConstruct
     public void init(){
-    setListaPaises((ArrayList<Pais>)universidadService.listaPaises());
+    
 }
 
   private String paisStr;
-    private Pais pais;
+   
     
    
     
@@ -60,6 +62,9 @@ public class crearUniversidadBean implements Serializable{
     
     
     //SERVICES Y UTILIDADES
+    
+    
+    
     
     public UniversidadService getUniversidadService()  {
         return universidadService;
@@ -89,14 +94,6 @@ public class crearUniversidadBean implements Serializable{
 
     public void setPaisStr(String paisStr) {
         this.paisStr = paisStr;
-    }
-
-    public Pais getPais() {
-        return pais;
-    }
-
-    public void setPais(Pais pais) {
-        this.pais = pais;
     }
 
     public String getCodUniversidad() {
@@ -325,7 +322,7 @@ public class crearUniversidadBean implements Serializable{
         nombre="";
         web="";
         info="";
-        pais=null;
+        
         
     }
     

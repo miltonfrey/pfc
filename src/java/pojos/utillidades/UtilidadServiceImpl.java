@@ -31,7 +31,7 @@ public class UtilidadServiceImpl implements UtilidadService,Serializable{
     
     @Override
     public void crearEstado(Estado e){
-        sessionFactory.getCurrentSession().saveOrUpdate(e);
+        sessionFactory.getCurrentSession().save(e);
     }
     @Override
     public List<Estado> listaEstados(){
@@ -46,7 +46,7 @@ public class UtilidadServiceImpl implements UtilidadService,Serializable{
     @Override
     public void crearEstadoMovilidad(EstadoMovilidad e){
         
-        sessionFactory.getCurrentSession().saveOrUpdate(e);
+        sessionFactory.getCurrentSession().save(e);
         
     }
     
@@ -66,7 +66,7 @@ public class UtilidadServiceImpl implements UtilidadService,Serializable{
     @Override
     public void crearCursoAcademico(Cursoacademico c){
         
-      sessionFactory.getCurrentSession().saveOrUpdate(c);
+      sessionFactory.getCurrentSession().save(c);
         
     }
     

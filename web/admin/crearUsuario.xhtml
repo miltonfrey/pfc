@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+    <h:head>
+        <title>crear usuario</title>
+    </h:head>
+    <h:body>
+       
+            <h:form id="form1">
+                
+                <p:growl id="msgs"/> 
+                
+                <p:outputLabel value="escriba el nombre"/>
+                <p:inputText value="#{crearUsuarioBean.nombre}"
+                             required="true"
+                             requiredMessage="el campo nombre está vacío"/>
+                             
+                                         
+                             
+                <br/>
+                
+                <p:outputLabel value="escriba el primer apellido"/>
+                <p:inputText value="#{crearUsuarioBean.apellido1}"
+                             required="true"
+                             requiredMessage="el campo apellido1 está vacío"/>
+                             
+                                         
+                             
+                <br/>
+                
+                
+                             
+                
+                <!--si no se pone el messages lo pone igual en el facecontext-->
+                <p:outputLabel value="introducir segundo apellido"/>
+                <p:inputText id="ii1" value="#{crearUsuarioBean.apellido2}"/>
+                             
+                <br/>
+                
+                <p:outputLabel value="escriba un login"/>
+                <p:inputText value="#{crearUsuarioBean.login}"
+                             required="true"
+                             requiredMessage="el campo login está vacío"
+                             autocomplete="off"/>
+                             
+                                         
+                             
+                <br/>
+                
+                <p:outputLabel value="escribe una contraseña"/>
+                <p:password id="hidden1" value="#{crearUsuarioBean.password}"
+                required="true"
+                requiredMessage="password no puede estar vacio"
+                autocomplete="off"/>
+                
+                <br/>
+                <p:outputLabel value="repite la contraseña"/>
+                <p:password value="#{crearUsuarioBean.passwordAux}"
+                            required="true"
+                            requiredMessage="el campo password está vacío"/>
+              
+                <br/>
+                <p:outputLabel value="titulacion" for="select1"/>
+                <p:selectOneMenu id="select1" value="#{crearUsuarioBean.titulacion}" 
+                                 required="true"  
+                                 requiredMessage="hay que intrododucir una titulacion">
+                
+                    <f:selectItem itemLabel="elige una titulacion" noSelectionOption="true"/>
+                    <f:selectItems value="#{crearUsuarioBean.listaTitulaciones}"/>
+                </p:selectOneMenu>
+                
+                <br/>
+                <p:commandButton value="crear usuario" action="#{crearUsuarioBean.creaUsuario}" update=":form1:" />
+                
+                <br/>
+                
+                
+                
+            </h:form>
+            
+        
+       <br/>
+        <br/>
+        
+        
+        
+        
+       <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>  <!--tb vale img src-->
+        
+       <br/>
+       <br/>
+        <p:panel>
+             <h:form>
+                 <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir}" ajax="false"/>
+            </h:form>
+        </p:panel>
+       
+    </h:body>
+</html>
+
+
+

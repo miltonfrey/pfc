@@ -59,12 +59,15 @@ public class UsuarioServiceImpl implements UsuarioService{
         
             
             usuarioDao.insertarUsuario(u);
-            
-       
-    
-    
-    
 }
+    @Override
+    public void actualizar(Usuario u){
+        
+        
+        usuarioDao.actualizar(u);
+        
+        
+    }
 
     
     
