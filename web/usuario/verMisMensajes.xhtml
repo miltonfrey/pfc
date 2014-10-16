@@ -6,20 +6,21 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Mis mensajes</title>
+        <h:outputStylesheet library="css" name="estilos.css"/>
     </h:head>
     <h:body>
         
          <h:form id="recibidos">
            <p:growl id="msgsRecibidos" />
             
-           <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}" rows="10"
+           <p:dataTable id="t1" var="mensaje" value="#{mensajesRecibidosUserBean.listaMensajesRecibidos}" rows="10"
                          emptyMessage="no hay mensajes"
                          widgetVar="mensTabla"
-                         filteredValue="#{beanMensaje.filteredMensajesRecibidos}"
-                         selection="#{beanMensaje.selectedMensajesRecibidos}"
+                         filteredValue="#{mensajesRecibidosUserBean.filteredMensajesRecibidos}"
+                         selection="#{mensajesRecibidosUserBean.selectedMensajesRecibidos}"
                          rowKey="#{mensaje.idmensaje}"
                          paginator="true"
-                         lazy="true">
+                         >
                <f:facet name="header">Mensajes recibidos</f:facet>
                 
                       <p:column headerText="De:">
@@ -48,29 +49,31 @@
                    <h:outputText value="#{mensaje.leidoDestino}"/>
                </p:column>
                     <p:column>
-                          <p:commandButton value="leer" update=":recibidos" action="#{beanMensaje.leerMensajeRecibido}">
-                              <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeRecibido}"/>
+                        <p:commandButton value="leer" update=":recibidos :panelRecibidos" action="#{mensajesRecibidosUserBean.leerMensajeRecibido}">
+                            <f:setPropertyActionListener value="#{mensaje}" target="#{mensajesRecibidosUserBean.selectedMensajeRecibido}"/>
                            </p:commandButton>
                       </p:column>
                
-               <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+               <p:column selectionMode="multiple" styleClass="multiple"/>
                
                          <f:facet name="footer">
-                             <p:commandButton update=":recibidos:" icon="ui-icon-search" value="Borrar" action="#{beanMensaje.eliminarMensajesRecibidos}"
+                             <p:commandButton update=":recibidos :panelRecibidos" icon="ui-icon-search" value="Borrar" action="#{mensajesRecibidosUserBean.eliminarMensajesRecibidos}"
                                               oncomplete="PF('mensTabla').clearFilters()"/>
                          </f:facet>
                
                 </p:dataTable> 
            
-           
-           <h:panelGrid id="panelRecibidos" columns="2" cellpadding="5">
-                <p:outputLabel id="labelTemaRecibido" value="asunto:" rendered="#{beanMensaje.activaRecibido}"/>
-                <p:inputText id="temaRecibido" value="#{beanMensaje.temaRecibido}" rendered="#{beanMensaje.activaRecibido}" readonly="true"/>
-                <p:outputLabel id="labelTextoRecibido" for="textoRecibido" rendered="#{beanMensaje.activaRecibido}"/>
-                <p:inputTextarea id="textoRecibido" value="#{beanMensaje.textAreaRecibido}"
-                                 rendered="#{beanMensaje.activaRecibido}" readonly="true" autoResize="true" cols="80" rows="10"/>
+         </h:form>
+        <br/>
+           <h:form id="panelRecibidos">
+               <h:panelGrid  columns="2" cellpadding="5" rendered="#{mensajesRecibidosUserBean.activaRecibido}">
+                <p:outputLabel id="labelTemaRecibido" value="asunto:" />
+                <p:inputText id="temaRecibido" value="#{mensajesRecibidosUserBean.temaRecibido}" readonly="true"/>
+                <p:outputLabel id="labelTextoRecibido" for="textoRecibido" />
+                <p:inputTextarea id="textoRecibido" value="#{mensajesRecibidosUserBean.textAreaRecibido}"
+                                  readonly="true" autoResize="true" cols="80" rows="10"/>
                 
-                <p:commandButton value="cerrar" process="@this" action="#{beanMensaje.cerrarMensajeRecibido}" update=":recibidos:panelRecibidos" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:commandButton value="cerrar" process="@this" action="#{mensajesRecibidosUserBean.cerrarMensajeRecibido}" update=":panelRecibidos" />
            </h:panelGrid>
     
            
@@ -80,12 +83,12 @@
             
             <h:form id="enviados">
             <p:growl id="msgsEnviados" />
-            <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}" rowKey="#{mensaje.idmensaje}" rows="10"
+            <p:dataTable id="t2" var="mensaje" value="#{mensajesEnviadosUserBean.listaMensajesEnviados}" rowKey="#{mensaje.idmensaje}" rows="10"
                          emptyMessage="no hay mensajes"
                          style="margin-bottom:0"
-                         selection="#{beanMensaje.selectedMensajesEnviados}"
+                         selection="#{mensajesEnviadosUserBean.selectedMensajesEnviados}"
                          paginator="true"
-                         lazy="true">
+                         >
                  
                          <f:facet name="header">Mensajes enviados</f:facet>
                              
@@ -93,40 +96,42 @@
                                  <h:outputText value="#{mensaje.tema}"/>
                               </p:column>
                          
-                          <p:column sortBy="#{mensaje.fecha}">
+                         <p:column  headerText="fecha" sortBy="#{mensaje.fecha}">
                                    <h:outputText value="#{mensaje.fecha}">
                                    <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                                    </h:outputText>
                               </p:column>
                         
-                              <p:column>
-                                  <p:commandButton value="leer" update=":enviados:panelEnviados" action="#{beanMensaje.leerMensajeEnviado}">
-                                       <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeEnviado}"/>
+                         <p:column headerText="leer">
+                                  <p:commandButton value="leer" update=":enviados :panelEnviados" action="#{mensajesEnviadosUserBean.leerMensajeEnviado}">
+                                      <f:setPropertyActionListener value="#{mensaje}" target="#{mensajesEnviadosUserBean.selectedMensajeEnviado}"/>
                                   </p:commandButton>
                               </p:column>
                          
-                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                         <p:column selectionMode="multiple" style="multiple"/>
                              
                          <f:facet name="footer">
-                             <p:commandButton update=":enviados" icon="ui-icon-search" value="Borrar" action="#{beanMensaje.eliminarMensajesEnviados}" />
+                             <p:commandButton update=":enviados :panelEnviados" icon="ui-icon-search" value="Borrar" action="#{mensajesEnviadosUserBean.eliminarMensajesEnviados}" />
                          </f:facet>
                          
                         </p:dataTable>   
             
            
                         
-                    <br/>              
+                               
+            </h:form>
+            
+          <br/>    
+          <h:form id="panelEnviados">
+              <h:panelGrid columns="2" cellpadding="5" rendered="#{mensajesEnviadosUserBean.activaEnviado}">
                 
+                <p:outputLabel id="labelTemaEnviado" value="asunto:" />
+                <p:inputText id="temaEnviado" value="#{mensajesEnviadosUserBean.temaEnviado}"  readonly="true"/>
+                <p:outputLabel id="labelTextoEnviado" for="textoEnviado" />
+                <p:inputTextarea id="textoEnviado" value="#{mensajesEnviadosUserBean.textAreaEnviado}"
+                                  readonly="true" autoResize="true" cols="80" rows="10"/>
                 
-        <h:panelGrid id="panelEnviados" columns="2" cellpadding="5">
-                
-                <p:outputLabel id="labelTemaEnviado" value="asunto:" rendered="#{beanMensaje.activaEnviado}"/>
-                <p:inputText id="temaEnviado" value="#{beanMensaje.temaEnviado}" rendered="#{beanMensaje.activaEnviado}" readonly="true"/>
-                <p:outputLabel id="labelTextoEnviado" for="textoEnviado" rendered="#{beanMensaje.activaEnviado}"/>
-                <p:inputTextarea id="textoEnviado" value="#{beanMensaje.textAreaEnviado}"
-                                 rendered="#{beanMensaje.activaEnviado}" readonly="true" autoResize="true" cols="80" rows="10"/>
-                
-                <p:commandButton value="cerrar" process="@this" action="#{beanMensaje.cerrarMensajeEnviado}" update=":enviados:panelEnviados" rendered="#{beanMensaje.activaEnviado}"/>
+                <p:commandButton value="cerrar" process="@this" action="#{mensajesEnviadosUserBean.cerrarMensajeEnviado}" update=":panelEnviados" />
         </h:panelGrid>
                     
             </h:form>        

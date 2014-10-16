@@ -201,6 +201,7 @@ public class beanUtilidades implements Serializable{
       
       try{
           Cursoacademico c=new Cursoacademico(cursoAcademico);
+          cursoAcademico="";
           utilidadService.crearCursoAcademico(c);
           
       }catch(Exception ex){
@@ -210,6 +211,7 @@ public class beanUtilidades implements Serializable{
       }
         creaMensaje("curso creado correctamente", FacesMessage.SEVERITY_INFO);
         cursoAcademico="";
+        setListaCursoAcademico((ArrayList<Cursoacademico>)utilidadService.listaCursoAcademico());
       return null;
     }
       

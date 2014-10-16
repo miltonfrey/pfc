@@ -13,14 +13,14 @@
         <h:form id="recibidos">
            <p:growl id="msgsRecibidos" />
             
-           <p:dataTable id="t1" var="mensaje" value="#{beanMensaje.listaMensajesRecibidos}" rows="10"
+           <p:dataTable id="t1" var="mensaje" value="#{mensajesRecibidosAdminBean.listaMensajesRecibidos}" rows="10"
                          emptyMessage="no hay mensajes"
                          widgetVar="mensTabla"
-                         filteredValue="#{beanMensaje.filteredMensajesRecibidos}"
-                         selection="#{beanMensaje.selectedMensajesRecibidos}"
+                         filteredValue="#{mensajesRecibidosAdminBean.filteredMensajesRecibidos}"
+                         selection="#{mensajesRecibidosAdminBean.selectedMensajesRecibidos}"
                          rowKey="#{mensaje.idmensaje}"
                          paginator="true"
-                         lazy="true">
+                         >
                          
                <f:facet name="header">Mensajes recibidos</f:facet>
                 
@@ -61,28 +61,30 @@
                    
                </p:column>
                <p:column headerText="leer">
-                          <p:commandButton value="leer" update=":recibidos" action="#{beanMensaje.leerMensajeRecibido}">
-                              <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeRecibido}"/>
+                   <p:commandButton value="leer" update=":recibidos :panelRecibidos" action="#{mensajesRecibidosAdminBean.leerMensajeRecibido}">
+                       <f:setPropertyActionListener value="#{mensaje}" target="#{mensajesRecibidosAdminBean.selectedMensajeRecibido}"/>
                            </p:commandButton>
                       </p:column>
                
                <p:column selectionMode="multiple" styleClass="multiple"/>
                
                          <f:facet name="footer">
-                             <p:commandButton update=":recibidos:" icon="ui-icon-search" value="Borrar" action="#{beanMensaje.eliminarMensajesRecibidos}" 
+                             <p:commandButton update=":recibidos :panelRecibidos" icon="ui-icon-search" value="Borrar" action="#{mensajesRecibidosAdminBean.eliminarMensajesRecibidos}" 
                                               oncomplete="PF('mensTabla').clearFilters()"/>
                          </f:facet>
                 </p:dataTable> 
+        </h:form>
+        <br/>
+        <h:form id="panelRecibidos">
            
-           
-           <h:panelGrid id="panelRecibidos" columns="2" cellpadding="5">
-                <p:outputLabel id="labelTemaRecibido" value="asunto:" rendered="#{beanMensaje.activaRecibido}"/>
-                <p:inputText id="temaRecibido" value="#{beanMensaje.temaRecibido}" rendered="#{beanMensaje.activaRecibido}" readonly="true"/>
-                <p:outputLabel id="labelTextoRecibido" for="textoRecibido" rendered="#{beanMensaje.activaRecibido}"/>
-                <p:inputTextarea id="textoRecibido" value="#{beanMensaje.textAreaRecibido}"
-                                 rendered="#{beanMensaje.activaRecibido}" readonly="true" autoResize="true" cols="80" rows="10"/>
+            <h:panelGrid columns="2" cellpadding="5" rendered="#{mensajesRecibidosAdminBean.activaRecibido}">
+                <p:outputLabel id="labelTemaRecibido" value="asunto:" />
+                <p:inputText id="temaRecibido" value="#{mensajesRecibidosAdminBean.temaRecibido}" readonly="true"/>
+                <p:outputLabel id="labelTextoRecibido" for="textoRecibido" />
+                <p:inputTextarea id="textoRecibido" value="#{mensajesRecibidosAdminBean.textAreaRecibido}"
+                                 readonly="true" autoResize="true" cols="80" rows="10"/>
                 
-                <p:commandButton value="cerrar" process="@this" action="#{beanMensaje.cerrarMensajeRecibido}" update=":recibidos:panelRecibidos" rendered="#{beanMensaje.activaRecibido}"/>
+                <p:commandButton value="cerrar" process="@this" action="#{mensajesRecibidosAdminBean.cerrarMensajeRecibido}" update=":panelRecibidos"/>
            </h:panelGrid>
     
            
@@ -97,12 +99,12 @@
             
             <h:form id="enviados">
             <p:growl id="msgsEnviados" />
-            <p:dataTable id="t2" var="mensaje" value="#{beanMensaje.listaMensajesEnviados}" rows="10"
+            <p:dataTable id="t2" var="mensaje" value="#{mensajesEnviadosAdminBean.listaMensajesEnviados}" rows="10"
                          emptyMessage="no hay mensajes"
-                         selection="#{beanMensaje.selectedMensajesEnviados}"
+                         selection="#{mensajesEnviadosAdminBean.selectedMensajesEnviados}"
                          rowKey="#{mensaje.idmensaje}"
                          paginator="true"
-                         lazy="true">
+                         >
                         
                          <f:facet name="header">Mensajes enviados</f:facet>
                          
@@ -131,32 +133,34 @@
                         
                          
                               <p:column>
-                                  <p:commandButton value="leer" update=":enviados:panelEnviados" action="#{beanMensaje.leerMensajeEnviado}">
-                                       <f:setPropertyActionListener value="#{mensaje}" target="#{beanMensaje.selectedMensajeEnviado}"/>
+                                  <p:commandButton value="leer" update=":enviados :panelEnviados" action="#{mensajesEnviadosAdminBean.leerMensajeEnviado}">
+                                      <f:setPropertyActionListener value="#{mensaje}" target="#{mensajesEnviadosAdminBean.selectedMensajeEnviado}"/>
                                   </p:commandButton>
                               </p:column>
                          
                          <p:column selectionMode="multiple" styleClass="multiple"/>
                
                          <f:facet name="footer">
-                             <p:commandButton update=":enviados:" icon="ui-icon-search" value="Borrar" action="#{beanMensaje.eliminarMensajesEnviados}" />
+                             <p:commandButton update=":enviados :panelEnviados" icon="ui-icon-search" value="Borrar" action="#{mensajesEnviadosAdminBean.eliminarMensajesEnviados}" />
                          </f:facet>
                              
                         </p:dataTable>   
                         
                     <br/>              
                 
+            </h:form>
+            <br/>
+            <h:form id="panelEnviados">
+                <h:panelGrid columns="2" cellpadding="5" rendered="#{mensajesEnviadosAdminBean.activaEnviado}">
                 
-                    <h:panelGrid id="panelEnviados" columns="2" cellpadding="5">
+                <p:outputLabel id="labelTemaEnviado" value="tema" />
+                <p:inputText id="temaEnviado" value="#{mensajesEnviadosAdminBean.temaEnviado}" />
+                <p:outputLabel id="labelTextoEnviado" for="textoEnviado" />
+                <p:inputTextarea id="textoEnviado" value="#{mensajesEnviadosAdminBean.textAreaEnviado}"
+                                  readonly="true" autoResize="true" cols="80" rows="10"/>
                 
-                <p:outputLabel id="labelTemaEnviado" value="tema" rendered="#{beanMensaje.activaEnviado}"/>
-                <p:inputText id="temaEnviado" value="#{beanMensaje.temaEnviado}" rendered="#{beanMensaje.activaEnviado}"/>
-                <p:outputLabel id="labelTextoEnviado" for="textoEnviado" rendered="#{beanMensaje.activaEnviado}"/>
-                <p:inputTextarea id="textoEnviado" value="#{beanMensaje.textAreaEnviado}"
-                                 rendered="#{beanMensaje.activaEnviado}" readonly="true" autoResize="true" cols="80" rows="10"/>
-                
-                <p:commandButton value="cerrar" process="@this" action="#{beanMensaje.cerrarMensajeEnviado}" update=":enviados:panelEnviados" rendered="#{beanMensaje.activaEnviado}"/>
-                    </h:panelGrid>
+                <p:commandButton value="cerrar" process="@this" action="#{mensajesEnviadosAdminBean.cerrarMensajeEnviado}" update=":panelEnviados" />
+                </h:panelGrid>
                     
             </h:form>        
                 

@@ -575,30 +575,6 @@ public class beanMensaje implements Serializable{
         temaEnviado=selectedMensajeEnviado.getTema();
         
     }
-     
-     
-     public String enviarMensajesVarios(){
-    if(selectedUsuarios.isEmpty()){
-        return "";
-    }
-    for(Usuario u:selectedUsuarios){
-        Mensaje mensaje=new Mensaje(u, user, Calendar.getInstance().getTime(), tema, texto, "no", "no", "no");
-        try{
-        mensajeService.enviarMensaje(mensaje);
-        }catch(Exception ex){
-            
-            creaMensaje("error al enviar mensajes", FacesMessage.SEVERITY_ERROR);
-            return "";
-        }
-    }
-        creaMensaje("mensajes enviados correctamente", FacesMessage.SEVERITY_INFO);
-        activaTexto=false;
-        selectedUsuarios=null;
-        tema="";
-        texto="";
-    return "";
-}
-     
     
     
     public void cerrarMensajeRecibido(){

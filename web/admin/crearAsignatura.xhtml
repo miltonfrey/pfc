@@ -19,7 +19,7 @@
                      <p:selectOneMenu id="pais" value="#{crearAsignaturaBean.paisStr}" required="true" requiredMessage="hay que introducir un pais">
                          <p:ajax  listener="#{crearAsignaturaBean.onChangePais}" update=":formUniversidad :formDetalles :formTabla :formAsignatura"/>
                         <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
-                        <f:selectItems value="#{beanPais.listaPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.nombre}"/>
+                        <f:selectItems value="#{paisBean.listaPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.nombre}"/>
             
             
                         </p:selectOneMenu>
@@ -42,45 +42,45 @@
             
             
         <h:form id="formAsignatura">
-            <h:panelGrid id="asignatura" columns="2" cellpadding="2"> 
+            <h:panelGrid id="asignatura" columns="2" cellpadding="2" rendered="#{crearAsignaturaBean.checkUniversidadStr}"> 
                     
                 
                 
-                <p:outputLabel value="Código" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
-                <p:inputText value="#{crearAsignaturaBean.codAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}" required="true"
+                <p:outputLabel value="Código" />
+                <p:inputText value="#{crearAsignaturaBean.codAsignatura}"  required="true"
                              requiredMessage="el campo código está vacío"
                              validatorMessage="debe ser un número" />
                     
                 
-                <p:outputLabel value="nombre " rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
-                <p:inputText value="#{crearAsignaturaBean.nombreAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}" required="true"
+                <p:outputLabel value="nombre " />
+                <p:inputText value="#{crearAsignaturaBean.nombreAsignatura}"  required="true"
                              requiredMessage="el campo nombre está vacío"/>
                 
-                <p:outputLabel value="creditos" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
-                <p:inputText value="#{crearAsignaturaBean.creditosAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}" required="true"
+                <p:outputLabel value="creditos" />
+                <p:inputText value="#{crearAsignaturaBean.creditosAsignatura}"  required="true"
                              requiredMessage="el campo créditos está vacío"/>
                
-                <p:outputLabel value="periodo" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
-                <p:selectOneMenu value="#{crearAsignaturaBean.periodoAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}">
+                <p:outputLabel value="periodo" />
+                <p:selectOneMenu value="#{crearAsignaturaBean.periodoAsignatura}" >
                     <f:selectItem itemLabel="anual" itemValue="anual"/>
                     <f:selectItem itemLabel="invierno" itemValue="invierno"/>
                     <f:selectItem itemLabel="primavera" itemValue="primavera"/>
                 </p:selectOneMenu>
                 
                 
-                <p:outputLabel value="web" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
-                <p:inputText value="#{crearAsignaturaBean.webAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
+                <p:outputLabel value="web" />
+                <p:inputText value="#{crearAsignaturaBean.webAsignatura}" />
                 
-                <p:outputLabel value="info" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
-                <p:inputTextarea value="#{crearAsignaturaBean.infoAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
+                <p:outputLabel value="info" />
+                <p:inputTextarea value="#{crearAsignaturaBean.infoAsignatura}" />
                 
-                <p:outputLabel value="titulacion" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
-                <p:inputText value="#{crearAsignaturaBean.titulacionAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
+                <p:outputLabel value="titulacion" />
+                <p:inputText value="#{crearAsignaturaBean.titulacionAsignatura}" />
                 
-                <p:outputLabel value="Facultad" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
-                <p:inputText value="#{crearAsignaturaBean.facultadAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}"/>
+                <p:outputLabel value="Facultad" />
+                <p:inputText value="#{crearAsignaturaBean.facultadAsignatura}" />
                 
-                <p:commandButton  oncomplete="PF('asignaturaBtn').filter()" value="crear asignatura" action="#{crearAsignaturaBean.creaAsignatura}" rendered="#{crearAsignaturaBean.checkUniversidadStr}" ajax="true"  update=":formAsignatura :formTabla: :formUniversidad"/>
+                <p:commandButton  oncomplete="PF('asignaturaBtn').filter()" value="crear asignatura" action="#{crearAsignaturaBean.creaAsignatura}"  ajax="true"  update=":formAsignatura :formTabla: :formUniversidad"/>
                 
                 
             
@@ -101,7 +101,7 @@
                              rowKey="#{asignatura.id}"
                              rendered="#{crearAsignaturaBean.checkTabla}"
                              filteredValue="#{crearAsignaturaBean.filteredAsignaturas}"
-                             lazy="true"
+                             
                              styleClass="borderless"
                             >
                               
@@ -170,33 +170,33 @@
             </h:form>
             
         <h:form id="formDetalles">
-            <h:panelGrid id="detallesAsignatura" columns="2" cellpadding="6">
+            <h:panelGrid id="detallesAsignatura" columns="2" cellpadding="6" rendered="#{crearAsignaturaBean.checkDetalles}">
                 
-                <p:outputLabel value="creditos" rendered="#{crearAsignaturaBean.checkDetalles}"/>
-                <p:inputText value="#{crearAsignaturaBean.selectedAsignatura.creditos}" rendered="#{crearAsignaturaBean.checkDetalles}"/>
+                <p:outputLabel value="creditos" />
+                <p:inputText value="#{crearAsignaturaBean.selectedAsignatura.creditos}" />
                     
                 
-                <p:outputLabel value="web" rendered="#{crearAsignaturaBean.checkDetalles}"/>
-                <p:inputText value="#{crearAsignaturaBean.selectedAsignatura.webAsignatura}" rendered="#{crearAsignaturaBean.checkDetalles}"/>
-                <p:outputLabel value="info" rendered="#{crearAsignaturaBean.checkDetalles}"/>
-                <p:inputTextarea value="#{crearAsignaturaBean.selectedAsignatura.infoAsigantura}" rendered="#{crearAsignaturaBean.checkDetalles}"/>
+                <p:outputLabel value="web" />
+                <p:inputText value="#{crearAsignaturaBean.selectedAsignatura.webAsignatura}" />
+                <p:outputLabel value="info" />
+                <p:inputTextarea value="#{crearAsignaturaBean.selectedAsignatura.infoAsigantura}" />
                 
-                <p:outputLabel value="titulacion" rendered="#{crearAsignaturaBean.checkDetalles}"/>
-                <p:inputText value="#{crearAsignaturaBean.selectedAsignatura.titulacion}" rendered="#{crearAsignaturaBean.checkDetalles}"/>
+                <p:outputLabel value="titulacion" />
+                <p:inputText value="#{crearAsignaturaBean.selectedAsignatura.titulacion}" />
                 
-                <p:outputLabel value="Facultad" rendered="#{crearAsignaturaBean.checkDetalles}"/>
-                <p:inputText value="#{crearAsignaturaBean.selectedAsignatura.facultad}" rendered="#{crearAsignaturaBean.checkDetalles}"/>
-                <p:outputLabel value="periodo" rendered="#{crearAsignaturaBean.checkDetalles}"/>
-                <p:selectOneMenu value="#{crearAsignaturaBean.selectedAsignatura.periodo}" rendered="#{crearAsignaturaBean.checkDetalles}">
+                <p:outputLabel value="Facultad" />
+                <p:inputText value="#{crearAsignaturaBean.selectedAsignatura.facultad}" />
+                <p:outputLabel value="periodo" />
+                <p:selectOneMenu value="#{crearAsignaturaBean.selectedAsignatura.periodo}" >
                     <f:selectItem itemLabel="anual" itemValue="anual"/>
                     <f:selectItem itemLabel="invierno" itemValue="invierno"/>
                     <f:selectItem itemLabel="primavera" itemValue="primavera"/>
                 </p:selectOneMenu>
                 
                 <p:commandButton process=":formDetalles:" id="actualizaBtn" value="editar" action="#{crearAsignaturaBean.editar()}" update=":formDetalles: :formTabla:"
-                                 rendered="#{crearAsignaturaBean.checkDetalles}" />
+                                  />
                 <p:commandButton id="cancelBtn" value="cerrar" action="#{crearAsignaturaBean.cerrar}" update=":formDetalles" process="cancelBtn"
-                                 rendered="#{crearAsignaturaBean.checkDetalles}" onclick=""/>
+                                  onclick=""/>
                 
             </h:panelGrid>
             

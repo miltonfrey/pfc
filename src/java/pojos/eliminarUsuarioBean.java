@@ -12,7 +12,7 @@ import pojos.utillidades.beanUtilidades;
 
 @ManagedBean
 @ViewScoped
-public class eliminarUsuario implements Serializable{
+public class eliminarUsuarioBean implements Serializable{
 
     @ManagedProperty(value="#{beanUtilidades}")
     private beanUtilidades beanUtilidades;
@@ -26,7 +26,7 @@ public class eliminarUsuario implements Serializable{
     private ArrayList<Usuario> filteredUsuarios;
     
     
-    public eliminarUsuario() {
+    public eliminarUsuarioBean() {
     }
     @PostConstruct
     public void init(){

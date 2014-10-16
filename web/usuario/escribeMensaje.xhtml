@@ -9,19 +9,19 @@
     </h:head>
     <h:body>
         
-        <p:panel>
-            <h:form id="formEnvio">
-            <p:growl />
-               <p:outputLabel value="tema"/>
-               <br/>
-               <p:inputText value="#{beanMensaje.tema}" />
-               <br/>
-               <p:inputTextarea value="#{beanMensaje.texto}" required="true" requiredMessage="el texto está vacío" cols="50" rows="6"/>
-               <br/>
-               <p:commandButton value="enviar" action="#{beanMensaje.enviarMensajeCoordinador}" update="formEnvio"/>
+       
             
+                <h:form id="formEnvio">
+                  <p:growl />
+                <h:panelGrid columns="2" cellpadding="5">    
+               <p:outputLabel value="tema:"/>
+               <p:inputText value="#{escribeMensajeAdminBean.tema}" />
+               <p:outputLabel />
+               <p:inputTextarea value="#{escribeMensajeAdminBean.texto}" required="true" requiredMessage="el texto está vacío" cols="50" rows="6"/>
+               <p:commandButton value="enviar" action="#{escribeMensajeAdminBean.enviarMensajeCoordinador}" update="formEnvio"/>
+                </h:panelGrid>
             </h:form>
-        </p:panel>
+        
         
         <br/>
        

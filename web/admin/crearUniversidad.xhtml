@@ -32,7 +32,7 @@
                                  
                     
                     <f:selectItem itemLabel="elige un pais" noSelectionOption="true"/>
-                    <f:selectItems var="pais" value="#{beanPais.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}" />
+                    <f:selectItems var="pais" value="#{paisBean.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}" />
                     
                 </p:selectOneMenu>
                 
@@ -79,7 +79,7 @@
                              widgetVar="universidadTable" paginator="true" rows="10"
                              selection="#{crearUniversidadBean.selectedUniversidades}"
                              rowKey="#{universidad.nombre}"
-                             lazy="true">
+                             >
                              
                 
                            <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
@@ -158,14 +158,7 @@
            
         
         <br/>
-        
-        
-        
-        
-        
-       
-        
-        
+    
     </h:body>
     
 </html>

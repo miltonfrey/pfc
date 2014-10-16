@@ -16,7 +16,7 @@ import pojos.utillidades.beanUtilidades;
 
 @ManagedBean
 @ViewScoped
-public class beanPais implements Serializable{
+public class paisBean implements Serializable{
     
     @ManagedProperty(value="#{universidadService}")
     private UniversidadService universidadService;

@@ -19,9 +19,9 @@
             
             <p:growl />
             
-            <p:dataTable id="tabla" var="usuario" value="#{eliminarUsuario.listaUsuarios}"
-                         filteredValue="#{eliminarUsuario.filteredUsuarios}"
-                         selection="#{eliminarUsuario.selectedUsuarios}"
+            <p:dataTable id="tabla" var="usuario" value="#{eliminarUsuarioBean.listaUsuarios}"
+                         filteredValue="#{eliminarUsuarioBean.filteredUsuarios}"
+                         selection="#{eliminarUsuarioBean.selectedUsuarios}"
                          widgetVar="usTable"
                          emptyMessage="no se han encontrado usuarios"
                          rowKey="#{usuario.login}">
@@ -62,7 +62,7 @@
                     <p:column selectionMode="multiple" styleClass="multiple"/>
                
                          <f:facet name="footer">
-                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Borrar" action="#{eliminarUsuario.eliminaUsuariosLista}" 
+                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Borrar" action="#{eliminarUsuarioBean.eliminaUsuariosLista}" 
                                  oncomplete="PF('usTable').filter()"/>
                          </f:facet>
                 
