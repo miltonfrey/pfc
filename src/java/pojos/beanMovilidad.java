@@ -469,6 +469,11 @@ public class beanMovilidad implements Serializable{
         
     }
     
+    public void onRowCancel(){
+        
+        
+    }
+    
     
     
     public void onRowEdit(RowEditEvent event){
