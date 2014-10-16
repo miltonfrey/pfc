@@ -64,7 +64,7 @@
                         
                         <p:selectOneMenu value="#{beanMovilidad.changeEstado}" style="width: 100%"
                                          required="true" requiredMessage="hay que elegir un estado">
-                            <f:selectItem itemLabel="seleccionar un estado" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="seleccionar" itemValue="#{null}" noSelectionOption="true"/>
                             <f:selectItems var="estados2" value="#{beanUtilidades.listaEstadosMovilidad}" itemLabel="#{estados2.estadoMovilidad}" itemValue="#{estados2.estadoMovilidad}"/>             
                         </p:selectOneMenu>
                     </f:facet>

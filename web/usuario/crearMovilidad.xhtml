@@ -21,8 +21,8 @@
                         <p:outputPanel>
                          
                          
-                         <p:selectOneMenu id="pais" value="#{beanMovilidad.selectedPais}" required="true" requiredMessage="hay que introducir un pais">
-                        <p:ajax  listener="#{beanMovilidad.onDropboxChangePais}" update=":formMovilidad: :formMovilidad:msgs1 "/>
+                         <p:selectOneMenu id="pais" value="#{crearMovilidadBean.selectedPais}" required="true" requiredMessage="hay que introducir un pais">
+                        <p:ajax  listener="#{crearMovilidadBean.onDropboxChangePais}" update=":formMovilidad: :formMovilidad:msgs1 "/>
                         <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
                         <f:selectItems value="#{paisBean.listaPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.nombre}"/>
             
@@ -32,11 +32,11 @@
                
                 
                 <p:outputPanel id="universidad" >
-                    <p:selectOneMenu  value="#{beanMovilidad.selectedUniversidad}" rendered="#{beanMovilidad.checkPais}" required="true" requiredMessage="hay que introducir una universidad"  >
+                    <p:selectOneMenu  value="#{crearMovilidadBean.selectedUniversidad}" rendered="#{crearMovilidadBean.checkPais}" required="true" requiredMessage="hay que introducir una universidad"  >
                 
-                <p:ajax listener="#{beanMovilidad.onDropboxchangeUni()}" update=":formMovilidad:info "/>
+                <p:ajax listener="#{crearMovilidadBean.onDropboxchangeUni()}" update=":formMovilidad:info "/>
                 <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" />
-                <f:selectItems value="#{beanMovilidad.listaUniversidades}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"
+                <f:selectItems value="#{crearMovilidadBean.listaUniversidades}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"
                                />
             
                  </p:selectOneMenu>
@@ -44,12 +44,13 @@
             <br/>
                 
             
-            <h:panelGrid id="info" columns="6" cellpadding="6">
+            <h:panelGrid id="info" columns="2" cellpadding="6">
                 
-                <h:outputLabel value="web: "  rendered="#{not empty beanMovilidad.universidad.web}" />
-                <h:outputLink value="#{beanMovilidad.universidad.web}" rendered="#{not empty beanMovilidad.universidad.web}">link</h:outputLink>
-                <h:outputLabel value="información adicional"  rendered="#{not empty beanMovilidad.universidad.info}"/>
-                <h:inputTextarea value="#{beanMovilidad.universidad.info}" readonly="true" rows="10" cols="10" rendered="#{not empty beanMovilidad.universidad.info}"/>
+                <p:outputLabel value="web: "  rendered="#{not empty crearMovilidadBean.universidad.web}" />
+                <h:outputLink value="#{crearMovilidadBean.universidad.web}" rendered="#{not empty crearMovilidadBean.universidad.web}">link</h:outputLink>
+                <p:outputLabel value="información:"  rendered="#{not empty crearMovilidadBean.universidad.info}"/>
+                <p:inputTextarea value="#{crearMovilidadBean.universidad.info}"
+                                 readonly="true" rows="10" cols="60" rendered="#{not empty crearMovilidadBean.universidad.info}"/>
                 
                 
                 
@@ -60,13 +61,13 @@
             <h:panelGrid id="horario" columns="2" cellpadding="6">
               
                 <p:outputLabel value="Fecha de inicio"/>
-                <p:calendar id="cal1" value="#{beanMovilidad.fechaInicio}" 
+                <p:calendar id="cal1" value="#{crearMovilidadBean.fechaInicio}" 
                             
                             required="true"
                             requiredMessage="hay que insertar una fecha de inicio"
                             locale="es"
-                            mindate="#{beanMovilidad.fechaMin}"
-                            maxdate="#{beanMovilidad.fechaMax}"
+                            mindate="#{crearMovilidadBean.fechaMin}"
+                            maxdate="#{crearMovilidadBean.fechaMax}"
                             pattern="dd-MM-yyyy">
                    
                 
@@ -74,12 +75,12 @@
                
                 
                 <p:outputLabel  value="fecha de fin"/>
-                <p:calendar id="cal2" value="#{beanMovilidad.fechaFin}" 
+                <p:calendar id="cal2" value="#{crearMovilidadBean.fechaFin}" 
                             
                             required="true"
                             requiredMessage="hay que insertar una fecha de fin"
                             locale="es"
-                            mindate="#{beanMovilidad.fechaMin}"
+                            mindate="#{crearMovilidadBean.fechaMin}"
                             pattern="dd-MM-yyyy"
                             >
                 
@@ -90,7 +91,7 @@
             
             
             
-            <p:commandButton value="crear movilidad" action="#{beanMovilidad.crearMovilidad}" ajax="false" update=":formMovilidad"/>
+            <p:commandButton value="crear movilidad" action="#{crearMovilidadBean.crearMovilidad}" ajax="false" update=":formMovilidad"/>
             </h:panelGrid>  
                 
         </h:form>
