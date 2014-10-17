@@ -5,24 +5,15 @@ package pojos;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import javax.annotation.PostConstruct;
-//import java.util.List;
-
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import javax.servlet.http.HttpSession;
-import org.primefaces.event.RowEditEvent;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -39,9 +30,6 @@ public class verMisMovilidadesBean implements Serializable{
     
      @ManagedProperty(value="#{movilidadService}")
     private MovilidadService movilidadService;
-    
-    @ManagedProperty(value="#{universidadService}")
-    private UniversidadService universidadService;
 
      @ManagedProperty(value="#{usuarioService}")
      private UsuarioService usuarioService;
@@ -62,20 +50,8 @@ public class verMisMovilidadesBean implements Serializable{
     private ArrayList<Movilidad> listaMisMovilidades;
     private ArrayList<Movilidad> filteredMovilidades;
     
-    private ArrayList<String> estados;
-    
-    
-    
-    
-    
-    
-    SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
-    
-    
    
-    
-    
-    
+    SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
     
     
     @PostConstruct
@@ -87,17 +63,6 @@ public class verMisMovilidadesBean implements Serializable{
        
         
        }
-
-   
-
-   
-   
-
-    
-       
-       
-    
-    
 
    
      public MensajeService getMensajeService() {
@@ -125,14 +90,7 @@ public class verMisMovilidadesBean implements Serializable{
         this.movilidadService = movilidadService;
     }
 
-    public UniversidadService getUniversidadService() {
-        return universidadService;
-    }
-
-    public void setUniversidadService(UniversidadService universidadService) {
-        this.universidadService = universidadService;
-    }
-
+   
     public beanUtilidades getBeanUtilidades() {
         return beanUtilidades;
     }
@@ -176,13 +134,7 @@ public class verMisMovilidadesBean implements Serializable{
         this.filteredMovilidades = filteredMovilidades;
     }
 
-    public ArrayList<String> getEstados() {
-        return estados;
-    }
-
-    public void setEstados(ArrayList<String> estados) {
-        this.estados = estados;
-    }
+    
 
     
     

@@ -154,7 +154,7 @@
                 <h:panelGrid columns="2" cellpadding="5" rendered="#{mensajesEnviadosAdminBean.activaEnviado}">
                 
                 <p:outputLabel id="labelTemaEnviado" value="tema" />
-                <p:inputText id="temaEnviado" value="#{mensajesEnviadosAdminBean.temaEnviado}" />
+                <p:inputText id="temaEnviado" value="#{mensajesEnviadosAdminBean.temaEnviado}" readonly="true" />
                 <p:outputLabel id="labelTextoEnviado" for="textoEnviado" />
                 <p:inputTextarea id="textoEnviado" value="#{mensajesEnviadosAdminBean.textAreaEnviado}"
                                   readonly="true" autoResize="true" cols="80" rows="10"/>

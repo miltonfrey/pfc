@@ -17,16 +17,16 @@
         <h:form id="formMovilidades" onkeypress="return event.keyCode != 13">
             
             <p:growl id="msgs"/>
-            <p:dataTable  id="t1" var="movilidad" value="#{beanMovilidad.listaMovilidades}"
+            <p:dataTable  id="t1" var="movilidad" value="#{verMovilidadesBean.listaMovilidades}"
                           emptyMessage="no hay movilidades" editable="true"
-                         filteredValue="#{beanMovilidad.filteredMovilidades}"
-                         selection="#{beanMovilidad.selectedMovilidades}"
+                         filteredValue="#{verMovilidadesBean.filteredMovilidades}"
+                         selection="#{verMovilidadesBean.selectedMovilidades}"
                          widgetVar="movTable"
                          rowKey="#{movilidad.codMovilidad}" 
                          
                          >
-                <p:ajax event="rowEdit" listener="#{beanMovilidad.onRowEdit}" oncomplete="PF('movTable').unselectAllRows();PF('movTable').filter();" update=":formMovilidades:t1 :formMovilidades:msgs"/>
-                <p:ajax event="rowEditCancel" listener="#{beanMovilidad.onRowCancel}" />
+                <p:ajax event="rowEdit" listener="#{verMovilidadesBean.onRowEdit}" oncomplete="PF('movTable').unselectAllRows();PF('movTable').filter();" update=":formMovilidades:t1 :formMovilidades:msgs"/>
+                <p:ajax event="rowEditCancel" listener="#{verMovilidadesBean.onRowCancel}" />
                    
                 <p:column headerText="login" sortBy="#{movilidad.usuario.login}" styleClass="login" filterBy="#{movilidad.usuario.login}">
                     
@@ -62,7 +62,7 @@
                     <f:facet name="output"><h:outputText value="#{movilidad.estado}"/></f:facet>
                     <f:facet name="input">
                         
-                        <p:selectOneMenu value="#{beanMovilidad.changeEstado}" style="width: 100%"
+                        <p:selectOneMenu value="#{verMovilidadesBean.changeEstado}" style="width: 100%"
                                          required="true" requiredMessage="hay que elegir un estado">
                             <f:selectItem itemLabel="seleccionar" itemValue="#{null}" noSelectionOption="true"/>
                             <f:selectItems var="estados2" value="#{beanUtilidades.listaEstadosMovilidad}" itemLabel="#{estados2.estadoMovilidad}" itemValue="#{estados2.estadoMovilidad}"/>             
@@ -104,16 +104,16 @@
                 
                
                          <f:facet name="footer">
-                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formMovilidades:" icon="ui-icon-search" value="Eliminar" action="#{beanMovilidad.eliminaMovilidadLista}" 
+                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formMovilidades:" icon="ui-icon-search" value="Eliminar" action="#{verMovilidadesBean.eliminaMovilidadLista}" 
                                  oncomplete="PF('movTable').filter()"/>
-                             <p:commandButton value="enviar mensaje" action="#{beanMovilidad.activaTexto}" update=":formMensajes:panelTexto :formMovilidades:msgs"/>  
+                             <p:commandButton value="enviar mensaje" action="#{verMovilidadesBean.activaTexto}" update=":formMensajes :formMovilidades:msgs"/>  
                          </f:facet>
                 
                 <p:column headerText="contratos" styleClass="contratos">
                     
-                    <p:commandButton value="contratos" action="#{beanContrato.verContratosAdmin}" ajax="false" rendered="#{movilidad.estado eq 'aceptada'||movilidad.estado eq 'cancelada'||movilidad.estado eq 'terminada'}">
+                    <p:commandButton value="contratos" action="#{verMovilidadesBean.verContratos}" ajax="false" rendered="#{movilidad.estado eq 'aceptada'||movilidad.estado eq 'cancelada'||movilidad.estado eq 'terminada'}">
                     
-                        <f:setPropertyActionListener value="#{movilidad}" target="#{beanContrato.selectedMovilidad}"/>
+                        <f:setPropertyActionListener value="#{movilidad}" target="#{verMovilidadesBean.selectedMovilidad}"/>
                         
                     </p:commandButton>
                     
@@ -127,14 +127,13 @@
         <br/>
         
         <h:form id="formMensajes">    
-            <p:outputPanel id="panelTexto">
-            <p:outputLabel value="tema" rendered="#{beanMovilidad.activaTexto}"/>
-            <p:inputText value="#{beanMovilidad.tema}" rendered="#{beanMovilidad.activaTexto}"/><br/><br/>
-           
-            <p:inputTextarea value="#{beanMovilidad.texto}" required="true" requiredMessage="el texto no puede estar vacío" rendered="#{beanMovilidad.activaTexto}" cols="40" rows="10"/>
-            <p:commandButton value="enviar" action="#{beanMovilidad.enviarMensajesVarios}" update=":formMovilidades :formMensajes" oncomplete="PF('movTable').unselectAllRows();" rendered="#{beanMovilidad.activaTexto}" />
-            <p:commandButton id="cancelBtn" value="cancelar" action="#{beanMovilidad.cancelar}" process="cancelBtn" update=":formMensajes" rendered="#{beanMovilidad.activaTexto}"/>
-            </p:outputPanel> 
+            <h:panelGrid columns="2" cellpadding="5" rendered="#{verMovilidadesBean.activaTexto}">
+            <p:outputLabel value="asunto:" />
+            <p:inputText value="#{verMovilidadesBean.tema}" />
+            <p:inputTextarea value="#{verMovilidadesBean.texto}" required="true" requiredMessage="el texto no puede estar vacío" cols="80" rows="10" autoResize="true"/>
+            <p:commandButton value="enviar" action="#{verMovilidadesBean.enviarMensajesVarios}" update=":formMovilidades :formMensajes" oncomplete="PF('movTable').unselectAllRows();"  />
+            <p:commandButton id="cancelBtn" value="cancelar" action="#{verMovilidadesBean.cancelar}" process="cancelBtn" update=":formMensajes" />
+            </h:panelGrid>
         </h:form>
             
             <br/><br/>
