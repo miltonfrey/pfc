@@ -21,6 +21,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.component.datatable.DataTable;
+import pojos.utillidades.beanUtilidades;
 
 
 /**
@@ -29,8 +30,10 @@ import org.primefaces.component.datatable.DataTable;
  */
 @ManagedBean
 @ViewScoped
-public class beanEquivalencia implements Serializable{
+public class misEquivalenciasBean implements Serializable{
 
+    @ManagedProperty(value="#{beanUtilidades}")
+    private beanUtilidades beanUtilidades;
     
     @ManagedProperty(value="#{usuarioService}")
     private transient UsuarioService usuarioService;
@@ -52,7 +55,6 @@ public class beanEquivalencia implements Serializable{
     private HttpSession session;
     private Movilidad selectedMovilidad;
     private Contrato selectedContrato;
-    private Contrato contratoComparado;
     private Usuario user;
     
     Equivalencia equivalencia;
@@ -61,14 +63,11 @@ public class beanEquivalencia implements Serializable{
     private ArrayList<Asignatura> listaAsignaturasFic;
     private ArrayList<Asignatura>listaAsignaturasUniversidad;
    
-    private Asignatura selectedAsignatura;
-    
-    
     private ArrayList<Equivalencia>listaEquivalencias;
     private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
     private ArrayList<Equivalencia> listaAuxEquivalenciasComparado;
     
-    private ArrayList<Equivalencia> listaEquivalenciasContrato;
+    
     
     private ArrayList<Asignatura>selectedAsignaturasFic;
     private ArrayList<Asignatura> selectedAsignaturasUni;
@@ -82,9 +81,9 @@ public class beanEquivalencia implements Serializable{
     private boolean verInfo;
     private boolean verConfirmar=true;
     
-    private String apruebaOrechaza;
     
-    public beanEquivalencia() {
+    
+    public misEquivalenciasBean() {
         
     }
     
@@ -94,7 +93,7 @@ public class beanEquivalencia implements Serializable{
         session=(HttpSession)context.getSession(false);
         
         
-       if((Usuario)session.getAttribute("user")!=null){
+       
       
         user=(Usuario)session.getAttribute("user");
         
@@ -126,34 +125,15 @@ public class beanEquivalencia implements Serializable{
                     }
     }
          
-       }  
        
-       else if((Usuario)session.getAttribute("admin")!=null){
-           
-           if(context.getSessionMap().containsKey("movilidad")&&context.getSessionMap().containsKey("contrato")){
-           user=(Usuario)session.getAttribute("admin");
-           selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
-           selectedContrato=(Contrato)context.getSessionMap().get("contrato");
-           context.getSessionMap().remove("contrato");
-           context.getSessionMap().remove("movilidad");
-           listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
-              
-           if(context.getSessionMap().containsKey("contratoComparado")){
-        contratoComparado=(Contrato)context.getSessionMap().get("contratoComparado");
-        listaAuxEquivalenciasComparado=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(contratoComparado.getIdContrato());
-        context.getSessionMap().remove("contratoComparado");
-         
-           }
-           
-        }
-       else{
-            try{
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
-            }catch(IOException ex){
-                    
-                    }
     }
-       } 
+
+    public beanUtilidades getBeanUtilidades() {
+        return beanUtilidades;
+    }
+
+    public void setBeanUtilidades(beanUtilidades beanUtilidades) {
+        this.beanUtilidades = beanUtilidades;
     }
     
 
@@ -203,15 +183,7 @@ public class beanEquivalencia implements Serializable{
         return selectedAsignaturasFic;
     }
 
-    public Asignatura getSelectedAsignatura() {
-        return selectedAsignatura;
-    }
-
-    public void setSelectedAsignatura(Asignatura selectedAsignatura) {
-        this.selectedAsignatura = selectedAsignatura;
-    }
-    
-    
+   
 
     public void setSelectedAsignaturasFic(ArrayList<Asignatura> selectedAsignaturasFic) {
         this.selectedAsignaturasFic = selectedAsignaturasFic;
@@ -311,21 +283,8 @@ public class beanEquivalencia implements Serializable{
         this.selectedContrato = selectedContrato;
     }
 
-    public Contrato getContratoComparado() {
-        return contratoComparado;
-    }
-
-    public void setContratoComparado(Contrato contratoComparado) {
-        this.contratoComparado = contratoComparado;
-    }
-
-    public String getApruebaOrechaza() {
-        return apruebaOrechaza;
-    }
-
-    public void setApruebaOrechaza(String apruebaOrechaza) {
-        this.apruebaOrechaza = apruebaOrechaza;
-    }
+  
+    
 
     
     
@@ -347,14 +306,6 @@ public class beanEquivalencia implements Serializable{
         this.verConfirmar = verConfirmar;
     }
 
-    public ArrayList<Equivalencia> getListaEquivalenciasContrato() {
-        return listaEquivalenciasContrato;
-    }
-
-    public void setListaEquivalenciasContrato(ArrayList<Equivalencia> listaEquivalenciasContrato) {
-        this.listaEquivalenciasContrato = listaEquivalenciasContrato;
-    }
-
     
      public String asignaturasTotales(){
        
@@ -373,12 +324,12 @@ public class beanEquivalencia implements Serializable{
         
         if(selectedAsignaturasFic.isEmpty()){
             
-            creaMensaje("No hay asignaturas de origen", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("No hay asignaturas de origen", FacesMessage.SEVERITY_ERROR);
             return null;
         }
         
         if(selectedAsignaturasUni.isEmpty()){
-            creaMensaje("No hay asignaturas de destino", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("No hay asignaturas de destino", FacesMessage.SEVERITY_ERROR);
             return null;
         }
        
@@ -424,7 +375,7 @@ public class beanEquivalencia implements Serializable{
     public String confirmarContrato(){
         if(listaAuxEquivalencias.isEmpty()){
             
-            creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
             return null;
         }
         
@@ -439,7 +390,7 @@ public class beanEquivalencia implements Serializable{
         equivalenciaService.creaContrato(c);
         }catch(Exception ex){
             
-            creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
             return null;
         }
         
@@ -454,11 +405,11 @@ public class beanEquivalencia implements Serializable{
           
         }
         }catch(Exception ex){
-            creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
             return null;
         } 
         
-        creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+        beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
         Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha creado un contrato","no","no","no");
         mensajeService.enviarMensaje(m);
         verConfirmar=false;
@@ -470,7 +421,7 @@ public class beanEquivalencia implements Serializable{
     public String editarContrato(){
         if(listaAuxEquivalencias.isEmpty()){
             
-            creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
             return null;
         }
         
@@ -480,7 +431,7 @@ public class beanEquivalencia implements Serializable{
         equivalenciaService.modificaContrato(selectedContrato);
         }catch(Exception ex){
             
-            creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
             return null;
         }
         Contrato c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
@@ -504,7 +455,7 @@ public class beanEquivalencia implements Serializable{
             equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
          }catch(Exception ex){
             ex.printStackTrace();
-            creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
             return null;
         } 
            
@@ -512,7 +463,7 @@ public class beanEquivalencia implements Serializable{
         }
        
     }
-     creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+     beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
      
         verConfirmar=false;
@@ -524,7 +475,7 @@ public class beanEquivalencia implements Serializable{
   public String  crearContratoDesdeAceptado(){
         if(listaAuxEquivalencias.isEmpty()){
             
-            creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
             return null;
         }
         
@@ -538,7 +489,7 @@ public class beanEquivalencia implements Serializable{
         equivalenciaService.creaContrato(cNuevo);
         }catch(Exception ex){
             
-            creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
             return null;
         }
         
@@ -577,7 +528,7 @@ public class beanEquivalencia implements Serializable{
                 
             }catch(Exception ex){
                 ex.printStackTrace();
-                creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+                beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
                 return null;
             }
             
@@ -585,7 +536,7 @@ public class beanEquivalencia implements Serializable{
         
         
     }
-        creaMensaje("contrato creado correctamente", FacesMessage.SEVERITY_INFO);
+        beanUtilidades.creaMensaje("contrato creado correctamente", FacesMessage.SEVERITY_INFO);
         verConfirmar=false;
         return null;
   }
@@ -606,75 +557,6 @@ public class beanEquivalencia implements Serializable{
         
     }
     
-    
-   
-    
-    
-    public String publicarEquivalencia(){
-        
-        if(selectedEquivalencias.isEmpty()){
-            return null;
-        }
-        
-        for(Equivalencia e:selectedEquivalencias){
-            e.setVisible("si");
-            try{
-                equivalenciaService.actualizarEquivalencia(e);
-            }catch(Exception ex){
-                creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-                return null;
-            }
-        }
-        creaMensaje("Las equivalencias han sido publicadas", FacesMessage.SEVERITY_INFO);
-        return null;
-    }
-    
-    
-    public String noPublicar(){
-        
-         if(selectedEquivalencias.isEmpty()){
-            return null;
-        }
-        
-        for(Equivalencia e:selectedEquivalencias){
-            e.setVisible("no");
-            try{
-                equivalenciaService.actualizarEquivalencia(e);
-            }catch(Exception ex){
-                creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-                return null;
-            }
-        }
-        creaMensaje("Las equivalencias seleccionadas ya no son públicas", FacesMessage.SEVERITY_INFO);
-        return null;
-        
-        
-    }
-    
-    
-    public String cambiarEstadoContrato(){
-        
-        creaMensaje(selectedContrato.getEstado(), FacesMessage.SEVERITY_INFO);
-        
-        selectedContrato.setEstado(apruebaOrechaza);
-        try{
-            
-            equivalenciaService.modificaContrato(selectedContrato);
-            
-        }catch(Exception ex){
-            ex.printStackTrace();
-            creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-            
-            return null;
-        }
-        creaMensaje("contrato modificado correctamente", FacesMessage.SEVERITY_INFO);
-        context.getSessionMap().remove("contrato");
-        
-        return null;
-    }
-    
-   
-    
     public void detallesAsign(){
          
         verInfo=true;
@@ -687,14 +569,7 @@ public class beanEquivalencia implements Serializable{
     }
    
     
-     public void creaMensaje(String texto,FacesMessage.Severity s){
-            
-            FacesContext context=FacesContext.getCurrentInstance();
-            FacesMessage message=new FacesMessage(texto);
-            message.setSeverity(s);
-            context.addMessage(null, message);
-        }
-     
+    
      
      
     

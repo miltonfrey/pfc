@@ -3,9 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Ver contratos</title>
         <h:outputStylesheet library="css" name="estilos.css"/>
@@ -18,20 +16,20 @@
         <p:panel id="headerContratos">
         
             <h:outputLabel value="Contratos de: "/>
-            <h:outputText value="#{beanContrato.selectedMovilidad.usuario.nombre }"/>
+            <h:outputText value="#{verContratosBean.selectedMovilidad.usuario.nombre }"/>
             
-            <h:outputText value=" #{beanContrato.selectedMovilidad.usuario.apellido1}"/>
+            <h:outputText value=" #{verContratosBean.selectedMovilidad.usuario.apellido1}"/>
             <br/>
             <h:outputLabel value="Destino: "/>
-            <h:outputText value=" #{beanContrato.selectedMovilidad.universidad.nombre} "/><br/>
+            <h:outputText value=" #{verContratosBean.selectedMovilidad.universidad.nombre} "/><br/>
             <p:outputLabel value="inicio: "/>
-            <h:outputText value="#{beanContrato.selectedMovilidad.fechaInicio}">
+            <h:outputText value="#{verContratosBean.selectedMovilidad.fechaInicio}">
             
                 <f:convertDateTime pattern="dd-MM-yyyy"/>
             </h:outputText><br/>
              
             <p:outputLabel value="fin: "/>               
-            <h:outputText value="#{beanContrato.selectedMovilidad.fechaFin}">
+            <h:outputText value="#{verContratosBean.selectedMovilidad.fechaFin}">
                 
                 <f:convertDateTime pattern="dd-MM-yyyy"/>
             </h:outputText>
@@ -49,9 +47,9 @@
             
             <p:dataTable widgetVar="tablaContratos"
                          
-                         value="#{beanContrato.listaContratos}"
+                         value="#{verContratosBean.listaContratos}"
                          var="contrato"
-                         filteredValue="#{beanContrato.filteredContratos}"
+                         filteredValue="#{verContratosBean.filteredContratos}"
                          rowKey="#{contrato.idContrato}"
                          emptyMessage="no hay contratos"
                          styleClass="borderless">
@@ -62,8 +60,8 @@
                 </p:column>
                 
                 <p:column headerText="ver contrato">
-                    <p:commandButton value="ver contrato" action="#{beanContrato.seleccionarContratoAdmin}" ajax="false">
-                        <f:setPropertyActionListener value="#{contrato}" target="#{beanContrato.selectedContrato}"/> 
+                    <p:commandButton value="ver contrato" action="#{verContratosBean.seleccionarContratoAdmin}" ajax="false">
+                        <f:setPropertyActionListener value="#{contrato}" target="#{verContratosBean.selectedContrato}"/> 
                     </p:commandButton>
                 </p:column>
                
@@ -76,17 +74,7 @@
                             <f:selectItems var="estados" value="#{beanUtilidades.listaEstados}" itemLabel="#{estados.estado}" itemValue="#{estados.estado}"/>
                         </p:selectOneMenu>
                     </f:facet>
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{estados.estado}"/></f:facet>
-                    <f:facet name="input">
-                        
-                        <p:selectOneMenu value="#{beanContrato.changeEstado}" style="width: 100%"
-                                         required="true" requiredMessage="hay que elegir un estado">
-                            <f:selectItem itemLabel="seleccionar un estado" itemValue="#{null}" noSelectionOption="true"/>
-                            <f:selectItems var="estados2" value="#{beanUtilidades.listaEstados}" itemLabel="#{estados2.estado}" itemValue="#{estados2.estado}"/>             
-                        </p:selectOneMenu>
-                    </f:facet>
-                    </p:cellEditor>
+                    
                     
                     <h:outputText value="#{contrato.estado}"/>
                     
@@ -94,11 +82,11 @@
                     
                <p:column headerText="eliminar">
                     
-                    <p:commandButton value="eliminar" action="#{beanContrato.eliminarContrato}" update=":panelContratos :headerContratos" 
+                    <p:commandButton value="eliminar" action="#{verContratosBean.eliminarContrato}" update=":panelContratos :headerContratos" 
                                      onclick="if (! confirm('¿seguro que quieres borrar?')) return false" oncomplete="PF('tablaContratos').filter();"
                                      >
                     
-                        <f:setPropertyActionListener target="#{beanContrato.selectedContrato}" value="#{contrato}"/>
+                        <f:setPropertyActionListener target="#{verContratosBean.selectedContrato}" value="#{contrato}"/>
                     
                     </p:commandButton>  
                     

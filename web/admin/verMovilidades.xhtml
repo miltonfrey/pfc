@@ -130,6 +130,7 @@
             <h:panelGrid columns="2" cellpadding="5" rendered="#{verMovilidadesBean.activaTexto}">
             <p:outputLabel value="asunto:" />
             <p:inputText value="#{verMovilidadesBean.tema}" />
+            <p:outputLabel/>
             <p:inputTextarea value="#{verMovilidadesBean.texto}" required="true" requiredMessage="el texto no puede estar vacío" cols="80" rows="10" autoResize="true"/>
             <p:commandButton value="enviar" action="#{verMovilidadesBean.enviarMensajesVarios}" update=":formMovilidades :formMensajes" oncomplete="PF('movTable').unselectAllRows();"  />
             <p:commandButton id="cancelBtn" value="cancelar" action="#{verMovilidadesBean.cancelar}" process="cancelBtn" update=":formMensajes" />

@@ -14,7 +14,7 @@
       
         <p:panel id="panelEstado">
             <p:outputLabel value="estado del contrato: "/>
-            <h:outputText value="#{beanEquivalencia.selectedContrato.estado}"/>
+            <h:outputText value="#{equivalenciasBean.selectedContrato.estado}"/>
             
         </p:panel>
         
@@ -23,8 +23,8 @@
             <p:growl id="msgs" />
                <p:dataTable id="tablaEquivalenciasAdmin"
                          emptyMessage="no hay equivalencias"
-                         selection="#{beanEquivalencia.selectedEquivalencias}"
-                         value="#{beanEquivalencia.listaAuxEquivalencias}"
+                         selection="#{equivalenciasBean.selectedEquivalencias}"
+                         value="#{equivalenciasBean.listaAuxEquivalencias}"
                          var="equivalencia"
                          styleClass="tablaEquivalenciasAdmin"
                          rowKey="#{equivalencia.idequivalencia}"
@@ -40,7 +40,7 @@
                     </ui:repeat>
                 </p:column>
                 
-                <p:column headerText="#{beanEquivalencia.selectedMovilidad.universidad.nombre}" styleClass="asignatura">
+                <p:column headerText="#{equivalenciasBean.selectedMovilidad.universidad.nombre}" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
                         <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{ not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
                          <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
@@ -53,9 +53,9 @@
                 </p:column>
                 <p:column selectionMode="multiple" styleClass="multiple"/>
                 <f:facet name="footer">
-                    <p:commandButton  id="publicaBtn"  update=":formTablaEquivalencias:" icon="ui-icon-search" value="publicar" action="#{beanEquivalencia.publicarEquivalencia}"
+                    <p:commandButton  id="publicaBtn"  update=":formTablaEquivalencias:" icon="ui-icon-search" value="publicar" action="#{equivalenciasBean.publicarEquivalencia}"
                                               oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
-                    <p:commandButton   process=":formTablaEquivalencias:" update=":formTablaEquivalencias" icon="ui-icon-search" value="invisible" action="#{beanEquivalencia.noPublicar}"
+                    <p:commandButton   process=":formTablaEquivalencias:" update=":formTablaEquivalencias" icon="ui-icon-search" value="invisible" action="#{equivalenciasBean.noPublicar}"
                                    oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
                     
                 </f:facet>
@@ -66,12 +66,12 @@
         <br/>
         
         
-        <p:outputPanel rendered="#{beanEquivalencia.selectedMovilidad.estado eq 'aceptada'}">
+        <p:outputPanel rendered="#{equivalenciasBean.selectedMovilidad.estado eq 'aceptada'}">
             <p:outputLabel value="Cambiar estado del contrato"/>
         <h:form id="aprobarContrato">
             
             
-            <p:selectOneMenu value="#{beanEquivalencia.apruebaOrechaza}" required="true"
+            <p:selectOneMenu value="#{equivalenciasBean.apruebaOrechaza}" required="true"
                              requiredMessage="hay que seleccionar un estado">
             
                 <f:selectItem noSelectionOption="true" itemValue="#{null}" itemLabel="selecciona una opción"/>
@@ -81,7 +81,7 @@
             </p:selectOneMenu>
             <br/>
            
-             <p:commandButton value="enviar" action="#{beanEquivalencia.cambiarEstadoContrato}" update=":formTablaEquivalencias:msgs :panelEstado"/>
+             <p:commandButton value="enviar" action="#{equivalenciasBean.cambiarEstadoContrato}" update=":formTablaEquivalencias:msgs :panelEstado"/>
          
              
           

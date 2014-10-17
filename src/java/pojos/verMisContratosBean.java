@@ -9,27 +9,27 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import pojos.utillidades.beanUtilidades;
 
 
 @ManagedBean
 @ViewScoped
-public class beanContrato implements Serializable{
+public class verMisContratosBean implements Serializable{
 
-    @ManagedProperty(value="#{movilidadService}")
-    private transient MovilidadService movilidadService;
+    @ManagedProperty(value="#{beanUtilidades}")
+    private beanUtilidades beanUtilidades;
     
-    @ManagedProperty(value="#{asignaturaService}")
-    private transient AsignaturaService asignaturaService;
+    @ManagedProperty(value="#{movilidadService}")
+    private MovilidadService movilidadService;
     
     @ManagedProperty(value="#{equivalenciaService}")
-    private transient EquivalenciaService equivalenciaService;
+    private EquivalenciaService equivalenciaService;
 
     
     
-    private ExternalContext context;
+   private Usuario user;
     
     private HttpSession session;
     
@@ -38,44 +38,38 @@ public class beanContrato implements Serializable{
     private boolean visibleContratos;
     private boolean verAceptado;
     
-    private Estado changeEstado;
+    
     
     private ArrayList<Contrato> listaContratos;
     private ArrayList<Contrato> filteredContratos;
     private Contrato selectedContrato;
     
-    
-    private ArrayList<Movilidad> listaMovilidadesValidas;
     private Movilidad selectedMovilidad;
   
     
-    public beanContrato() {
+    public verMisContratosBean() {
     }
     
     @PostConstruct
     public void init(){
         
-       context=FacesContext.getCurrentInstance().getExternalContext();
+       
        session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
        
-        if((Usuario)session.getAttribute("user")!=null){
-        user=(Usuario)session.getAttribute("user");
-           //listaMovilidadesValidas=(ArrayList<Movilidad>)movilidadService.listarMovilidadesValidas(user.getLogin());
-        }else{
-            
-            
-            if((Usuario)session.getAttribute("admin")!=null&&context.getSessionMap().containsKey("movilidad")){
-                selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
-                listaContratos=(ArrayList < Contrato >)equivalenciaService.listaContratos(selectedMovilidad);
-                //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("movilidad");
-            }
-            
-        }
-       
-        //if (request.getRequestURI().equals(request.getContextPath()+"/usuario/elaborarContrato.xhtml"))
         
+        user=(Usuario)session.getAttribute("user");
+         
+        }
+
+    public beanUtilidades getBeanUtilidades() {
+        return beanUtilidades;
     }
 
+    public void setBeanUtilidades(beanUtilidades beanUtilidades) {
+        this.beanUtilidades = beanUtilidades;
+    }
+       
+     
     public EquivalenciaService getEquivalenciaService() {
         return equivalenciaService;
     }
@@ -84,11 +78,6 @@ public class beanContrato implements Serializable{
         this.equivalenciaService = equivalenciaService;
     }
     
-    
-    
-    
-    
-
     public MovilidadService getMovilidadService() {
         return movilidadService;
     }
@@ -97,32 +86,16 @@ public class beanContrato implements Serializable{
         this.movilidadService = movilidadService;
     }
 
-    public AsignaturaService getAsignaturaService() {
-        return asignaturaService;
-    }
-
-    public void setAsignaturaService(AsignaturaService asignaturaService) {
-        this.asignaturaService = asignaturaService;
-    }
-    
-    
-    
-    
+   
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    private Usuario user;
+   
 
     public boolean isNuevo() {
         return nuevo;
     }
 
-    public boolean isVerAceptado() {
-        return verAceptado;
-    }
-
-    public void setVerAceptado(boolean verAceptado) {
-        this.verAceptado = verAceptado;
-    }
+   
     
     
     
@@ -138,6 +111,16 @@ public class beanContrato implements Serializable{
     public void setVisibleContratos(boolean visibleContratos) {
         this.visibleContratos = visibleContratos;
     }
+
+    public boolean isVerAceptado() {
+        return verAceptado;
+    }
+
+    public void setVerAceptado(boolean verAceptado) {
+        this.verAceptado = verAceptado;
+    }
+    
+    
 
     public ArrayList<Contrato> getListaContratos() {
         return listaContratos;
@@ -163,13 +146,6 @@ public class beanContrato implements Serializable{
         this.selectedContrato = selectedContrato;
     }
 
-    public Estado getChangeEstado() {
-        return changeEstado;
-    }
-
-    public void setChangeEstado(Estado changeEstado) {
-        this.changeEstado = changeEstado;
-    }
     
     
     
@@ -182,23 +158,31 @@ public class beanContrato implements Serializable{
         this.selectedMovilidad = selectedMovilidad;
     }
 
-    public ArrayList<Movilidad> getListaMovilidadesValidas() {
-        return listaMovilidadesValidas;
+    
+    
+    
+    public String eliminarContrato(){
+        
+        try{
+            
+            equivalenciaService.eliminaContrato(selectedContrato);
+            
+           }catch(Exception ex){
+               ex.printStackTrace();
+               beanUtilidades.creaMensaje("error al eliminar contrato", FacesMessage.SEVERITY_ERROR);
+               return null;
+           }
+        
+        beanUtilidades.creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);
+        listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
+       verContratos();
+        
+        selectedContrato=null;
+        //visibleContratos=false;
+        
+        return null;
     }
-
-    public void setListaMovilidadesValidas(ArrayList<Movilidad> listaMovilidadesValidas) {
-        this.listaMovilidadesValidas = listaMovilidadesValidas;
-    }
-
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
-    }
-
-  
+    
     
     public void verContratos(){
         verAceptado=true;
@@ -222,48 +206,16 @@ public class beanContrato implements Serializable{
         
         for(Contrato c:listaContratos){
             
-            if(c.getEstado().equalsIgnoreCase("pendiente")){
+            if(c.getEstado().equalsIgnoreCase("pendiente")||c.getEstado().equalsIgnoreCase("rechazado")){
                 verAceptado=false;
                
                 break;
             }
         }
         
-         System.out.println(""+verAceptado);
+        
         
     }
-   
-    public void cerrarContratos(){
-        
-        visibleContratos=false;
-    }
-    
-    
-    
-    
-    public String eliminarContrato(){
-        
-        try{
-            
-            equivalenciaService.eliminaContrato(selectedContrato);
-            
-           }catch(Exception ex){
-               ex.printStackTrace();
-               creaMensaje("error al eliminar contrato", FacesMessage.SEVERITY_ERROR);
-               return null;
-           }
-        
-        creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);
-        listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
-        if(listaContratos.isEmpty())
-            nuevo=true;
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("contrato");
-        selectedContrato=null;
-        visibleContratos=false;
-        //verAceptado=false;
-        return null;
-    }
-    
     
     
     public String crearContrato(){
@@ -296,37 +248,13 @@ public class beanContrato implements Serializable{
     
     
     
-    public String verContratosAdmin(){
-       
-        
-        
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
-        
-        return ("verContratos.xhtml?faces-redirect=true");
-       
-    }
     
-    public String seleccionarContratoAdmin(){
-        
-       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
-       return "gestionarContrato.xhtml?faces-redirect=true";
-        
-    }
     
-    public void creaMensaje(String texto,FacesMessage.Severity s){
-            
-            FacesContext context=FacesContext.getCurrentInstance();
-            FacesMessage message=new FacesMessage(texto);
-            message.setSeverity(s);
-            context.addMessage(null, message);
-        }
+   
     
-    public void action(){
-        
-        creaMensaje(""+selectedContrato.getIdContrato()+" "+selectedMovilidad.getCodMovilidad(), FacesMessage.SEVERITY_INFO);
-        
-    }
     
+    
+  
     
     
 }
