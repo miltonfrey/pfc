@@ -217,6 +217,11 @@ public class verMisContratosBean implements Serializable{
         
     }
     
+     public void cerrarContratos(){
+        
+        visibleContratos=false;
+    }
+    
     
     public String crearContrato(){
         
