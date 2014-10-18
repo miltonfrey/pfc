@@ -61,4 +61,10 @@ public class AsignaturaDaoImpl implements AsignaturaDao,Serializable{
         
     }
     
+    @Override
+    public List<Asignatura> listarPorCriterio(){
+        
+        return(sessionFactory.getCurrentSession().createQuery("select a from Asignatura a where a."+"periodo=:nombre").setParameter("nombre", "anual").list());
+    }
+    
 }

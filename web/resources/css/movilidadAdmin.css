@@ -1,29 +1,29 @@
 .login{
     
     width: 5%;
-    font-size: 15px;
+    font-size: 14px;
     
 }
 
 .nombre{
     
-    width: 6%;
-    font-size: 15px;
+    width: 4%;
+    font-size: 14px;
     
 }
 
 
 .apellido1{
     
-    width: 7%;
-    font-size: 15px;
+    width: 5%;
+    font-size: 14px;
     
 }
 
 .universidad{
     
    width: 7%;
-   font-size: 15px;  
+   font-size: 14px;  
     
 }
 
@@ -31,21 +31,21 @@
 .estado{
     
     width: 6%;
-   font-size: 15px;  
+   font-size: 14px;  
     
 }
 
 .contratos{
     
     width: 5%;
-   font-size: 15px;  
+   font-size: 14px;  
     
 }
 
 .cambiar{
     
    width: 3%;
-   font-size: 15px;  
+   font-size: 14px;  
 }
 
 .multiple{
@@ -57,11 +57,17 @@
     
     
     width: 4%;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .fecha{
     
     width: 4%;
-    font-size: 15px;
+    font-size: 14px;
+}
+
+.pais{
+    
+    width: 5%;
+    font-size: 14px;
 }

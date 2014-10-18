@@ -57,5 +57,11 @@ public class AsignaturaServiceImpl implements AsignaturaService,Serializable{
         asignaturaDao.actualizarAsignatura(a);
     }
     
+    @Override
+    public List<Asignatura> listarPorCriterio(){
+        
+        return asignaturaDao.listarPorCriterio();
+    }
+    
     
 }

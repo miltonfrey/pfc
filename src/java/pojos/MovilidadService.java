@@ -26,4 +26,5 @@ public interface MovilidadService {
     public void eliminarMovilidad(Movilidad m);
     public List<Object> doJoin();
     public List<Movilidad> listarMovilidadesValidas(String usuario);
+    public Movilidad findMovilidad(Integer id);
 }

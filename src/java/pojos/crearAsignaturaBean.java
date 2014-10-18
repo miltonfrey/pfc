@@ -287,6 +287,7 @@ public class crearAsignaturaBean implements Serializable{
         checkUniversidadStr=true;
         checkTabla=true;
         listaAsignaturas=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
+        //listaAsignaturas=(ArrayList<Asignatura>)asignaturaService.listarPorCriterio();
        checkDetalles=false;
        
         

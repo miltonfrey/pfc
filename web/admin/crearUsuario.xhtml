@@ -14,58 +14,41 @@
             <h:form id="form1">
                 
                 <p:growl id="msgs"/> 
+               
+                <h:panelGrid columns="2" cellpadding="5">
                 
-                <p:outputLabel value="escriba el nombre"/>
+                <p:outputLabel value="Nombre:"/>
                 <p:inputText value="#{crearUsuarioBean.nombre}"
                              required="true"
                              requiredMessage="el campo nombre está vacío"/>
-                             
-                                         
-                             
-                <br/>
-                
-                <p:outputLabel value="escriba el primer apellido"/>
+                <p:outputLabel value="Primer apellido"/>
                 <p:inputText value="#{crearUsuarioBean.apellido1}"
                              required="true"
                              requiredMessage="el campo apellido1 está vacío"/>
-                             
-                                         
-                             
-                <br/>
                 
                 
-                             
-                
-                <!--si no se pone el messages lo pone igual en el facecontext-->
-                <p:outputLabel value="introducir segundo apellido"/>
+                <p:outputLabel value="Segundo apellido"/>
                 <p:inputText id="ii1" value="#{crearUsuarioBean.apellido2}"/>
                              
-                <br/>
-                
-                <p:outputLabel value="escriba un login"/>
+               
+                <p:outputLabel value="Login"/>
                 <p:inputText value="#{crearUsuarioBean.login}"
                              required="true"
                              requiredMessage="el campo login está vacío"
                              autocomplete="off"/>
-                             
-                                         
-                             
-                <br/>
                 
-                <p:outputLabel value="escribe una contraseña"/>
+                <p:outputLabel value="Contraseña"/>
                 <p:password id="hidden1" value="#{crearUsuarioBean.password}"
                 required="true"
                 requiredMessage="password no puede estar vacio"
                 autocomplete="off"/>
                 
-                <br/>
-                <p:outputLabel value="repite la contraseña"/>
+                <p:outputLabel value="repite contraseña"/>
                 <p:password value="#{crearUsuarioBean.passwordAux}"
                             required="true"
                             requiredMessage="el campo password está vacío"/>
               
-                <br/>
-                <p:outputLabel value="titulacion" for="select1"/>
+                <p:outputLabel value="titulacion"/>
                 <p:selectOneMenu id="select1" value="#{crearUsuarioBean.titulacion}" 
                                  required="true"  
                                  requiredMessage="hay que intrododucir una titulacion">
@@ -73,11 +56,10 @@
                     <f:selectItem itemLabel="elige una titulacion" noSelectionOption="true"/>
                     <f:selectItems value="#{crearUsuarioBean.listaTitulaciones}"/>
                 </p:selectOneMenu>
-                
-                <br/>
+               
                 <p:commandButton value="crear usuario" action="#{crearUsuarioBean.creaUsuario}" update=":form1:" />
                 
-                <br/>
+                </h:panelGrid>
                 
                 
                 

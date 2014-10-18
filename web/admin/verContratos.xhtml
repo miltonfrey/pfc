@@ -20,8 +20,11 @@
             
             <h:outputText value=" #{verContratosBean.selectedMovilidad.usuario.apellido1}"/>
             <br/>
-            <h:outputLabel value="Destino: "/>
-            <h:outputText value=" #{verContratosBean.selectedMovilidad.universidad.nombre} "/><br/>
+            <h:outputLabel value="país: "/>
+            <h:outputText value="#{verContratosBean.selectedMovilidad.universidad.pais.nombre}"/><br/>
+            <h:outputLabel value="Universidad: "/>
+            <h:outputText value=" #{verContratosBean.selectedMovilidad.universidad.nombre} "/>
+            <br/>
             <p:outputLabel value="inicio: "/>
             <h:outputText value="#{verContratosBean.selectedMovilidad.fechaInicio}">
             

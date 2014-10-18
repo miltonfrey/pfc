@@ -24,7 +24,8 @@ public class verContratosBean implements Serializable{
     @ManagedProperty(value="#{equivalenciaService}")
     private EquivalenciaService equivalenciaService;
 
-    
+    @ManagedProperty(value="#{movilidadService}")
+    private MovilidadService movilidadService;
     
    private Usuario user;
     
@@ -59,6 +60,7 @@ public class verContratosBean implements Serializable{
        if(context.getSessionMap().containsKey("movilidad")==true){
            selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
            context.getSessionMap().remove("Movilidad");
+           selectedMovilidad=movilidadService.findMovilidad(selectedMovilidad.getCodMovilidad());
            listaContratos=(ArrayList < Contrato >)equivalenciaService.listaContratos(selectedMovilidad);
            
        }
@@ -78,6 +80,16 @@ public class verContratosBean implements Serializable{
     public void setBeanUtilidades(beanUtilidades beanUtilidades) {
         this.beanUtilidades = beanUtilidades;
     }
+
+    public MovilidadService getMovilidadService() {
+        return movilidadService;
+    }
+
+    public void setMovilidadService(MovilidadService movilidadService) {
+        this.movilidadService = movilidadService;
+    }
+    
+    
     
     
     public EquivalenciaService getEquivalenciaService() {

@@ -108,6 +108,11 @@ public class MovilidadDaoImpl implements MovilidadDao, Serializable{
         return q.list();
         
     }
+    @Override
+    public Movilidad findMovilidad(Integer id){
+        
+        return (Movilidad)sessionFactory.getCurrentSession().createQuery("select m from Movilidad m where m.codMovilidad=:id").setParameter("id", id).uniqueResult();
+    }
     
     
     

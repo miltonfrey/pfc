@@ -22,7 +22,7 @@ public interface MovilidadDao {
     
     public List<Movilidad> listarMovilidadesValidas(String usuario);
     
-    
+    public Movilidad findMovilidad(Integer id);
     
     public List<Object> doJoin();
         

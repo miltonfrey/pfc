@@ -44,6 +44,12 @@
                     <h:outputText value="#{movilidad.usuario.apellido1}"/>
                 </p:column>
                 
+                <p:column headerText="Pais" filterBy="#{movilidad.universidad.pais.nombre}" sortBy="#{movilidad.universidad.pais.nombre}" styleClass="pais">
+                
+                    <h:outputText value="#{movilidad.universidad.pais.nombre}"/>
+                
+                </p:column>
+                
                 <p:column headerText="destino" sortBy="#{movilidad.universidad.nombre}" styleClass="universidad">
                     
                     <h:outputText value="#{movilidad.universidad.nombre}"/>
@@ -82,7 +88,7 @@
                     
                 </p:column>
                 
-                <p:column headerText="inicio" sortBy="#{movilidad.fechaInicio}" styleClass="fecha">
+                <p:column headerText="Inicio" sortBy="#{movilidad.fechaInicio}" styleClass="fecha">
                 
                     <h:outputText value="#{movilidad.fechaInicio}">
                     
@@ -92,7 +98,7 @@
                 </p:column>
                 
                 
-                <p:column headerText="inicio" sortBy="#{movilidad.fechaFin}" styleClass="fecha">
+                <p:column headerText="Fin" sortBy="#{movilidad.fechaFin}" styleClass="fecha">
                 
                     <h:outputText value="#{movilidad.fechaFin}">
                     

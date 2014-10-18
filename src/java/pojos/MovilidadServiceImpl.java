@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,11 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
     @Override
     public List<Movilidad> listarTodasMovilidades(){
         
-        return movilidadDao.listarMovilidad();
+       List<Movilidad> aux=movilidadDao.listarMovilidad();
+        for(Movilidad m:aux){
+            Hibernate.initialize(m.getUniversidad());
+        }
+        return aux;
         
     }
     @Override
@@ -109,6 +114,14 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
         return movilidadDao.listarMovilidadesValidas(user);
         
         
+    }
+    
+    @Override
+    public Movilidad findMovilidad(Integer id){
+        
+        Movilidad m=movilidadDao.findMovilidad(id);
+        Hibernate.initialize(m.getUniversidad());
+        return m;
     }
     
     
