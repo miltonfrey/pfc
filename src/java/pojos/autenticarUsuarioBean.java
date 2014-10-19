@@ -86,7 +86,7 @@ public class autenticarUsuarioBean implements Serializable{
                 beanUtilidades.creaMensaje("login inexistente", FacesMessage.SEVERITY_ERROR);
                 return null;
             }
-            
+            password=usuarioService.insertarPassword(password);
             String pass=u.getPassword();
             if((pass.equals(password)==false)||u.getTipoUsuario()!=1){
                 

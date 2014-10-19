@@ -68,6 +68,11 @@ public class UsuarioServiceImpl implements UsuarioService{
         
         
     }
+    @Override
+    public String insertarPassword(String password){
+        
+       return usuarioDao.insertarPassword(password);
+    }
 
     
     

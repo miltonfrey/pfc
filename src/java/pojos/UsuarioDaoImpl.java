@@ -71,7 +71,8 @@ public class UsuarioDaoImpl implements UsuarioDao{
     @Override
     public void insertarUsuario(Usuario u){ //throws org.springframework.dao.DataIntegrityViolationException{
         
-        
+            String password=insertarPassword(u.getPassword());
+            u.setPassword(password);
             sessionFactory.getCurrentSession().save(u);
             
         
@@ -82,5 +83,26 @@ public class UsuarioDaoImpl implements UsuarioDao{
         sessionFactory.getCurrentSession().saveOrUpdate(u);
         
     }
+    
+    @Override
+    public String insertarPassword(String password){
+        
+        
+        try {
+        java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+        byte[] array = md.digest(password.getBytes());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < array.length; ++i) {
+          sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+       }
+        return sb.toString();
+    } catch (java.security.NoSuchAlgorithmException e) {
+    }
+    return null;
+        
+        
+        
+    }
+    
     
 }

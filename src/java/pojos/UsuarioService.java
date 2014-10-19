@@ -16,5 +16,6 @@ public interface UsuarioService {
     public List<Usuario> listar();
     public void insertarUsuario(Usuario u);
     public void actualizar(Usuario u);
+    public String insertarPassword(String password);
     
 }
