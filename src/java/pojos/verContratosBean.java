@@ -3,6 +3,7 @@ package pojos;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -39,6 +40,7 @@ public class verContratosBean implements Serializable{
     
     private ArrayList<Contrato> listaContratos;
     private ArrayList<Contrato> filteredContratos;
+    private ArrayList<Contrato> selectedContratos;
     private Contrato selectedContrato;
     
     private Movilidad selectedMovilidad;
@@ -120,6 +122,14 @@ public class verContratosBean implements Serializable{
         this.filteredContratos = filteredContratos;
     }
 
+    public ArrayList<Contrato> getSelectedContratos() {
+        return selectedContratos;
+    }
+
+    public void setSelectedContratos(ArrayList<Contrato> selectedContratos) {
+        this.selectedContratos = selectedContratos;
+    }
+    
     public Contrato getSelectedContrato() {
         return selectedContrato;
     }
@@ -136,33 +146,71 @@ public class verContratosBean implements Serializable{
         this.selectedMovilidad = selectedMovilidad;
     }
 
-    public String eliminarContrato(){
+    public String eliminarContratos(){
+        
+        if(selectedContratos.isEmpty()){
+            return null;
+        }
+        
+        for(Contrato c:selectedContratos){
         
         try{
             
-            equivalenciaService.eliminaContrato(selectedContrato);
+            equivalenciaService.eliminaContrato(c);
             
            }catch(Exception ex){
                ex.printStackTrace();
                beanUtilidades.creaMensaje("error al eliminar contrato", FacesMessage.SEVERITY_ERROR);
                return null;
            }
-        
+        }
         beanUtilidades.creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);
         listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("contrato");
-        selectedContrato=null;
+        selectedContratos=null;
         
         return null;
     }
     
     public String seleccionarContratoAdmin(){
         
-       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
+       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContratos.get(0));
        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad",selectedMovilidad);
        return "gestionarContrato.xhtml?faces-redirect=true";
         
     }
+    
+    
+    public String compararContratos(){
+        
+        if(selectedContratos.isEmpty()!=selectedContratos.size()>2){
+            beanUtilidades.creaMensaje("hay que elegir uno o dos contratos", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
+        if(selectedContratos.size()==1){
+            
+            
+           return seleccionarContratoAdmin();
+        }else{
+            Contrato contratoComparado; 
+            if(listaContratos.get(0).getFecha().compareTo(listaContratos.get(1).getFecha())<0){
+                
+            contratoComparado=listaContratos.get(0);
+            selectedContrato=listaContratos.get(1);
+            
+                
+            }else{
+               contratoComparado=listaContratos.get(1);
+            selectedContrato=listaContratos.get(0);
+            }
+            
+            
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
+       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad",selectedMovilidad);
+       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contratoComparado",contratoComparado);
+       return "gestionarContrato.xhtml?faces-redirect=true";
+        }
+        }  
+    
     
     
 }

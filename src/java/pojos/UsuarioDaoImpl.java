@@ -71,7 +71,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
     @Override
     public void insertarUsuario(Usuario u){ //throws org.springframework.dao.DataIntegrityViolationException{
         
-            String password=insertarPassword(u.getPassword());
+            String password=md5Password(u.getPassword());
             u.setPassword(password);
             sessionFactory.getCurrentSession().save(u);
             
@@ -85,7 +85,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
     }
     
     @Override
-    public String insertarPassword(String password){
+    public String md5Password(String password){
         
         
         try {

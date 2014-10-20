@@ -161,6 +161,7 @@ public class verMisMovilidadesBean implements Serializable{
                 mensajeService.enviarMensaje(mensaje);
             }catch(Exception ex){
                 beanUtilidades.creaMensaje("se ha producido un error enviando el mensaje", FacesMessage.SEVERITY_ERROR);
+                
                 return null;
             }
             
@@ -178,6 +179,7 @@ public class verMisMovilidadesBean implements Serializable{
                     
             }
                 beanUtilidades.creaMensaje("se ha enviado un mensaje al coordinador para su cancelación", FacesMessage.SEVERITY_INFO);
+                selectedMovilidad=null;
             return null;
         
              
@@ -193,6 +195,7 @@ public class verMisMovilidadesBean implements Serializable{
             }  
                   beanUtilidades.creaMensaje("movilidad eliminada correctamente", FacesMessage.SEVERITY_INFO);
                   actualizar();
+                  selectedMovilidad=null;
                   return null;  
                 }
             

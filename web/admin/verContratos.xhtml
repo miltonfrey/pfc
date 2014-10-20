@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Ver contratos</title>
-        <h:outputStylesheet library="css" name="estilos.css"/>
+        <h:outputStylesheet library="css" name="contratosAdmin.css"/>
     </h:head>
     <h:body onload="PF('tablaContratos').filter();">
         
@@ -55,7 +55,8 @@
                          filteredValue="#{verContratosBean.filteredContratos}"
                          rowKey="#{contrato.idContrato}"
                          emptyMessage="no hay contratos"
-                         styleClass="borderless">
+                         styleClass="borderless"
+                         selection="#{verContratosBean.selectedContratos}">
                 <p:column headerText="fecha" sortBy="#{contrato.fecha}">
                     <h:outputText value="#{contrato.fecha}">
                                   <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
@@ -83,17 +84,19 @@
                     
                 </p:column>     
                     
-               <p:column headerText="eliminar">
+                <p:column selectionMode="multiple" styleClass="multiple"/>
+                
+                <f:facet name="footer">
                     
-                    <p:commandButton value="eliminar" action="#{verContratosBean.eliminarContrato}" update=":panelContratos :headerContratos" 
+                    <p:commandButton value="editar/comparar" action="#{verContratosBean.compararContratos}"  update=":panelContratos"/>
+                    <p:commandButton value="eliminar" action="#{verContratosBean.eliminarContratos}" update=":panelContratos :headerContratos" 
                                      onclick="if (! confirm('¿seguro que quieres borrar?')) return false" oncomplete="PF('tablaContratos').filter();"
                                      >
                     
-                        <f:setPropertyActionListener target="#{verContratosBean.selectedContrato}" value="#{contrato}"/>
+                    </p:commandButton>      
+                   
                     
-                    </p:commandButton>  
-                    
-                </p:column>
+                </f:facet>
                
             
             </p:dataTable>

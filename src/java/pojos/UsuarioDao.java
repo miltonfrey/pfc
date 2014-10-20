@@ -16,7 +16,7 @@ public interface UsuarioDao {
     public List<Usuario> listar();
     public void insertarUsuario(Usuario u)throws org.springframework.dao.DataIntegrityViolationException;
     public void actualizar(Usuario u);
-    public String insertarPassword(String password);
+    public String md5Password(String password);
         
         
     

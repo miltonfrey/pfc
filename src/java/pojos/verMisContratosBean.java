@@ -55,8 +55,6 @@ public class verMisContratosBean implements Serializable{
         
        
        session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-       
-        
         user=(Usuario)session.getAttribute("user");
          
         }
@@ -146,9 +144,6 @@ public class verMisContratosBean implements Serializable{
         this.selectedContrato = selectedContrato;
     }
 
-    
-    
-    
     
     public Movilidad getSelectedMovilidad() {
         return selectedMovilidad;

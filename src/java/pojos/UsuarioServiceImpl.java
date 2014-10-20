@@ -69,9 +69,9 @@ public class UsuarioServiceImpl implements UsuarioService{
         
     }
     @Override
-    public String insertarPassword(String password){
+    public String md5Password(String password){
         
-       return usuarioDao.insertarPassword(password);
+       return usuarioDao.md5Password(password);
     }
 
     

@@ -12,9 +12,31 @@
     </h:head>
     <h:body>
       
-        <p:panel id="panelEstado">
-            <p:outputLabel value="estado del contrato: "/>
-            <h:outputText value="#{equivalenciasBean.selectedContrato.estado}"/>
+        <p:panel id="headerContratos">
+        
+            <h:outputLabel value="Contratos de: "/>
+            <h:outputText value="#{equivalenciasBean.selectedMovilidad.usuario.nombre }"/>
+            
+            <h:outputText value=" #{equivalenciasBean.selectedMovilidad.usuario.apellido1}"/>
+            <br/>
+            <h:outputLabel value="país: "/>
+            <h:outputText value="#{equivalenciasBean.selectedMovilidad.universidad.pais.nombre}"/><br/>
+            <h:outputLabel value="Universidad: "/>
+            <h:outputText value=" #{equivalenciasBean.selectedMovilidad.universidad.nombre} "/>
+            <br/>
+            <p:outputLabel value="inicio: "/>
+            <h:outputText value="#{equivalenciasBean.selectedMovilidad.fechaInicio}">
+            
+                <f:convertDateTime pattern="dd-MM-yyyy"/>
+            </h:outputText><br/>
+             
+            <p:outputLabel value="fin: "/>               
+            <h:outputText value="#{equivalenciasBean.selectedMovilidad.fechaFin}">
+                
+                <f:convertDateTime pattern="dd-MM-yyyy"/>
+            </h:outputText>
+            
+            
             
         </p:panel>
         
@@ -30,7 +52,13 @@
                          rowKey="#{equivalencia.idequivalencia}"
                          widgetVar="equivalenciaTable">
                          
-                <f:facet name="header">LISTA DE EQUIVALENCIAS</f:facet>
+                <f:facet name="header">Estado del contrato:
+                    <h:outputText value=" #{equivalenciasBean.selectedContrato.estado}"/><br/>última modificación
+                    <h:outputText value="#{equivalenciasBean.selectedContrato.fecha}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                           
+                </f:facet>
                 
                 <p:column headerText="UDC" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
@@ -51,6 +79,7 @@
                     <h:outputText value="#{equivalencia.visible}"/>
                     
                 </p:column>
+                   
                 <p:column selectionMode="multiple" styleClass="multiple"/>
                 <f:facet name="footer">
                     <p:commandButton  id="publicaBtn"  update=":formTablaEquivalencias:" icon="ui-icon-search" value="publicar" action="#{equivalenciasBean.publicarEquivalencia}"
@@ -63,7 +92,43 @@
             </p:dataTable>
             
         </h:form>
+        <h:form id="tablaEquivalenciasComparadoAdmin">
+            
+            <p:dataTable id="tablaComparado"
+                         value="#{equivalenciasBean.listaAuxEquivalenciasComparado}"
+                         styleClass="tablaEquivalenciasComparadoAdmin"
+                         var="equivalenciaB"
+                         rowKey="#{equivalenciaB.idequivalencia}"
+                         widgetVar="equivalenciaComparado"
+                         emptyMessage="no hay equivalencias">
+                <f:facet name="header">Estado del contrato:
+                    <h:outputText value=" #{equivalenciasBean.contratoComparado.estado}"/><br/>última modificación
+                    <h:outputText value="#{equivalenciasBean.contratoComparado.fecha}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                </f:facet>
+                 <p:column headerText="UDC" styleClass="asignatura">
+                    <ui:repeat value="#{equivalenciaB.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
+                        <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
+                        <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                
+                <p:column headerText="#{equivalenciasBean.selectedMovilidad.universidad.nombre}" styleClass="asignatura">
+                    <ui:repeat value="#{equivalenciaB.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
+                        <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{ not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
+                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
+                    </ui:repeat>
+                </p:column>
+                
+                
+            </p:dataTable>
+                
+            
+        </h:form>
         <br/>
+        
         
         
         <p:outputPanel rendered="#{equivalenciasBean.selectedMovilidad.estado eq 'aceptada'}">
@@ -81,7 +146,7 @@
             </p:selectOneMenu>
             <br/>
            
-             <p:commandButton value="enviar" action="#{equivalenciasBean.cambiarEstadoContrato}" update=":formTablaEquivalencias:msgs :panelEstado"/>
+             <p:commandButton value="enviar" action="#{equivalenciasBean.cambiarEstadoContrato}" update=":formTablaEquivalencias"/>
          
              
           

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 //import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -20,7 +21,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.primefaces.component.datatable.DataTable;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -62,12 +62,10 @@ public class equivalenciasBean implements Serializable{
     Equivalencia equivalencia;
     
     
-    private ArrayList<Asignatura> listaAsignaturasFic;
-    private ArrayList<Asignatura>listaAsignaturasUniversidad;
-   
     
-    private ArrayList<Equivalencia>listaEquivalencias;
-    private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
+    
+    
+    private ArrayList<Equivalencia> listaAuxEquivalencias;
     private ArrayList<Equivalencia> listaAuxEquivalenciasComparado;
     
     private ArrayList<Equivalencia>selectedEquivalencias;
@@ -172,14 +170,6 @@ public class equivalenciasBean implements Serializable{
         this.selectedEquivalencias = selectedEquivalencias;
     }
 
-    public ArrayList<Equivalencia> getListaEquivalencias() {
-        return listaEquivalencias;
-    }
-
-    public void setListaEquivalencias(ArrayList<Equivalencia> listaEquivalencias) {
-        this.listaEquivalencias = listaEquivalencias;
-    }
-
     public ArrayList<Equivalencia> getListaAuxEquivalencias() {
         return listaAuxEquivalencias;
     }
@@ -194,23 +184,6 @@ public class equivalenciasBean implements Serializable{
 
     public void setListaAuxEquivalenciasComparado(ArrayList<Equivalencia> listaAuxEquivalenciasComparado) {
         this.listaAuxEquivalenciasComparado = listaAuxEquivalenciasComparado;
-    }
-
-   
-    public ArrayList<Asignatura> getListaAsignaturasFic() {
-        return listaAsignaturasFic;
-    }
-
-    public void setListaAsignaturasFic(ArrayList<Asignatura> listaAsignaturasFic) {
-        this.listaAsignaturasFic = listaAsignaturasFic;
-    }
-
-    public ArrayList<Asignatura> getListaAsignaturasUniversidad() {
-        return listaAsignaturasUniversidad;
-    }
-
-    public void setListaAsignaturasUniversidad(ArrayList<Asignatura> listaAsignaturasUniversidad) {
-        this.listaAsignaturasUniversidad = listaAsignaturasUniversidad;
     }
 
     public Movilidad getSelectedMovilidad() {
@@ -290,7 +263,8 @@ public class equivalenciasBean implements Serializable{
     
     public String cambiarEstadoContrato(){
         
-        beanUtilidades.creaMensaje(selectedContrato.getEstado(), FacesMessage.SEVERITY_INFO);
+        if(apruebaOrechaza.equals(selectedContrato.getEstado()))
+            return null;
         
         selectedContrato.setEstado(apruebaOrechaza);
         try{
@@ -303,7 +277,9 @@ public class equivalenciasBean implements Serializable{
             
             return null;
         }
-        beanUtilidades.creaMensaje("contrato modificado correctamente", FacesMessage.SEVERITY_INFO);
+        beanUtilidades.creaMensaje("contrato modificado correctamente, se le ha enviado un mensaje al usuario", FacesMessage.SEVERITY_INFO);
+        Mensaje m=new Mensaje(selectedMovilidad.getUsuario(), user, Calendar.getInstance().getTime(), "cambio de estado de contrato", "El estado de un contrato ha sido modificado", "no", "no", "no");
+        mensajeService.enviarMensaje(m);
         context.getSessionMap().remove("contrato");
         
         return null;

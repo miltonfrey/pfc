@@ -105,9 +105,21 @@ body.green{
 .tablaEquivalenciasAdmin{
     //top: 200px;
     //left: 200px;
-    height: 65%;
-    width: 60%;
+    height: 45%;
+    width: 45%;
     position:relative;
+    text-align: center;
+    font-size: 15px;
+    
+}
+
+
+.tablaEquivalenciasComparadoAdmin{
+    top:140px;
+    left: 650px;
+    height: 45%;
+    width: 45%;
+    position:absolute;
     text-align: center;
     font-size: 15px;
     
@@ -203,13 +215,18 @@ body.green{
 ////////////////////////////////////////////////////////////////////////////////
 
 .campoUsuario{
-    
-    
-     
+   
     width: 8%;
     font-size: 15px;
     
 }
+
+
+
+    
+    
+
+
  .ui-datatable.borderless  .ui-datatable-data tr,
 .ui-datatable.borderless .ui-datatable-data-empty tr,
 .ui-datatable.borderless .ui-datatable-data td,
