@@ -121,7 +121,11 @@
                          <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
                     </ui:repeat>
                 </p:column>
-                
+                <p:column headerText="visible" styleClass="visible">
+                    
+                    <h:outputText value="#{equivalenciaB.visible}"/>
+                    
+                </p:column>
                 
             </p:dataTable>
                 
