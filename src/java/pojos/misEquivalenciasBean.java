@@ -63,7 +63,7 @@ public class misEquivalenciasBean implements Serializable{
     private ArrayList<Asignatura> listaAsignaturasFic;
     private ArrayList<Asignatura>listaAsignaturasUniversidad;
    
-    private ArrayList<Equivalencia>listaEquivalencias;
+    
     private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
     private ArrayList<Equivalencia> listaAuxEquivalenciasComparado;
     
@@ -108,7 +108,9 @@ public class misEquivalenciasBean implements Serializable{
              
         listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         listaAuxEquivalenciasComparado=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
+        //lo comparamos igual para la version b
         if(context.getSessionMap().containsKey("comparado")){
+           
         listaAuxEquivalenciasComparado=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         context.getSessionMap().remove("comparado");
         }
@@ -225,13 +227,7 @@ public class misEquivalenciasBean implements Serializable{
         this.selectedEquivalencias = selectedEquivalencias;
     }
 
-    public ArrayList<Equivalencia> getListaEquivalencias() {
-        return listaEquivalencias;
-    }
-
-    public void setListaEquivalencias(ArrayList<Equivalencia> listaEquivalencias) {
-        this.listaEquivalencias = listaEquivalencias;
-    }
+    
 
     public ArrayList<Equivalencia> getListaAuxEquivalencias() {
         return listaAuxEquivalencias;
@@ -480,7 +476,7 @@ public class misEquivalenciasBean implements Serializable{
     }
     
     
-  public String  crearContratoDesdeAceptado(){
+ /* public String  crearContratoDesdeAceptado(){
         if(listaAuxEquivalencias.isEmpty()){
             
             beanUtilidades.creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
@@ -547,8 +543,59 @@ public class misEquivalenciasBean implements Serializable{
         beanUtilidades.creaMensaje("contrato creado correctamente", FacesMessage.SEVERITY_INFO);
         verConfirmar=false;
         return null;
-  }
+  }*/
     
+     public String  crearContratoDesdeAceptado(){
+       if(listaAuxEquivalencias.isEmpty()){
+            
+            beanUtilidades.creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
+        
+        Contrato cNuevo=new Contrato();
+        cNuevo.setFecha(Calendar.getInstance().getTime());
+        cNuevo.setMovilidad(selectedMovilidad);
+        cNuevo.setEstado("pendiente");
+        
+        try{
+        equivalenciaService.creaContrato(cNuevo);
+        }catch(Exception ex){
+            
+            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
+        
+        Contrato c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+        
+        
+        for(Equivalencia e:listaAuxEquivalencias){
+            
+         if(c.getEquivalencias().contains(e)==false){   
+            try{
+            e.setContrato(c);
+            equivalenciaService.crearEquivalencia(e);
+            equivalenciaService.crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
+            equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
+         }catch(Exception ex){
+            ex.printStackTrace();
+            beanUtilidades.creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
+            return null;
+        } 
+           
+            
+        }else{
+             
+             
+         }
+       
+    }
+     beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+     Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
+     
+        verConfirmar=false;
+        return null;
+    
+  }
     
     
     public String eliminaEquivalenciasLista(){
