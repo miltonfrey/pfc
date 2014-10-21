@@ -68,7 +68,7 @@ public class misEquivalenciasBean implements Serializable{
     private ArrayList<Equivalencia> listaAuxEquivalenciasComparado;
     
     
-    
+    private Asignatura selectedAsignatura;
     private ArrayList<Asignatura>selectedAsignaturasFic;
     private ArrayList<Asignatura> selectedAsignaturasUni;
     
@@ -181,6 +181,14 @@ public class misEquivalenciasBean implements Serializable{
     //////////////////////////////////////////////////////////////////////////////////////////
     public ArrayList<Asignatura> getSelectedAsignaturasFic() {
         return selectedAsignaturasFic;
+    }
+
+    public Asignatura getSelectedAsignatura() {
+        return selectedAsignatura;
+    }
+
+    public void setSelectedAsignatura(Asignatura selectedAsignatura) {
+        this.selectedAsignatura = selectedAsignatura;
     }
 
    
