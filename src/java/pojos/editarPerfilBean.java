@@ -93,7 +93,7 @@ public class editarPerfilBean implements Serializable{
     
     public String editar(){
         
-        if(user.getPassword().equals(password)==false){
+        if(user.getPassword().equals(usuarioService.md5Password(password))==false){
             
             beanUtilidades.creaMensaje("el password es incorrecto", FacesMessage.SEVERITY_ERROR);
             return null;
@@ -104,7 +104,7 @@ public class editarPerfilBean implements Serializable{
             return null;
         }
         
-        user.setPassword(nuevoPassword);
+        user.setPassword(usuarioService.md5Password(nuevoPassword));
         try{
             usuarioService.actualizar(user);
         }catch(Exception ex){
