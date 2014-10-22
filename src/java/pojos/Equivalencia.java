@@ -1,8 +1,9 @@
 package pojos;
-// Generated 22-oct-2014 10:55:47 by Hibernate Tools 4.3.1
+// Generated 22-oct-2014 11:54:10 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,6 @@ public class Equivalencia  implements java.io.Serializable {
 
 
      private Integer idequivalencia;
-     private Integer idContrato;
      private String visible;
      private GrupoAsignaturaB grupoAsignaturaB;
      private GrupoAsignaturaA grupoAsignaturaA;
@@ -34,8 +34,7 @@ public class Equivalencia  implements java.io.Serializable {
     public Equivalencia() {
     }
 
-    public Equivalencia(Integer idContrato, String visible, GrupoAsignaturaB grupoAsignaturaB, GrupoAsignaturaA grupoAsignaturaA, Set<Contrato> contratos) {
-       this.idContrato = idContrato;
+    public Equivalencia(String visible, GrupoAsignaturaB grupoAsignaturaB, GrupoAsignaturaA grupoAsignaturaA, Set<Contrato> contratos) {
        this.visible = visible;
        this.grupoAsignaturaB = grupoAsignaturaB;
        this.grupoAsignaturaA = grupoAsignaturaA;
@@ -52,16 +51,6 @@ public class Equivalencia  implements java.io.Serializable {
     
     public void setIdequivalencia(Integer idequivalencia) {
         this.idequivalencia = idequivalencia;
-    }
-
-    
-    @Column(name="idContrato")
-    public Integer getIdContrato() {
-        return this.idContrato;
-    }
-    
-    public void setIdContrato(Integer idContrato) {
-        this.idContrato = idContrato;
     }
 
     
@@ -99,6 +88,28 @@ public class Equivalencia  implements java.io.Serializable {
     
     public void setContratos(Set<Contrato> contratos) {
         this.contratos = contratos;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.idequivalencia);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Equivalencia other = (Equivalencia) obj;
+        if (!Objects.equals(this.idequivalencia, other.idequivalencia)) {
+            return false;
+        }
+        return true;
     }
 
 
