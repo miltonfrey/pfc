@@ -1,5 +1,5 @@
 package pojos;
-// Generated 02-oct-2014 14:56:35 by Hibernate Tools 4.3.1
+// Generated 22-oct-2014 10:55:47 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -21,7 +21,7 @@ import org.hibernate.annotations.Parameter;
  */
 @Entity
 @Table(name="grupo_asignatura_b"
-    ,catalog="pfc"
+    ,catalog="pfc2"
 )
 public class GrupoAsignaturaB  implements java.io.Serializable {
 

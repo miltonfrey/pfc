@@ -1,16 +1,16 @@
 package pojos;
-// Generated 02-oct-2014 14:56:35 by Hibernate Tools 4.3.1
+// Generated 22-oct-2014 10:55:47 by Hibernate Tools 4.3.1
 
 
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,25 +19,27 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="equivalencia"
-    ,catalog="pfc"
+    ,catalog="pfc2"
 )
 public class Equivalencia  implements java.io.Serializable {
 
 
      private Integer idequivalencia;
-     private Contrato contrato;
+     private Integer idContrato;
      private String visible;
      private GrupoAsignaturaB grupoAsignaturaB;
      private GrupoAsignaturaA grupoAsignaturaA;
+     private Set<Contrato> contratos = new HashSet<Contrato>(0);
 
     public Equivalencia() {
     }
 
-    public Equivalencia(Contrato contrato, String visible, GrupoAsignaturaB grupoAsignaturaB, GrupoAsignaturaA grupoAsignaturaA) {
-       this.contrato = contrato;
+    public Equivalencia(Integer idContrato, String visible, GrupoAsignaturaB grupoAsignaturaB, GrupoAsignaturaA grupoAsignaturaA, Set<Contrato> contratos) {
+       this.idContrato = idContrato;
        this.visible = visible;
        this.grupoAsignaturaB = grupoAsignaturaB;
        this.grupoAsignaturaA = grupoAsignaturaA;
+       this.contratos = contratos;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -52,14 +54,14 @@ public class Equivalencia  implements java.io.Serializable {
         this.idequivalencia = idequivalencia;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idContrato")
-    public Contrato getContrato() {
-        return this.contrato;
+    
+    @Column(name="idContrato")
+    public Integer getIdContrato() {
+        return this.idContrato;
     }
     
-    public void setContrato(Contrato contrato) {
-        this.contrato = contrato;
+    public void setIdContrato(Integer idContrato) {
+        this.idContrato = idContrato;
     }
 
     
@@ -90,26 +92,13 @@ public class Equivalencia  implements java.io.Serializable {
         this.grupoAsignaturaA = grupoAsignaturaA;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.idequivalencia);
-        return hash;
+@ManyToMany(fetch=FetchType.LAZY, mappedBy="equivalencias")
+    public Set<Contrato> getContratos() {
+        return this.contratos;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Equivalencia other = (Equivalencia) obj;
-        if (!Objects.equals(this.idequivalencia, other.idequivalencia)) {
-            return false;
-        }
-        return true;
+    
+    public void setContratos(Set<Contrato> contratos) {
+        this.contratos = contratos;
     }
 
 

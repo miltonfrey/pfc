@@ -447,7 +447,7 @@ public class beanEquivalencia implements Serializable{
         for(Equivalencia e:listaAuxEquivalencias){
           
             
-            e.setContrato(c);
+            //e.setContrato(c);
             equivalenciaService.crearEquivalencia(e);
             equivalenciaService.crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
             equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
@@ -498,7 +498,7 @@ public class beanEquivalencia implements Serializable{
             
          if(c.getEquivalencias().contains(e)==false){   
             try{
-            e.setContrato(c);
+            //e.setContrato(c);
             equivalenciaService.crearEquivalencia(e);
             equivalenciaService.crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
             equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
@@ -566,7 +566,7 @@ public class beanEquivalencia implements Serializable{
         }
            
             try{
-                eNueva.setContrato(cNuevo);
+               // eNueva.setContrato(cNuevo);
                 eNueva.setVisible("no");
                 equivalenciaService.crearEquivalencia(eNueva);
                 auxA.setEquivalencia(eNueva);

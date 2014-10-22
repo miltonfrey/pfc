@@ -1,5 +1,5 @@
 package pojos;
-// Generated 02-oct-2014 14:56:35 by Hibernate Tools 4.3.1
+// Generated 22-oct-2014 10:55:47 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,8 +12,9 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +24,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="contrato"
-    ,catalog="pfc"
+    ,catalog="pfc2"
 )
 public class Contrato  implements java.io.Serializable {
 
@@ -86,7 +87,10 @@ public class Contrato  implements java.io.Serializable {
         this.estado = estado;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="contrato")
+@ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="contrato-equivalencia", catalog="pfc2", joinColumns = { 
+        @JoinColumn(name="idContrato", nullable=false, updatable=false) }, inverseJoinColumns = { 
+        @JoinColumn(name="idEquivalencia", nullable=false, updatable=false) })
     public Set<Equivalencia> getEquivalencias() {
         return this.equivalencias;
     }
