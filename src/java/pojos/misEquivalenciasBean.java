@@ -55,6 +55,8 @@ public class misEquivalenciasBean implements Serializable{
     private HttpSession session;
     private Movilidad selectedMovilidad;
     private Contrato selectedContrato;
+    Contrato c;
+    
     private Usuario user;
     
     Equivalencia equivalencia;
@@ -65,7 +67,7 @@ public class misEquivalenciasBean implements Serializable{
    
     
     private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
-    private ArrayList<Equivalencia> listaAuxEquivalenciasComparado;
+    private ArrayList<Equivalencia> listaAuxEquivalenciasComparado=new ArrayList<Equivalencia>();
     
     
     private Asignatura selectedAsignatura;
@@ -105,17 +107,18 @@ public class misEquivalenciasBean implements Serializable{
         
          if(context.getSessionMap().containsKey("contrato")){
         selectedContrato=(Contrato)context.getSessionMap().get("contrato");
-             
-        listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
-        listaAuxEquivalenciasComparado=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
+        c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+        listaAuxEquivalencias.addAll(c.getEquivalencias());   //(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
+        listaAuxEquivalenciasComparado.addAll(c.getEquivalencias()); //=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         //lo comparamos igual para la version b
         if(context.getSessionMap().containsKey("comparado")){
            
-        listaAuxEquivalenciasComparado=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
+        //listaAuxEquivalenciasComparado.//=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         context.getSessionMap().remove("comparado");
         }
-        context.getSessionMap().remove("contrato");
+        
          }
+         context.getSessionMap().remove("contrato");
         }
         
         
@@ -390,19 +393,14 @@ public class misEquivalenciasBean implements Serializable{
         //Set<Equivalencia>setE=new HashSet<Equivalencia>(listaAuxEquivalencias); no hace falta ya que se van a añadir luego
         //c.setEquivalencias(setE);
         c.setEstado("pendiente");
-        try{
-        equivalenciaService.creaContrato(c);
-        }catch(Exception ex){
-            
-            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
+        
         
         try{
         for(Equivalencia e:listaAuxEquivalencias){
           
-            
+            c.getEquivalencias().add(e);
             e.getContratos().add(c);
+            
             equivalenciaService.crearEquivalencia(e);
             equivalenciaService.crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
             equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
@@ -412,6 +410,13 @@ public class misEquivalenciasBean implements Serializable{
             beanUtilidades.creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
             return null;
         } 
+        try{
+        equivalenciaService.creaContrato(c);
+        }catch(Exception ex){
+            
+            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
         
         beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
         Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha creado un contrato","no","no","no");
@@ -438,13 +443,14 @@ public class misEquivalenciasBean implements Serializable{
             beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
             return null;
         }
-        Contrato c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+        //Contrato c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
         
         
         for(Equivalencia e:c.getEquivalencias()){
             
             if(listaAuxEquivalencias.contains(e)==false){
                 equivalenciaService.eliminarEquivalencia(e);
+                c.getEquivalencias().remove(e);
             }
            
         }
@@ -454,6 +460,7 @@ public class misEquivalenciasBean implements Serializable{
          if(c.getEquivalencias().contains(e)==false){   
             try{
             e.getContratos().add(c);
+            c.getEquivalencias().add(e);
             equivalenciaService.crearEquivalencia(e);
             equivalenciaService.crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
             equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
@@ -467,6 +474,13 @@ public class misEquivalenciasBean implements Serializable{
         }
        
     }
+        try{
+        equivalenciaService.modificaContrato(c);
+        }catch(Exception ex){
+            
+            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
      beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
      

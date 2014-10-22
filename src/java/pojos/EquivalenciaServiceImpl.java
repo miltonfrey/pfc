@@ -126,13 +126,30 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
         
         Contrato c=equivalenciaDao.findContrato(id);
         Hibernate.initialize(c.getEquivalencias());
-        return c;
-    }
+        for(Equivalencia e:c.getEquivalencias()){ 
             
+        Hibernate.initialize(e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs());
+        Iterator i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
+        while(i.hasNext()){
+            MiembroGrupoAsignaturaB m=(MiembroGrupoAsignaturaB)i.next();
+            Hibernate.initialize(m.getAsignatura());
+        }
+        Hibernate.initialize(e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs());
+        Iterator j=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
+        while(j.hasNext()){
+            MiembroGrupoAsignaturaA m=(MiembroGrupoAsignaturaA)j.next();
+            Hibernate.initialize(m.getAsignatura());
+        }
+        
+        
+        
+        
+    }
+           return c; 
 }       
             
             
-            
+}         
             
             
             

@@ -1,5 +1,5 @@
 package pojos;
-// Generated 22-oct-2014 11:54:10 by Hibernate Tools 4.3.1
+// Generated 22-oct-2014 15:25:10 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -88,7 +88,7 @@ public class Contrato  implements java.io.Serializable {
     }
 
 @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="contrato-equivalencia", catalog="pfc2", joinColumns = { 
+    @JoinTable(name="contrato_equivalencia", catalog="pfc2", joinColumns = { 
         @JoinColumn(name="idContrato", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="idEquivalencia", nullable=false, updatable=false) })
     public Set<Equivalencia> getEquivalencias() {

@@ -26,6 +26,7 @@
                          selection="#{misEquivalenciasBean.selectedAsignaturasFic}"               
                          paginator="true"
                          styleClass="tablaFic"
+                         filteredValue="#{misEquivalenciasBean.filteredAsignaturasFic}"
                          >
                <!-- <p:ajax event="rowSelectCheckbox" listener="{misEquivalenciasBean.seleccionaFila}" update=":formEquivalenciaFic"/>
                 <p:ajax event="rowUnselectCheckbox" listener="{misEquivalenciasBean.deseleccionarFila}" update=":formEquivalenciaFic"/>    
@@ -34,7 +35,7 @@
                
                
                 <f:facet name="header">ORIGEN: UDC</f:facet>
-                <p:column headerText="asignatura"  sortBy="#{asigFic.nombreAsignatura}" styleClass="asignatura">
+                <p:column headerText="asignatura"  sortBy="#{asigFic.nombreAsignatura}" styleClass="asignatura" filterBy="#{asigFic.nombreAsignatura}">
                 
                     <h:outputText value="#{asigFic.nombreAsignatura}" />
                 
@@ -91,7 +92,7 @@
                          var="asigUni"
                          widgetVar="asigUniBtn"
                          selection="#{misEquivalenciasBean.selectedAsignaturasUni}"
-                        
+                         filteredValue="#{misEquivalenciasBean.filteredAsignaturasUni}"
                          rowKey="#{asigUni.id}"
                          paginator="true"
                          rows="10"
@@ -100,7 +101,7 @@
                 
                 <f:facet name="header">DESTINO: #{misEquivalenciasBean.selectedMovilidad.universidad.nombre}</f:facet>
                 
-                <p:column headerText="asignatura" sortBy="#{asigUni.nombreAsignatura}" styleClass="asignatura">
+                <p:column headerText="asignatura" sortBy="#{asigUni.nombreAsignatura}" styleClass="asignatura" filterBy="#{asigUni.nombreAsignatura}">
                 
                     <h:outputText value="#{asigUni.nombreAsignatura}"/>
                 

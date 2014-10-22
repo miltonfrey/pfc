@@ -6,8 +6,8 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/pfc2?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">admin</property>
     <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.connection.password">admin</property>
     <mapping resource="pojos/MiembroGrupoAsignaturaA.hbm.xml"/>
     <mapping resource="pojos/Pais.hbm.xml"/>
     <mapping resource="pojos/GrupoAsignaturaA.hbm.xml"/>

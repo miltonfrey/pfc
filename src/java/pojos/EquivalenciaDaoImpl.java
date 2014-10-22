@@ -93,7 +93,7 @@ private SessionFactory sessionFactory;
     @Override
     public List<Equivalencia> listarEquivalenciasPorContrato(Integer id){
         
-        return sessionFactory.getCurrentSession().createQuery("select e from Equivalencia e where e.contrato.idContrato=:id").setParameter("id", id).list();
+        return sessionFactory.getCurrentSession().createQuery("select e from Equivalencia e where e.contratos.idContrato").setParameter("id", id).list();
     }
     @Override
     public Contrato findContrato(Integer id){
