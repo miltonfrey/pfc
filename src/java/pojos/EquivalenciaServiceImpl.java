@@ -147,7 +147,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
            return c; 
 }       
-            
+  
             
 }         
             

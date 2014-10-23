@@ -151,11 +151,15 @@ public class verContratosBean implements Serializable{
         if(selectedContratos.isEmpty()){
             return null;
         }
+        ArrayList<Equivalencia> listaCopia;
         
         for(Contrato c:selectedContratos){
         
         try{
+            c=equivalenciaService.findContrato(c.getIdContrato());
+            listaCopia=new ArrayList<>(c.getEquivalencias());
             
+            c.setEquivalencias(null);
             equivalenciaService.eliminaContrato(c);
             
            }catch(Exception ex){
@@ -163,6 +167,14 @@ public class verContratosBean implements Serializable{
                beanUtilidades.creaMensaje("error al eliminar contrato", FacesMessage.SEVERITY_ERROR);
                return null;
            }
+        for(Equivalencia e:listaCopia){
+            try{
+            equivalenciaService.eliminarEquivalencia(e);
+            }catch(Exception ex){
+                
+            }
+        }
+        
         }
         beanUtilidades.creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);
         listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);

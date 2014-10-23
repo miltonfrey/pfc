@@ -28,5 +28,5 @@ public interface EquivalenciaDao {
     public void insertarGrupoAsignaturasB(GrupoAsignaturaB grupo);
    // public void insertarMiembroGrupoAsignatura(MiembroGrupoAsignatura m);
     public Contrato findContrato(Integer id);
-    
+   
 }

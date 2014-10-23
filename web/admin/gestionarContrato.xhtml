@@ -72,6 +72,7 @@
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
                         <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{ not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
                          <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
+                         <br/>
                     </ui:repeat>
                 </p:column>
                 <p:column styleClass="visible" headerText="visible" sortBy="#{equivalencia.visible}">
@@ -150,7 +151,7 @@
             </p:selectOneMenu>
             <br/>
            
-             <p:commandButton value="enviar" action="#{equivalenciasBean.cambiarEstadoContrato}" update=":formTablaEquivalencias"/>
+            <p:commandButton value="enviar" action="#{equivalenciasBean.cambiarEstadoContrato}" update=":formTablaEquivalencias" oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
          
              
           

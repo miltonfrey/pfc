@@ -27,7 +27,7 @@
         
             <h:form id="formEquivalenciaFic">
                 
-                <p:outputPanel>
+                <p:outputPanel id="outputPanel1">
             
             <p:growl id="msgs"/> 
             <p:dataTable id="tablaFic" value="#{misEquivalenciasBean.listaAsignaturasFic}" var="asigFic" rows="10"
@@ -228,7 +228,7 @@
                 <f:facet name="footer" rendered="#{misEquivalenciasBean.verConfirmar}">
                              <p:commandButton id="deleteBtn"  process=":formTablaEquivalenciasNuevo:" update=":formTablaEquivalenciasNuevo :formEquivalenciaFic:msgs"  icon="ui-icon-search" value="Borrar" action="#{misEquivalenciasBean.eliminaEquivalenciasLista}"
                                               oncomplete="PF('equivalenciaTable').unselectAllRows();" rendered="#{misEquivalenciasBean.verConfirmar}"/>
-                             <p:commandButton id="confirmBtn" value="confirmar contrato" process=":formTablaEquivalenciasNuevo" action="#{misEquivalenciasBean.editarContrato}" update=":formEquivalenciaFic:msgs :formTablaEquivalenciasNuevo" oncomplete="PF('equivalenciaTableNuevo').unselectAllRows();"
+                             <p:commandButton id="confirmBtn" value="confirmar contrato" process=":formTablaEquivalenciasNuevo" action="#{misEquivalenciasBean.editarContrato}" update=":formEquivalenciaFic  :formTablaEquivalenciasNuevo" oncomplete="PF('equivalenciaTableNuevo').unselectAllRows();"
                                               rendered="#{misEquivalenciasBean.verConfirmar}"/>
                                
                          </f:facet>

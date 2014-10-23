@@ -101,4 +101,7 @@ private SessionFactory sessionFactory;
         return (Contrato)sessionFactory.getCurrentSession().createQuery("select c from Contrato c where c.idContrato=:contrato").setParameter("contrato", id).uniqueResult();
     }
     
+   
+    
+    
 }

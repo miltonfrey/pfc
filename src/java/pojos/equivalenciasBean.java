@@ -65,8 +65,8 @@ public class equivalenciasBean implements Serializable{
     
     
     
-    private ArrayList<Equivalencia> listaAuxEquivalencias;
-    private ArrayList<Equivalencia> listaAuxEquivalenciasComparado;
+    private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
+    private ArrayList<Equivalencia> listaAuxEquivalenciasComparado=new ArrayList<Equivalencia>();
     
     private ArrayList<Equivalencia>selectedEquivalencias;
     
@@ -89,13 +89,15 @@ public class equivalenciasBean implements Serializable{
            user=(Usuario)session.getAttribute("admin");
            selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
            selectedContrato=(Contrato)context.getSessionMap().get("contrato");
+           selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
            context.getSessionMap().remove("contrato");
            context.getSessionMap().remove("movilidad");
-           listaAuxEquivalencias=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
+           listaAuxEquivalencias.addAll(selectedContrato.getEquivalencias());//(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
               
            if(context.getSessionMap().containsKey("contratoComparado")){
         contratoComparado=(Contrato)context.getSessionMap().get("contratoComparado");
-        listaAuxEquivalenciasComparado=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(contratoComparado.getIdContrato());
+        contratoComparado=equivalenciaService.findContrato(contratoComparado.getIdContrato());
+        listaAuxEquivalenciasComparado.addAll(contratoComparado.getEquivalencias());//(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(contratoComparado.getIdContrato());
         context.getSessionMap().remove("contratoComparado");
          
            }

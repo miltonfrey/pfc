@@ -158,17 +158,31 @@ public class verMisContratosBean implements Serializable{
     
     
     public String eliminarContrato(){
-        
+        selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+        ArrayList<Equivalencia> listaCopia=new ArrayList<>(selectedContrato.getEquivalencias());
         try{
-            
-            equivalenciaService.eliminaContrato(selectedContrato);
-            
+           
+           selectedContrato.setEquivalencias(null);
+           equivalenciaService.eliminaContrato(selectedContrato);
+             
            }catch(Exception ex){
                ex.printStackTrace();
                beanUtilidades.creaMensaje("error al eliminar contrato", FacesMessage.SEVERITY_ERROR);
                return null;
            }
-        
+         
+            for(Equivalencia e:listaCopia){
+                try{
+                //e.getContratos().remove(selectedContrato);
+                //equivalenciaService.actualizarEquivalencia(e);
+                //if(e.getContratos().isEmpty()==true)
+                equivalenciaService.eliminarEquivalencia(e);
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+            
+          
         beanUtilidades.creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);
         listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
        verContratos();

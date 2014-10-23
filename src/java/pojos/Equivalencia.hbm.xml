@@ -13,7 +13,7 @@
         </property>
         <one-to-one name="grupoAsignaturaB" class="pojos.GrupoAsignaturaB"></one-to-one>
         <one-to-one name="grupoAsignaturaA" class="pojos.GrupoAsignaturaA"></one-to-one>
-        <set name="contratos" table="contrato_equivalencia" inverse="true" lazy="true" fetch="select">
+        <set name="contratos"  table="contrato_equivalencia" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="idEquivalencia" not-null="true" />
             </key>
