@@ -48,12 +48,10 @@
                          widgetVar="equivalenciaTable"
                          >
                    
-                   <f:facet name="header">
-                       UDC
-                       <h:outputText value=" #{equivalenciasPublicasBean.universidadStr}"/>
-                   </f:facet>
                    
-                <p:column headerText="nombre" styleClass="asignatura">
+                   
+                   <p:column headerText="nombre" styleClass="asignaturaPublica">
+                    <f:facet name="header">UDC</f:facet> 
                     <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
                         <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
@@ -61,20 +59,44 @@
                     </ui:repeat>
                 </p:column>
                 
-                <p:column headerText="Cr" styleClass="creditos">
+                   <p:column headerText="Cr" styleClass="creditosPublica">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
+                        
+                        <h:outputText value="#{asignatura.asignatura.creditos}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                   
+                    <p:column headerText="periodo" styleClass="periodoPublica">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
                         
                         <h:outputText value="#{asignatura.asignatura.periodo}"/>
                         <br/>
                     </ui:repeat>
-                </p:column>   
+                </p:column>
                    
                    
-                   <p:column headerText="#{equivalenciasPublicasBean.universidadStr}" styleClass="asignatura">
+                   <p:column headerText="#{equivalenciasPublicasBean.universidadStr}" styleClass="asignaturaPublica">
+                       <f:facet name="header">#{equivalenciasPublicasBean.universidadStr}</f:facet>
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
                         <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{ not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
                          <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
                          <br/>
+                    </ui:repeat>
+                </p:column>
+                       <p:column headerText="Cr" styleClass="creditos">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
+                        
+                        <h:outputText value="#{asignatura.asignatura.creditos}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                   
+                    <p:column headerText="periodo" styleClass="periodoPublica">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
+                        
+                        <h:outputText value="#{asignatura.asignatura.periodo}"/>
+                        <br/>
                     </ui:repeat>
                 </p:column>
            

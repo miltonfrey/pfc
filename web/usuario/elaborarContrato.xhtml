@@ -177,8 +177,17 @@
                         <br/>
                     </ui:repeat>
                 </p:column>
-                
-                <p:column selectionMode="multiple" styleClass="multiple" rendered="#{misEquivalenciasBean.verConfirmar}"/>
+                 <p:column selectionMode="multiple" styleClass="multiple" rendered="#{misEquivalenciasBean.verConfirmar}"/>
+         <p:columnGroup type="footer">
+            <p:row>
+                <p:column footerText="total creditos: #{misEquivalenciasBean.creditosA}" rowspan="1" >
+                   
+                </p:column>
+                <p:column colspan="1" headerText="Total créditos" />
+            </p:row>
+            
+                </p:columnGroup>
+               
                
                 <f:facet name="footer" rendered="#{misEquivalenciasBean.verConfirmar}">
                              <p:commandButton id="deleteBtn"  process=":formTablaEquivalencias:" update=":formTablaEquivalencias: :formEquivalenciaFic:msgs"  icon="ui-icon-search" value="Borrar" action="#{misEquivalenciasBean.eliminaEquivalenciasLista}"

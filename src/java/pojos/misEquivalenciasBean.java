@@ -79,7 +79,9 @@ public class misEquivalenciasBean implements Serializable{
     
     private ArrayList<Equivalencia>selectedEquivalencias;
     
-    private static int j=0;
+    private int j=0;
+    private int creditosA;
+    private int creditosB;
     private boolean verInfo;
     private boolean verConfirmar=true;
     
@@ -289,6 +291,22 @@ public class misEquivalenciasBean implements Serializable{
         this.selectedContrato = selectedContrato;
     }
 
+    public int getCreditosA() {
+        return creditosA;
+    }
+
+    public void setCreditosA(int creditosA) {
+        this.creditosA = creditosA;
+    }
+
+    public int getCreditosB() {
+        return creditosB;
+    }
+
+    public void setCreditosB(int creditosB) {
+        this.creditosB = creditosB;
+    }
+
   
     
 
@@ -345,7 +363,7 @@ public class misEquivalenciasBean implements Serializable{
        
         ma=new MiembroGrupoAsignaturaA(a, grupoA);
         grupoA.getMiembroGrupoAsignaturaAs().add(ma);
-                                                // con cascade save-update no hace falta salvar el miembro_grupo_asignaturas
+                  creditosA=creditosA+a.getCreditos();                              // con cascade save-update no hace falta salvar el miembro_grupo_asignaturas
         
         }
         

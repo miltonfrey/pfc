@@ -108,7 +108,7 @@ body.green{
     width: 80%;
     position:absolute;
     
-    left:140px;
+    left:120px;
     text-align: center;
     font-size: 15px;
    
@@ -233,7 +233,24 @@ body.green{
     
 }
 
+.asignaturaPublica{
+    width: 6%;
+    font-size: 15px;
+}
 
+.creditosPublica{
+    
+    width: 3%;
+    font-size: 15px;
+    
+}
+
+.periodoPublica{
+    
+    width: 4%;
+    font-size: 15px;
+    
+}
 
     
     
