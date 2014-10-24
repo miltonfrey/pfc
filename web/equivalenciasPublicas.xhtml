@@ -25,12 +25,13 @@
         <br/>
         <h:form id="formUniversidad">
             <p:selectOneMenu value="#{equivalenciasPublicasBean.universidadStr}" required="true" requiredMessage="hay que elegir una universidad de destino" rendered="#{equivalenciasPublicasBean.checkPais}">
+                <p:ajax event="change" listener="#{equivalenciasPublicasBean.onChangeUni}" update=":formUniversidad :formPais"/>
                 <f:selectItem itemLabel="elige una universidad" itemValue="#{null}" noSelectionOption="true"/>
                 <f:selectItems value="#{equivalenciasPublicasBean.listaUniversidad}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"/>
                 
             </p:selectOneMenu>
             <br/><br/>
-            <p:commandButton value="mostrar equivalencias" action="#{equivalenciasPublicasBean.buscar()}" update=":formTablaEquivalencias :formPais"/>
+            <p:commandButton value="mostrar equivalencias" action="#{equivalenciasPublicasBean.buscar()}" update=":formTablaEquivalencias :formPais" rendered="#{equivalenciasPublicasBean.checkUni}"/>
             
         </h:form>
         
@@ -47,7 +48,12 @@
                          widgetVar="equivalenciaTable"
                          >
                    
-                <p:column headerText="UDC" styleClass="asignatura">
+                   <f:facet name="header">
+                       UDC
+                       <h:outputText value=" #{equivalenciasPublicasBean.universidadStr}"/>
+                   </f:facet>
+                   
+                <p:column headerText="nombre" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
                         <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
@@ -55,6 +61,15 @@
                     </ui:repeat>
                 </p:column>
                 
+                <p:column headerText="Cr" styleClass="creditos">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
+                        
+                        <h:outputText value="#{asignatura.asignatura.periodo}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>   
+                   
+                   
                    <p:column headerText="#{equivalenciasPublicasBean.universidadStr}" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
                         <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{ not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
