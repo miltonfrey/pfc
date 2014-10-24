@@ -106,10 +106,6 @@ public class misEquivalenciasBean implements Serializable{
         listaAsignaturasFic=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad("UDC");
         listaAsignaturasUniversidad=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(selectedMovilidad.getUniversidad().getNombre());
         
-       
-            
-        
-        
          if(context.getSessionMap().containsKey("contrato")){
         selectedContrato=(Contrato)context.getSessionMap().get("contrato");
         c=equivalenciaService.findContrato(selectedContrato.getIdContrato());

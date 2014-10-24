@@ -3,6 +3,7 @@
 package pojos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -139,6 +140,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
         while(j.hasNext()){
             MiembroGrupoAsignaturaA m=(MiembroGrupoAsignaturaA)j.next();
             Hibernate.initialize(m.getAsignatura());
+            
         }
         
         
@@ -148,7 +150,35 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
            return c; 
 }       
   
+      @Override      
+    public List<Equivalencia> equivalenciasPublicas(String Universidad){
+        
+        ArrayList<Equivalencia> listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaDao.equivalenciasPublicas(Universidad);
+        Iterator i;
+        for(Equivalencia e:listaEquivalencias){
+            Hibernate.initialize(e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs());
+            i=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaA m=(MiembroGrupoAsignaturaA)i.next();
+                Hibernate.initialize(m.getAsignatura());
+            }
             
+             Hibernate.initialize(e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs());
+            i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaB m=(MiembroGrupoAsignaturaB)i.next();
+                Hibernate.initialize(m.getAsignatura());
+            }
+        }
+        return listaEquivalencias;
+    }
+    
+    public List<Object[]> listaObject(){
+        
+        return equivalenciaDao.listaObject();
+    }
+    
+    
 }         
             
             

@@ -24,7 +24,8 @@ public interface EquivalenciaService {
     public List<Contrato> listaContratos(Movilidad m);
     public void eliminaContrato(Contrato c);
     public Contrato findContrato(Integer id);
-   
+   public List<Equivalencia> equivalenciasPublicas(String universidad);
+   public List<Object[]> listaObject();
 }
 
 

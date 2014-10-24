@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Equivalencias públicas</title>
+        <h:outputStylesheet library="css" name="estilos.css"/>
+        <h:outputScript library="js" name="funciones.js"/>
+    </h:head>
+    <h:body>
+      
+        <h:form id="formPais">
+             <p:growl id="msgs" />
+            <p:selectOneMenu value="#{equivalenciasPublicasBean.paisStr}" required="true" requiredMessage="hay que elegir un pais">
+                <p:ajax event="change" listener="#{equivalenciasPublicasBean.onChangePais()}" update=":formUniversidad :formPais:msgs"/>
+                <f:selectItem itemLabel="elige un país"  noSelectionOption="true"/>
+                <f:selectItems var="pais" value="#{paisBean.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}"/>
+            
+            </p:selectOneMenu>
+            
+        </h:form>
+        <br/>
+        <h:form id="formUniversidad">
+            <p:selectOneMenu value="#{equivalenciasPublicasBean.universidadStr}" required="true" requiredMessage="hay que elegir una universidad de destino" rendered="#{equivalenciasPublicasBean.checkPais}">
+                <f:selectItem itemLabel="elige una universidad" itemValue="#{null}" noSelectionOption="true"/>
+                <f:selectItems value="#{equivalenciasPublicasBean.listaUniversidad}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"/>
+                
+            </p:selectOneMenu>
+            <br/><br/>
+            <p:commandButton value="mostrar equivalencias" action="#{equivalenciasPublicasBean.buscar()}" update=":formTablaEquivalencias :formPais"/>
+            
+        </h:form>
+        
+        <br/><br/><br/>
+        
+        <h:form id="formTablaEquivalencias">
+           
+               <p:dataTable id="tablaEquivalencias"
+                         emptyMessage="no hay equivalencias publicas"
+                         value="#{equivalenciasPublicasBean.listaEquivalencias}"
+                         var="equivalencia"
+                         styleClass="tablaEquivalenciasPublicas"
+                         rowKey="#{equivalencia.idequivalencia}"
+                         widgetVar="equivalenciaTable"
+                         >
+                   
+                <p:column headerText="UDC" styleClass="asignatura">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
+                        <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
+                        <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                
+                   <p:column headerText="#{equivalenciasPublicasBean.universidadStr}" styleClass="asignatura">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
+                        <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{ not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
+                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
+                         <br/>
+                    </ui:repeat>
+                </p:column>
+           
+            </p:dataTable>
+            
+        </h:form>
+        
+        <br />
+        
+        
+        <h:outputLink value="principal.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+        
+    </h:body>
+</html>
+
+

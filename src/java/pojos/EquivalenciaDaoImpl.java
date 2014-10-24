@@ -100,8 +100,20 @@ private SessionFactory sessionFactory;
         
         return (Contrato)sessionFactory.getCurrentSession().createQuery("select c from Contrato c where c.idContrato=:contrato").setParameter("contrato", id).uniqueResult();
     }
-    
+  
+    @Override
+   public List<Equivalencia> equivalenciasPublicas(String universidad){
+       
+       String query="select e from Equivalencia e where e.visible='si' and idequivalencia in(select  g.idequivalencia from GrupoAsignaturaB g where g.idequivalencia in(select m.grupoAsignaturaB.idequivalencia from MiembroGrupoAsignaturaB m where m.asignatura.id.nombreUniversidad='ABC'))";
+       
+       return sessionFactory.getCurrentSession().createQuery(query).list();
+   }
    
+   public List<Object[]> listaObject(){ 
+       
+       String query="select * from equivalencia";
+       return sessionFactory.getCurrentSession().createSQLQuery(query).list();
+   }
     
     
 }

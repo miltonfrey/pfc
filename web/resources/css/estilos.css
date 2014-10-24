@@ -102,6 +102,18 @@ body.green{
    
 }
 
+
+.tablaEquivalenciasPublicas{
+    height: 65%;
+    width: 80%;
+    position:absolute;
+    
+    left:140px;
+    text-align: center;
+    font-size: 15px;
+   
+}
+
 .tablaEquivalenciasAdmin{
     //top: 200px;
     //left: 200px;
