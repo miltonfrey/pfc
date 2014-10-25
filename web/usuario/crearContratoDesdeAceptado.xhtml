@@ -182,6 +182,13 @@
                     </ui:repeat>
                 </p:column>
                 
+                <p:column headerText="Cr" styleClass="creditos">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
+                        <h:outputText value="#{asignatura.asignatura.creditos}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                
                 <p:column headerText="#{misEquivalenciasBean.selectedMovilidad.universidad.nombre}" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura} "/>
@@ -189,6 +196,25 @@
                         <br/>
                     </ui:repeat>
                 </p:column>
+                <p:column headerText="Cr" styleClass="creditos">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
+                        <h:outputText value="#{asignatura.asignatura.creditos} "/>
+                        
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                <p:columnGroup type="footer">
+            <p:row>
+                <p:column footerText="total créditos: " />
+                <p:column footerText="#{misEquivalenciasBean.creditosA}"/>    
+                   
+                
+                <p:column  footerText="total créditos:  " />
+                <p:column footerText="#{misEquivalenciasBean.creditosB}"/>
+                
+            </p:row>
+            
+                </p:columnGroup>
                
             </p:dataTable>
             
@@ -215,6 +241,13 @@
                     </ui:repeat>
                 </p:column>
                 
+                <p:column headerText="Cr" styleClass="creditos">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
+                        <h:outputText value="#{asignatura.asignatura.creditos}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                
                 <p:column headerText="#{misEquivalenciasBean.selectedMovilidad.universidad.nombre}" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura} "/>
@@ -223,7 +256,28 @@
                     </ui:repeat>
                 </p:column>
                 
+                <p:column headerText="Cr" styleClass="creditos">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
+                        <h:outputText value="#{asignatura.asignatura.creditos} "/>
+                        
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                
                 <p:column selectionMode="multiple" styleClass="multiple" rendered="#{misEquivalenciasBean.verConfirmar}"/>
+                
+                <p:columnGroup type="footer">
+            <p:row>
+                <p:column footerText="total créditos: " />
+                <p:column footerText="#{misEquivalenciasBean.creditosA}"/>    
+                   
+                
+                <p:column  footerText="total créditos:  " />
+                <p:column footerText="#{misEquivalenciasBean.creditosB}"/>
+                <p:column/>
+            </p:row>
+            
+                </p:columnGroup>
                
                 <f:facet name="footer" rendered="#{misEquivalenciasBean.verConfirmar}">
                              <p:commandButton id="deleteBtn"  process=":formTablaEquivalenciasNuevo:" update=":formTablaEquivalenciasNuevo :formEquivalenciaFic:msgs"  icon="ui-icon-search" value="Borrar" action="#{misEquivalenciasBean.eliminaEquivalenciasLista}"

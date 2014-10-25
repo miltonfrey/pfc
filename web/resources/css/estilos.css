@@ -252,7 +252,23 @@ body.green{
     
 }
 
+.nuevoCreditos{
     
+    width: 30%;
+    font-size: 15px;
+}
+
+.nuevoAsignatura{
+    
+    width: 50%;
+    font-size: 15px;
+}
+
+.nuevoMultiple{
+    
+    width: 20%;
+    font-size: 15px;
+}
     
 
 

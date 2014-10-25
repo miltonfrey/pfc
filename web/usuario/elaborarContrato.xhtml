@@ -163,9 +163,18 @@
                          
                 <f:facet name="header">LISTA DE EQUIVALENCIAS</f:facet>
                 
+                
+                
                 <p:column headerText="UDC" styleClass="asignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}"/>
+                        <br/>
+                    </ui:repeat>
+                </p:column>
+                
+                <p:column headerText="Cr" styleClass="creditos">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
+                        <h:outputText value="#{asignatura.asignatura.creditos}"/>
                         <br/>
                     </ui:repeat>
                 </p:column>
@@ -176,14 +185,28 @@
                         
                         <br/>
                     </ui:repeat>
-                </p:column>
-                 <p:column selectionMode="multiple" styleClass="multiple" rendered="#{misEquivalenciasBean.verConfirmar}"/>
-         <p:columnGroup type="footer">
-            <p:row>
-                <p:column footerText="total creditos: #{misEquivalenciasBean.creditosA}" rowspan="1" >
                    
                 </p:column>
-                <p:column colspan="1" headerText="Total créditos" />
+                
+                <p:column headerText="Cr" styleClass="creditos">
+                    <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
+                        <h:outputText value="#{asignatura.asignatura.creditos} "/>
+                        
+                        <br/>
+                    </ui:repeat>
+                   
+                </p:column>
+                 <p:column selectionMode="multiple" styleClass="multiple" rendered="#{misEquivalenciasBean.verConfirmar}"/>
+                 
+                 
+         <p:columnGroup type="footer">
+            <p:row>
+                <p:column footerText="total créditos: "  styleClass="asignatura"/>
+                <p:column footerText="#{misEquivalenciasBean.creditosA}" styleClass="creditos"/>
+                
+                <p:column footerText="total créditos: "  styleClass="asignatura"/>
+                <p:column footerText="#{misEquivalenciasBean.creditosB}" styleClass="creditos"/>
+                <p:column  styleClass="multiple"/>
             </p:row>
             
                 </p:columnGroup>
@@ -192,7 +215,7 @@
                 <f:facet name="footer" rendered="#{misEquivalenciasBean.verConfirmar}">
                              <p:commandButton id="deleteBtn"  process=":formTablaEquivalencias:" update=":formTablaEquivalencias: :formEquivalenciaFic:msgs"  icon="ui-icon-search" value="Borrar" action="#{misEquivalenciasBean.eliminaEquivalenciasLista}"
                                               oncomplete="PF('equivalenciaTable').unselectAllRows();" rendered="#{misEquivalenciasBean.verConfirmar}"/>
-                             <p:commandButton id="confirmBtn" value="confirmar contrato" process=":formTablaEquivalencias" action="#{misEquivalenciasBean.confirmarContrato}" update=":formEquivalenciaFic: :formTablaEquivalencias" oncomplete="PF('equivalenciaTable').unselectAllRows();"
+                             <p:commandButton id="confirmBtn" value="confirmar contrato" process=":formTablaEquivalencias" action="#{misEquivalenciasBean.confirmarContrato}" update=":formEquivalenciaFic: :formTablaEquivalencias:tablaEquivalencias:" oncomplete="PF('equivalenciaTable').unselectAllRows();"
                                               rendered="#{misEquivalenciasBean.verConfirmar}"/>
                                
                          </f:facet>

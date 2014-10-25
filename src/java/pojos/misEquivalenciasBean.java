@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 //import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -82,6 +83,11 @@ public class misEquivalenciasBean implements Serializable{
     private int j=0;
     private int creditosA;
     private int creditosB;
+    
+    private int creditosComparadoA;
+    private int creditosComparadoB;
+    
+    
     private boolean verInfo;
     private boolean verConfirmar=true;
     
@@ -113,7 +119,10 @@ public class misEquivalenciasBean implements Serializable{
         c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
         listaAuxEquivalencias.addAll(c.getEquivalencias());   //(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         listaAuxEquivalenciasComparado.addAll(c.getEquivalencias()); //=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
-        //lo comparamos igual para la version b
+        //lo comparamos igual en la version b
+             totalCreditos(listaAuxEquivalencias);
+             creditosComparadoA=creditosA;
+             creditosComparadoB=creditosB;
         if(context.getSessionMap().containsKey("comparado")){
            
         //listaAuxEquivalenciasComparado.//=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
@@ -307,6 +316,22 @@ public class misEquivalenciasBean implements Serializable{
         this.creditosB = creditosB;
     }
 
+    public int getCreditosComparadoA() {
+        return creditosComparadoA;
+    }
+
+    public void setCreditosComparadoA(int creditosComparadoA) {
+        this.creditosComparadoA = creditosComparadoA;
+    }
+
+    public int getCreditosComparadoB() {
+        return creditosComparadoB;
+    }
+
+    public void setCreditosComparadoB(int creditosComparadoB) {
+        this.creditosComparadoB = creditosComparadoB;
+    }
+
   
     
 
@@ -371,7 +396,7 @@ public class misEquivalenciasBean implements Serializable{
             
         mb=new MiembroGrupoAsignaturaB(a,grupoB);
         grupoB.getMiembroGrupoAsignaturaBs().add(mb);
-       
+                   creditosB=creditosB+a.getCreditos();
             
         }
         equivalencia.setVisible("no");
@@ -526,74 +551,7 @@ public class misEquivalenciasBean implements Serializable{
     }
     
     
- /* public String  crearContratoDesdeAceptado(){
-        if(listaAuxEquivalencias.isEmpty()){
-            
-            beanUtilidades.creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
-        
-        //selectedContrato.setFecha(Calendar.getInstance().getTime());
-        Contrato cNuevo=new Contrato();
-        cNuevo.setFecha(Calendar.getInstance().getTime());
-        cNuevo.setMovilidad(selectedMovilidad);
-        cNuevo.setEstado("pendiente");
-        
-        try{
-        equivalenciaService.creaContrato(cNuevo);
-        }catch(Exception ex){
-            
-            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
-        
-        
-        
-        for(Equivalencia e:listaAuxEquivalencias){
-            Equivalencia eNueva=new Equivalencia();
-             GrupoAsignaturaA auxA=new GrupoAsignaturaA();
-             GrupoAsignaturaB auxB=new GrupoAsignaturaB();
-             GrupoAsignaturaA gA=e.getGrupoAsignaturaA();
-             GrupoAsignaturaB gB=e.getGrupoAsignaturaB();
-             
-                for(MiembroGrupoAsignaturaA mA:gA.getMiembroGrupoAsignaturaAs()){
-                    
-                    MiembroGrupoAsignaturaA a=new MiembroGrupoAsignaturaA(mA.getAsignatura(), auxA);
-                    auxA.getMiembroGrupoAsignaturaAs().add(a);
-                    
-                }
-                for(MiembroGrupoAsignaturaB mB:gB.getMiembroGrupoAsignaturaBs()){
-                    
-                    MiembroGrupoAsignaturaB b=new MiembroGrupoAsignaturaB(mB.getAsignatura(), auxB);
-                    auxB.getMiembroGrupoAsignaturaBs().add(b);
-                
-        
-        }
-           
-            try{
-                eNueva.setContrato(cNuevo);
-                eNueva.setVisible("no");
-                equivalenciaService.crearEquivalencia(eNueva);
-                auxA.setEquivalencia(eNueva);
-                auxB.setEquivalencia(eNueva);
-                equivalenciaService.crearGrupoAsignaturasA(auxA);
-                equivalenciaService.crearGrupoAsignaturasB(auxB);
-                
-                
-            }catch(Exception ex){
-                ex.printStackTrace();
-                beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-                return null;
-            }
-            
-            
-        
-        
-    }
-        beanUtilidades.creaMensaje("contrato creado correctamente", FacesMessage.SEVERITY_INFO);
-        verConfirmar=false;
-        return null;
-  }*/
+ 
     
      public String  crearContratoDesdeAceptado(){
        if(listaAuxEquivalencias.isEmpty()){
@@ -649,8 +607,22 @@ public class misEquivalenciasBean implements Serializable{
         if(selectedEquivalencias.isEmpty()==false){
             
            for(int i=0;i<selectedEquivalencias.size();i++){
-           
+          
+               Iterator it=selectedEquivalencias.get(i).getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
+               while(it.hasNext()){
+                   MiembroGrupoAsignaturaA mA=(MiembroGrupoAsignaturaA)it.next();
+                   creditosA=creditosA-mA.getAsignatura().getCreditos();
+               }
+               
+               it=selectedEquivalencias.get(i).getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
+               while(it.hasNext()){
+                   MiembroGrupoAsignaturaB mB=(MiembroGrupoAsignaturaB)it.next();
+                   creditosB=creditosB-mB.getAsignatura().getCreditos();
+               }
+               
           listaAuxEquivalencias.remove(selectedEquivalencias.get(i));
+          
+          
           
         }
         }
@@ -670,7 +642,24 @@ public class misEquivalenciasBean implements Serializable{
         verInfo=false;
     }
    
-    
+    public void totalCreditos(ArrayList<Equivalencia> lista){
+        
+        for(Equivalencia e:lista){
+            Iterator i=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaA mA=(MiembroGrupoAsignaturaA)i.next();
+                creditosA=creditosA+mA.getAsignatura().getCreditos();
+            }
+        }
+        
+        for(Equivalencia e:lista){
+            Iterator i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaB mB=(MiembroGrupoAsignaturaB)i.next();
+                creditosB=creditosB+mB.getAsignatura().getCreditos();
+            }
+        }
+    }
     
      
      
