@@ -91,6 +91,7 @@ public class misEquivalenciasBean implements Serializable{
     private boolean verInfo;
     private boolean verConfirmar=true;
     
+    private boolean ultimo;
     
     
     
@@ -108,6 +109,8 @@ public class misEquivalenciasBean implements Serializable{
       
         user=(Usuario)session.getAttribute("user");
         
+        
+        
         if(context.getSessionMap().containsKey("movilidad")){
         selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
         context.getSessionMap().remove("movilidad");
@@ -123,10 +126,11 @@ public class misEquivalenciasBean implements Serializable{
              totalCreditos(listaAuxEquivalencias);
              creditosComparadoA=creditosA;
              creditosComparadoB=creditosB;
-        if(context.getSessionMap().containsKey("comparado")){
-           
+             
+        if(context.getSessionMap().containsKey("ultimo")){
+           ultimo=true;
         //listaAuxEquivalenciasComparado.//=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
-        context.getSessionMap().remove("comparado");
+        context.getSessionMap().remove("ultimo");
         }
         
          }
@@ -144,6 +148,7 @@ public class misEquivalenciasBean implements Serializable{
          
        
     }
+    
 
     public beanUtilidades getBeanUtilidades() {
         return beanUtilidades;
@@ -330,6 +335,14 @@ public class misEquivalenciasBean implements Serializable{
 
     public void setCreditosComparadoB(int creditosComparadoB) {
         this.creditosComparadoB = creditosComparadoB;
+    }
+
+    public boolean isUltimo() {
+        return ultimo;
+    }
+
+    public void setUltimo(boolean ultimo) {
+        this.ultimo = ultimo;
     }
 
   
@@ -661,6 +674,17 @@ public class misEquivalenciasBean implements Serializable{
         }
     }
     
+    public String nuevoAceptado(){
+        
+        
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad",selectedMovilidad);
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
+         
+         return ("crearContratoDesdeAceptado.xhtml?faces-redirect=true");
+         
+     
+        
+    }
      
      
     

@@ -134,10 +134,11 @@
                 </p:column>
                 
                  <p:column headerText="ver contrato/editar">
+                     
                      <p:commandButton value="ver contrato/editar" action="#{verMisContratosBean.editarContrato}" ajax="false" rendered="#{contrato.estado eq 'pendiente'||contrato.estado eq 'rechazado'}">
                         <f:setPropertyActionListener value="#{contrato}" target="#{verMisContratosBean.selectedContrato}"/> 
                     </p:commandButton>
-                     <p:commandButton value="crear nuevo a partir de este" action="#{verMisContratosBean.crearContratoDesdeAceptado}" ajax="false" rendered="#{contrato.estado eq 'aceptado' and verMisContratosBean.verAceptado==true}">
+                     <p:commandButton value="Ver contrato" action="#{verMisContratosBean.revisarContrato}" ajax="false" rendered="#{contrato.estado eq 'aceptado' and verMisContratosBean.verAceptado==true}">
                         <f:setPropertyActionListener value="#{contrato}" target="#{verMisContratosBean.selectedContrato}"/> 
                     </p:commandButton>
                 </p:column>

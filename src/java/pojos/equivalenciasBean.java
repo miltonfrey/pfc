@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 //import java.util.Set;
 import javax.annotation.PostConstruct;
@@ -55,7 +56,13 @@ public class equivalenciasBean implements Serializable{
     private Contrato contratoComparado;
     private Usuario user;
     
+    private int creditosA;
+    private int creditosB;
+    private int creditosComparadoA;
+    private int creditosComparadoB;
+    
     Equivalencia equivalencia;
+    
     
     
     
@@ -89,11 +96,16 @@ public class equivalenciasBean implements Serializable{
            context.getSessionMap().remove("contrato");
            context.getSessionMap().remove("movilidad");
            listaAuxEquivalencias.addAll(selectedContrato.getEquivalencias());//(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
-              
+            creditosA=totalCreditos(listaAuxEquivalencias)[0];
+            creditosB=totalCreditos(listaAuxEquivalencias)[1];
+             
            if(context.getSessionMap().containsKey("contratoComparado")){
         contratoComparado=(Contrato)context.getSessionMap().get("contratoComparado");
+             
         contratoComparado=equivalenciaService.findContrato(contratoComparado.getIdContrato());
         listaAuxEquivalenciasComparado.addAll(contratoComparado.getEquivalencias());//(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(contratoComparado.getIdContrato());
+        creditosComparadoA=totalCreditos(listaAuxEquivalenciasComparado)[0];
+        creditosComparadoB=totalCreditos(listaAuxEquivalenciasComparado)[1];
         context.getSessionMap().remove("contratoComparado");
          
            }
@@ -216,6 +228,41 @@ public class equivalenciasBean implements Serializable{
         this.apruebaOrechaza = apruebaOrechaza;
     }
 
+    public int getCreditosA() {
+        return creditosA;
+    }
+
+    public void setCreditosA(int creditosA) {
+        this.creditosA = creditosA;
+    }
+
+    public int getCreditosB() {
+        return creditosB;
+    }
+
+    public void setCreditosB(int creditosB) {
+        this.creditosB = creditosB;
+    }
+
+    public int getCreditosComparadoA() {
+        return creditosComparadoA;
+    }
+
+    public void setCreditosComparadoA(int creditosComparadoA) {
+        this.creditosComparadoA = creditosComparadoA;
+    }
+
+    public int getCreditosComparadoB() {
+        return creditosComparadoB;
+    }
+
+    public void setCreditosComparadoB(int creditosComparadoB) {
+        this.creditosComparadoB = creditosComparadoB;
+    }
+    
+    
+    
+
    
     public String publicarEquivalencia(){
         
@@ -282,6 +329,31 @@ public class equivalenciasBean implements Serializable{
         
         return null;
     }
+    
+     public int[] totalCreditos(ArrayList<Equivalencia> lista){
+        
+         int a=0;
+         int b=0;
+         
+        for(Equivalencia e:lista){
+            Iterator i=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaA mA=(MiembroGrupoAsignaturaA)i.next();
+                a=a+mA.getAsignatura().getCreditos();
+            }
+        }
+        
+        for(Equivalencia e:lista){
+            Iterator i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaB mB=(MiembroGrupoAsignaturaB)i.next();
+                b=b+mB.getAsignatura().getCreditos();
+            }
+        }
+        
+        return new int[]{a,b};
+    }
+    
     
    
 }

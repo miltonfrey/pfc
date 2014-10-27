@@ -233,6 +233,26 @@ public class verMisContratosBean implements Serializable{
         visibleContratos=false;
     }
     
+     
+     public String revisarContrato(){
+         
+          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
+       
+        
+        for(Contrato c:listaContratos){
+            if(selectedContrato.getFecha().compareTo(c.getFecha())==-1){
+             return ("verContrato.xhtml?faces-redirect=true");
+            }
+            
+        }
+        
+        
+        
+       FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ultimo", "ultimo");
+          return ("verContrato.xhtml?faces-redirect=true");
+     }
+     
     
     public String crearContrato(){
         
@@ -253,13 +273,7 @@ public class verMisContratosBean implements Serializable{
     }
     
     
-     public String crearContratoDesdeAceptado(){
-         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad",selectedMovilidad);
-         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
-         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("comparado", "true");
-         return ("crearContratoDesdeAceptado.xhtml?faces-redirect=true");
-         
-     }
+    
     
     
     
