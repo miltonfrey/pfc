@@ -11,18 +11,7 @@
         <h:outputScript library="js" name="funciones.js"/>
     </h:head>
     <h:body>
-         <p:panel>
-        
-            <h:outputLabel value="Última modificación: "/>
-            <h:outputText value="#{misEquivalenciasBean.selectedContrato.fecha}">
-                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
-            </h:outputText>    
-            
-        </p:panel>
-        
-        
          
-        
         <p:outputPanel id="panelFic">
         
             <h:form id="formEquivalenciaFic">
@@ -172,7 +161,13 @@
                          rowKey="#{equivalencia.idequivalencia}"
                          widgetVar="equivalenciaTable">
                          
-                <f:facet name="header">CONTRATO</f:facet>
+                <f:facet name="header">Estado del contrato:
+                    <h:outputText value=" #{misEquivalenciasBean.selectedContrato.estado}"/><br/>última modificación
+                    <h:outputText value="#{misEquivalenciasBean.selectedContrato.fecha}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                           
+                </f:facet>
                 
                 
                 <p:column headerText="UDC" styleClass="asignatura">
@@ -231,7 +226,7 @@
                          rowKey="#{equivalencia.idequivalencia}"
                          widgetVar="equivalenciaTableNuevo">
                          
-                <f:facet name="header">CONTRATO NUEVO</f:facet>
+                <f:facet name="header">CONTRATO EDITADO</f:facet>
                 
                 
                 <p:column headerText="UDC" styleClass="nuevoAsignatura">

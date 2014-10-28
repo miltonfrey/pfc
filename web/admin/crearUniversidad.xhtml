@@ -71,7 +71,7 @@
                                   oncomplete="PF('universidadTable').unselectAllRows();"/>
               </h:panelGrid>
           </h:form>
-              
+        <p:separator/>
                  <br/><br/> 
                  
                  <h:form id="formTabla">
@@ -79,16 +79,17 @@
                              widgetVar="universidadTable" paginator="true" rows="10"
                              selection="#{crearUniversidadBean.selectedUniversidades}"
                              rowKey="#{universidad.nombre}"
+                             styleClass="borderless"
                              >
-                             
-                
+                                        
+                         <f:facet name="header">Lista de Universidades de: #{crearUniversidadBean.paisStr}</f:facet>
                            <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
                         
                               <h:outputText value="#{universidad.codUniversidad}"/>
                             
                            </p:column>
                          
-                           <p:column headerText="nombre" sortBy="#{universidad.nombre}">
+                         <p:column headerText="nombre" sortBy="#{universidad.nombre}" filterBy="#{universidad.nombre}">
                         
                             
                               <h:outputText value="#{universidad.nombre}"/>
@@ -119,7 +120,8 @@
                                <f:facet name="footer">
                                 <p:commandButton id="b1" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
                                                  value="eliminar" action="#{crearUniversidadBean.eliminaUniversidadLista}"  icon="edit_icon" update=":formTabla :formPais:msgs :formDetalles"
-                                     oncomplete="PF('universidadTable').unselectAllRows();"/>
+                                                 oncomplete="PF('universidadTable').unselectAllRows();"
+                                                 />
                                
                                </f:facet>
                 
@@ -153,7 +155,7 @@
              <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
         
                     <br/><br/>
-                    <p:commandButton value="salir" action="#{beanUtilidades.salir}" ajax="false"/>
+                    <p:commandButton value="Cerrar sesión" action="#{beanUtilidades.salir}" ajax="false"/>
             </h:form>
            
         

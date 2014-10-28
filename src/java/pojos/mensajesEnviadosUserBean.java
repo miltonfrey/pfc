@@ -46,6 +46,7 @@ public class mensajesEnviadosUserBean implements Serializable{
         HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         user=(Usuario)session.getAttribute("user");
         setListaMensajesEnviados((ArrayList<Mensaje>)mensajeService.mensajesEnviados(user.getLogin(), "admin"));
+        
     }
 
     public beanUtilidades getBeanUtilidades() {

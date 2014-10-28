@@ -31,14 +31,19 @@
                 
             </p:selectOneMenu>
             <br/><br/>
-            <p:commandButton value="mostrar equivalencias" action="#{equivalenciasPublicasBean.buscar()}" update=":formTablaEquivalencias :formPais" rendered="#{equivalenciasPublicasBean.checkUni}"/>
+            <p:commandButton value="mostrar" action="#{equivalenciasPublicasBean.buscar()}" update=":formTablaEquivalencias :formPais" rendered="#{equivalenciasPublicasBean.checkUni}"/>
             
         </h:form>
         
         <br/><br/><br/>
         
         <h:form id="formTablaEquivalencias">
-           
+            <h:panelGrid columns="2" cellpadding="5" rendered="#{equivalenciasPublicasBean.checkUni}">
+            <p:outputLabel value="Web:" rendered="#{not empty equivalenciasPublicasBean.universidad.web}"/>
+            <h:outputLink value="#{equivalenciasPublicasBean.universidad.web}" rendered="#{not empty equivalenciasPublicasBean.universidad.web}">link</h:outputLink>
+            <p:outputLabel value="Info:" rendered="#{not empty equivalenciasPublicasBean.universidad.info}"/>
+            <p:inputTextarea value="#{equivalenciasPublicasBean.universidad.info}" cols="60" rows="10" readonly="true" rendered="#{not empty equivalenciasPublicasBean.universidad.info}"/>
+            </h:panelGrid>
                <p:dataTable id="tablaEquivalencias"
                          emptyMessage="no hay equivalencias publicas"
                          value="#{equivalenciasPublicasBean.listaEquivalencias}"
@@ -84,7 +89,7 @@
                          <br/>
                     </ui:repeat>
                 </p:column>
-                       <p:column headerText="Cr" styleClass="creditos">
+                       <p:column headerText="Cr" styleClass="creditosPublica">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
                         
                         <h:outputText value="#{asignatura.asignatura.creditos}"/>

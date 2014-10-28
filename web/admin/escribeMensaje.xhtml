@@ -6,6 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Escribir mensaje a usuario</title>
+        <h:outputStylesheet library="css" name="estilos.css"/>
     </h:head>
     <h:body>
 
@@ -16,7 +17,8 @@
                          widgetVar="usTable"
                          emptyMessage="no hay usuarios"
                          selection="#{escribeMensajeBean.selectedUsuarios}"
-                         rowKey="#{usuario.login}">
+                         rowKey="#{usuario.login}"
+                         styleClass="borderless">
             
                 <p:column headerText="login" filterBy="#{usuario.login}" filterMatchMode="contains">
                 
@@ -42,7 +44,7 @@
                 
                 </p:column>
                 
-                <p:column selectionMode="multiple" headerText="seleccion" style="multiple"/>
+                <p:column selectionMode="multiple" headerText="seleccion" styleClass="escribeMensajesMultiple"/>
                
                 <f:facet name="footer">
                     <p:commandButton value="enviar mensaje" action="#{escribeMensajeBean.activarTexto}" update=":usuario :panelEnvio"/>  

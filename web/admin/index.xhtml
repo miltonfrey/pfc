@@ -8,61 +8,62 @@
       
     <h:head>
         <title>pagina principal admin</title>
+        <h:outputStylesheet library="css" name="menu.css"/>
     </h:head>
     <h:body>
        
-        <h:form>
+        
+            
+            <h:form>
+              
+          
             
             
-            <h:outputLink value="crearPais.xhtml">Crear Pais</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="listaUsuarios.xhtml">Lista de usuarios</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="eliminarUsuario.xhtml">Eliminar usuario</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="crearUniversidad.xhtml">Crear universidad</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="verMovilidades.xhtml">Ver movilidades</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="verMensajes.xhtml">Ver mensajes</h:outputLink> 
-            <br/>
-            <br/>
-            <h:outputLink value="crearAsignatura.xhtml">Crear asignaturas</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="verContratos.xhtml">Ver contratos</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="crearCursoAcademico.xhtml">CrearCursoAcademico</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="listarAsignaturas.xhtml">Listar asignaturas</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="estados.xhtml">Gestionar estados</h:outputLink>
-            <br/>
-            <br/>
-            <h:outputLink value="estadosMovilidad.xhtml">Gestionar estados de movilidad</h:outputLink>
-            <br/><br/>
             <h:outputLink value="crearUsuario.xhtml">Crear usuario</h:outputLink>
-            <br/><br/>
+            
             <h:outputLink value="crearAdmin.xhtml">Crear admin</h:outputLink>
-            <br/><br/>
+            
+            <h:outputLink value="listaUsuarios.xhtml">Lista de usuarios</h:outputLink>
+            
+            <h:outputLink value="crearUniversidad.xhtml">Universidades</h:outputLink>
+            
+            <h:outputLink value="crearAsignatura.xhtml">Asignaturas</h:outputLink>
+            
+            <h:outputLink value="verMovilidades.xhtml">Movilidades</h:outputLink>
+            
+            <h:outputLink value="verMensajes.xhtml">Mensajes</h:outputLink> 
+            
+            <h:outputLink value="crearPais.xhtml">Paises</h:outputLink>
+            
+            <h:outputLink value="crearCursoAcademico.xhtml">Cursos academicos</h:outputLink>
+            
+            <h:outputLink value="estados.xhtml">Estados</h:outputLink>
+            
+            <h:outputLink value="estadosMovilidad.xhtml">Estados de movilidad</h:outputLink>
+            
             <h:outputLink value="cambiarPasswordAdmin.xhtml">Cambiar password</h:outputLink>
-        </h:form>
-        
-        <br/>
-        
-        <h:form>
             
-            <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir()}" ajax="false"/>
+             <br/><br/>
             
         </h:form>
+                
+                <h:form>
+            
+            <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir()}" ajax="false" />
+            
+        </h:form>
+                
+           
+        <p:graphicImage library="img" name="udc.png" styleClass="imagenUdc"/>
+           
+       
+       
+       
+        
+        
+        <br/><br/>
+        
+        
         
         
         <br />

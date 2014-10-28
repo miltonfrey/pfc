@@ -63,13 +63,6 @@
                     </h:outputText>
                 </p:column>
                 
-                <p:column headerText="ver contrato">
-                    <p:commandButton value="ver contrato" action="#{verContratosBean.seleccionarContratoAdmin}" ajax="false">
-                        <f:setPropertyActionListener value="#{contrato}" target="#{verContratosBean.selectedContrato}"/> 
-                    </p:commandButton>
-                </p:column>
-               
-                
                 <p:column filterBy="#{contrato.estado}" filterMatchMode="exact" headerText="ver estado" >
                 
                     <f:facet name="filter">

@@ -135,11 +135,11 @@ body.green{
 
 
 .tablaEquivalenciasPublicas{
-    height: 65%;
-    width: 80%;
-    position:absolute;
+    //height: 65%;
+    //width: 100%;
+    //position:absolute;
     
-    left:120px;
+    //left:120px;
     text-align: center;
     font-size: 15px;
    
@@ -160,7 +160,7 @@ body.green{
 .tablaEquivalenciasComparadoAdmin{
     top:140px;
     left: 730px;
-    height: 45%;
+    height: 50%;
     width: 45%;
     position:absolute;
     //text-align: center;
@@ -177,7 +177,7 @@ body.green{
     height: 45%;
     width: 45%;
     position:absolute;
-    text-align: center;
+    text-align: left;
     font-size: 15px;
   
 }
@@ -188,7 +188,7 @@ body.green{
     height: 45%;
     width: 45%;
     position:absolute;
-    text-align: center;
+    text-align: left;
     font-size: 15px;
   
 }
@@ -258,20 +258,20 @@ body.green{
 }
 
 .asignaturaPublica{
-    width: 6%;
+    width: 70%;
     font-size: 15px;
 }
 
 .creditosPublica{
     
-    width: 3%;
+    width: 10%;
     font-size: 15px;
     
 }
 
 .periodoPublica{
     
-    width: 4%;
+    width: 20%;
     font-size: 15px;
     
 }
@@ -354,10 +354,16 @@ body.green{
     
 }
 
+.escribeMensajesMultiple{
+    
+    text-align: center;
+}
 
- .ui-datatable.borderless  .ui-datatable-data tr,
+
+.ui-datatable.borderless  .ui-datatable-data tr,
 .ui-datatable.borderless .ui-datatable-data-empty tr,
 .ui-datatable.borderless .ui-datatable-data td,
 .ui-datatable.borderless .ui-datatable-data-empty td {
     border-style: none;
+    
 }

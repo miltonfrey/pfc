@@ -155,8 +155,9 @@
                     
                     <p:column selectionMode="multiple" styleClass="multiple"/>
                
+                    
                          <f:facet name="footer">
-                             <p:commandButton id="deleteBtn" onclick="if (! confirm('¿seguro que quieres borrar?')) return false" process=":formTabla:" update=":formTabla: :formDetalles: :formAsignatura :formUniversidad" icon="ui-icon-search" value="Borrar" action="#{crearAsignaturaBean.eliminaAsignaturasLista}"  
+                             <p:commandButton id="deleteBtn"  onclick="if (! confirm('¿seguro que quieres eliminar?')) return false" process=":formTabla:" update=":formTabla: :formDetalles: :formAsignatura :formUniversidad" icon="ui-icon-search" value="Eliminar" action="#{crearAsignaturaBean.eliminaAsignaturasLista}"  
                                oncomplete="PF('asignaturaBtn').filter()" />
                          </f:facet>
                     
@@ -206,8 +207,7 @@
         <br/>
         <br/>
             
-        <h:outputLink value="listarAsignaturas.xhtml">Listar asignaturas</h:outputLink>
-        <br/>
+        
         
         
          <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>

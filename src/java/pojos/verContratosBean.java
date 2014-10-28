@@ -204,15 +204,15 @@ public class verContratosBean implements Serializable{
            return seleccionarContratoAdmin();
         }else{
             Contrato contratoComparado; 
-            if(listaContratos.get(0).getFecha().compareTo(listaContratos.get(1).getFecha())<0){
+            if(selectedContratos.get(0).getFecha().compareTo(selectedContratos.get(1).getFecha())<0){
                 
-            contratoComparado=listaContratos.get(0);
-            selectedContrato=listaContratos.get(1);
+            contratoComparado=selectedContratos.get(0);
+            selectedContrato=selectedContratos.get(1);
             
                 
             }else{
-               contratoComparado=listaContratos.get(1);
-            selectedContrato=listaContratos.get(0);
+               contratoComparado=selectedContratos.get(1);
+            selectedContrato=selectedContratos.get(0);
             }
             
             

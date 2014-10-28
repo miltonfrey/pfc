@@ -37,6 +37,7 @@ public class equivalenciasPublicasBean implements Serializable{
     private String paisStr;
     private ArrayList<Universidad> listaUniversidad;
     private String universidadStr;
+    private Universidad universidad;
     
     private boolean checkPais;
    private boolean checkUni;
@@ -127,6 +128,16 @@ public class equivalenciasPublicasBean implements Serializable{
         this.universidadStr = universidadStr;
     }
 
+    public Universidad getUniversidad() {
+        return universidad;
+    }
+
+    public void setUniversidad(Universidad universidad) {
+        this.universidad = universidad;
+    }
+    
+    
+
     public boolean isCheckPais() {
         return checkPais;
     }
@@ -165,6 +176,7 @@ public class equivalenciasPublicasBean implements Serializable{
         
         
         listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.equivalenciasPublicas(universidadStr);
+        universidad=universidadService.findUniversidad(universidadStr);
     }
     
    
