@@ -84,6 +84,8 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
             
             if(m.getFechaFin().compareTo(new Date())==-1){
                 m.setEstado("terminada");
+                crearMovilidad(m);
+                
             }
             
             

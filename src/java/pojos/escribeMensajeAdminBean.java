@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import pojos.Exceptions.UsuarioNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -96,24 +97,23 @@ public class escribeMensajeAdminBean implements Serializable{
    
     public String enviarMensajeCoordinador(){
         
-        Usuario destino=usuarioService.find("admin");
-        
-        
-        Mensaje m=new Mensaje(destino, user, Calendar.getInstance().getTime(), tema, texto, "no","no","no");
+        Usuario destino=null;
         try{
-        mensajeService.enviarMensaje(m);
-        }catch(Exception ex){
+        destino=usuarioService.find("admin");
+        }catch(UsuarioNotFoundException ex){
             
-            beanUtilidades.creaMensaje("se ha producido un error creando el mensaje", FacesMessage.SEVERITY_ERROR);
-            return "";
         }
         
-        beanUtilidades.creaMensaje("mensaje enviado correctamente", FacesMessage.SEVERITY_WARN);
+        Mensaje m=new Mensaje(destino, user, Calendar.getInstance().getTime(), tema, texto, "no","no","no");
+       
+        mensajeService.enviarMensaje(m);
+        
+        beanUtilidades.creaMensaje("mensaje enviado correctamente", FacesMessage.SEVERITY_INFO);
         texto="";
         tema="";
         
         //actualizarEnviados();
-        return "";
+        return null;
     }
    
 }

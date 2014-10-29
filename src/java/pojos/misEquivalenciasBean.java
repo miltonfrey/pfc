@@ -22,6 +22,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.component.datatable.DataTable;
+import pojos.Exceptions.PasswordIncorrectoException;
+import pojos.Exceptions.UsuarioNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -474,8 +476,12 @@ public class misEquivalenciasBean implements Serializable{
         }
         
         beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+        try{
         Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha creado un contrato","no","no","no");
         mensajeService.enviarMensaje(m);
+        }catch(UsuarioNotFoundException ex){
+            
+        }
         verConfirmar=false;
         
         return null;
@@ -555,9 +561,12 @@ public class misEquivalenciasBean implements Serializable{
             beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
             return null;
         }
+        try{
      beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
-     
+        }catch(Exception ex){
+            
+        }
         verConfirmar=false;
         return null;
     
@@ -608,8 +617,11 @@ public class misEquivalenciasBean implements Serializable{
         }
         
      beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+     try{
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
-     
+     }catch(Exception ex){
+         
+     }
         verConfirmar=false;
         return null;
     

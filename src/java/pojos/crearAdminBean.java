@@ -94,8 +94,8 @@ public class crearAdminBean implements Serializable{
         Usuario u=new Usuario(login,password,s,"admin","admin","admin");
         try{
         usuarioService.insertarUsuario(u);
-    }catch(Exception ex){
-        beanUtilidades.creaMensaje("error al crear usuario", FacesMessage.SEVERITY_ERROR);
+    }catch(org.springframework.dao.DataIntegrityViolationException ex){
+        beanUtilidades.creaMensaje("Ese usuario ya existe", FacesMessage.SEVERITY_ERROR);
         return null;
     }
         

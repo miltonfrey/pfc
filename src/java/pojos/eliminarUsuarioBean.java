@@ -84,19 +84,15 @@ public class eliminarUsuarioBean implements Serializable{
         }
         
         for(Usuario u:selectedUsuarios){
-        
-        try{
-         usuarioService.delete(u);
-      
-        }catch(Exception ex){
-                     
-            beanUtilidades.creaMensaje("error al eliminar "+ u.getLogin(), FacesMessage.SEVERITY_FATAL);
-            return null;
-                 }
+        usuarioService.delete(u);
         }
-        beanUtilidades.creaMensaje("usuarios borrado ", FacesMessage.SEVERITY_INFO);
+        
+         beanUtilidades.creaMensaje("usuarios borrado ", FacesMessage.SEVERITY_INFO);
         setListaUsuarios((ArrayList < Usuario >)usuarioService.listar());
         return null;
+      
+        
+        
           
     }
     

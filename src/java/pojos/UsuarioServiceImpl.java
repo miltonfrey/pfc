@@ -11,6 +11,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pojos.Exceptions.PasswordIncorrectoException;
+import pojos.Exceptions.UsuarioNotFoundException;
 
 @Transactional
 @Service("usuarioService")
@@ -28,10 +30,15 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
     
     @Override
-    public Usuario find(String nombre){
+    @Transactional(readOnly = true)
+    public Usuario find(String nombre)throws UsuarioNotFoundException{
         
-        return usuarioDao.find(nombre);
+        Usuario u=usuarioDao.find(nombre);
+        if(u==null){
+            throw new UsuarioNotFoundException();
+        }
         
+        return u;
     }
     
     @Override
@@ -74,6 +81,31 @@ public class UsuarioServiceImpl implements UsuarioService{
        return usuarioDao.md5Password(password);
     }
 
+    
+    @Override
+    public void autenticarUsuario(String password,Usuario u)throws PasswordIncorrectoException{
+        
+        password=md5Password(password);
+            String pass=u.getPassword();
+            if((pass.equals(password)==false)||u.getTipoUsuario()!=1){
+                
+               throw new PasswordIncorrectoException();
+            }
+        
+    
+}
+
+   @Override
+   public void autenticarAdmin(String password,Usuario u) throws PasswordIncorrectoException{
+       
+       password=md5Password(password);
+            String pass=u.getPassword();
+            if((pass.equals(password)==false)||u.getTipoUsuario()!=0){
+                
+               throw new PasswordIncorrectoException();
+            }
+       
+   }
     
     
 }

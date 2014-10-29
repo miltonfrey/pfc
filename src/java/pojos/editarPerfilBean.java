@@ -10,10 +10,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import org.springframework.dao.DataAccessException;
-
-//import javax.faces.bean.SessionScoped;
-//import javax.faces.component.UIComponent;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -105,12 +101,7 @@ public class editarPerfilBean implements Serializable{
         }
         
         user.setPassword(usuarioService.md5Password(nuevoPassword));
-        try{
-            usuarioService.actualizar(user);
-        }catch(Exception ex){
-            beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
+        usuarioService.actualizar(user);
         
         beanUtilidades.creaMensaje("password modificado correctamente", FacesMessage.SEVERITY_INFO);
         return null;

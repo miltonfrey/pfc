@@ -136,27 +136,8 @@ public class mensajesRecibidosUserBean implements Serializable{
         activaRecibido=true;
         temaRecibido=selectedMensajeRecibido.getTema();
         textAreaRecibido=selectedMensajeRecibido.getTexto();
-        
-        Mensaje aux=mensajeService.find(selectedMensajeRecibido.getIdmensaje());
-            
-            if(aux!=null){
-            aux.setLeidoDestino("si");
-            selectedMensajeRecibido.setLeidoDestino("si");
-        
-        try{
-            
-            mensajeService.enviarMensaje(aux);
-            
-        }catch(Exception ex){
-            
-            beanUtilidades.creaMensaje("se ha producido un error al leer mensaje", FacesMessage.SEVERITY_ERROR);
-            return "";
-        }
-            }
-      
-        
-      return "";
-        
+        mensajeService.leerMensajeRecibido(selectedMensajeRecibido);
+         return null;
     }
      
      public void actualizarRecibidos(){
@@ -172,46 +153,23 @@ public class mensajesRecibidosUserBean implements Serializable{
             
         }    
      
-    
-    
     public String eliminarMensajesRecibidos(){
         
         if(selectedMensajesRecibidos.isEmpty()){
-            return "";
+            return null;
         }
         
         for(Mensaje m:selectedMensajesRecibidos){
          
-            Mensaje aux=mensajeService.find(m.getIdmensaje());
+            mensajeService.eliminarMensaje(m,"recibido");
+           
             
-            if(aux!=null){
-            aux.setEliminadoDestino("si");
-               
-            
-            try{
-                
-                if(aux.getEliminadoOrigen().equals("si")){
-                    
-                    mensajeService.eliminarMensaje(aux);
-                }else{
-                    
-                     mensajeService.enviarMensaje(aux);
-                }
-                
-            }catch(Exception ex){
-                
-                beanUtilidades.creaMensaje("se ha producido un error en el borrado de mensajes", FacesMessage.SEVERITY_ERROR);
-                return "";
-            }
-            
-        }
-        }
-         beanUtilidades.creaMensaje("mensajes eliminados correctamente", FacesMessage.SEVERITY_INFO);
         actualizarRecibidos();
-        return "";
+        
     
     }
-    
+        return null;
+    }
     
         public void cerrarMensajeRecibido(){
         

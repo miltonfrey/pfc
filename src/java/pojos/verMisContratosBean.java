@@ -95,10 +95,6 @@ public class verMisContratosBean implements Serializable{
     }
 
    
-    
-    
-    
-
     public void setNuevo(boolean nuevo) {
         this.nuevo = nuevo;
     }
@@ -160,35 +156,22 @@ public class verMisContratosBean implements Serializable{
     public String eliminarContrato(){
         selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
         ArrayList<Equivalencia> listaCopia=new ArrayList<>(selectedContrato.getEquivalencias());
-        try{
+        
            
            selectedContrato.setEquivalencias(null);
            equivalenciaService.eliminaContrato(selectedContrato);
-             
-           }catch(Exception ex){
-               ex.printStackTrace();
-               beanUtilidades.creaMensaje("error al eliminar contrato", FacesMessage.SEVERITY_ERROR);
-               return null;
-           }
-         
+            
             for(Equivalencia e:listaCopia){
-                try{
-                //e.getContratos().remove(selectedContrato);
-                //equivalenciaService.actualizarEquivalencia(e);
-                //if(e.getContratos().isEmpty()==true)
+              
                 equivalenciaService.eliminarEquivalencia(e);
-                }catch(Exception ex){
-                    ex.printStackTrace();
-                }
+                
             }
             
           
         beanUtilidades.creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);
-        listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
-       verContratos();
+        verContratos();
         
         selectedContrato=null;
-        //visibleContratos=false;
         
         return null;
     }
@@ -198,13 +181,11 @@ public class verMisContratosBean implements Serializable{
         verAceptado=true;
         visibleContratos=true;
         
-        try{
+        
         listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+        
         if(listaContratos.isEmpty()){
-            nuevo=true;
+        nuevo=true;
     }else
             for (Contrato c: listaContratos){
                 
@@ -217,13 +198,12 @@ public class verMisContratosBean implements Serializable{
         for(Contrato c:listaContratos){
             
             if(c.getEstado().equalsIgnoreCase("pendiente")||c.getEstado().equalsIgnoreCase("rechazado")){
-                verAceptado=false;
+            verAceptado=false;
                
                 break;
             }
             
         }
-        
         
         
     }

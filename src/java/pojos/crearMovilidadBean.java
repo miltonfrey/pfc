@@ -21,6 +21,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import javax.servlet.http.HttpSession;
+import pojos.Exceptions.UsuarioNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -316,10 +317,15 @@ public String crearMovilidad(){
                     beanUtilidades.creaMensaje("se ha producido un error creando la movilidad", FacesMessage.SEVERITY_ERROR);
                     return "";
                 }
-               
+              Usuario admin=null;
+               try{
+                    admin=usuarioService.find("admin");
+               }catch(UsuarioNotFoundException ex){
+                   
+               }
                 
                 
-                Mensaje mensaje=new Mensaje(usuarioService.find("admin"),usuario,  Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getNombre()+" "+usuario.getApellido1()+""
+                Mensaje mensaje=new Mensaje(admin,usuario,  Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getNombre()+" "+usuario.getApellido1()+""
                         + " ha creado una movilidad a "+selectedUniversidad+" entre el "+sdf.format(fechaInicio)+" y "+sdf.format(fechaFin) , "no","no","no");
                 try{
                     mensajeService.enviarMensaje(mensaje);

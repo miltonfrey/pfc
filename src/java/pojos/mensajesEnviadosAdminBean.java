@@ -165,44 +165,18 @@ public class mensajesEnviadosAdminBean implements Serializable{
        public String eliminarMensajesEnviados(){
         
         if(selectedMensajesEnviados.isEmpty()){
-            return "";
+            return null;
         }
         
         for(Mensaje m:selectedMensajesEnviados){
             
-            
-            
-             Mensaje aux=mensajeService.find(m.getIdmensaje());
-            
-            if(aux!=null){
-            aux.setEliminadoOrigen("si");
-           
-            try{
-            
-                if(aux.getEliminadoDestino().equals("si")){
-                    
-                    mensajeService.eliminarMensaje(aux);
-                }else{
-                    
-                  mensajeService.enviarMensaje(aux);  
-                }
-                
-            }catch(Exception ex){
-                
-                beanUtilidades.creaMensaje("se ha producido un error en el borrado de mensajes", FacesMessage.SEVERITY_ERROR);
-                return "";
-            }
-            }
+            mensajeService.eliminarMensaje(m,"enviado");
         }
      
-        beanUtilidades.creaMensaje("mensajes eliminados correctamente", FacesMessage.SEVERITY_INFO);
+        //beanUtilidades.creaMensaje("mensajes eliminados correctamente", FacesMessage.SEVERITY_INFO);
         actualizarEnviados();
-       // actualizarRecibidos();
-        return "";
-    
-}
-       
-       
-       
+        return null;
+        
+    }
        
 }

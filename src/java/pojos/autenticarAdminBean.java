@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import pojos.Exceptions.PasswordIncorrectoException;
+import pojos.Exceptions.UsuarioNotFoundException;
 
 
 //import javax.faces.bean.SessionScoped;
@@ -79,28 +81,28 @@ public class autenticarAdminBean implements Serializable{
     
     
     public String autenticarAdmin(){
-            Usuario u=usuarioService.find(getLogin());
+            Usuario u;
             
-            if(u==null){
-                
-                beanUtilidades.creaMensaje("login inexistente", FacesMessage.SEVERITY_ERROR);
-                return null;
+             try{
+             u=usuarioService.find(getLogin());
+             }catch(UsuarioNotFoundException ex){
+              beanUtilidades.creaMensaje("login inexistente", FacesMessage.SEVERITY_ERROR);
+              return null; 
+             }
+             
+             
+             try{ 
+            usuarioService.autenticarAdmin(password,u);
+            }catch(PasswordIncorrectoException ex){
+               beanUtilidades.creaMensaje("password incorrecto", FacesMessage.SEVERITY_ERROR);
+               return null;
             }
-            password=usuarioService.md5Password(password);
-            String pass=u.getPassword();
-            if((pass.equals(password)==false)||u.getTipoUsuario()!=0){
-                
-                beanUtilidades.creaMensaje("password incorrecto", FacesMessage.SEVERITY_ERROR); // meter numero de errores al loguear
-                return null;
-                
-                
-            }else{
-                
+            
                 HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
                 session.setAttribute("admin", u);
                 return "admin/index.xhtml?faces-redirect=true";
-                
-            }
+            
+        }
             
             
         }
@@ -109,4 +111,4 @@ public class autenticarAdminBean implements Serializable{
     
     
     
-}
+

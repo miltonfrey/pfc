@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import pojos.Exceptions.UsuarioNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -60,6 +61,7 @@ public class verMisMovilidadesBean implements Serializable{
        HttpSession session=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(false);
        usuario=(Usuario)session.getAttribute("user");
        listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
+       Collections.reverse(listaMisMovilidades);
        
         
        }
@@ -118,7 +120,7 @@ public class verMisMovilidadesBean implements Serializable{
     }
     
     public ArrayList<Movilidad> getListaMisMovilidades() {
-         Collections.reverse(listaMisMovilidades);
+         
          return listaMisMovilidades;
     }
 
@@ -135,88 +137,53 @@ public class verMisMovilidadesBean implements Serializable{
     }
 
     
-
-    
-    
-    
-    
-    
-    
     public String eliminarMovilidad(){
+        Usuario admin=null;
+        try{
+         admin=usuarioService.find(("admin"));
+        }catch(UsuarioNotFoundException ex){
+        }
+        
         
         if(selectedMovilidad.getEstado().equalsIgnoreCase("pendiente")){
-            
-            try{
+           
             movilidadService.eliminarMovilidad(selectedMovilidad);
-            }catch(Exception ex){
-                
-                beanUtilidades.creaMensaje("se ha producido un error eliminando la movilidad", FacesMessage.SEVERITY_ERROR);
-                
-            }
-            
-            beanUtilidades.creaMensaje("movilidad eliminada correctamente, se ha enviado un mensaje al coordinador ", FacesMessage.SEVERITY_INFO);
-            
-            Mensaje mensaje=new Mensaje(usuarioService.find("admin"),usuario,  Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no","no","no");
-            try{
+            Mensaje mensaje=new Mensaje(admin,usuario,Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no","no","no");
                 mensajeService.enviarMensaje(mensaje);
-            }catch(Exception ex){
-                beanUtilidades.creaMensaje("se ha producido un error enviando el mensaje", FacesMessage.SEVERITY_ERROR);
-                
+                beanUtilidades.creaMensaje("movilidad eliminada correctamente, se ha enviado un mensaje al coordinador ", FacesMessage.SEVERITY_INFO);
+                selectedMovilidad=null;
+                actualizar();
                 return null;
             }
             
-            
-        }else
          
             if(selectedMovilidad.getEstado().equalsIgnoreCase("aceptada")){
                 
-                
-                Mensaje mensaje=new Mensaje( usuarioService.find("admin"),usuario, Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre()+" con fecha de inicio:"+ sdf.format(selectedMovilidad.getFechaInicio())+" y fecha fin:"+sdf.format(selectedMovilidad.getFechaFin()), "no","no","no");
-            try{
+                Mensaje mensaje=new Mensaje( admin,usuario, Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" quiere cancelar una movilidad en curso en: "+selectedMovilidad.getUniversidad().getNombre()+" con fecha de inicio:"+ sdf.format(selectedMovilidad.getFechaInicio())+" y fecha fin:"+sdf.format(selectedMovilidad.getFechaFin()), "no","no","no");
                 mensajeService.enviarMensaje(mensaje);
-            }catch(Exception ex){
-                beanUtilidades.creaMensaje("se ha producido un error enviando el mensaje", FacesMessage.SEVERITY_ERROR);
-                    
-            }
                 beanUtilidades.creaMensaje("se ha enviado un mensaje al coordinador para su cancelación", FacesMessage.SEVERITY_INFO);
                 selectedMovilidad=null;
-            return null;
-        
-             
-        }else
-                if(selectedMovilidad.getEstado().equalsIgnoreCase("rechazada")){
-                    
-                     try{
-            movilidadService.eliminarMovilidad(selectedMovilidad);
-            }catch(Exception ex){
-                
-                beanUtilidades.creaMensaje("se ha producido un error eliminando la movilidad", FacesMessage.SEVERITY_ERROR);
                 return null;
-            }  
-                  beanUtilidades.creaMensaje("movilidad eliminada correctamente", FacesMessage.SEVERITY_INFO);
-                  actualizar();
-                  selectedMovilidad=null;
-                  return null;  
-                }
-            
-        
-        return null;
-        
+                    
+            }
+                
+                if(selectedMovilidad.getEstado().equalsIgnoreCase("rechazada")){
+                movilidadService.eliminarMovilidad(selectedMovilidad);    
+                actualizar();     
+                beanUtilidades.creaMensaje("movilidad eliminada correctamente", FacesMessage.SEVERITY_INFO);
+                selectedMovilidad=null;
+                return null;
+           
     }
-    
+     return null;
+    }
     public void actualizar(){
         
         listaMisMovilidades=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
+        Collections.reverse(listaMisMovilidades);
     }
     
    
-    
-   
-    
-    
-    
-    
-    
     }
     
 

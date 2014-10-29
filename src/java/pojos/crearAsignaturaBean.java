@@ -295,18 +295,17 @@ public class crearAsignaturaBean implements Serializable{
     
     public String creaAsignatura(){
         
-       
         Universidad uni=universidadService.findUniversidad(universidadStr);
-         AsignaturaId id=new AsignaturaId(codAsignatura,universidadStr);
+        AsignaturaId id=new AsignaturaId(codAsignatura,universidadStr);
         
         Asignatura a=new Asignatura(id,uni, nombreAsignatura, creditosAsignatura.shortValue(),periodoAsignatura,infoAsignatura,webAsignatura,facultadAsignatura,titulacionAsignatura,null,null);
         
         try{
             
             asignaturaService.crearAsignatura(a);
-        }catch(Exception ex){
+        }catch(org.springframework.dao.DataIntegrityViolationException ex){
             
-            beanUtilidades.creaMensaje("se ha producido un error creando la asignatura, el código ya existe", FacesMessage.SEVERITY_ERROR);
+            beanUtilidades.creaMensaje("La asignatura ya existe", FacesMessage.SEVERITY_ERROR);
             return "";
         }
         
@@ -336,18 +335,10 @@ public class crearAsignaturaBean implements Serializable{
     }
     public void editar(){
         
-        try{
-            
             asignaturaService.actualizarAsignatura(SelectedAsignatura);
             checkDetalles=false;
-            
-        }catch(Exception ex){
-            
             beanUtilidades.creaMensaje("error al editar la asignatura", FacesMessage.SEVERITY_INFO);
-        }
-        
-        
-        listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
+             listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
         
     }
     
@@ -363,33 +354,24 @@ public class crearAsignaturaBean implements Serializable{
     
     public String eliminaAsignaturasLista(){
         
-        if(selectedAsignaturas.isEmpty()==false){
+        if(selectedAsignaturas.isEmpty()==true){
+            return null;
+        }
+            
         for (Asignatura a:selectedAsignaturas){
             
-            try{
-                
                 asignaturaService.eliminaAsignatura(a);
                 
-                
-            }catch(Exception ex){
-                
-                beanUtilidades.creaMensaje("se ha producido un error eliminando asignatura", FacesMessage.SEVERITY_ERROR);
-                return null;
-            }
-            
-            
         }
         
         beanUtilidades.creaMensaje("se han eliminado correctamente las asignaturas",FacesMessage.SEVERITY_INFO);
         listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
         //checkUniversidadStr=false;
         checkDetalles=false;
-        return "";
+        return null;
     }
         
-        return "";
-    }
-    
+     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     public boolean isCheckPaisStr() {

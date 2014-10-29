@@ -59,9 +59,42 @@ public class MensajeServiceImpl implements MensajeService{
     
     
     @Override
-    public void eliminarMensaje(Mensaje m){
+    public void eliminarMensaje(Mensaje m,String accion){
         
-        mensajeDao.eliminarMensaje(m);
+        
+         Mensaje aux=find(m.getIdmensaje());
+            
+            if(aux!=null){
+                
+                
+                if(accion.equals("recibido")){
+            aux.setEliminadoDestino("si");
+                
+             
+                if(aux.getEliminadoOrigen().equals("si")){
+                    
+                    mensajeDao.eliminarMensaje(aux);
+                }else{
+                    
+                     enviarMensaje(aux);
+                }
+              }else{
+                    if(accion.equals("enviado")){
+            aux.setEliminadoOrigen("si");
+                
+             
+                if(aux.getEliminadoDestino().equals("si")){
+                    
+                    mensajeDao.eliminarMensaje(aux);
+                }else{
+                    
+                     enviarMensaje(aux);
+                }
+              }
+                }
+            }
+                
+            
     }
     
     @Override
@@ -69,5 +102,23 @@ public class MensajeServiceImpl implements MensajeService{
         
         return mensajeDao.find(msgId);
     }
+    
+
+
+    @Override
+    public void leerMensajeRecibido(Mensaje selectedMensajeRecibido){
+
+            Mensaje aux=find(selectedMensajeRecibido.getIdmensaje());
+            
+            if(aux!=null){
+            aux.setLeidoDestino("si");
+            enviarMensaje(aux);
+            
+        
+            }
+      
+}
+    
+    
     
 }

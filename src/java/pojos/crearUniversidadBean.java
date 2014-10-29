@@ -275,18 +275,9 @@ public class crearUniversidadBean implements Serializable{
             
             
             for(Universidad u:selectedUniversidades){
-                
-                try{
-                    
+               
                     universidadService.delete(u);
                     
-                    
-                }catch(Exception ex){
-                    
-                    beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-                    
-                }
-                
             }
             beanUtilidades.creaMensaje("se han eliminado las universidades correctamente", FacesMessage.SEVERITY_INFO);
             listaUniversidades=(ArrayList < Universidad >)universidadService.listarPorPais(paisStr);
@@ -299,19 +290,8 @@ public class crearUniversidadBean implements Serializable{
     public String editar(){
         
         checkDetalles=false;
-        
-        
-        try{
-            
-            universidadService.actualizar(selectedUniversidad);
-            
-            
-        }catch(Exception ex){
-            beanUtilidades.creaMensaje("se ha producido un error ", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
-        
-       listaUniversidades=(ArrayList<Universidad>)universidadService.listarPorPais(paisStr);
+        universidadService.actualizar(selectedUniversidad);
+        listaUniversidades=(ArrayList<Universidad>)universidadService.listarPorPais(paisStr);
         return null;
     }
     

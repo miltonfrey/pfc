@@ -152,13 +152,11 @@ public class crearUsuarioBean implements Serializable{
         u.setNombre(nombre);
         u.setApellido1(apellido1);
         u.setApellido2(apellido2);
-        
         u.setTitulacion(titulacion);
         
         try{
         usuarioService.insertarUsuario(u);
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
-    //}catch(Exception ex){ 
             beanUtilidades.creaMensaje("ya existe ese login", FacesMessage.SEVERITY_ERROR);
             return null;
             
