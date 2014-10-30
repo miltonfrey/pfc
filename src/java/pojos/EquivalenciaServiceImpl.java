@@ -179,6 +179,32 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     
     
+    @Override
+    public int[] totalCreditos(ArrayList<Equivalencia> lista){
+        
+         int a=0;
+         int b=0;
+         
+        for(Equivalencia e:lista){
+            Iterator i=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaA mA=(MiembroGrupoAsignaturaA)i.next();
+                a=a+mA.getAsignatura().getCreditos();
+            }
+        }
+        
+        for(Equivalencia e:lista){
+            Iterator i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaB mB=(MiembroGrupoAsignaturaB)i.next();
+                b=b+mB.getAsignatura().getCreditos();
+            }
+        }
+        
+        return new int[]{a,b};
+    }
+    
+    
 }         
             
             

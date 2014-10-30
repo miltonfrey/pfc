@@ -2,6 +2,7 @@
 
 package pojos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +27,7 @@ public interface EquivalenciaService {
     public Contrato findContrato(Integer id);
    public List<Equivalencia> equivalenciasPublicas(String universidad);
    public List<Object[]> listaObject();
+   public int[] totalCreditos(ArrayList<Equivalencia> lista);
 }
 
 

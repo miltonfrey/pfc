@@ -40,8 +40,9 @@
                 
                 <p:column headerText="UDC" styleClass="verAsignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaA.miembroGrupoAsignaturaAs.toArray()}" var="asignatura">
-                        <h:outputText value="#{asignatura.asignatura.nombreAsignatura}"/>
-                        <br/>
+                        <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{ not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
+                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
+                         <br/>
                     </ui:repeat>
                 </p:column>
                 
@@ -61,9 +62,9 @@
                 
                 <p:column headerText="#{misEquivalenciasBean.selectedMovilidad.universidad.nombre}" styleClass="verAsignatura">
                     <ui:repeat value="#{equivalencia.grupoAsignaturaB.miembroGrupoAsignaturaBs.toArray()}" var="asignatura">
-                        <h:outputText value="#{asignatura.asignatura.nombreAsignatura} "/>
-                        
-                        <br/>
+                       <h:outputLink target="_blank" value="#{asignatura.asignatura.webAsignatura}" rendered="#{ not empty asignatura.asignatura.webAsignatura}">#{asignatura.asignatura.nombreAsignatura}</h:outputLink>
+                         <h:outputText value="#{asignatura.asignatura.nombreAsignatura}" rendered="#{empty asignatura.asignatura.webAsignatura}"/>
+                         <br/>
                     </ui:repeat>
                    
                 </p:column>

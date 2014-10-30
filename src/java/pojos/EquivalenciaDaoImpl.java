@@ -109,11 +109,14 @@ private SessionFactory sessionFactory;
        return sessionFactory.getCurrentSession().createQuery(query).list();
    }
    
+   @Override
    public List<Object[]> listaObject(){ 
        
        String query="select * from equivalencia";
        return sessionFactory.getCurrentSession().createSQLQuery(query).list();
    }
     
+   
+   
     
 }

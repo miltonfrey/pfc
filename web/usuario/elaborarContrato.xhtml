@@ -36,8 +36,8 @@
                
                 <f:facet name="header">ORIGEN: UDC</f:facet>
                 <p:column headerText="asignatura"  sortBy="#{asigFic.nombreAsignatura}" styleClass="asignatura" filterBy="#{asigFic.nombreAsignatura}">
-                
-                    <h:outputText value="#{asigFic.nombreAsignatura}" />
+                   <h:outputLink target="_blank" value="#{asigFic.webAsignatura}" rendered="#{not empty asigFic.webAsignatura}">#{asigFic.nombreAsignatura}</h:outputLink>
+                    <h:outputText value="#{asigFic.nombreAsignatura}" rendered="#{empty asigFic.webAsignatura}" />
                 
                 </p:column>
             
@@ -52,11 +52,7 @@
                     <h:outputText value="#{asigFic.periodo}"/>
                 
                 </p:column>
-                <p:column headerText="web" styleClass="web">
-                    
-                    <h:outputLink value="#{asigFic.webAsignatura}" target="_blank" rendered="#{not empty asigFic.webAsignatura}">link</h:outputLink>
-                   
-                </p:column>
+               
                 
                 <p:column styleClass="info" headerText="+info">
                         
@@ -102,8 +98,8 @@
                 <f:facet name="header">DESTINO: #{misEquivalenciasBean.selectedMovilidad.universidad.nombre}</f:facet>
                 
                 <p:column headerText="asignatura" sortBy="#{asigUni.nombreAsignatura}" styleClass="asignatura" filterBy="#{asigUni.nombreAsignatura}">
-                
-                    <h:outputText value="#{asigUni.nombreAsignatura}"/>
+                   <h:outputLink target="_blank" value="#{asigUni.webAsignatura}" rendered="#{not empty asigUni.webAsignatura}">#{asigUni.nombreAsignatura}</h:outputLink>
+                    <h:outputText value="#{asigUni.nombreAsignatura}" rendered="#{empty asigUni.webAsignatura}" />
                 
                 </p:column>
             
@@ -118,11 +114,7 @@
                     <h:outputText value="#{asigUni.periodo}"/>
                 
                 </p:column>
-                <p:column headerText="web" styleClass="web">
-                    
-                    <h:outputLink value="#{asigUni.webAsignatura}" target="_blank" rendered="#{not empty asigUni.webAsignatura}">link</h:outputLink>
-                    
-                </p:column>
+               
                 <p:column headerText="+info" styleClass="info">
                         
                      <p:commandLink value="+info" action="#{misEquivalenciasBean.detallesAsign}" update=":formEquivalenciaFic:info" rendered="#{not empty asigUni.infoAsigantura}">

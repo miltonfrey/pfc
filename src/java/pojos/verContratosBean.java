@@ -168,9 +168,10 @@ public class verContratosBean implements Serializable{
                return null;
            }
         for(Equivalencia e:listaCopia){
+            
             try{
             equivalenciaService.eliminarEquivalencia(e);
-            }catch(Exception ex){
+            }catch(org.springframework.dao.DataIntegrityViolationException ex){
                 
             }
         }

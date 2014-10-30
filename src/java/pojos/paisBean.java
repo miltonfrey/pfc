@@ -88,7 +88,7 @@ public class paisBean implements Serializable{
       universidadService.insertarPais(paisStr);
       }catch(DataAccessException ex){
           
-          beanUtilidades.creaMensaje("se ha producido un error creando el país", FacesMessage.SEVERITY_ERROR);
+          beanUtilidades.creaMensaje("Ya existe ese país", FacesMessage.SEVERITY_ERROR);
           return null;
       }
           

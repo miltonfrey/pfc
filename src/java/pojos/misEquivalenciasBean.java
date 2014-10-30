@@ -125,7 +125,8 @@ public class misEquivalenciasBean implements Serializable{
         listaAuxEquivalencias.addAll(c.getEquivalencias());   //(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         listaAuxEquivalenciasComparado.addAll(c.getEquivalencias()); //=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         //lo comparamos igual en la version b
-             totalCreditos(listaAuxEquivalencias);
+              creditosA=equivalenciaService.totalCreditos(listaAuxEquivalencias)[0];
+              creditosB=equivalenciaService.totalCreditos(listaAuxEquivalencias)[1];
              creditosComparadoA=creditosA;
              creditosComparadoB=creditosB;
              
@@ -495,8 +496,8 @@ public class misEquivalenciasBean implements Serializable{
             return null;
         }
         
-        selectedContrato.setFecha(Calendar.getInstance().getTime());
-        selectedContrato.setEstado("pendiente");
+        //selectedContrato.setFecha(Calendar.getInstance().getTime());
+        //selectedContrato.setEstado("pendiente");
         try{
         equivalenciaService.modificaContrato(selectedContrato);
         }catch(Exception ex){
@@ -555,6 +556,8 @@ public class misEquivalenciasBean implements Serializable{
        
     }
         try{
+            c.setEstado("pendiente");
+            c.setFecha(Calendar.getInstance().getTime());
         equivalenciaService.modificaContrato(c);
         }catch(Exception ex){
             
@@ -667,24 +670,8 @@ public class misEquivalenciasBean implements Serializable{
         verInfo=false;
     }
    
-    public void totalCreditos(ArrayList<Equivalencia> lista){
-        
-        for(Equivalencia e:lista){
-            Iterator i=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
-            while(i.hasNext()){
-                MiembroGrupoAsignaturaA mA=(MiembroGrupoAsignaturaA)i.next();
-                creditosA=creditosA+mA.getAsignatura().getCreditos();
-            }
-        }
-        
-        for(Equivalencia e:lista){
-            Iterator i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
-            while(i.hasNext()){
-                MiembroGrupoAsignaturaB mB=(MiembroGrupoAsignaturaB)i.next();
-                creditosB=creditosB+mB.getAsignatura().getCreditos();
-            }
-        }
-    }
+    
+    
     
     public String nuevoAceptado(){
         

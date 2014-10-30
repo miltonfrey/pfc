@@ -96,16 +96,16 @@ public class equivalenciasBean implements Serializable{
            context.getSessionMap().remove("contrato");
            context.getSessionMap().remove("movilidad");
            listaAuxEquivalencias.addAll(selectedContrato.getEquivalencias());//(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
-            creditosA=totalCreditos(listaAuxEquivalencias)[0];
-            creditosB=totalCreditos(listaAuxEquivalencias)[1];
+            creditosA=equivalenciaService.totalCreditos(listaAuxEquivalencias)[0];
+            creditosB=equivalenciaService.totalCreditos(listaAuxEquivalencias)[1];
              
            if(context.getSessionMap().containsKey("contratoComparado")){
         contratoComparado=(Contrato)context.getSessionMap().get("contratoComparado");
              
         contratoComparado=equivalenciaService.findContrato(contratoComparado.getIdContrato());
         listaAuxEquivalenciasComparado.addAll(contratoComparado.getEquivalencias());//(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(contratoComparado.getIdContrato());
-        creditosComparadoA=totalCreditos(listaAuxEquivalenciasComparado)[0];
-        creditosComparadoB=totalCreditos(listaAuxEquivalenciasComparado)[1];
+        creditosComparadoA=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[0];
+        creditosComparadoB=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[1];
         context.getSessionMap().remove("contratoComparado");
          
            }
@@ -272,12 +272,9 @@ public class equivalenciasBean implements Serializable{
         
         for(Equivalencia e:selectedEquivalencias){
             e.setVisible("si");
-            try{
+           
                 equivalenciaService.actualizarEquivalencia(e);
-            }catch(Exception ex){
-                beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-                return null;
-            }
+            
         }
         beanUtilidades.creaMensaje("Las equivalencias han sido publicadas", FacesMessage.SEVERITY_INFO);
         return null;
@@ -292,12 +289,9 @@ public class equivalenciasBean implements Serializable{
         
         for(Equivalencia e:selectedEquivalencias){
             e.setVisible("no");
-            try{
+            
                 equivalenciaService.actualizarEquivalencia(e);
-            }catch(Exception ex){
-                beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-                return null;
-            }
+            
         }
         beanUtilidades.creaMensaje("Las equivalencias seleccionadas ya no son públicas", FacesMessage.SEVERITY_INFO);
         return null;
@@ -312,16 +306,10 @@ public class equivalenciasBean implements Serializable{
             return null;
         
         selectedContrato.setEstado(apruebaOrechaza);
-        try{
+        
             
             equivalenciaService.modificaContrato(selectedContrato);
             
-        }catch(Exception ex){
-            ex.printStackTrace();
-            beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-            
-            return null;
-        }
         beanUtilidades.creaMensaje("contrato modificado correctamente, se le ha enviado un mensaje al usuario", FacesMessage.SEVERITY_INFO);
         Mensaje m=new Mensaje(selectedMovilidad.getUsuario(), user, Calendar.getInstance().getTime(), "cambio de estado de contrato", "El estado de un contrato ha sido modificado", "no", "no", "no");
         mensajeService.enviarMensaje(m);
@@ -330,29 +318,7 @@ public class equivalenciasBean implements Serializable{
         return null;
     }
     
-     public int[] totalCreditos(ArrayList<Equivalencia> lista){
-        
-         int a=0;
-         int b=0;
-         
-        for(Equivalencia e:lista){
-            Iterator i=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
-            while(i.hasNext()){
-                MiembroGrupoAsignaturaA mA=(MiembroGrupoAsignaturaA)i.next();
-                a=a+mA.getAsignatura().getCreditos();
-            }
-        }
-        
-        for(Equivalencia e:lista){
-            Iterator i=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
-            while(i.hasNext()){
-                MiembroGrupoAsignaturaB mB=(MiembroGrupoAsignaturaB)i.next();
-                b=b+mB.getAsignatura().getCreditos();
-            }
-        }
-        
-        return new int[]{a,b};
-    }
+     
     
     
    

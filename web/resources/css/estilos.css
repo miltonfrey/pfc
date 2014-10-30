@@ -50,12 +50,14 @@ body.green{
     font-size: 15px;
     height: 15%;
     width: 3%;
+    text-align: center;
 }
 
 .periodo{
     font-size: 15px;
     height: 15%;
     width: 6%;
+    text-align: center;
 }
 
 .web{
@@ -278,13 +280,14 @@ body.green{
 
 .nuevoCreditos{
     
-    width: 10%;
+    width: 8%;
     font-size: 15px;
+    text-align: center;
 }
 
 .nuevoAsignatura{
     
-    width: 70%;
+    width: 74%;
     font-size: 15px;
 }
 
@@ -292,8 +295,9 @@ body.green{
 
 .nuevoMultiple{
     
-    width: 10%;
+    width: 8%;
     font-size: 15px;
+    text-align: center;
 }
     
 .nuevoCreditosAdmin{
@@ -340,7 +344,7 @@ body.green{
 }
 
 .verCreditos{
-    text-align: left;
+    text-align: center;
     width: 20%;
     font-size: 16px;
     
@@ -348,7 +352,7 @@ body.green{
 }
 
 .verPeriodo{
-    text-align: left;
+    text-align: center;
      width: 20%;
     font-size: 16px;
     

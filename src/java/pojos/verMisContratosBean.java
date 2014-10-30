@@ -163,8 +163,11 @@ public class verMisContratosBean implements Serializable{
             
             for(Equivalencia e:listaCopia){
               
+                try{
                 equivalenciaService.eliminarEquivalencia(e);
-                
+                }catch(org.springframework.dao.DataIntegrityViolationException ex){
+                    
+                }
             }
             
           
