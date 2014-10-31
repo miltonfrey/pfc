@@ -22,7 +22,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.component.datatable.DataTable;
-import pojos.Exceptions.PasswordIncorrectoException;
 import pojos.Exceptions.UsuarioNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
@@ -444,7 +443,6 @@ public class misEquivalenciasBean implements Serializable{
             return null;
         }
         
-        
         Contrato c=new Contrato();
         c.setMovilidad(selectedMovilidad);
         c.setFecha(Calendar.getInstance().getTime());
@@ -452,36 +450,14 @@ public class misEquivalenciasBean implements Serializable{
         //c.setEquivalencias(setE);
         c.setEstado("pendiente");
         
-        
-        try{
-        for(Equivalencia e:listaAuxEquivalencias){
-          
-            c.getEquivalencias().add(e);
-            //e.getContratos().add(c); //No hace falta
-            
-            equivalenciaService.crearEquivalencia(e);
-            equivalenciaService.crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
-            equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
-          
-        }
-        }catch(Exception ex){
-            beanUtilidades.creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        } 
-        try{
-        equivalenciaService.creaContrato(c);
-        }catch(Exception ex){
-            
-            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
+        equivalenciaService.confirmarContrato(listaAuxEquivalencias, c);
         
         beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
         try{
         Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha creado un contrato","no","no","no");
         mensajeService.enviarMensaje(m);
         }catch(UsuarioNotFoundException ex){
-            
+            beanUtilidades.creaMensaje("Usuario inexistente", FacesMessage.SEVERITY_ERROR);
         }
         verConfirmar=false;
         

@@ -28,6 +28,8 @@ public interface EquivalenciaService {
    public List<Equivalencia> equivalenciasPublicas(String universidad);
    public List<Object[]> listaObject();
    public int[] totalCreditos(ArrayList<Equivalencia> lista);
+   public void confirmarContrato(ArrayList<Equivalencia> lista,Contrato c);
+   public void editarContrato();
 }
 
 

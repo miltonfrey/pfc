@@ -4,12 +4,15 @@ package pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pojos.Exceptions.UsuarioNotFoundException;
 
 @Transactional
 @Service("equivalenciaService")
@@ -202,6 +205,29 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
         }
         
         return new int[]{a,b};
+    }
+    
+    @Override
+    public void confirmarContrato(ArrayList<Equivalencia> listaAuxEquivalencias,Contrato c){
+        
+        for(Equivalencia e:listaAuxEquivalencias){
+          
+            c.getEquivalencias().add(e);
+            //e.getContratos().add(c); //No hace falta
+            
+            crearEquivalencia(e);
+            crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
+            crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
+          
+        }
+        
+        creaContrato(c);
+        
+    }
+    
+    @Override
+    public void editarContrato(){
+        
     }
     
     
