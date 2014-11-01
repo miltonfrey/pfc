@@ -37,6 +37,7 @@ public class AsignaturaServiceImpl implements AsignaturaService,Serializable{
     
     
     @Override
+    @Transactional(readOnly = true)
     public List<Asignatura> listarAsignaturasPorUniversidad(String codUniversidad){
         
         return asignaturaDao.listarAsignaturasPorUniversidad(codUniversidad);
@@ -58,6 +59,7 @@ public class AsignaturaServiceImpl implements AsignaturaService,Serializable{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Asignatura> listarPorCriterio(){
         
         return asignaturaDao.listarPorCriterio();

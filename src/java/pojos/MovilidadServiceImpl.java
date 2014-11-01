@@ -34,6 +34,7 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Movilidad> listarTodasMovilidades(){
         
        List<Movilidad> aux=movilidadDao.listarMovilidad();
@@ -44,6 +45,7 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
         
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Movilidad> listarMovilidadesPendientes(){
         
         String estado="pendiente";
@@ -76,6 +78,7 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Movilidad> listarMisMovilidades(String user){
         
         List<Movilidad> aux= movilidadDao.listarMisMovilidades(user);
@@ -93,6 +96,7 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
         return aux;
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Movilidad> listarMisMovilidadesPorEstado(String user, String estado){
         return movilidadDao.listarMisMovilidadesPorEstado(user, estado);
     }
@@ -111,6 +115,7 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
     
     
     @Override
+    @Transactional(readOnly = true)
     public List<Movilidad> listarMovilidadesValidas(String user){
         
         return movilidadDao.listarMovilidadesValidas(user);
@@ -119,6 +124,7 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Movilidad findMovilidad(Integer id){
         
         Movilidad m=movilidadDao.findMovilidad(id);

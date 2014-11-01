@@ -29,7 +29,8 @@ public interface EquivalenciaService {
    public List<Object[]> listaObject();
    public int[] totalCreditos(ArrayList<Equivalencia> lista);
    public void confirmarContrato(ArrayList<Equivalencia> lista,Contrato c);
-   public void editarContrato();
+   public void editarContrato(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c);
+   public void crearContratoDesdeAceptado(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c, Contrato cNuevo);
 }
 
 

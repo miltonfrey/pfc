@@ -23,18 +23,21 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Pais> listaPaises(){
         
         return universidadDao.listaPaises();
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Universidad> listaUniversidades(){
         
         return universidadDao.listaUniversidades();
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Pais findPais(String pais){
         
         return universidadDao.findPais(pais);
@@ -59,6 +62,7 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
     
     
     @Override
+    @Transactional(readOnly = true)
     public List<Universidad> listar(){
         
         return(universidadDao.listarUniversidades());
@@ -89,18 +93,21 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Universidad>listarPorUniversidad(String universidad){
         
         return universidadDao.listarPorUniversidad(universidad);
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Universidad>listarPorPais(String pais){
         
         return universidadDao.listarPorPais(pais);
         
     }
     @Override
+    @Transactional(readOnly = true)
     public List<String>listarPorPaisStr(String pais){
         
        
@@ -108,6 +115,7 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
         return universidadDao.listarPorPaisStr(pais);
     }
     @Override
+    @Transactional(readOnly = true)
     public List<String>listarPorUniversidadStr(String universidad){
         
         return universidadDao.listarPorUniversidadStr(universidad);
@@ -138,6 +146,7 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
    }
     
    @Override
+   @Transactional(readOnly = true)
    public List<Cursoacademico> listaCursosAcademicos(){
        
        return universidadDao.listaCursosAcademicos();
@@ -145,6 +154,7 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
    
    
    @Override
+   @Transactional(readOnly = true)
    public Universidad findUniversidad(String universidad){
        
        return universidadDao.findUniversidad(universidad);

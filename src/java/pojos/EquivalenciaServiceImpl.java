@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import javax.faces.application.FacesMessage;
+
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pojos.Exceptions.UsuarioNotFoundException;
+
 
 @Transactional
 @Service("equivalenciaService")
@@ -52,6 +52,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Equivalencia> listarEquivalencias(){
         
         return equivalenciaDao.listarEquivalencias();
@@ -88,6 +89,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
         equivalenciaDao.modificaContrato(c);
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Contrato> listaContratos(Movilidad m){
         return equivalenciaDao.listaContratos(m);
     }
@@ -99,6 +101,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
        
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Equivalencia> listarEquivalenciasPorContrato(Integer id){
         List<Equivalencia> listaEquivalenciasPorcontrato=equivalenciaDao.listarEquivalenciasPorContrato(id);
         
@@ -126,6 +129,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Contrato findContrato(Integer id){
         
         Contrato c=equivalenciaDao.findContrato(id);
@@ -153,7 +157,8 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
            return c; 
 }       
   
-      @Override      
+      @Override
+      @Transactional(readOnly = true)
     public List<Equivalencia> equivalenciasPublicas(String Universidad){
         
         ArrayList<Equivalencia> listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaDao.equivalenciasPublicas(Universidad);
@@ -226,7 +231,78 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     
     @Override
-    public void editarContrato(){
+    public void editarContrato(ArrayList<Equivalencia> listaAuxEquivalencias,Contrato c){
+        
+        ArrayList<Equivalencia> listaCopia=new ArrayList<Equivalencia>();
+               
+        
+        for(Equivalencia e:c.getEquivalencias()){
+            
+            if(listaAuxEquivalencias.contains(e)==false){
+              
+                   listaCopia.add(e);
+          
+        }
+        }
+        
+        for(Equivalencia e:listaCopia){
+           
+            c.getEquivalencias().remove(e);
+            //e.getContratos().remove(c);
+            
+            //equivalenciaService.actualizarEquivalencia(e);
+            modificaContrato(c);
+            eliminarEquivalencia(e);
+        
+        }
+        
+        
+        for(Equivalencia e:listaAuxEquivalencias){
+            
+         if(c.getEquivalencias().contains(e)==false){   
+           
+            //e.getContratos().add(c);
+            c.getEquivalencias().add(e);
+            crearEquivalencia(e);
+            crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
+            crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
+         
+        }
+       
+    }
+       
+            c.setEstado("pendiente");
+            c.setFecha(Calendar.getInstance().getTime());
+            modificaContrato(c);
+        
+    }
+    
+    
+ 
+    @Override
+     public void crearContratoDesdeAceptado(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c,Contrato cNuevo){
+       
+        
+        
+        for(Equivalencia e:listaAuxEquivalencias){
+            
+         if(c.getEquivalencias().contains(e)==true){   
+            
+            cNuevo.getEquivalencias().add(e);
+            
+         
+           
+        }else{
+             
+            crearEquivalencia(e);
+            crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
+            crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
+             cNuevo.getEquivalencias().add(e);
+         }
+       
+    }
+        
+        creaContrato(cNuevo);
         
     }
     

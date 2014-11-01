@@ -7,6 +7,7 @@
     <h:head>
         <title>Escribir mensaje a usuario</title>
         <h:outputStylesheet library="css" name="estilos.css"/>
+        <h:outputScript library="js" name="funciones.js"/>
     </h:head>
     <h:body>
 
@@ -60,7 +61,7 @@
         <h:form id="panelEnvio">
             <p:growl />
           
-            <h:panelGrid columns="2" cellpadding="5" rendered="#{escribeMensajeBean.activaTexto}">
+            <h:panelGrid columns="2" cellpadding="5" rendered="#{escribeMensajeBean.activaTexto}" id="panelGrid">
                <p:outputLabel value="asunto" />
                <p:inputText value="#{escribeMensajeBean.tema}" />
                <p:outputLabel/>

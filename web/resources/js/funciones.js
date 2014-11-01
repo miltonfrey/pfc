@@ -19,6 +19,12 @@ function clearCheckboxes(widgetVar)
             }
  }
         
-
-
+        
+        $(document).ready(function (){
+            
+            $("#panelEnvio\\:panelGrid:cancelBtn").click(function (){
+                $("#panelEnvio").hide();
+           
+             });
+        });
 

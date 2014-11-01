@@ -52,6 +52,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public List<Usuario>listar(){
         
         List<Usuario> lista= (ArrayList<Usuario>)usuarioDao.listar();

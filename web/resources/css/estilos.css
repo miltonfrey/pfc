@@ -8,6 +8,11 @@ body.green{
     
 }
 
+body.red{
+    
+    background-color: #F70727;
+}
+
 
 .tablaFic{
     height: 45%;
@@ -364,10 +369,22 @@ body.green{
 }
 
 
-.ui-datatable.borderless  .ui-datatable-data tr,
-.ui-datatable.borderless .ui-datatable-data-empty tr,
-.ui-datatable.borderless .ui-datatable-data td,
-.ui-datatable.borderless .ui-datatable-data-empty td {
+
+
+
+
+.borderless.ui-datatable .ui-datatable-data tr,
+.borderless.ui-datatable .ui-datatable-data-empty tr,
+.borderless.ui-datatable .ui-datatable-data td,
+.borderless.ui-datatable .ui-datatable-data-empty td 
+.borderless.ui-datatable .ui-datatable-data th{
     border-style: none;
     
+    
+    
 }
+
+
+
+
+

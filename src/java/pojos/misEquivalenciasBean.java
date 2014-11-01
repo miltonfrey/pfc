@@ -472,80 +472,15 @@ public class misEquivalenciasBean implements Serializable{
             return null;
         }
         
-        //selectedContrato.setFecha(Calendar.getInstance().getTime());
-        //selectedContrato.setEstado("pendiente");
-        try{
-        equivalenciaService.modificaContrato(selectedContrato);
-        }catch(Exception ex){
-            
-            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
-        //Contrato c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+        equivalenciaService.editarContrato(listaAuxEquivalencias, c);
         
-        ArrayList<Equivalencia> listaCopia=new ArrayList<Equivalencia>();
-               
-        
-        for(Equivalencia e:c.getEquivalencias()){
-            
-            if(listaAuxEquivalencias.contains(e)==false){
-               try{
-                   listaCopia.add(e);
-                   
-                
-               }catch(Exception ex){
-                   ex.printStackTrace();
-               }
-        }
-        }
-        
-        for(Equivalencia e:listaCopia){
-            try{
-            c.getEquivalencias().remove(e);
-            //e.getContratos().remove(c);
-            
-            //equivalenciaService.actualizarEquivalencia(e);
-            equivalenciaService.modificaContrato(c);
-            equivalenciaService.eliminarEquivalencia(e);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        }
-        
-        
-        for(Equivalencia e:listaAuxEquivalencias){
-            
-         if(c.getEquivalencias().contains(e)==false){   
-            try{
-            //e.getContratos().add(c);
-            c.getEquivalencias().add(e);
-            equivalenciaService.crearEquivalencia(e);
-            equivalenciaService.crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
-            equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
-         }catch(Exception ex){
-            ex.printStackTrace();
-            beanUtilidades.creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        } 
-           
-        }
-       
-    }
-        try{
-            c.setEstado("pendiente");
-            c.setFecha(Calendar.getInstance().getTime());
-        equivalenciaService.modificaContrato(c);
-        }catch(Exception ex){
-            
-            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
-        try{
-     beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+        beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
+     try{
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
-        }catch(Exception ex){
-            
-        }
+     }catch(Exception ex){
+         
+     }
+        
         verConfirmar=false;
         return null;
     
@@ -566,38 +501,11 @@ public class misEquivalenciasBean implements Serializable{
         cNuevo.setMovilidad(selectedMovilidad);
         cNuevo.setEstado("pendiente");
         
-        for(Equivalencia e:listaAuxEquivalencias){
-            
-         if(c.getEquivalencias().contains(e)==true){   
-            try{
-            cNuevo.getEquivalencias().add(e);
-            
-         }catch(Exception ex){
-            ex.printStackTrace();
-            beanUtilidades.creaMensaje("se ha producido  un error guardando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        } 
-           
-        }else{
-             
-            equivalenciaService.crearEquivalencia(e);
-            equivalenciaService.crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
-            equivalenciaService.crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
-             cNuevo.getEquivalencias().add(e);
-         }
-       
-    }
-        try{
-        equivalenciaService.creaContrato(cNuevo);
-        }catch(Exception ex){
-            
-            beanUtilidades.creaMensaje("error creando el contrato", FacesMessage.SEVERITY_ERROR);
-            return null;
-        }
+        equivalenciaService.crearContratoDesdeAceptado(listaAuxEquivalencias, c, cNuevo);
         
      beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      try{
-     Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
+     Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
      }catch(Exception ex){
          
      }

@@ -28,12 +28,14 @@ public class MensajeServiceImpl implements MensajeService{
     
     
     @Override
+    @Transactional(readOnly = true)
     public List<Mensaje> mensajesEnviados(String origen,String destino){
         
         return mensajeDao.mensajesEnviados(origen, destino);
     }
     
      @Override
+     @Transactional(readOnly = true)
     public List<Mensaje> mensajesRecibidos(String origen,String destino){
         
         return mensajeDao.mensajesRecibidos(origen, destino);
@@ -45,6 +47,7 @@ public class MensajeServiceImpl implements MensajeService{
         
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Mensaje> mensajesEnviadosTotal(String destino){
         
         return mensajeDao.mensajesEnviadosTotal(destino);
@@ -52,6 +55,7 @@ public class MensajeServiceImpl implements MensajeService{
         
     }
     @Override
+    @Transactional(readOnly = true)
     public List<Mensaje> mensajesRecibidosTotal(String origen){
         
         return mensajeDao.mensajesRecibidosTotal(origen);
@@ -98,6 +102,7 @@ public class MensajeServiceImpl implements MensajeService{
     }
     
     @Override
+    @Transactional(readOnly = true)
     public Mensaje find(Integer msgId){
         
         return mensajeDao.find(msgId);
@@ -106,6 +111,7 @@ public class MensajeServiceImpl implements MensajeService{
 
 
     @Override
+    @Transactional(readOnly = true)
     public void leerMensajeRecibido(Mensaje selectedMensajeRecibido){
 
             Mensaje aux=find(selectedMensajeRecibido.getIdmensaje());
