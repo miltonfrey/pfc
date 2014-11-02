@@ -89,8 +89,8 @@ body.red{
 .añadir{
     
     position: absolute;
-    top: 525px;
-    left: 560px;
+    top: 535px;
+    left: 580px;
     text-align:center; 
 }
 
@@ -103,7 +103,7 @@ body.red{
 .cerrarAreaTexto{
     
     position: absolute;
-    top: 572px;
+    top: 620px;
     
 }
 
@@ -193,7 +193,7 @@ body.red{
     top: 700px;
     left: 650px;
     height: 45%;
-    width: 45%;
+    width: 50%;
     position:absolute;
     text-align: left;
     font-size: 15px;
@@ -285,7 +285,7 @@ body.red{
 
 .nuevoCreditos{
     
-    width: 8%;
+    width: 9%;
     font-size: 15px;
     text-align: center;
 }
@@ -300,7 +300,7 @@ body.red{
 
 .nuevoMultiple{
     
-    width: 8%;
+    width: 9%;
     font-size: 15px;
     text-align: center;
 }
