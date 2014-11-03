@@ -17,11 +17,11 @@
         
         
             
-          <h:form id="formPais">
+          <h:form id="formUniversidad">
              
              <p:growl id="msgs"/>
                 
-                <h:panelGrid columns="2" cellpadding="6">
+             <h:panelGrid columns="2" cellpadding="6">
                 
                     <p:outputLabel  value="pais" />
                     <p:selectOneMenu id="p1" value="#{crearUniversidadBean.paisStr}"
@@ -36,11 +36,9 @@
                     
                 </p:selectOneMenu>
                 
-                </h:panelGrid>
-          </h:form>
-        
-                <h:form id="formUniversidad">
-                    <h:panelGrid columns="2" cellpadding="6">
+                
+          
+                
                 
                 <p:outputLabel value="nombre" style="text-align: left"/>
                 <p:inputText value="#{crearUniversidadBean.nombre}"
@@ -67,9 +65,9 @@
                  <p:outputLabel  value="información adicional"/>
                  <p:inputTextarea value="#{crearUniversidadBean.info}"/>
                 
-                 <p:commandButton value="crear universidad" action="#{crearUniversidadBean.creaUniversidad}" update=":formTabla :formUniversidad :formDetalles :formPais:msgs"
+                 <p:commandButton value="crear universidad" action="#{crearUniversidadBean.creaUniversidad}" update=":formTabla :formUniversidad :formDetalles"
                                   oncomplete="PF('universidadTable').unselectAllRows();"/>
-              </h:panelGrid>
+             </h:panelGrid>
           </h:form>
         <p:separator/>
                  <br/><br/> 
@@ -82,7 +80,7 @@
                              styleClass="borderless"
                              >
                                         
-                         <f:facet name="header">Lista de Universidades de: #{crearUniversidadBean.paisStr}</f:facet>
+                         <f:facet name="header">Lista de Universidades de #{crearUniversidadBean.paisStr}</f:facet>
                            <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
                         
                               <h:outputText value="#{universidad.codUniversidad}"/>
@@ -119,7 +117,7 @@
                                
                                <f:facet name="footer">
                                 <p:commandButton id="b1" onclick= "if (! confirm('¿seguro que quieres borrar?'))return false"
-                                                 value="eliminar" action="#{crearUniversidadBean.eliminaUniversidadLista}"  icon="edit_icon" update=":formTabla :formPais:msgs :formDetalles"
+                                                 value="eliminar" action="#{crearUniversidadBean.eliminaUniversidadLista}"  icon="edit_icon" update=":formTabla :formUniversidad:msgs :formDetalles"
                                                  oncomplete="PF('universidadTable').unselectAllRows();"
                                                  />
                                
@@ -144,13 +142,16 @@
                 
                 
                 
-                <p:commandButton process=":formDetalles:" id="actualizaBtn" value="editar" action="#{crearUniversidadBean.editar()}" update=":formDetalles: :formTabla: :formPais:msgs"
+                <p:commandButton process=":formDetalles:" id="actualizaBtn" value="editar" action="#{crearUniversidadBean.editar()}" update=":formDetalles: :formTabla: :formUniversidad:msgs"
                                  rendered="#{crearUniversidadBean.checkDetalles}" />
                 <p:commandButton id="cancelBtn" value="cerrar" action="#{crearUniversidadBean.cerrar}" update=":formDetalles" process="cancelBtn"
                                  rendered="#{crearUniversidadBean.checkDetalles}" />
                 
             </h:panelGrid>
             
+               <br/>
+        <h:outputLink value="crearAsignatura.xhtml">Asignaturas</h:outputLink>
+        <br/><br/>
             
              <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
         

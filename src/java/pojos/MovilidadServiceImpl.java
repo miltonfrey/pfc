@@ -8,13 +8,19 @@ package pojos;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pojos.Exceptions.DuracionException;
+import pojos.Exceptions.NumeroDeMovilidadesException;
+import pojos.Exceptions.UsuarioNotFoundException;
+import pojos.utillidades.beanUtilidades;
 
 @Service("movilidadService")
 @Transactional
@@ -130,6 +136,87 @@ public class MovilidadServiceImpl implements MovilidadService,Serializable{
         Movilidad m=movilidadDao.findMovilidad(id);
         Hibernate.initialize(m.getUniversidad());
         return m;
+    }
+    
+    
+    @Override
+    public void crearMovilidad(Date fechaInicio,Date fechaFin,Usuario user,Universidad u,Cursoacademico ca)throws DuracionException,NumeroDeMovilidadesException{
+        
+        Calendar cal1=Calendar.getInstance();
+        Calendar cal2=Calendar.getInstance();
+                cal1.setTime(fechaInicio);
+                cal2.setTime(fechaFin);
+                if (cal2.compareTo(cal1)<1){
+                    throw new DuracionException("la fecha de inicio es igual o posterior a la fecha de fin");
+                }
+                
+                Calendar calAux=Calendar.getInstance();
+                calAux.setTime(fechaInicio);
+                calAux.add(2, 3);
+                if(cal2.compareTo(calAux)<0){
+                    
+                    throw new DuracionException("la duración mínima de una movilidad son 3 meses");
+                }
+                
+                calAux.setTime(fechaInicio);
+                calAux.add(2, 12);
+                if(cal2.compareTo(calAux)>0){
+                    throw new DuracionException("la duración máxima es de un año");
+                }
+                
+                 
+                
+                   ArrayList<Movilidad> aux;
+                   aux=(ArrayList < Movilidad >)listarMisMovilidades(user.getLogin());
+                      
+                    
+                    int i=0;
+                    Movilidad enCurso=null;
+                    
+                    if(aux.size()>0){
+                    for(Movilidad mov:aux){
+                        
+                        if(mov.getEstado().equalsIgnoreCase("pendiente")){
+                            
+                            if(mov.getEstado().equalsIgnoreCase("pendiente")){
+                            
+                            throw new NumeroDeMovilidadesException("hay una movilidad pendiente que debe ser aceptada por el coordinador o eliminada");
+                            
+                        }
+                                    
+                        
+                        }
+                        
+                       if(mov.getEstado().equalsIgnoreCase("aceptada")){
+                           i=i+1;
+                           enCurso=mov;
+                           if(i>1){
+                               
+                               throw new NumeroDeMovilidadesException("Como máximo se pueden tener dos movilidades");
+                           }
+                           
+                       }
+                  
+                    }     
+                    
+                       if(i==1){
+                           
+                            if( (fechaInicio.compareTo(enCurso.getFechaInicio())>-1 && fechaInicio.compareTo(enCurso.getFechaFin())<1)||(fechaFin.compareTo(enCurso.getFechaInicio())>-1  && fechaFin.compareTo(enCurso.getFechaFin())<1)||(fechaInicio.compareTo(enCurso.getFechaInicio())<1  && fechaFin.compareTo(enCurso.getFechaFin())>-1)){
+                                //creaMensaje(Boolean.toString((fechaInicio.compareTo(enCurso.getFechaInicio())<1  && fechaFin.compareTo(enCurso.getFechaFin())<1)), FacesMessage.SEVERITY_INFO);
+                                throw new NumeroDeMovilidadesException("las fechas se solapan");
+                       }
+                       }
+                    }
+                    
+              
+              String estado="pendiente";
+              
+              
+             
+              Movilidad m=new Movilidad(ca,u, user, fechaInicio, fechaFin, estado,null);
+              
+              crearMovilidad(m);
+              
     }
     
     

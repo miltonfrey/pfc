@@ -50,7 +50,7 @@
                 <h:outputLink value="#{crearMovilidadBean.universidad.web}" rendered="#{not empty crearMovilidadBean.universidad.web}">link</h:outputLink>
                 <p:outputLabel value="información:"  rendered="#{not empty crearMovilidadBean.universidad.info}"/>
                 <p:inputTextarea value="#{crearMovilidadBean.universidad.info}"
-                                 readonly="true" rows="10" cols="60" rendered="#{not empty crearMovilidadBean.universidad.info}"/>
+                                 readonly="true" rows="8" cols="50" rendered="#{not empty crearMovilidadBean.universidad.info}"/>
                 
                 
                 
@@ -101,20 +101,19 @@
             <br/>
             
             <h:outputLink value="verMisMovilidades.xhtml">ver mis movilidades</h:outputLink>
+            <br/><br/>
             
             
-            <p:panel>
-            
+             <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
                 
         <h:form>
             
             <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir}" ajax="false"/>
         </h:form>
-            </p:panel>
-        
+           
         <br />
         
-        <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
+       
         
                 
            

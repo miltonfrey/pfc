@@ -1,5 +1,6 @@
 package pojos;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,4 +31,5 @@ public interface UniversidadService {
     public void eliminarCursoAcademico(String c);
     public List<Cursoacademico> listaCursosAcademicos();
     public Universidad findUniversidad(String universidad);
+    public Cursoacademico buscarCursoAcademico(Date fechaInicio,Date fechaFin);
 }

@@ -1,6 +1,8 @@
 package pojos;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.dao.DataAccessException;
@@ -132,13 +134,6 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
    @Override
    public void eliminarCursoAcademico(String cursoAcademico){
        
-       
-           
-           
-       
-       
-       
-       
        Cursoacademico c=new Cursoacademico(cursoAcademico);
        universidadDao.eliminarCursoAcademico(c);
        
@@ -151,6 +146,35 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
        
        return universidadDao.listaCursosAcademicos();
    }
+   
+   @Override
+   public Cursoacademico buscarCursoAcademico(Date fechaInicio,Date fechaFin){
+    Calendar cal1=Calendar.getInstance();
+    Calendar cal2=Calendar.getInstance();
+    cal1.setTime(fechaInicio);
+    cal2.setTime(fechaFin);
+    Cursoacademico ca=new Cursoacademico();
+                    
+                    if(cal1.get(2)>8){
+                       
+                        ca.setCursoAcademico(cal1.get(1)+"/"+(cal1.get(1)+1));
+                    }else{
+                        
+                        ca.setCursoAcademico(cal1.get(1)-1+"/"+(cal1.get(1)));
+                    }
+                    
+                    for(Cursoacademico c:listaCursosAcademicos()){
+                        if (c.getCursoAcademico().equals(ca.getCursoAcademico())){
+                            return ca;
+                        }
+                        
+                    }
+                    
+                    crearCursoAcademico(ca);
+                    return ca;
+    
+    
+}
    
    
    @Override

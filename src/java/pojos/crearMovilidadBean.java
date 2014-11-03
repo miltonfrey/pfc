@@ -21,6 +21,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import javax.servlet.http.HttpSession;
+import pojos.Exceptions.DuracionException;
+import pojos.Exceptions.NumeroDeMovilidadesException;
 import pojos.Exceptions.UsuarioNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
@@ -225,98 +227,28 @@ public String crearMovilidad(){
         checkPais=false;
         //checkUni=false;
         
+        
+        
+        Universidad u=universidadService.findUniversidad(selectedUniversidad);
         Calendar cal1=Calendar.getInstance();
         Calendar cal2=Calendar.getInstance();
                 cal1.setTime(fechaInicio);
                 cal2.setTime(fechaFin);
-                if (cal2.compareTo(cal1)<1){
-                    
-                    beanUtilidades.creaMensaje("la fecha de inicio es igual o posterior a la fecha de fin", FacesMessage.SEVERITY_ERROR);
-                    return "";
-                }
+                Cursoacademico ca=universidadService.buscarCursoAcademico(fechaInicio, fechaFin);
                 
-                Calendar calAux=Calendar.getInstance();
-                calAux.setTime(fechaInicio);
-                calAux.add(2, 3);
-                if(cal2.compareTo(calAux)<0){
-                    
-                    beanUtilidades.creaMensaje("la duración mínima de una movilidad son 3 meses", FacesMessage.SEVERITY_ERROR);
-                    return "";
-                }
-                calAux.setTime(fechaInicio);
-                calAux.add(2, 12);
-                if(cal2.compareTo(calAux)>0){
-                    beanUtilidades.creaMensaje("la duración máxima es de un año", FacesMessage.SEVERITY_ERROR);
-                    return "";
-                }
-                
-                 ArrayList<Movilidad> aux;
-                try{
-                    
-                   aux=(ArrayList < Movilidad >)movilidadService.listarMisMovilidades(usuario.getLogin());
-                }catch(Exception ex){
-                    
-                    beanUtilidades.creaMensaje("se ha producido un error",FacesMessage.SEVERITY_ERROR);
-                    return "";
-                        }            
-                    
-                    int i=0;
-                    Movilidad enCurso=null;
-                    
-                    if(aux.size()>0){
-                    for(Movilidad mov:aux){
-                        
-                        if(mov.getEstado().equalsIgnoreCase("pendiente")){
-                            
-                            beanUtilidades.creaMensaje("hay una movilidad pendiente que debe ser aceptada por el coordinador o eliminada", FacesMessage.SEVERITY_ERROR);
-                            return null;
-                        
-                        }
-                        
-                       if(mov.getEstado().equalsIgnoreCase("aceptada")){
-                           i=i+1;
-                           enCurso=mov;
-                           if(i>1){
-                               
-                               beanUtilidades.creaMensaje("solo se puede tener dos convocatorias aceptadas como máximo", FacesMessage.SEVERITY_ERROR);
-                               return "";
-                           }
-                           
-                       }
-                  
-                    }     
-                    
-                       if(i==1){
-                           
-                            if( (fechaInicio.compareTo(enCurso.getFechaInicio())>-1 && fechaInicio.compareTo(enCurso.getFechaFin())<1)||(fechaFin.compareTo(enCurso.getFechaInicio())>-1  && fechaFin.compareTo(enCurso.getFechaFin())<1)||(fechaInicio.compareTo(enCurso.getFechaInicio())<1  && fechaFin.compareTo(enCurso.getFechaFin())>-1)){
-                                //creaMensaje(Boolean.toString((fechaInicio.compareTo(enCurso.getFechaInicio())<1  && fechaFin.compareTo(enCurso.getFechaFin())<1)), FacesMessage.SEVERITY_INFO);
-                                beanUtilidades.creaMensaje("las fechas se solapan con otra movilidad", FacesMessage.SEVERITY_ERROR);
-                           return "";
-                       }
-                       }
-                    }
-                    Cursoacademico ca=new Cursoacademico();
-                    
-                    if(cal1.get(2)>8){
-                       
-                        ca.setCursoAcademico(cal1.get(1)+"/"+(cal1.get(1)+1));
-                    }else{
-                        
-                        ca.setCursoAcademico(cal1.get(1)-1+"/"+(cal1.get(1)));
-                    }
-              universidadService.crearCursoAcademico(ca);
-              String estado="pendiente";
-              Universidad u=universidadService.findUniversidad(selectedUniversidad);
-              
-             
-              Movilidad m=new Movilidad(ca,u, usuario, fechaInicio, fechaFin, estado,null);
               try{
-              movilidadService.crearMovilidad(m);
-                    
-                }catch(Exception ex){
-                    beanUtilidades.creaMensaje("se ha producido un error creando la movilidad", FacesMessage.SEVERITY_ERROR);
-                    return "";
-                }
+                  
+                  movilidadService.crearMovilidad(fechaInicio, fechaFin, usuario, u,ca);
+                  
+              }catch(DuracionException ex){
+                  beanUtilidades.creaMensaje(ex.getMessage(),FacesMessage.SEVERITY_ERROR);
+                  return null;
+              }
+              catch(NumeroDeMovilidadesException ex){
+                  beanUtilidades.creaMensaje(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+              }
+             
+              
               Usuario admin=null;
                try{
                     admin=usuarioService.find("admin");
@@ -327,11 +259,9 @@ public String crearMovilidad(){
                 
                 Mensaje mensaje=new Mensaje(admin,usuario,  Calendar.getInstance().getTime(), "movilidad creada", "el usuario "+usuario.getNombre()+" "+usuario.getApellido1()+""
                         + " ha creado una movilidad a "+selectedUniversidad+" entre el "+sdf.format(fechaInicio)+" y "+sdf.format(fechaFin) , "no","no","no");
-                try{
+                
                     mensajeService.enviarMensaje(mensaje);
-                }catch(Exception ex){
-                    beanUtilidades.creaMensaje("error al enviar el mensaje", FacesMessage.SEVERITY_ERROR);
-                }
+                
                 
                 beanUtilidades.creaMensaje("movilidad creada", FacesMessage.SEVERITY_INFO);
                 beanUtilidades.creaMensaje(usuario.getLogin()+" a "+ selectedUniversidad+" "+selectedPais+" "+" " + " de "+sdf.format(fechaInicio)+" a "+ sdf.format(fechaFin), FacesMessage.SEVERITY_INFO);
@@ -340,10 +270,12 @@ public String crearMovilidad(){
                 selectedUniversidad="";
                 fechaFin=null;
                 fechaInicio=null;
-                ca.setCursoAcademico("");
                 
-                return "";
+                
+                return null;
         
     }
+
+
    
 }

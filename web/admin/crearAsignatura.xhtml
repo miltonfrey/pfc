@@ -15,26 +15,28 @@
             
            
                      <p:growl  id="msgs1"  />
-                
-                     <p:selectOneMenu id="pais" value="#{crearAsignaturaBean.paisStr}" required="true" requiredMessage="hay que introducir un pais">
+                     
+                     <h:panelGrid cellpadding="5" columns="2">
+                         <p:outputLabel value="Pais"/>
+                         <p:selectOneMenu id="pais" value="#{crearAsignaturaBean.paisStr}" required="true" requiredMessage="hay que introducir un pais">
                          <p:ajax  listener="#{crearAsignaturaBean.onChangePais}" update=":formUniversidad :formDetalles :formTabla :formAsignatura"/>
                         <f:selectItem itemLabel="selecciona pais" noSelectionOption="true"/>
                         <f:selectItems value="#{paisBean.listaPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.nombre}"/>
-            
-            
                         </p:selectOneMenu>
                     
-               <br/><br/>
+               
                 
-                <p:outputPanel id="universidad" >
-                    <p:selectOneMenu  value="#{crearAsignaturaBean.universidadStr}" rendered="#{crearAsignaturaBean.checkPaisStr}" required="true" requiredMessage="hay que introducir una universidad"  >
+                   
+                        <p:outputLabel value="Universidad" rendered="#{crearAsignaturaBean.checkPaisStr}"/>
+                       <p:selectOneMenu  value="#{crearAsignaturaBean.universidadStr}" rendered="#{crearAsignaturaBean.checkPaisStr}" required="true" requiredMessage="hay que introducir una universidad"  >
                 
                         <p:ajax listener="#{crearAsignaturaBean.onChangeUniversidad}" update=":formTabla :formAsignatura :formUniversidad" oncomplete="PF('asignaturaBtn').filter();"/>
-                <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" id="uni3" />
-                <f:selectItems value="#{crearAsignaturaBean.listaUniversidades}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"/>
+                       <f:selectItem itemLabel="selecciona universidad" noSelectionOption="true" id="uni3" />
+                       <f:selectItems value="#{crearAsignaturaBean.listaUniversidades}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"/>
             
                  </p:selectOneMenu>
-                </p:outputPanel>
+                
+                     </h:panelGrid>
             </h:form>    
             <br/><br/>
             
@@ -207,7 +209,9 @@
         <br/>
         <br/>
             
-        
+       
+        <h:outputLink value="crearUniversidad.xhtml">Universidades</h:outputLink>
+        <br/><br/>
         
         
          <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
