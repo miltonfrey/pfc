@@ -7,6 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Crear país</title>
+        <h:outputStylesheet library="css" name="estilos.css"/>
     </h:head>
     <h:body styleClass="blue">
         <h:form id="formPais">
@@ -26,15 +27,16 @@
             <p:outputPanel id="panelTable" >
                 
                 <p:dataTable id="tabla1" value="#{paisBean.listaPaises}" var="pais"
-                             emptyMessage="no se han recuperado países" paginator="true" rows="10"
+                             emptyMessage="no hay países" paginator="true" rows="10"
+                             styleClass="borderless"
                              >
                     
-                    <p:column headerText="pais" sortBy="#{pais.nombre}">
+                    <p:column headerText="pais" sortBy="#{pais.nombre}" styleClass="centrar">
                         
                         <h:outputText value="#{pais.nombre}"/>
                         
                     </p:column>
-                    <p:column headerText="eliminar">
+                    <p:column headerText="eliminar" styleClass="centrar">
                         
                         <p:commandButton id="button1" value="eliminar" action="#{paisBean.eliminaPais}" update=":formPais"
                                          process="button1"  
