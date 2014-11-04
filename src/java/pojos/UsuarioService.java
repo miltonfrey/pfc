@@ -14,8 +14,9 @@ import pojos.Exceptions.UsuarioNotFoundException;
 public interface UsuarioService {
     
     public Usuario find(String nombre)throws UsuarioNotFoundException;
-    public boolean delete(Usuario u);
+    public void delete(Usuario u);
     public List<Usuario> listar();
+    
     public void insertarUsuario(Usuario u);
     public void actualizar(Usuario u);
     public String md5Password(String password);

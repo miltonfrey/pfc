@@ -9,7 +9,7 @@
         <h:outputStylesheet library="css" name="estilos.css"/>
         <h:outputScript library="js" name="funciones.js"/>
     </h:head>
-    <h:body>
+    <h:body styleClass="blue">
 
         <h:form id="usuario">
             
@@ -74,18 +74,18 @@
             </h:panelGrid>
         
       </h:form>
-        <br/>
+        <br/><br/>
        
            
             
            <h:outputLink value="verMensajes.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
-            
+            <br/>
         
-        <p:panel>
+        
              <h:form>
                  <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir}" ajax="false"/>
             </h:form>
-        </p:panel>
+        
         
     
         

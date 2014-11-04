@@ -9,7 +9,7 @@
         <title>crear asignatura</title>
         <h:outputStylesheet library="css" name="estilos.css"/>
     </h:head>
-    <h:body>
+    <h:body styleClass="blue">
         
         <h:form id="formUniversidad"> 
             
@@ -206,8 +206,8 @@
             
             
         </h:form>
-        <br/>
-        <br/>
+        <br/><br/><br/>
+        
             
        
         <h:outputLink value="crearUniversidad.xhtml">Universidades</h:outputLink>
@@ -215,13 +215,13 @@
         
         
          <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
-            
+          <br/>  
         
-        <p:panel>
+        
              <h:form>
                 <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir}" ajax="false"/>
             </h:form>
-        </p:panel>
+        
         
     
 

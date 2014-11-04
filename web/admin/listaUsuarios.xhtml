@@ -13,7 +13,7 @@
        
         <title>lista de usuarios</title>
     </h:head>
-    <h:body>
+    <h:body styleClass="blue">
        
         <h:form id="formTabla">
             
@@ -24,7 +24,8 @@
                          selection="#{eliminarUsuarioBean.selectedUsuarios}"
                          widgetVar="usTable"
                          emptyMessage="no se han encontrado usuarios"
-                         rowKey="#{usuario.login}">
+                         rowKey="#{usuario.login}"
+                         styleClass="borderless">
                 
                 <p:column headerText="login" sortBy="#{usuario.nombre}" filterBy="#{usuario.login}" filterMatchMode="contains" styleClass="campoUsuario">
                     
@@ -62,7 +63,7 @@
                     <p:column selectionMode="multiple" styleClass="multiple"/>
                
                          <f:facet name="footer">
-                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Borrar" action="#{eliminarUsuarioBean.eliminaUsuariosLista}" 
+                             <p:commandButton onclick="if (! confirm('¿seguro que quieres borrar?')) return false" update=":formTabla:" icon="ui-icon-search" value="Eliminar" action="#{eliminarUsuarioBean.eliminaUsuariosLista}" 
                                  oncomplete="PF('usTable').filter()"/>
                          </f:facet>
                 
@@ -79,7 +80,7 @@
         <br/><br/>
         <h:outputLink value="index.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
         
-        <p:panel>
+       <br/>
             
             
             
@@ -89,7 +90,7 @@
             <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir}" ajax="false"/>
             
         </h:form>
-            </p:panel>
+            
         
         
         

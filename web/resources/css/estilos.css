@@ -373,6 +373,13 @@ body.red{
     text-align: center;
 }
 
+.fechaEnviados,.asuntoEnviados,.multipleEnviados,.leerEnviados{
+    
+    text-align: center;
+}
+
+
+
 
 
 
@@ -390,6 +397,9 @@ body.red{
 }
 
 
-
-
+.form{
+    margin-left: 15%;      //centrar los form
+    margin-right:15%;
+    width: 100%;
+    }
 

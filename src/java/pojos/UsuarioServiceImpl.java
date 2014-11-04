@@ -42,13 +42,10 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
     
     @Override
-    public boolean delete(Usuario u){
-        try{
+    public void delete(Usuario u){
+        
         usuarioDao.delete(u);
-        }catch(Exception ex){    //ver que exception es
-            return false;
-        }
-        return true;
+       
     }
     
     @Override
@@ -60,6 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         lista.remove(u);
         return lista;
     }
+    
     
     @Override
     public void insertarUsuario(Usuario u){

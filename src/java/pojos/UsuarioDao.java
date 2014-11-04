@@ -12,11 +12,12 @@ import java.util.List;
 public interface UsuarioDao {
 
     public Usuario find(String name);
-    public void delete(Usuario u)throws Exception;
+    public void delete(Usuario u);
     public List<Usuario> listar();
     public void insertarUsuario(Usuario u)throws org.springframework.dao.DataIntegrityViolationException;
     public void actualizar(Usuario u);
     public String md5Password(String password);
+    
         
         
     

@@ -10,7 +10,7 @@
         <h:outputStylesheet library="css" name="estilos.css"/>
         <h:outputScript library="js" name="funciones.js"/>
     </h:head>
-    <h:body>
+    <h:body styleClass="blue">
       
         <p:panel id="headerContratos">
         
@@ -268,7 +268,7 @@
        <br/>
        <br/>
        <h:outputLink value="verContratos.xhtml"><h:graphicImage value="/resources/iniciar-icono-4628-48.png"/></h:outputLink>
-        <p:panel>
+        <br/>
          <h:form>
             
             <p:commandButton value="cerrar sesión" action="#{beanUtilidades.salir}" ajax="false"/>
