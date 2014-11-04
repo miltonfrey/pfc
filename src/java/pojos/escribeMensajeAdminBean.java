@@ -115,5 +115,7 @@ public class escribeMensajeAdminBean implements Serializable{
         //actualizarEnviados();
         return null;
     }
+    
+   
    
 }

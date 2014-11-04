@@ -141,5 +141,5 @@ public class escribeMensajeBean implements Serializable{
         activaTexto=false;
     }
     
-    
+       
 }

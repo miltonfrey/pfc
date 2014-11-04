@@ -158,8 +158,8 @@
                 <p:outputLabel id="labelTextoEnviado" for="textoEnviado" />
                 <p:inputTextarea id="textoEnviado" value="#{mensajesEnviadosAdminBean.textAreaEnviado}"
                                   readonly="true" autoResize="true" cols="80" rows="10"/>
-                
-                <p:commandButton value="cerrar" process="@this" action="#{mensajesEnviadosAdminBean.cerrarMensajeEnviado}" update=":panelEnviados" />
+                <p:commandButton widgetVar="b" id="boton" value="pulsa" action="#{bean1.pulsar}"/>
+                <p:commandButton  widgetVar="b" id="cancelBtn" value="cerrar" process="@this" action="#{mensajesEnviadosAdminBean.cerrarMensajeEnviado}" />
                 </h:panelGrid>
                     
             </h:form>        
