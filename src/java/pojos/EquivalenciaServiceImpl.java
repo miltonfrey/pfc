@@ -5,6 +5,7 @@ package pojos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pojos.Exceptions.FechaIncorrectaException;
 
 
 @Transactional
@@ -305,6 +307,13 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
         creaContrato(cNuevo);
         
     }
+     
+     @Override
+     public void compruebaFechaCrearContrato(Contrato c,Date aux)throws FechaIncorrectaException{
+         
+         
+         
+     }
     
     
 }         

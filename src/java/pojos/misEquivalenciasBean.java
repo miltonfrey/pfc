@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 //import java.util.Set;
 import javax.annotation.PostConstruct;
@@ -559,6 +560,12 @@ public class misEquivalenciasBean implements Serializable{
     
     public String nuevoAceptado(){
         
+        Date aux=Calendar.getInstance().getTime();
+        
+        try{
+            
+            
+        }
         
          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad",selectedMovilidad);
          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);

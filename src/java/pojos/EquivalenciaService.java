@@ -3,7 +3,9 @@
 package pojos;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import pojos.Exceptions.FechaIncorrectaException;
 
 
 public interface EquivalenciaService {
@@ -31,6 +33,7 @@ public interface EquivalenciaService {
    public void confirmarContrato(ArrayList<Equivalencia> lista,Contrato c);
    public void editarContrato(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c);
    public void crearContratoDesdeAceptado(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c, Contrato cNuevo);
+   public void compruebaFechaCrearContrato(Contrato c,Date aux)throws FechaIncorrectaException;
 }
 
 
