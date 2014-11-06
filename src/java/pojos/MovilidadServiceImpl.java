@@ -12,15 +12,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pojos.Exceptions.DuracionException;
 import pojos.Exceptions.NumeroDeMovilidadesException;
-import pojos.Exceptions.UsuarioNotFoundException;
-import pojos.utillidades.beanUtilidades;
+
 
 @Service("movilidadService")
 @Transactional

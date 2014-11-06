@@ -220,7 +220,7 @@ public class verContratosBean implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad",selectedMovilidad);
        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contratoComparado",contratoComparado);
-       return "gestionarContrato.xhtml?faces-redirect=true";
+       return "compararContratos.xhtml?faces-redirect=true";
         }
         }  
     

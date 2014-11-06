@@ -225,6 +225,8 @@ public class verMisContratosBean implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);
        
         
+        
+        
         for(Contrato c:listaContratos){
             
             if(selectedContrato.getFecha().compareTo(c.getFecha())==-1){
@@ -234,8 +236,6 @@ public class verMisContratosBean implements Serializable{
             
             
         }
-        
-        
         
        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("ultimo", "ultimo");
           return ("verContrato.xhtml?faces-redirect=true");

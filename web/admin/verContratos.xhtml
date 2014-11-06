@@ -57,13 +57,13 @@
                          emptyMessage="no hay contratos"
                          styleClass="borderless"
                          selection="#{verContratosBean.selectedContratos}">
-                <p:column headerText="fecha" sortBy="#{contrato.fecha}">
+                <p:column headerText="fecha" sortBy="#{contrato.fecha}" styleClass="centrar">
                     <h:outputText value="#{contrato.fecha}">
                                   <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
                     </h:outputText>
                 </p:column>
                 
-                <p:column filterBy="#{contrato.estado}" filterMatchMode="exact" headerText="ver estado" >
+                <p:column filterBy="#{contrato.estado}" filterMatchMode="exact" headerText="ver estado" styleClass="centrar" >
                 
                     <f:facet name="filter">
                         <p:selectOneMenu onchange="PF('tablaContratos').filter()" style="width: 100%">

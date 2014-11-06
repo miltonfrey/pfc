@@ -69,10 +69,10 @@ public class equivalenciasBean implements Serializable{
     private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
     private ArrayList<Equivalencia> listaAuxEquivalenciasComparado=new ArrayList<Equivalencia>();
     
-    private ArrayList<EquivalenciaRevisada> equivalenciaRevisadas=new ArrayList<EquivalenciaRevisada>();
+    private ArrayList<EquivalenciaRevisada> equivalenciasRevisadas;
     
     
-    private ArrayList<Equivalencia>selectedEquivalencias;
+    private ArrayList<EquivalenciaRevisada>selectedEquivalencias;
     
     private static int j=0;
     
@@ -96,7 +96,7 @@ public class equivalenciasBean implements Serializable{
            selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
            context.getSessionMap().remove("contrato");
            context.getSessionMap().remove("movilidad");
-           listaAuxEquivalencias.addAll(selectedContrato.getEquivalencias());//(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
+           listaAuxEquivalencias.addAll(selectedContrato.getEquivalencias());
             creditosA=equivalenciaService.totalCreditos(listaAuxEquivalencias)[0];
             creditosB=equivalenciaService.totalCreditos(listaAuxEquivalencias)[1];
              
@@ -105,6 +105,7 @@ public class equivalenciasBean implements Serializable{
              
         contratoComparado=equivalenciaService.findContrato(contratoComparado.getIdContrato());
         listaAuxEquivalenciasComparado.addAll(contratoComparado.getEquivalencias());
+        equivalenciasRevisadas=equivalenciaService.compararEquivalencias(listaAuxEquivalencias, listaAuxEquivalenciasComparado);
         creditosComparadoA=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[0];
         creditosComparadoB=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[1];
         context.getSessionMap().remove("contratoComparado");
@@ -171,13 +172,20 @@ public class equivalenciasBean implements Serializable{
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////
+
+    public ArrayList<EquivalenciaRevisada> getEquivalenciasRevisadas() {
+        return equivalenciasRevisadas;
+    }
+
+    public void setEquivalenciasRevisadas(ArrayList<EquivalenciaRevisada> equivalenciasRevisadas) {
+        this.equivalenciasRevisadas = equivalenciasRevisadas;
+    }
    
-    
-    public ArrayList<Equivalencia> getSelectedEquivalencias() {
+    public ArrayList<EquivalenciaRevisada> getSelectedEquivalencias() {
         return selectedEquivalencias;
     }
 
-    public void setSelectedEquivalencias(ArrayList<Equivalencia> selectedEquivalencias) {
+    public void setSelectedEquivalencias(ArrayList<EquivalenciaRevisada> selectedEquivalencias) {
         this.selectedEquivalencias = selectedEquivalencias;
     }
 
@@ -271,13 +279,15 @@ public class equivalenciasBean implements Serializable{
             return null;
         }
         
-        for(Equivalencia e:selectedEquivalencias){
-            e.setVisible("si");
+        for(EquivalenciaRevisada e:selectedEquivalencias){
+            e.getEquivalencia().setVisible("si");
            
-                equivalenciaService.actualizarEquivalencia(e);
+                equivalenciaService.actualizarEquivalencia(e.getEquivalencia());
             
         }
         beanUtilidades.creaMensaje("Las equivalencias han sido publicadas", FacesMessage.SEVERITY_INFO);
+        
+        
         return null;
     }
     
@@ -288,10 +298,10 @@ public class equivalenciasBean implements Serializable{
             return null;
         }
         
-        for(Equivalencia e:selectedEquivalencias){
-            e.setVisible("no");
+        for(EquivalenciaRevisada e:selectedEquivalencias){
+            e.getEquivalencia().setVisible("no");
             
-                equivalenciaService.actualizarEquivalencia(e);
+                equivalenciaService.actualizarEquivalencia(e.getEquivalencia());
             
         }
         beanUtilidades.creaMensaje("Las equivalencias seleccionadas ya no son públicas", FacesMessage.SEVERITY_INFO);

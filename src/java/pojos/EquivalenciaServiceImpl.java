@@ -318,7 +318,19 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
      @Override
      public ArrayList<EquivalenciaRevisada> compararEquivalencias(ArrayList<Equivalencia> listaAuxEquivalencias,ArrayList<Equivalencia> listaAuxEquivalenciasComparado){
          
-         return null;
+         ArrayList<EquivalenciaRevisada> listaRevisada=new ArrayList<EquivalenciaRevisada>();
+         
+         for(Equivalencia e:listaAuxEquivalencias){
+             EquivalenciaRevisada er=new EquivalenciaRevisada(e);
+             
+             if(listaAuxEquivalenciasComparado.contains(e)==false){
+                 er.setIgual(true);
+             }
+             listaRevisada.add(er);
+         }
+          
+         return listaRevisada;
+        
      }
     
     
