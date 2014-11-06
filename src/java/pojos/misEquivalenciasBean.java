@@ -478,6 +478,7 @@ public class misEquivalenciasBean implements Serializable{
         beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      try{
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato modificado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
+     mensajeService.enviarMensaje(m);
      }catch(Exception ex){
          
      }
@@ -507,6 +508,7 @@ public class misEquivalenciasBean implements Serializable{
      beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      try{
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
+     mensajeService.enviarMensaje(m);
      }catch(Exception ex){
          
      }
@@ -560,12 +562,7 @@ public class misEquivalenciasBean implements Serializable{
     
     public String nuevoAceptado(){
         
-        Date aux=Calendar.getInstance().getTime();
-        
-        try{
-            
-            
-        }
+       
         
          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad",selectedMovilidad);
          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", selectedContrato);

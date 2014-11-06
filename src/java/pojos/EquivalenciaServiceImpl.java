@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pojos.Exceptions.FechaIncorrectaException;
+import pojos.utillidades.EquivalenciaRevisada;
 
 
 @Transactional
@@ -313,6 +314,11 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
          
          
          
+     }
+     @Override
+     public ArrayList<EquivalenciaRevisada> compararEquivalencias(ArrayList<Equivalencia> listaAuxEquivalencias,ArrayList<Equivalencia> listaAuxEquivalenciasComparado){
+         
+         return null;
      }
     
     

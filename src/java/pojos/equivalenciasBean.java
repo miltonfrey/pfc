@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
-
-//import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -18,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import pojos.utillidades.EquivalenciaRevisada;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -71,6 +69,9 @@ public class equivalenciasBean implements Serializable{
     private ArrayList<Equivalencia> listaAuxEquivalencias=new ArrayList<Equivalencia>();
     private ArrayList<Equivalencia> listaAuxEquivalenciasComparado=new ArrayList<Equivalencia>();
     
+    private ArrayList<EquivalenciaRevisada> equivalenciaRevisadas=new ArrayList<EquivalenciaRevisada>();
+    
+    
     private ArrayList<Equivalencia>selectedEquivalencias;
     
     private static int j=0;
@@ -103,7 +104,7 @@ public class equivalenciasBean implements Serializable{
         contratoComparado=(Contrato)context.getSessionMap().get("contratoComparado");
              
         contratoComparado=equivalenciaService.findContrato(contratoComparado.getIdContrato());
-        listaAuxEquivalenciasComparado.addAll(contratoComparado.getEquivalencias());//(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(contratoComparado.getIdContrato());
+        listaAuxEquivalenciasComparado.addAll(contratoComparado.getEquivalencias());
         creditosComparadoA=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[0];
         creditosComparadoB=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[1];
         context.getSessionMap().remove("contratoComparado");
@@ -318,8 +319,7 @@ public class equivalenciasBean implements Serializable{
         return null;
     }
     
+    
+}
      
     
-    
-   
-}
