@@ -246,6 +246,7 @@ public String crearMovilidad(){
               }
               catch(NumeroDeMovilidadesException ex){
                   beanUtilidades.creaMensaje(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+                  return null;
               }
              
               

@@ -132,9 +132,9 @@
                 </p:columnGroup>
                 
                 <f:facet name="footer">
-                    <p:commandButton  id="publicaBtn"  update=":formTablaEquivalencias:" icon="ui-icon-search" value="publicar" action="#{equivalenciasBean.publicarEquivalencia}"
+                    <p:commandButton  id="publicaBtn"  update=":formTablaEquivalencias:" icon="ui-icon-search" value="publicar" action="#{equivalenciasBean.publicarEquivalenciaSimple}"
                                               oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
-                    <p:commandButton   process=":formTablaEquivalencias:" update=":formTablaEquivalencias" icon="ui-icon-search" value="invisible" action="#{equivalenciasBean.noPublicar}"
+                    <p:commandButton   process=":formTablaEquivalencias:" update=":formTablaEquivalencias" icon="ui-icon-search" value="invisible" action="#{equivalenciasBean.noPublicarSimple}"
                                    oncomplete="PF('equivalenciaTable').unselectAllRows();"/>
                     
                 </f:facet>

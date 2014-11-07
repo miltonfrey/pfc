@@ -95,6 +95,8 @@ public class equivalenciasBean implements Serializable{
            user=(Usuario)session.getAttribute("admin");
            selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
            selectedContrato=(Contrato)context.getSessionMap().get("contrato");
+           context.getSessionMap().remove("contrato");
+           context.getSessionMap().remove("movilidad");
            try{
            selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
            }catch(ContratoNotFoundException ex){
@@ -104,14 +106,14 @@ public class equivalenciasBean implements Serializable{
                     
                     }
            }
-           context.getSessionMap().remove("contrato");
-           context.getSessionMap().remove("movilidad");
+           
            listaAuxEquivalencias.addAll(selectedContrato.getEquivalencias());
             creditosA=equivalenciaService.totalCreditos(listaAuxEquivalencias)[0];
             creditosB=equivalenciaService.totalCreditos(listaAuxEquivalencias)[1];
              
            if(context.getSessionMap().containsKey("contratoComparado")){
         contratoComparado=(Contrato)context.getSessionMap().get("contratoComparado");
+        context.getSessionMap().remove("contratoComparado");
              try{
         contratoComparado=equivalenciaService.findContrato(contratoComparado.getIdContrato());
              }catch(ContratoNotFoundException ex3){
@@ -125,7 +127,7 @@ public class equivalenciasBean implements Serializable{
         equivalenciasRevisadas=equivalenciaService.compararEquivalencias(listaAuxEquivalencias, listaAuxEquivalenciasComparado);
         creditosComparadoA=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[0];
         creditosComparadoB=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[1];
-        context.getSessionMap().remove("contratoComparado");
+       
          
            }
            
@@ -295,7 +297,31 @@ public class equivalenciasBean implements Serializable{
     }
     
     
-    
+    public String publicarEquivalencia(){
+        
+        if(selectedEquivalencias.isEmpty()){
+            return null;
+        }
+        
+        for(EquivalenciaRevisada e:selectedEquivalencias){
+            e.getEquivalencia().setVisible("si");
+           
+                try{
+                equivalenciaService.actualizarEquivalencia(e.getEquivalencia());
+            }catch(RuntimeException ex){
+                try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+            }
+            
+        }
+        beanUtilidades.creaMensaje("Las equivalencias han sido publicadas", FacesMessage.SEVERITY_INFO);
+        
+        
+        return null;
+    }
     
 
    
@@ -311,7 +337,15 @@ public class equivalenciasBean implements Serializable{
         for(Equivalencia e:selectedEquivalenciasSimples){
             e.setVisible("si");
            
+                 try{
                 equivalenciaService.actualizarEquivalencia(e);
+            }catch(RuntimeException ex){
+                 try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+            }
             
         }
         beanUtilidades.creaMensaje("Las equivalencias han sido publicadas", FacesMessage.SEVERITY_INFO);
@@ -330,7 +364,15 @@ public class equivalenciasBean implements Serializable{
         for(EquivalenciaRevisada e:selectedEquivalencias){
             e.getEquivalencia().setVisible("no");
             
+                 try{
                 equivalenciaService.actualizarEquivalencia(e.getEquivalencia());
+            }catch(RuntimeException ex){
+                 try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+            }
             
         }
         beanUtilidades.creaMensaje("Las equivalencias seleccionadas ya no son públicas", FacesMessage.SEVERITY_INFO);
@@ -348,7 +390,15 @@ public class equivalenciasBean implements Serializable{
         for(Equivalencia e:selectedEquivalenciasSimples){
             e.setVisible("no");
             
+            try{
                 equivalenciaService.actualizarEquivalencia(e);
+            }catch(RuntimeException ex){
+                 try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+            }
             
         }
         beanUtilidades.creaMensaje("Las equivalencias seleccionadas ya no son públicas", FacesMessage.SEVERITY_INFO);

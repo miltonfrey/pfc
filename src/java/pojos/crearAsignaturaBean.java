@@ -306,7 +306,7 @@ public class crearAsignaturaBean implements Serializable{
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
             
             beanUtilidades.creaMensaje("La asignatura ya existe", FacesMessage.SEVERITY_ERROR);
-            return "";
+            return null;
         }
         
         beanUtilidades.creaMensaje("asignatura creada correctamente", FacesMessage.SEVERITY_INFO);
@@ -320,7 +320,7 @@ public class crearAsignaturaBean implements Serializable{
         webAsignatura="";
         listaAsignaturas=(ArrayList<Asignatura>)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
         
-        return "";
+        return null;
     }
     
     public void verDetalles(){
@@ -333,12 +333,16 @@ public class crearAsignaturaBean implements Serializable{
         //checkUniversidadStr=false;
         
     }
-    public void editar(){
-        
+    public String editar(){
+        try{
             asignaturaService.actualizarAsignatura(SelectedAsignatura);
+            listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
+        }catch(RuntimeException ex){
+            return null;
+        }
             checkDetalles=false;
             beanUtilidades.creaMensaje("error al editar la asignatura", FacesMessage.SEVERITY_INFO);
-             listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
+           return null;
         
     }
     
@@ -359,9 +363,11 @@ public class crearAsignaturaBean implements Serializable{
         }
             
         for (Asignatura a:selectedAsignaturas){
-            
+            try{
                 asignaturaService.eliminaAsignatura(a);
-                
+            }catch(RuntimeException ex){
+                return null;
+            }
         }
         
         beanUtilidades.creaMensaje("se han eliminado correctamente las asignaturas",FacesMessage.SEVERITY_INFO);

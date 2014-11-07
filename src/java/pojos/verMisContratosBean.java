@@ -248,7 +248,7 @@ public class verMisContratosBean implements Serializable{
      
     
     public String crearContrato(){
-        
+        System.out.println(selectedMovilidad.getUniversidad().getNombre());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", selectedMovilidad);
         return ("elaborarContrato.xhtml?faces-redirect=true");
         

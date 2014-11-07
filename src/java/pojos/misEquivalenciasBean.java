@@ -122,6 +122,7 @@ public class misEquivalenciasBean implements Serializable{
         
          if(context.getSessionMap().containsKey("contrato")){
         selectedContrato=(Contrato)context.getSessionMap().get("contrato");
+        context.getSessionMap().remove("contrato");
         try{
         c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
         }catch(ContratoNotFoundException ex){
@@ -146,7 +147,7 @@ public class misEquivalenciasBean implements Serializable{
         }
         
          }
-         context.getSessionMap().remove("contrato");
+        
         }
         
         
@@ -460,7 +461,17 @@ public class misEquivalenciasBean implements Serializable{
         //c.setEquivalencias(setE);
         c.setEstado("pendiente");
         
+        try{
         equivalenciaService.confirmarContrato(listaAuxEquivalencias, c);
+        }catch(RuntimeException ex){
+         
+             try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/verMisMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+        }
+            
         
         beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
         try{
@@ -481,9 +492,18 @@ public class misEquivalenciasBean implements Serializable{
             beanUtilidades.creaMensaje("el contrato está vacío", FacesMessage.SEVERITY_ERROR);
             return null;
         }
+        ArrayList<Equivalencia>listaCopia=null;
+         try{
+        listaCopia=equivalenciaService.editarContrato(listaAuxEquivalencias, c);
+        }catch(RuntimeException ex){
+         
+             try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/verMisMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+        }
         
-        
-        ArrayList<Equivalencia> listaCopia=equivalenciaService.editarContrato(listaAuxEquivalencias, c);
         
         for(Equivalencia e:listaCopia){
             try{
@@ -521,7 +541,19 @@ public class misEquivalenciasBean implements Serializable{
         cNuevo.setMovilidad(selectedMovilidad);
         cNuevo.setEstado("pendiente");
         
-        equivalenciaService.crearContratoDesdeAceptado(listaAuxEquivalencias, c, cNuevo);
+         try{
+         equivalenciaService.crearContratoDesdeAceptado(listaAuxEquivalencias, c, cNuevo);
+        }catch(RuntimeException ex){
+         
+             try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/verMisMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+        }
+        
+        
+       
         
      beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      try{
