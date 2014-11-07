@@ -3,6 +3,7 @@ package pojos;
 
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -169,6 +170,28 @@ public class Asignatura  implements java.io.Serializable {
     
     public void setMiembroGrupoAsignaturaBs(Set<MiembroGrupoAsignaturaB> miembroGrupoAsignaturaBs) {
         this.miembroGrupoAsignaturaBs = miembroGrupoAsignaturaBs;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 31 * hash + Objects.hashCode(this.nombreAsignatura);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Asignatura other = (Asignatura) obj;
+        if (!Objects.equals(this.nombreAsignatura, other.nombreAsignatura)) {
+            return false;
+        }
+        return true;
     }
 
 

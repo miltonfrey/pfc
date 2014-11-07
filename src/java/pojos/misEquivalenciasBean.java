@@ -473,7 +473,16 @@ public class misEquivalenciasBean implements Serializable{
             return null;
         }
         
-        equivalenciaService.editarContrato(listaAuxEquivalencias, c);
+        
+        ArrayList<Equivalencia> listaCopia=equivalenciaService.editarContrato(listaAuxEquivalencias, c);
+        
+        for(Equivalencia e:listaCopia){
+            try{
+                equivalenciaService.eliminarEquivalencia(e);
+            }catch(org.springframework.dao.DataIntegrityViolationException ex){
+                
+            }
+        }
         
         beanUtilidades.creaMensaje("se ha registrado el contrato correctamente", FacesMessage.SEVERITY_INFO);
      try{

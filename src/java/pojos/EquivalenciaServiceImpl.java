@@ -234,7 +234,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     }
     
     @Override
-    public void editarContrato(ArrayList<Equivalencia> listaAuxEquivalencias,Contrato c){
+    public ArrayList<Equivalencia> editarContrato(ArrayList<Equivalencia> listaAuxEquivalencias,Contrato c){
         
         ArrayList<Equivalencia> listaCopia=new ArrayList<Equivalencia>();
                
@@ -255,20 +255,21 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
             
             //equivalenciaService.actualizarEquivalencia(e);
             modificaContrato(c);
-            eliminarEquivalencia(e);
+            
+            //eliminarEquivalencia(e);
         
         }
         
         
-        for(Equivalencia e:listaAuxEquivalencias){
+        for(Equivalencia e2:listaAuxEquivalencias){
             
-         if(c.getEquivalencias().contains(e)==false){   
+         if(c.getEquivalencias().contains(e2)==false){   
            
             //e.getContratos().add(c);
-            c.getEquivalencias().add(e);
-            crearEquivalencia(e);
-            crearGrupoAsignaturasA(e.getGrupoAsignaturaA());
-            crearGrupoAsignaturasB(e.getGrupoAsignaturaB());
+            c.getEquivalencias().add(e2);
+            crearEquivalencia(e2);
+            crearGrupoAsignaturasA(e2.getGrupoAsignaturaA());
+            crearGrupoAsignaturasB(e2.getGrupoAsignaturaB());
          
         }
        
@@ -277,6 +278,7 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
             c.setEstado("pendiente");
             c.setFecha(Calendar.getInstance().getTime());
             modificaContrato(c);
+            return listaCopia;
         
     }
     
@@ -315,7 +317,80 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
          
          
      }
-     @Override
+    
+    @Override 
+    public ArrayList<EquivalenciaRevisada> compararEquivalencias(ArrayList<Equivalencia> listaAuxEquivalencias,ArrayList<Equivalencia> listaAuxEquivalenciasComparado){
+        
+        ArrayList<EquivalenciaRevisada> listaRevisada=new ArrayList<EquivalenciaRevisada>();
+        
+        loop:
+        for(Equivalencia e:listaAuxEquivalencias){
+            EquivalenciaRevisada er=new EquivalenciaRevisada(e);
+            er.setIgual(true);
+            ArrayList<Asignatura> listaAsignaturas=new ArrayList<Asignatura>();
+            ArrayList<Asignatura> listaAsignaturasB=new ArrayList<Asignatura>();
+            
+            
+            Iterator i=e.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
+            while(i.hasNext()){
+                MiembroGrupoAsignaturaA m=(MiembroGrupoAsignaturaA)i.next();
+                listaAsignaturas.add(m.getAsignatura());   
+            }
+            
+            
+            Iterator j=e.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
+            while(j.hasNext()){
+                MiembroGrupoAsignaturaB mb=(MiembroGrupoAsignaturaB)j.next();
+                listaAsignaturasB.add(mb.getAsignatura());
+            }     
+            
+            
+            loopB: 
+                  for(Equivalencia eComp:listaAuxEquivalenciasComparado){
+                      
+                       ArrayList<Asignatura> listaAsignaturasComp=new ArrayList<Asignatura>();
+                       i=eComp.getGrupoAsignaturaA().getMiembroGrupoAsignaturaAs().iterator();
+                            while(i.hasNext()){
+                            MiembroGrupoAsignaturaA m=(MiembroGrupoAsignaturaA)i.next();
+                            listaAsignaturasComp.add(m.getAsignatura());
+                
+                        }
+                             
+                           if(listaAsignaturas.size()==listaAsignaturasComp.size()){
+                                 if(contiene(listaAsignaturas, listaAsignaturasComp)){
+                              
+                                   System.out.println(listaAsignaturasComp.get(0).getNombreAsignatura());
+                                   ArrayList<Asignatura> listaAsignaturasCompB=new ArrayList<Asignatura>();
+                                      j=eComp.getGrupoAsignaturaB().getMiembroGrupoAsignaturaBs().iterator();
+                                      
+                                       while(j.hasNext()){
+                                       MiembroGrupoAsignaturaB mb=(MiembroGrupoAsignaturaB)j.next();
+                                       listaAsignaturasCompB.add(mb.getAsignatura());
+                           }     
+                                      
+                                      if(listaAsignaturasB.size()==listaAsignaturasCompB.size()){
+                                          if(contiene(listaAsignaturasB, listaAsignaturasCompB)){
+                                                er.setIgual(false);
+                                                listaRevisada.add(er);
+                                                continue loop;
+                                          }
+                                      }
+                               
+                               
+                           }
+                           
+                  }
+                           
+               }
+                listaRevisada.add(er);
+            }
+            return listaRevisada;
+        }
+       
+     
+ 
+     
+  /*   @Override
      public ArrayList<EquivalenciaRevisada> compararEquivalencias(ArrayList<Equivalencia> listaAuxEquivalencias,ArrayList<Equivalencia> listaAuxEquivalenciasComparado){
          
          ArrayList<EquivalenciaRevisada> listaRevisada=new ArrayList<EquivalenciaRevisada>();
@@ -331,10 +406,30 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
           
          return listaRevisada;
         
+     }*/
+     
+     
+     public boolean contiene(ArrayList<Asignatura> listaA, ArrayList<Asignatura> listaB){
+        
+         
+         loopA:
+         for(Asignatura a:listaA){
+             for(Asignatura b:listaB){
+                 if(a.getNombreAsignatura().equals(b.getNombreAsignatura()))
+                 continue loopA;    
+             }
+             return false;
+         }
+         
+         return true;
      }
+     
+     
+     
+}
     
-    
-}         
+   
+        
             
             
             

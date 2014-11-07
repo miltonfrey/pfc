@@ -32,7 +32,7 @@ public interface EquivalenciaService {
    public List<Object[]> listaObject();
    public int[] totalCreditos(ArrayList<Equivalencia> lista);
    public void confirmarContrato(ArrayList<Equivalencia> lista,Contrato c);
-   public void editarContrato(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c);
+   public ArrayList<Equivalencia> editarContrato(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c);
    public void crearContratoDesdeAceptado(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c, Contrato cNuevo);
    public void compruebaFechaCrearContrato(Contrato c,Date aux)throws FechaIncorrectaException;
    public ArrayList<EquivalenciaRevisada> compararEquivalencias(ArrayList<Equivalencia> listaAuxEquivalencias,ArrayList<Equivalencia> listaAuxEquivalenciasComparado);
