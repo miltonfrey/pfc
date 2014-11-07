@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import pojos.Exceptions.ContratoNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -151,21 +152,22 @@ public class verContratosBean implements Serializable{
         if(selectedContratos.isEmpty()){
             return null;
         }
-        ArrayList<Equivalencia> listaCopia;
+        ArrayList<Equivalencia> listaCopia=null;
         
         for(Contrato c:selectedContratos){
         
-        try{
+            try{
             c=equivalenciaService.findContrato(c.getIdContrato());
+            }catch(ContratoNotFoundException ex){
+             listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
+             return null;
+            }
             listaCopia=new ArrayList<>(c.getEquivalencias());
             
             c.setEquivalencias(null);
             equivalenciaService.eliminaContrato(c);
             
-           }catch(Exception ex){
-               ex.printStackTrace();
-               beanUtilidades.creaMensaje("error al eliminar contrato", FacesMessage.SEVERITY_ERROR);
-               return null;
+          
            }
         for(Equivalencia e:listaCopia){
             
@@ -176,7 +178,7 @@ public class verContratosBean implements Serializable{
             }
         }
         
-        }
+        
         beanUtilidades.creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);
         listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
         selectedContratos=null;

@@ -13,6 +13,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pojos.Exceptions.ContratoNotFoundException;
 import pojos.Exceptions.FechaIncorrectaException;
 import pojos.utillidades.EquivalenciaRevisada;
 
@@ -133,9 +134,11 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
     
     @Override
     @Transactional(readOnly = true)
-    public Contrato findContrato(Integer id){
+    public Contrato findContrato(Integer id) throws ContratoNotFoundException{
         
         Contrato c=equivalenciaDao.findContrato(id);
+        if (c==null)
+                throw new ContratoNotFoundException();
         Hibernate.initialize(c.getEquivalencias());
         for(Equivalencia e:c.getEquivalencias()){ 
             

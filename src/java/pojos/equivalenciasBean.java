@@ -15,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import pojos.Exceptions.ContratoNotFoundException;
 import pojos.utillidades.EquivalenciaRevisada;
 import pojos.utillidades.beanUtilidades;
 
@@ -73,6 +74,7 @@ public class equivalenciasBean implements Serializable{
     
     
     private ArrayList<EquivalenciaRevisada>selectedEquivalencias;
+    private ArrayList<Equivalencia> selectedEquivalenciasSimples;
     
     private static int j=0;
     
@@ -93,7 +95,15 @@ public class equivalenciasBean implements Serializable{
            user=(Usuario)session.getAttribute("admin");
            selectedMovilidad=(Movilidad)context.getSessionMap().get("movilidad");
            selectedContrato=(Contrato)context.getSessionMap().get("contrato");
+           try{
            selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+           }catch(ContratoNotFoundException ex){
+               try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+           }
            context.getSessionMap().remove("contrato");
            context.getSessionMap().remove("movilidad");
            listaAuxEquivalencias.addAll(selectedContrato.getEquivalencias());
@@ -102,8 +112,15 @@ public class equivalenciasBean implements Serializable{
              
            if(context.getSessionMap().containsKey("contratoComparado")){
         contratoComparado=(Contrato)context.getSessionMap().get("contratoComparado");
-             
+             try{
         contratoComparado=equivalenciaService.findContrato(contratoComparado.getIdContrato());
+             }catch(ContratoNotFoundException ex3){
+                 try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
+            }catch(IOException ex4){
+                    
+                    }
+             }
         listaAuxEquivalenciasComparado.addAll(contratoComparado.getEquivalencias());
         equivalenciasRevisadas=equivalenciaService.compararEquivalencias(listaAuxEquivalencias, listaAuxEquivalenciasComparado);
         creditosComparadoA=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[0];
@@ -268,21 +285,33 @@ public class equivalenciasBean implements Serializable{
     public void setCreditosComparadoB(int creditosComparadoB) {
         this.creditosComparadoB = creditosComparadoB;
     }
+
+    public ArrayList<Equivalencia> getSelectedEquivalenciasSimples() {
+        return selectedEquivalenciasSimples;
+    }
+
+    public void setSelectedEquivalenciasSimples(ArrayList<Equivalencia> selectedEquivalenciasSimples) {
+        this.selectedEquivalenciasSimples = selectedEquivalenciasSimples;
+    }
+    
     
     
     
 
    
-    public String publicarEquivalencia(){
+    public String publicarEquivalenciaSimple(){
         
-        if(selectedEquivalencias.isEmpty()){
+        if(selectedEquivalenciasSimples.isEmpty()){
             return null;
         }
         
-        for(EquivalenciaRevisada e:selectedEquivalencias){
-            e.getEquivalencia().setVisible("si");
+        
+        
+        
+        for(Equivalencia e:selectedEquivalenciasSimples){
+            e.setVisible("si");
            
-                equivalenciaService.actualizarEquivalencia(e.getEquivalencia());
+                equivalenciaService.actualizarEquivalencia(e);
             
         }
         beanUtilidades.creaMensaje("Las equivalencias han sido publicadas", FacesMessage.SEVERITY_INFO);
@@ -310,9 +339,35 @@ public class equivalenciasBean implements Serializable{
         
     }
     
+     public String noPublicarSimple(){
+        
+         if(selectedEquivalenciasSimples.isEmpty()){
+            return null;
+        }
+        
+        for(Equivalencia e:selectedEquivalenciasSimples){
+            e.setVisible("no");
+            
+                equivalenciaService.actualizarEquivalencia(e);
+            
+        }
+        beanUtilidades.creaMensaje("Las equivalencias seleccionadas ya no son públicas", FacesMessage.SEVERITY_INFO);
+        return null;
+        
+        
+    }
+    
     
     public String cambiarEstadoContrato(){
-        
+        try{
+        selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+        }catch(ContratoNotFoundException ex){
+            try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/admin/verMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+        }
         if(apruebaOrechaza.equals(selectedContrato.getEstado()))
             return null;
         

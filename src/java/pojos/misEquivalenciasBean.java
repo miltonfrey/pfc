@@ -23,6 +23,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.component.datatable.DataTable;
+import pojos.Exceptions.ContratoNotFoundException;
 import pojos.Exceptions.UsuarioNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
@@ -121,7 +122,15 @@ public class misEquivalenciasBean implements Serializable{
         
          if(context.getSessionMap().containsKey("contrato")){
         selectedContrato=(Contrato)context.getSessionMap().get("contrato");
+        try{
         c=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+        }catch(ContratoNotFoundException ex){
+             try{
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()+"/usuario/verMisMovilidades.xhtml");
+            }catch(IOException ex2){
+                    
+                    }
+        }
         listaAuxEquivalencias.addAll(c.getEquivalencias());   //(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         listaAuxEquivalenciasComparado.addAll(c.getEquivalencias()); //=(ArrayList<Equivalencia>)equivalenciaService.listarEquivalenciasPorContrato(selectedContrato.getIdContrato());
         //lo comparamos igual en la version b
@@ -518,7 +527,7 @@ public class misEquivalenciasBean implements Serializable{
      try{
      Mensaje m=new Mensaje(usuarioService.find("admin"), user, Calendar.getInstance().getTime(),"contrato creado", "el usuario "+user.getLogin()+" ha modificado un contrato","no","no","no");
      mensajeService.enviarMensaje(m);
-     }catch(Exception ex){
+     }catch(UsuarioNotFoundException ex){
          
      }
         verConfirmar=false;

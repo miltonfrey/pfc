@@ -4,8 +4,6 @@ package pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -13,7 +11,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import pojos.Exceptions.FechaIncorrectaException;
+import pojos.Exceptions.ContratoNotFoundException;
+
 import pojos.utillidades.beanUtilidades;
 
 
@@ -156,7 +155,13 @@ public class verMisContratosBean implements Serializable{
     
     
     public String eliminarContrato(){
+        try{
         selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
+        }catch(ContratoNotFoundException ex){
+            beanUtilidades.creaMensaje("contrato no encontrado", FacesMessage.SEVERITY_ERROR);
+            return null;
+            
+        }
         ArrayList<Equivalencia> listaCopia=new ArrayList<>(selectedContrato.getEquivalencias());
         
            

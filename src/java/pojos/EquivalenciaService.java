@@ -5,6 +5,7 @@ package pojos;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import pojos.Exceptions.ContratoNotFoundException;
 import pojos.Exceptions.FechaIncorrectaException;
 import pojos.utillidades.EquivalenciaRevisada;
 
@@ -27,7 +28,7 @@ public interface EquivalenciaService {
     public void modificaContrato(Contrato c);
     public List<Contrato> listaContratos(Movilidad m);
     public void eliminaContrato(Contrato c);
-    public Contrato findContrato(Integer id);
+    public Contrato findContrato(Integer id) throws ContratoNotFoundException;
    public List<Equivalencia> equivalenciasPublicas(String universidad);
    public List<Object[]> listaObject();
    public int[] totalCreditos(ArrayList<Equivalencia> lista);
