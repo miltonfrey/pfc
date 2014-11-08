@@ -160,6 +160,7 @@ public class verContratosBean implements Serializable{
             c=equivalenciaService.findContrato(c.getIdContrato());
             }catch(ContratoNotFoundException ex){
              listaContratos=(ArrayList<Contrato>)equivalenciaService.listaContratos(selectedMovilidad);
+              beanUtilidades.creaMensaje("contrato no encontrado", FacesMessage.SEVERITY_ERROR);
              return null;
             }
             listaCopia=new ArrayList<>(c.getEquivalencias());

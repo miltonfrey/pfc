@@ -159,6 +159,7 @@ public class verMisContratosBean implements Serializable{
         selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
         }catch(ContratoNotFoundException ex){
             beanUtilidades.creaMensaje("contrato no encontrado", FacesMessage.SEVERITY_ERROR);
+            verContratos();
             return null;
             
         }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pojos.Exceptions.PaisException;
+import pojos.Exceptions.UniversidadException;
 
 @Service("universidadService")
 @Transactional
@@ -40,9 +42,12 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
     
     @Override
     @Transactional(readOnly = true)
-    public Pais findPais(String pais){
-        
-        return universidadDao.findPais(pais);
+    public Pais findPais(String pais) throws PaisException{
+        Pais p=universidadDao.findPais(pais);
+        if(p==null){
+            throw new PaisException();
+        }
+        return p;
     }
     
     
@@ -179,9 +184,13 @@ public class UniversidadServiceImpl implements UniversidadService,Serializable{
    
    @Override
    @Transactional(readOnly = true)
-   public Universidad findUniversidad(String universidad){
+   public Universidad findUniversidad(String universidad) throws UniversidadException{
        
-       return universidadDao.findUniversidad(universidad);
+       Universidad u=universidadDao.findUniversidad(universidad);
+       if(u==null){
+           throw new UniversidadException();
+       }
+       return u;
    }
     
 }

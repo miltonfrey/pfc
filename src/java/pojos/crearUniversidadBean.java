@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import pojos.Exceptions.PaisException;
 //import javax.faces.bean.SessionScoped;
 //import javax.faces.component.UIComponent;
 import pojos.utillidades.beanUtilidades;
@@ -226,7 +227,14 @@ public class crearUniversidadBean implements Serializable{
     
     
    public String creaUniversidad(){
-        Pais p=universidadService.findPais(paisStr);
+       
+       Pais p;
+       try{
+        p=universidadService.findPais(paisStr);
+       }catch(PaisException ex){
+          beanUtilidades.creaMensaje("se ha producido un error,no existe ese país", FacesMessage.SEVERITY_ERROR);
+          return null;
+       }
         Universidad u=new Universidad();
         u.setInfo(info);
         u.setNombre(nombre);
@@ -240,6 +248,10 @@ public class crearUniversidadBean implements Serializable{
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
             beanUtilidades.creaMensaje("ya existe esa universidad", FacesMessage.SEVERITY_ERROR);
             return "";
+        }
+        catch(RuntimeException ex){
+            beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_INFO);
+            listaUniversidades=(ArrayList < Universidad >)universidadService.listarPorPais(paisStr);
         }
         
         beanUtilidades.creaMensaje("universidad creada", FacesMessage.SEVERITY_INFO);
@@ -265,11 +277,7 @@ public class crearUniversidadBean implements Serializable{
     
     public String eliminaUniversidadLista(){
         
-        if(selectedUniversidades==null){
-            beanUtilidades.creaMensaje("null", FacesMessage.SEVERITY_INFO);
-            return null;
-        }
-        
+       
         
         if(selectedUniversidades.isEmpty()==false){
             
@@ -279,7 +287,10 @@ public class crearUniversidadBean implements Serializable{
                 try{
                     universidadService.delete(u);
                 }catch(RuntimeException ex){
-                    
+                    listaUniversidades=(ArrayList < Universidad >)universidadService.listarPorPais(paisStr);
+                   beanUtilidades.creaMensaje("Error eliminando", FacesMessage.SEVERITY_INFO); 
+                   checkDetalles=false;
+                    return "";
                 }    
             }
             beanUtilidades.creaMensaje("se han eliminado las universidades correctamente", FacesMessage.SEVERITY_INFO);
@@ -293,12 +304,16 @@ public class crearUniversidadBean implements Serializable{
     public String editar(){
         
         checkDetalles=false;
+        
+           
+                    
         try{
         universidadService.actualizar(selectedUniversidad);
         listaUniversidades=(ArrayList<Universidad>)universidadService.listarPorPais(paisStr);
         }catch(RuntimeException ex){
-            
+            beanUtilidades.creaMensaje("se ha producido un error ", FacesMessage.SEVERITY_ERROR);
         }
+        beanUtilidades.creaMensaje("edición correcta", FacesMessage.SEVERITY_INFO);
         return null;
     }
     

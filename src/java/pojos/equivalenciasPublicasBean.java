@@ -6,9 +6,11 @@ package pojos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import pojos.Exceptions.UniversidadException;
 import pojos.utillidades.beanUtilidades;
 
 
@@ -176,7 +178,12 @@ public class equivalenciasPublicasBean implements Serializable{
         
         
         listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.equivalenciasPublicas(universidadStr);
+        try{
         universidad=universidadService.findUniversidad(universidadStr);
+        }catch(UniversidadException ex){
+            beanUtilidades.creaMensaje("no existe esa universidad", FacesMessage.SEVERITY_ERROR);
+            
+        }
     }
     
    

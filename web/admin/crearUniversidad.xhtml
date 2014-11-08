@@ -139,7 +139,8 @@
                 <p:inputText value="#{crearUniversidadBean.selectedUniversidad.web}" />
                 <p:outputLabel value="info" />
                 <p:inputTextarea value="#{crearUniversidadBean.selectedUniversidad.info}" />
-                
+                <p:outputLabel value="pais"/>
+               
                 
                 
                 <p:commandButton process=":formDetalles:" id="actualizaBtn" value="editar" action="#{crearUniversidadBean.editar()}" update=":formDetalles: :formTabla: :formUniversidad:msgs"

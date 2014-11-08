@@ -1,4 +1,6 @@
-
+.red{
+    background-color: #FFA8B4;
+}
 
 
 .green{
@@ -38,6 +40,7 @@ body.red{
     font-size: 15px;
     position: absolute;
     top: 58px;
+    
 }
 
 

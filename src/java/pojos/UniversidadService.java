@@ -2,6 +2,8 @@ package pojos;
 
 import java.util.Date;
 import java.util.List;
+import pojos.Exceptions.PaisException;
+import pojos.Exceptions.UniversidadException;
 
 /**
  *
@@ -12,7 +14,7 @@ public interface UniversidadService {
     
     public List<Pais>listaPaises();
     public List<Universidad>listaUniversidades();
-    public Pais findPais(String pais);
+    public Pais findPais(String pais) throws PaisException;
     
     
     
@@ -30,6 +32,6 @@ public interface UniversidadService {
     public void crearCursoAcademico(Cursoacademico cursoAcademico);
     public void eliminarCursoAcademico(String c);
     public List<Cursoacademico> listaCursosAcademicos();
-    public Universidad findUniversidad(String universidad);
+    public Universidad findUniversidad(String universidad) throws UniversidadException;
     public Cursoacademico buscarCursoAcademico(Date fechaInicio,Date fechaFin);
 }

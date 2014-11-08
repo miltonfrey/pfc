@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import pojos.Exceptions.UniversidadException;
 
 import pojos.utillidades.beanUtilidades;
 
@@ -294,8 +295,15 @@ public class crearAsignaturaBean implements Serializable{
     }
     
     public String creaAsignatura(){
-        
-        Universidad uni=universidadService.findUniversidad(universidadStr);
+        Universidad uni;
+        try{
+        uni=universidadService.findUniversidad(universidadStr);
+        }catch(UniversidadException ex){
+            beanUtilidades.creaMensaje("no existe la universidad", FacesMessage.SEVERITY_ERROR);
+            return "";
+        }
+            
+            
         AsignaturaId id=new AsignaturaId(codAsignatura,universidadStr);
         
         Asignatura a=new Asignatura(id,uni, nombreAsignatura, creditosAsignatura.shortValue(),periodoAsignatura,infoAsignatura,webAsignatura,facultadAsignatura,titulacionAsignatura,null,null);
@@ -338,10 +346,11 @@ public class crearAsignaturaBean implements Serializable{
             asignaturaService.actualizarAsignatura(SelectedAsignatura);
             listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
         }catch(RuntimeException ex){
-            return null;
+            beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_INFO);
+            return "";
         }
             checkDetalles=false;
-            beanUtilidades.creaMensaje("error al editar la asignatura", FacesMessage.SEVERITY_INFO);
+            beanUtilidades.creaMensaje("Edición correcta", FacesMessage.SEVERITY_INFO);
            return null;
         
     }
@@ -366,6 +375,9 @@ public class crearAsignaturaBean implements Serializable{
             try{
                 asignaturaService.eliminaAsignatura(a);
             }catch(RuntimeException ex){
+                 beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_INFO);
+                 listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
+                 checkDetalles=false;
                 return null;
             }
         }

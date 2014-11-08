@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import pojos.Exceptions.DuracionException;
 import pojos.Exceptions.NumeroDeMovilidadesException;
+import pojos.Exceptions.UniversidadException;
 import pojos.Exceptions.UsuarioNotFoundException;
 import pojos.utillidades.beanUtilidades;
 
@@ -216,9 +217,12 @@ public class crearMovilidadBean implements Serializable{
     
     public void onDropboxchangeUni(){
         
-        
+        try{
         universidad=universidadService.findUniversidad(selectedUniversidad);
-        
+        }catch(UniversidadException ex){
+            beanUtilidades.creaMensaje("universidad inexistente", FacesMessage.SEVERITY_ERROR);
+            
+        }
     }
     
     
@@ -227,9 +231,19 @@ public String crearMovilidad(){
         checkPais=false;
         //checkUni=false;
         
-        
-        
-        Universidad u=universidadService.findUniversidad(selectedUniversidad);
+         Universidad u;
+        try{
+       u=universidadService.findUniversidad(selectedUniversidad);
+        }catch(UniversidadException ex){
+            beanUtilidades.creaMensaje("universidad inexistente", FacesMessage.SEVERITY_ERROR);
+            selectedUniversidad="";
+                selectedPais="";
+                selectedUniversidad="";
+                fechaFin=null;
+                fechaInicio=null;
+                universidad=null;
+            return "";
+        }
         Calendar cal1=Calendar.getInstance();
         Calendar cal2=Calendar.getInstance();
                 cal1.setTime(fechaInicio);
@@ -242,6 +256,7 @@ public String crearMovilidad(){
                   
                   
               }catch(RuntimeException ex){
+                 
                   return "";
               }
               
@@ -276,9 +291,12 @@ public String crearMovilidad(){
                 selectedUniversidad="";
                 fechaFin=null;
                 fechaInicio=null;
+                universidad=null;
                 
                 
-                return null;
+                
+                
+                return "";
         
     }
 
