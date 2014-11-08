@@ -240,7 +240,12 @@ public String crearMovilidad(){
                   
                   movilidadService.crearMovilidad(fechaInicio, fechaFin, usuario, u,ca);
                   
-              }catch(DuracionException ex){
+                  
+              }catch(RuntimeException ex){
+                  return "";
+              }
+              
+              catch(DuracionException ex){
                   beanUtilidades.creaMensaje(ex.getMessage(),FacesMessage.SEVERITY_ERROR);
                   return null;
               }

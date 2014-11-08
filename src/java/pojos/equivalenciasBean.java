@@ -71,6 +71,7 @@ public class equivalenciasBean implements Serializable{
     private ArrayList<Equivalencia> listaAuxEquivalenciasComparado=new ArrayList<Equivalencia>();
     
     private ArrayList<EquivalenciaRevisada> equivalenciasRevisadas;
+    private ArrayList<EquivalenciaRevisada> equivalenciasRevisadasComparado;
     
     
     private ArrayList<EquivalenciaRevisada>selectedEquivalencias;
@@ -125,6 +126,7 @@ public class equivalenciasBean implements Serializable{
              }
         listaAuxEquivalenciasComparado.addAll(contratoComparado.getEquivalencias());
         equivalenciasRevisadas=equivalenciaService.compararEquivalencias(listaAuxEquivalencias, listaAuxEquivalenciasComparado);
+        equivalenciasRevisadasComparado=equivalenciaService.compararEquivalencias(listaAuxEquivalenciasComparado, listaAuxEquivalencias);
         creditosComparadoA=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[0];
         creditosComparadoB=equivalenciaService.totalCreditos(listaAuxEquivalenciasComparado)[1];
        
@@ -199,6 +201,17 @@ public class equivalenciasBean implements Serializable{
     public void setEquivalenciasRevisadas(ArrayList<EquivalenciaRevisada> equivalenciasRevisadas) {
         this.equivalenciasRevisadas = equivalenciasRevisadas;
     }
+
+    public ArrayList<EquivalenciaRevisada> getEquivalenciasRevisadasComparado() {
+        return equivalenciasRevisadasComparado;
+    }
+
+    public void setEquivalenciasRevisadasComparado(ArrayList<EquivalenciaRevisada> equivalenciasRevisadasComparado) {
+        this.equivalenciasRevisadasComparado = equivalenciasRevisadasComparado;
+    }
+    
+    
+    
    
     public ArrayList<EquivalenciaRevisada> getSelectedEquivalencias() {
         return selectedEquivalencias;
