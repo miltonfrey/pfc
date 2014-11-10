@@ -233,7 +233,7 @@ public class crearUniversidadBean implements Serializable{
         p=universidadService.findPais(paisStr);
        }catch(PaisException ex){
           beanUtilidades.creaMensaje("se ha producido un error,no existe ese país", FacesMessage.SEVERITY_ERROR);
-          return null;
+           return "crearUniversidad.xhtml";
        }
         Universidad u=new Universidad();
         u.setInfo(info);
@@ -247,11 +247,11 @@ public class crearUniversidadBean implements Serializable{
             
         }catch(org.springframework.dao.DataIntegrityViolationException ex){
             beanUtilidades.creaMensaje("ya existe esa universidad", FacesMessage.SEVERITY_ERROR);
-            return "";
+            return "crearUniversidad.xhtml";
         }
         catch(RuntimeException ex){
             beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_INFO);
-            listaUniversidades=(ArrayList < Universidad >)universidadService.listarPorPais(paisStr);
+            return "crearUniversidad.xhtml";
         }
         
         beanUtilidades.creaMensaje("universidad creada", FacesMessage.SEVERITY_INFO);
@@ -289,8 +289,8 @@ public class crearUniversidadBean implements Serializable{
                 }catch(RuntimeException ex){
                     listaUniversidades=(ArrayList < Universidad >)universidadService.listarPorPais(paisStr);
                    beanUtilidades.creaMensaje("Error eliminando", FacesMessage.SEVERITY_INFO); 
-                   checkDetalles=false;
-                    return "";
+                   
+                    return "crearUniversidad.xhtml";
                 }    
             }
             beanUtilidades.creaMensaje("se han eliminado las universidades correctamente", FacesMessage.SEVERITY_INFO);
@@ -312,6 +312,7 @@ public class crearUniversidadBean implements Serializable{
         listaUniversidades=(ArrayList<Universidad>)universidadService.listarPorPais(paisStr);
         }catch(RuntimeException ex){
             beanUtilidades.creaMensaje("se ha producido un error ", FacesMessage.SEVERITY_ERROR);
+            return "crearUniversidad.xhtml";
         }
         beanUtilidades.creaMensaje("edición correcta", FacesMessage.SEVERITY_INFO);
         return null;

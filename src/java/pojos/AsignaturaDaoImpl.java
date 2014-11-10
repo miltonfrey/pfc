@@ -35,7 +35,7 @@ public class AsignaturaDaoImpl implements AsignaturaDao,Serializable{
     @Override
     public void actualizarAsignatura(Asignatura a){
         
-        sessionFactory.getCurrentSession().saveOrUpdate(a);
+        sessionFactory.getCurrentSession().update(a);
     }
     
     @Override

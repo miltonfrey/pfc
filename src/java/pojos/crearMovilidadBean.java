@@ -255,18 +255,20 @@ public String crearMovilidad(){
                   movilidadService.crearMovilidad(fechaInicio, fechaFin, usuario, u,ca);
                   
                   
-              }catch(RuntimeException ex){
-                 
-                  return "";
-              }
+             
               
-              catch(DuracionException ex){
+              }catch(DuracionException ex){
                   beanUtilidades.creaMensaje(ex.getMessage(),FacesMessage.SEVERITY_ERROR);
                   return null;
               }
               catch(NumeroDeMovilidadesException ex){
                   beanUtilidades.creaMensaje(ex.getMessage(), FacesMessage.SEVERITY_ERROR);
                   return null;
+              }
+              
+               catch(RuntimeException ex){
+                 beanUtilidades.creaMensaje("se ha producido un error", null);
+                  return "crearMovilidad.xhtml";
               }
              
               

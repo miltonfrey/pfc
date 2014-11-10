@@ -86,7 +86,7 @@ public class UniversidadDaoImpl implements UniversidadDao,Serializable{
     @Override
     public void actualizar(Universidad u){
         
-        sessionFactory.getCurrentSession().saveOrUpdate(u);
+        sessionFactory.getCurrentSession().update(u);
     }
     
     

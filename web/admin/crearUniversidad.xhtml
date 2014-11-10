@@ -65,7 +65,7 @@
                  <p:outputLabel  value="información adicional"/>
                  <p:inputTextarea value="#{crearUniversidadBean.info}"/>
                 
-                 <p:commandButton value="crear universidad" action="#{crearUniversidadBean.creaUniversidad}" update=":formTabla :formUniversidad :formDetalles"
+                 <p:commandButton value="crear universidad" action="#{crearUniversidadBean.creaUniversidad}" update=":formTabla :formUniversidad :formDetalles" 
                                   oncomplete="PF('universidadTable').unselectAllRows();"/>
              </h:panelGrid>
           </h:form>
@@ -139,7 +139,7 @@
                 <p:inputText value="#{crearUniversidadBean.selectedUniversidad.web}" />
                 <p:outputLabel value="info" />
                 <p:inputTextarea value="#{crearUniversidadBean.selectedUniversidad.info}" />
-                <p:outputLabel value="pais"/>
+                
                
                 
                 

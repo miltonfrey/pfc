@@ -203,19 +203,25 @@ public class verMovilidadesBean implements Serializable{
     
     
     
-    public void onRowEdit(RowEditEvent event){
+    public String onRowEdit(RowEditEvent event){
        
         Movilidad m=(Movilidad)event.getObject();
         
         if(changeEstado.equals(m.getEstado())==false){
         
         m.setEstado(changeEstado);
+        try{
         movilidadService.crearMovilidad(m);
+        }catch(RuntimeException ex){
+            beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+            listaMovilidades=(ArrayList<Movilidad>)movilidadService.listarTodasMovilidades();
+            return "verMovilidades.xhtml";
+        }
         Mensaje mensaje=new Mensaje(m.getUsuario() ,usuario, Calendar.getInstance().getTime(),"cambio de estado de movilidad","destino:"+m.getUniversidad().getNombre()+" \n"+"fecha de inicio:"+sdf.format(m.getFechaInicio())+" \n"+"fecha fin:"+sdf.format(m.getFechaFin())+"\n\n"+ "el estado de la movilidad ahora es: "+m.getEstado(), "no","no","no");
             mensajeService.enviarMensaje(mensaje);
             beanUtilidades.creaMensaje("estado de una movilidad modificado, se ha enviado un mensaje", FacesMessage.SEVERITY_INFO);
         }
-               
+               return null;
     }
     
     
@@ -223,8 +229,12 @@ public class verMovilidadesBean implements Serializable{
     public String eliminaMovilidadLista(){
         
         for(Movilidad m:selectedMovilidades){
+            try{
         movilidadService.eliminarMovilidad(m);
-          
+            }catch(RuntimeException ex){
+                beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+                return "verMovilidades.xhtml";
+            }
         }
         
         actualizarTodasMovilidades();

@@ -125,8 +125,8 @@ public class beanUtilidades implements Serializable{
         Estado e=new Estado(estado);
         try{
         utilidadService.crearEstado(e);
-        }catch(Exception ex){
-            creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+        }catch(org.springframework.dao.DataIntegrityViolationException ex){
+            creaMensaje("El estado ya existe", FacesMessage.SEVERITY_ERROR);
             estado="";
             return null;
         }
@@ -161,8 +161,8 @@ public class beanUtilidades implements Serializable{
         EstadoMovilidad e=new EstadoMovilidad(estadoMovilidad);
         try{
         utilidadService.crearEstadoMovilidad(e);
-        }catch(Exception ex){
-            creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+        }catch(org.springframework.dao.DataIntegrityViolationException ex){
+            creaMensaje("El estado de la movilidad ya existe", FacesMessage.SEVERITY_ERROR);
             estadoMovilidad="";
             return null;
         }
@@ -204,7 +204,7 @@ public class beanUtilidades implements Serializable{
           cursoAcademico="";
           utilidadService.crearCursoAcademico(c);
           
-      }catch(Exception ex){
+      }catch(org.springframework.dao.DataIntegrityViolationException ex){
           
           creaMensaje("El año "+cursoAcademico+" ya existe", FacesMessage.SEVERITY_ERROR);
           return null;

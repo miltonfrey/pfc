@@ -219,7 +219,7 @@ public class equivalenciasPublicasBean implements Serializable{
          m=equivalenciaService.buscarMovilidadPorContrato(c);
         }catch(ContratoNotFoundException|MovilidadNotFoundException|RuntimeException ex){
            beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
-            return "";
+            return "equivalenciasPublicasAdmin.xhtml";
         }
       
         

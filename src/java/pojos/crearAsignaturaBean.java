@@ -300,7 +300,7 @@ public class crearAsignaturaBean implements Serializable{
         uni=universidadService.findUniversidad(universidadStr);
         }catch(UniversidadException ex){
             beanUtilidades.creaMensaje("no existe la universidad", FacesMessage.SEVERITY_ERROR);
-            return "";
+            return "crearAsignatura.xhtml";
         }
             
             
@@ -347,7 +347,7 @@ public class crearAsignaturaBean implements Serializable{
             listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
         }catch(RuntimeException ex){
             beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_INFO);
-            return "";
+            return "crearAsignatura.xhtml";
         }
             checkDetalles=false;
             beanUtilidades.creaMensaje("Edición correcta", FacesMessage.SEVERITY_INFO);
@@ -376,9 +376,8 @@ public class crearAsignaturaBean implements Serializable{
                 asignaturaService.eliminaAsignatura(a);
             }catch(RuntimeException ex){
                  beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_INFO);
-                 listaAsignaturas=(ArrayList < Asignatura >)asignaturaService.listarAsignaturasPorUniversidad(universidadStr);
-                 checkDetalles=false;
-                return null;
+                 return "crearAsignatura.xhtml";
+                 
             }
         }
         

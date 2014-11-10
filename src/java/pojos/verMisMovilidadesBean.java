@@ -147,7 +147,12 @@ public class verMisMovilidadesBean implements Serializable{
         
         if(selectedMovilidad.getEstado().equalsIgnoreCase("pendiente")){
            
+            try{
             movilidadService.eliminarMovilidad(selectedMovilidad);
+            }catch(RuntimeException ex){
+                    beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+                    return "verMisMovilidades.xhtml";
+                    }
             Mensaje mensaje=new Mensaje(admin,usuario,Calendar.getInstance().getTime(), "movilidad eliminada", "el usuario "+usuario.getLogin()+" ha eliminado una movilidad", "no","no","no");
                 mensajeService.enviarMensaje(mensaje);
                 beanUtilidades.creaMensaje("movilidad eliminada correctamente, se ha enviado un mensaje al coordinador ", FacesMessage.SEVERITY_INFO);
@@ -168,7 +173,12 @@ public class verMisMovilidadesBean implements Serializable{
             }
                 
                 if(selectedMovilidad.getEstado().equalsIgnoreCase("rechazada")){
+                    try{
                 movilidadService.eliminarMovilidad(selectedMovilidad);    
+                    }catch(RuntimeException ex){
+                        beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
+                        return "verMisMovilidades.xhtml";
+                    }
                 actualizar();     
                 beanUtilidades.creaMensaje("movilidad eliminada correctamente", FacesMessage.SEVERITY_INFO);
                 selectedMovilidad=null;
