@@ -229,8 +229,8 @@ public class equivalenciasPublicasBean implements Serializable{
         
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", c);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", m);
+       // return "equivalenciasPublicasAdmin.xhtml?faces-redirect=true";
         return "gestionarContrato.xhtml?faces-redirect=true";
-        
     }
     
     
