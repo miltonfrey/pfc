@@ -422,6 +422,7 @@ public class equivalenciasBean implements Serializable{
     
     
     public String cambiarEstadoContrato(){
+        
         try{
         selectedContrato=equivalenciaService.findContrato(selectedContrato.getIdContrato());
         }catch(ContratoNotFoundException ex){

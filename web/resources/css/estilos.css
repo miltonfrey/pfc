@@ -416,9 +416,50 @@ body.red{
     text-align: center;
 }
 
+.asignaturaPublicaAdmin{
+    width: 55%;
+    font-size: 15px;
+    text-align: left;
+}
+
+.creditosPublicaAdmin{
+    
+    width: 10%;
+    font-size: 15px;
+    text-align: center;
+    
+}
+
+.periodoPublicaAdmin{
+    
+    width: 12%;
+    font-size: 15px;
+    text-align: center;
+    
+}
+
+.verPublicaAdmin{
+    width: 15%;
+    text-align: center;
+        
+}
 
 
 
+
+
+.nuevoCreditos{
+    
+    width: 9%;
+    font-size: 15px;
+    text-align: center;
+}
+
+.nuevoAsignatura{
+    
+    width: 74%;
+    font-size: 15px;
+}
 
 
 

@@ -39,7 +39,7 @@ public interface EquivalenciaService {
    public void compruebaFechaCrearContrato(Contrato c,Date aux)throws FechaIncorrectaException;
    public ArrayList<EquivalenciaRevisada> compararEquivalencias(ArrayList<Equivalencia> listaAuxEquivalencias,ArrayList<Equivalencia> listaAuxEquivalenciasComparado);
     public Contrato verContratoPorEquivalencia(Equivalencia e)throws ContratoNotFoundException;
-    public Movilidad buscarMovilidadPorContrato(Contrato c);
+    public Movilidad buscarMovilidadPorContrato(Contrato c)throws ContratoNotFoundException,MovilidadNotFoundException;
 }
 
 

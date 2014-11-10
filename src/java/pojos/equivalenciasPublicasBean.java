@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import pojos.Exceptions.ContratoNotFoundException;
+import pojos.Exceptions.MovilidadNotFoundException;
 import pojos.Exceptions.UniversidadException;
 import pojos.utillidades.beanUtilidades;
 
@@ -50,7 +51,7 @@ public class equivalenciasPublicasBean implements Serializable{
     
     private Equivalencia selectedEquivalencia; 
     
-    
+    private boolean mostrarInfo;
     
     
    
@@ -166,6 +167,14 @@ public class equivalenciasPublicasBean implements Serializable{
         this.selectedEquivalencia = selectedEquivalencia;
     }
 
+    public boolean isMostrarInfo() {
+        return mostrarInfo;
+    }
+
+    public void setMostrarInfo(boolean mostrarInfo) {
+        this.mostrarInfo = mostrarInfo;
+    }
+
    
     
     
@@ -176,11 +185,13 @@ public class equivalenciasPublicasBean implements Serializable{
         checkPais=true;
         listaUniversidad=(ArrayList<Universidad>)universidadService.listarPorPais(paisStr);
         checkUni=false;
+        mostrarInfo=false;
     }
     
     public void onChangeUni(){
         
         checkUni=true;
+        mostrarInfo=false;
     }
    
     
@@ -196,22 +207,25 @@ public class equivalenciasPublicasBean implements Serializable{
             return null;
         }
         listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.equivalenciasPublicas(universidadStr);
+        mostrarInfo=true;
         return null;
     }
     
     public String verContrato(){
+         Movilidad m;
         Contrato c;
         try{
         c=equivalenciaService.verContratoPorEquivalencia(selectedEquivalencia);
-        }catch(ContratoNotFoundException ex){
+         m=equivalenciaService.buscarMovilidadPorContrato(c);
+        }catch(ContratoNotFoundException|MovilidadNotFoundException|RuntimeException ex){
+           beanUtilidades.creaMensaje("se ha producido un error", FacesMessage.SEVERITY_ERROR);
             return "";
         }
-        Movilidad m;
-        try{
-        m=equivalenciaService.buscarMovilidadPorContrato(c);
-        }catch(RuntimeException ex){
-            return "";
-        }
+      
+        
+       
+        
+        
         
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", c);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", m);

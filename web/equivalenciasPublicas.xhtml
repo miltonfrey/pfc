@@ -15,7 +15,7 @@
         <h:form id="formPais">
              <p:growl id="msgs" />
             <p:selectOneMenu value="#{equivalenciasPublicasBean.paisStr}" required="true" requiredMessage="hay que elegir un pais">
-                <p:ajax event="change" listener="#{equivalenciasPublicasBean.onChangePais()}" update=":formUniversidad :formPais:msgs"/>
+                <p:ajax event="change" listener="#{equivalenciasPublicasBean.onChangePais()}" update=":formUniversidad :formPais:msgs :formTablaEquivalencias"/>
                 <f:selectItem itemLabel="elige un país"  noSelectionOption="true"/>
                 <f:selectItems var="pais" value="#{paisBean.listaPaises}" itemValue="#{pais.nombre}" itemLabel="#{pais.nombre}"/>
             
@@ -25,7 +25,7 @@
         <br/>
         <h:form id="formUniversidad">
             <p:selectOneMenu value="#{equivalenciasPublicasBean.universidadStr}" required="true" requiredMessage="hay que elegir una universidad de destino" rendered="#{equivalenciasPublicasBean.checkPais}">
-                <p:ajax event="change" listener="#{equivalenciasPublicasBean.onChangeUni}" update=":formUniversidad :formPais"/>
+                <p:ajax event="change" listener="#{equivalenciasPublicasBean.onChangeUni}" update=":formUniversidad :formPais :formTablaEquivalencias"/>
                 <f:selectItem itemLabel="elige una universidad" itemValue="#{null}" noSelectionOption="true"/>
                 <f:selectItems value="#{equivalenciasPublicasBean.listaUniversidad}" var="universidad" itemLabel="#{universidad.nombre}" itemValue="#{universidad.nombre}"/>
                 
@@ -39,10 +39,10 @@
         
         <h:form id="formTablaEquivalencias">
             <h:panelGrid columns="2" cellpadding="5" rendered="#{equivalenciasPublicasBean.checkUni}">
-            <p:outputLabel value="Web:" rendered="#{not empty equivalenciasPublicasBean.universidad.web}"/>
-            <h:outputLink value="#{equivalenciasPublicasBean.universidad.web}" rendered="#{not empty equivalenciasPublicasBean.universidad.web}">link</h:outputLink>
-            <p:outputLabel value="Info:" rendered="#{not empty equivalenciasPublicasBean.universidad.info}"/>
-            <p:inputTextarea value="#{equivalenciasPublicasBean.universidad.info}" cols="60" rows="10" readonly="true" rendered="#{not empty equivalenciasPublicasBean.universidad.info}"/>
+                <p:outputLabel value="Web:" rendered="#{not empty equivalenciasPublicasBean.universidad.web and equivalenciasPublicasBean.mostrarInfo}"/>
+                <h:outputLink value="#{equivalenciasPublicasBean.universidad.web}" rendered="#{not empty equivalenciasPublicasBean.universidad.web and equivalenciasPublicasBean.mostrarInfo}">link</h:outputLink>
+                <p:outputLabel value="Info:" rendered="#{not empty equivalenciasPublicasBean.universidad.info and equivalenciasPublicasBean.mostrarInfo}"/>
+            <p:inputTextarea value="#{equivalenciasPublicasBean.universidad.info}" cols="60" rows="10" readonly="true" rendered="#{not empty equivalenciasPublicasBean.universidad.info and equivalenciasPublicasBean.mostrarInfo}"/>
             </h:panelGrid>
                <p:dataTable id="tablaEquivalencias"
                          emptyMessage="no hay equivalencias publicas"

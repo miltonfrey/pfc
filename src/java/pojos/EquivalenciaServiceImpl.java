@@ -458,9 +458,12 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
 }
      
      @Override
-     public Movilidad buscarMovilidadPorContrato(Contrato c){
-         
+     public Movilidad buscarMovilidadPorContrato(Contrato c)throws ContratoNotFoundException,MovilidadNotFoundException{
+        c=findContrato(c.getIdContrato());
         Hibernate.initialize(c.getMovilidad());
+        if(c.getMovilidad()==null)
+            throw new MovilidadNotFoundException();
+        Hibernate.initialize(c.getMovilidad().getUniversidad());
         return c.getMovilidad();
      }
              
