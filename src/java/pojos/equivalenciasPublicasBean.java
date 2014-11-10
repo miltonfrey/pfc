@@ -10,6 +10,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import pojos.Exceptions.ContratoNotFoundException;
 import pojos.Exceptions.UniversidadException;
 import pojos.utillidades.beanUtilidades;
 
@@ -46,7 +48,7 @@ public class equivalenciasPublicasBean implements Serializable{
     
     private ArrayList<Equivalencia> listaEquivalencias;
     
-    
+    private Equivalencia selectedEquivalencia; 
     
     
     
@@ -156,6 +158,14 @@ public class equivalenciasPublicasBean implements Serializable{
         this.checkUni = checkUni;
     }
 
+    public Equivalencia getSelectedEquivalencia() {
+        return selectedEquivalencia;
+    }
+
+    public void setSelectedEquivalencia(Equivalencia selectedEquivalencia) {
+        this.selectedEquivalencia = selectedEquivalencia;
+    }
+
    
     
     
@@ -174,17 +184,41 @@ public class equivalenciasPublicasBean implements Serializable{
     }
    
     
-    public void buscar(){
+    public String buscar(){
         
         
-        listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.equivalenciasPublicas(universidadStr);
+        
         try{
         universidad=universidadService.findUniversidad(universidadStr);
         }catch(UniversidadException ex){
             beanUtilidades.creaMensaje("no existe esa universidad", FacesMessage.SEVERITY_ERROR);
-            
+            universidadStr="";
+            return null;
         }
+        listaEquivalencias=(ArrayList < Equivalencia >)equivalenciaService.equivalenciasPublicas(universidadStr);
+        return null;
     }
+    
+    public String verContrato(){
+        Contrato c;
+        try{
+        c=equivalenciaService.verContratoPorEquivalencia(selectedEquivalencia);
+        }catch(ContratoNotFoundException ex){
+            return "";
+        }
+        Movilidad m;
+        try{
+        m=equivalenciaService.buscarMovilidadPorContrato(c);
+        }catch(RuntimeException ex){
+            return "";
+        }
+        
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("contrato", c);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("movilidad", m);
+        return "gestionarContrato.xhtml?faces-redirect=true";
+        
+    }
+    
     
    
 }

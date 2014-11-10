@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import pojos.Exceptions.ContratoNotFoundException;
 import pojos.Exceptions.FechaIncorrectaException;
+import pojos.Exceptions.MovilidadNotFoundException;
 import pojos.utillidades.EquivalenciaRevisada;
 
 
@@ -37,6 +38,8 @@ public interface EquivalenciaService {
    public void crearContratoDesdeAceptado(ArrayList<Equivalencia>listaAuxEquivalencias,Contrato c, Contrato cNuevo);
    public void compruebaFechaCrearContrato(Contrato c,Date aux)throws FechaIncorrectaException;
    public ArrayList<EquivalenciaRevisada> compararEquivalencias(ArrayList<Equivalencia> listaAuxEquivalencias,ArrayList<Equivalencia> listaAuxEquivalenciasComparado);
+    public Contrato verContratoPorEquivalencia(Equivalencia e)throws ContratoNotFoundException;
+    public Movilidad buscarMovilidadPorContrato(Contrato c);
 }
 
 

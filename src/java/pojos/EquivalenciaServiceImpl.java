@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pojos.Exceptions.ContratoNotFoundException;
 import pojos.Exceptions.FechaIncorrectaException;
+import pojos.Exceptions.MovilidadNotFoundException;
 import pojos.utillidades.EquivalenciaRevisada;
 
 
@@ -427,12 +428,45 @@ public class EquivalenciaServiceImpl implements EquivalenciaService,Serializable
          return true;
      }
      
-     
+     @Override
+     public Contrato verContratoPorEquivalencia(Equivalencia e) throws ContratoNotFoundException{
+         
+         Contrato c=null;
+         
+         Hibernate.initialize(e.getContratos());
+         Iterator i=e.getContratos().iterator();
+         while(i.hasNext()){
+             if(c==null){
+                 c=(Contrato)i.next();
+             }else{
+                 Contrato aux=(Contrato)i.next();
+                 if (c.getFecha().compareTo(aux.getFecha())<0){
+                     
+                 c=aux;
+                     
+                 
+             }
+             
+         }
+         
+     }
+    if(c==null)
+        throw new ContratoNotFoundException();
+         
+     return c;
      
 }
+     
+     @Override
+     public Movilidad buscarMovilidadPorContrato(Contrato c){
+         
+        Hibernate.initialize(c.getMovilidad());
+        return c.getMovilidad();
+     }
+             
     
    
-        
+}        
             
             
             
