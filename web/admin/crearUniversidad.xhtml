@@ -81,13 +81,13 @@
                              >
                                         
                          <f:facet name="header">Lista de Universidades de #{crearUniversidadBean.paisStr}</f:facet>
-                           <p:column headerText="código" sortBy="#{universidad.codUniversidad}">
+                         <p:column headerText="código" sortBy="#{universidad.codUniversidad}" styleClass="centrar">
                         
                               <h:outputText value="#{universidad.codUniversidad}"/>
                             
                            </p:column>
                          
-                         <p:column headerText="nombre" sortBy="#{universidad.nombre}" filterBy="#{universidad.nombre}">
+                         <p:column headerText="nombre" sortBy="#{universidad.nombre}" filterBy="#{universidad.nombre}" styleClass="centrar">
                         
                             
                               <h:outputText value="#{universidad.nombre}"/>
@@ -95,15 +95,15 @@
                         
                            </p:column>
                     
-                           <p:column sortBy="#{universidad.pais.nombre}" headerText="pais">
+                         <p:column sortBy="#{universidad.web}" headerText="WEB" styleClass="centrar">
                     
-                              <h:outputText value="#{universidad.pais.nombre}"/>
+                             <h:outputLink value="#{universidad.web}" target="_blank" rendered="#{not empty universidad.web}">link</h:outputLink>
                          
                            </p:column>
                     
                            
                                            
-                               <p:column headerText="ver detalles/editar">
+                         <p:column headerText="ver detalles/editar" styleClass="centrar">
                                    
                                    <p:commandButton value="ver detalles/editar" action="#{crearUniversidadBean.verDetalles}" update=":formDetalles">
                                    
