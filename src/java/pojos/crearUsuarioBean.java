@@ -19,7 +19,7 @@ public class crearUsuarioBean implements Serializable{
     private beanUtilidades beanUtilidades;
     
     @ManagedProperty(value="#{usuarioService}")  
-    private transient UsuarioService usuarioService;
+    private UsuarioService usuarioService;
     
     private String login;
     private String password;
