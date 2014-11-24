@@ -168,9 +168,7 @@ public class verContratosBean implements Serializable{
             c.setEquivalencias(null);
             equivalenciaService.eliminaContrato(c);
             
-          
-           }
-        for(Equivalencia e:listaCopia){
+            for(Equivalencia e:listaCopia){
             
             try{
             equivalenciaService.eliminarEquivalencia(e);
@@ -178,6 +176,9 @@ public class verContratosBean implements Serializable{
                 
             }
         }
+          
+           }
+        
         
         
         beanUtilidades.creaMensaje("contrato eliminado correctamente", FacesMessage.SEVERITY_INFO);

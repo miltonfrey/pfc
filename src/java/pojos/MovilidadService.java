@@ -12,10 +12,7 @@ import java.util.List;
 import pojos.Exceptions.DuracionException;
 import pojos.Exceptions.NumeroDeMovilidadesException;
 
-/**
- *
- * @author abc
- */
+
 public interface MovilidadService {
     
     public List<Movilidad> listarTodasMovilidades();
@@ -30,5 +27,5 @@ public interface MovilidadService {
     public List<Movilidad> listarMovilidadesValidas(String usuario);
     public Movilidad findMovilidad(Integer id);
     public void crearMovilidad(Date fechaInicio,Date fechaFin,Usuario user,Universidad u,Cursoacademico ca) throws DuracionException,NumeroDeMovilidadesException;
-    
+   
 }
