@@ -28,11 +28,6 @@
                          styleClass="tablaFic"
                          filteredValue="#{misEquivalenciasBean.filteredAsignaturasFic}"
                          >
-               <!-- <p:ajax event="rowSelectCheckbox" listener="{misEquivalenciasBean.seleccionaFila}" update=":formEquivalenciaFic"/>
-                <p:ajax event="rowUnselectCheckbox" listener="{misEquivalenciasBean.deseleccionarFila}" update=":formEquivalenciaFic"/>    
-                <p:ajax event="toggleSelect" listener="{misEquivalenciasBean.unToggle}" update=":formEquivalenciaFic"/>-->
-                
-               
                
                 <f:facet name="header">ORIGEN: UDC</f:facet>
                 <p:column headerText="asignatura"  sortBy="#{asigFic.nombreAsignatura}" styleClass="asignatura" filterBy="#{asigFic.nombreAsignatura}">

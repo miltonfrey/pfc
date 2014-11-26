@@ -393,6 +393,7 @@ public class misEquivalenciasBean implements Serializable{
         DataTable dataTable=(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaFic");
         DataTable dataTable2=(DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("formEquivalenciaFic:tablaUniversidad");
         
+         
         
         selectedAsignaturasFic=(ArrayList < Asignatura >)dataTable.getSelection();
         selectedAsignaturasUni=(ArrayList<Asignatura>)dataTable2.getSelection();
