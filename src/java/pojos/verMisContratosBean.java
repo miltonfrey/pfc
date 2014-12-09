@@ -206,17 +206,6 @@ public class verMisContratosBean implements Serializable{
         }
     }
         
-        for(Contrato c:listaContratos){
-            
-            if(c.getEstado().equalsIgnoreCase("pendiente")||c.getEstado().equalsIgnoreCase("rechazado")){
-            verAceptado=false;
-               
-                break;
-            }
-            
-        }
-        
-        
     }
     
      public void cerrarContratos(){

@@ -98,7 +98,8 @@ private SessionFactory sessionFactory;
     @Override
     public Contrato findContrato(Integer id){
         
-        return (Contrato)sessionFactory.getCurrentSession().createQuery("select c from Contrato c where c.idContrato=:contrato").setParameter("contrato", id).uniqueResult();
+       // return (Contrato)sessionFactory.getCurrentSession().createQuery("select c from Contrato c where c.idContrato=:contrato").setParameter("contrato", id).uniqueResult();
+        return (Contrato)sessionFactory.getCurrentSession().get(Contrato.class, id);
     }
   
     @Override
